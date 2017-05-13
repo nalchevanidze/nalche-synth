@@ -1,8 +1,8 @@
 import React from "react";
 import SynthesizerController from "./SynthesizerController";
-import css from "./app.scss";
-import Octave from "./Octave";
-import PanelOscillator from "./PanelOscillator";
+import css from "./Styles/index.scss";
+import Octave from "./panel/Octave";
+import PanelOscillator from "./panel/PanelOscillator";
 
 const keymap = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m", "q", "2", "w", "3", "e", "r", "5", "t", "6", "y", "7", "u"];
 export default class Synth extends React.Component {

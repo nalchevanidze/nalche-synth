@@ -1,6 +1,8 @@
 import React from "react";
-import WaveForm from "./Oscillator/WaveForm";
-import Controller from "./Controller" ;
+
+import Controller from "../Controller" ;
+import WaveForm from "../Oscillator/WaveForm";
+
 import GridLine from "./GridLine";
 import ButtonWave from "./ButtonWave";
 import EnvelopeGraphic from './EnvelopeGraphic';
