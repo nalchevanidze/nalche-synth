@@ -1,13 +1,11 @@
-import NalcheOscillator from "./Oscillator";
+import NalcheOscillator from "./oscillator";
 import Context from "./Context";
-
 const nodes = []
 function FreeNodes() {
     return nodes.filter( 
         node => !node.isActive() 
     );
 }
-
 function freeOscilator () {
     let free_nodes = FreeNodes();
     if (free_nodes.length < 1) {
@@ -17,29 +15,11 @@ function freeOscilator () {
     }
     return free_nodes[0];
 };
-
-
-function Note_to_freq( index ){
-  index = Number(index);
-  if( Number.isNaN(index) ) throw new Error("Invalid Note");
-  let pow = ( index - 49 )/12 ;
-  return  ( 2 ** pow )* 440;
-
-}
-
 function MyOSC(note) {
-  
-    const param = {
-        freq: Note_to_freq( note ) || 880.0,
-        attack: 0.15,
-        release: 0.25
-    };
-
     let Oscilator = freeOscilator();
-    Oscilator.start(param);
+    Oscilator.start( { note } );
     return Oscilator;
 }
-
 export default function SynthPad () {
   const notes = {};
 

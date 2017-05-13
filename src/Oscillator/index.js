@@ -5,7 +5,7 @@ import FillAudioChenel from "./FillAudioChenel";
 const { sampleRate, destination } = Context;
 import Controller from "../Controller";
 import WaveForm from "./WaveForm";
-
+import NoteToFrequency from "./NoteToFrequency";
 
 
 export default function Oscillator() {
@@ -26,8 +26,10 @@ export default function Oscillator() {
         }
     };
     node.start = function (param) {
+        let frequency = NoteToFrequency(param.note)
         parameters = param;
-        position.set(param.freq , Controller.wave.fm );
+        parameters.freq = frequency;
+        position.set( frequency , Controller.wave.fm );
         eventTimes.restart();
     }
     node.end =  function (){

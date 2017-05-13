@@ -1,7 +1,7 @@
 import React from "react";
 
 import Controller from "../Controller" ;
-import WaveForm from "../Oscillator/WaveForm";
+import WaveForm from "../oscillator/WaveForm";
 
 import GridLine from "./GridLine";
 import ButtonWave from "./ButtonWave";
