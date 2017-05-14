@@ -1,5 +1,5 @@
 import React from "react";
-import GridLine from "./GridLine";
+import GridLine from "../GridLine";
 
 const EnvelopeGraphic = ({ attack, release , sustain ,decay }) => {
 

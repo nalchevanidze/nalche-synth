@@ -1,38 +1,31 @@
 .oscillator{
-   user-select: nonde;
-   cursor:pointer;
-   padding: 10px;
-   display: flex;
-   * {user-select: none;}
-    svg.wave-button{
+    display: flex;
+   svg.wave-button{
         width: 60px;
         height: 60px;
         box-shadow: 0 2px 3px rgba(0,0,0,0.03);
         border-radius: 50%;
         margin: 5px;
     }
-    h1{
-        color: #EEE;
-    }
-    h4{ margin: 0px ; color: #EEE }
-    .wave-form svg{
+
+    .screen svg{
           width:120px;
           height: 120px;
     }
-      
-    .wave-controllers , .envelope {
+
+    .controllers  {
           display: flex;
           justify-content: flex-start;
           flex-wrap: wrap;
     }
-    .wave-controllers, .fm-controllers {
+    .controllers, .fm {
         width: 150px;
         justify-content: space-around;
         margin: 5px;
         flex-shrink: 0 ;
     }
 
-    .fm-controllers {
+    .fm {
         width: 70px;
         p{
             color:#BBB;
@@ -45,26 +38,4 @@
             stroke-width: 2px;
         }
     }
-
-      .envelope{
-          > div {
-              width: 100%;
-              padding: 0px 10px;
-              display: flex;
-              justify-content: space-between;
-            span{
-              width: 20%;
-              display: block;
-              *{
-                  display: block;
-                  width: 100%;
-              }
-              label{
-                  border-bottom: 1px solid #f9fbe6;
-                  color: #b9bab2;
-              }
-          }
-          }
-       
-      }
 }

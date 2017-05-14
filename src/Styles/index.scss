@@ -81,4 +81,18 @@
     }
 }
 
+.panel {
+    user-select: nonde;
+   cursor:pointer;
+   padding: 10px;
+   display: flex;
+   * {user-select: none;}
+    h1{
+        color: #EEE;
+    }
+    h4{ margin: 0px ; color: #EEE }
+}
+
+@import "envelope";
 @import "oscillator";
+@import "grid";

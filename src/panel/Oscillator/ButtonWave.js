@@ -37,7 +37,7 @@ function rescale ( vector ){
 }
 
 
-export default class ButtonWave extends React.Component {
+class ButtonWave extends React.Component {
     constructor(props) {
         super(props);
         this.state = { level: false, gain: 0.75 }
@@ -96,8 +96,5 @@ export default class ButtonWave extends React.Component {
     }
 }
 
-// import { string , number } from "prop-types";
-// IconedStatistic.propTypes = {
-//     level: number.isRequired,
-//     id: string.isRequired,
-// }
+
+export default ButtonWave;

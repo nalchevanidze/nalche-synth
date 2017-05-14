@@ -2,7 +2,7 @@ import React from "react";
 import SynthesizerController from "./SynthesizerController";
 import css from "./Styles/index.scss";
 import Octave from "./panel/Octave";
-import PanelOscillator from "./panel/PanelOscillator";
+import Panel from "./panel";
 
 const keymap = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m", "q", "2", "w", "3", "e", "r", "5", "t", "6", "y", "7", "u"];
 export default class Synth extends React.Component {
@@ -40,9 +40,7 @@ export default class Synth extends React.Component {
         return (
             <div className='page piano' >
                <section className="keyboard">
-                   <div className="panel">
-                      <PanelOscillator />
-                    </div>
+                    <Panel />
                     <ul>
                     <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
                     <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active}/>

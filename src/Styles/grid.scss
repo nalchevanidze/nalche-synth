@@ -1,0 +1,16 @@
+.grid-line{
+  .grids{opacity: 0.1;}
+  pattern{fill:none;}
+  .round{ fill-opacity: 0.3;}
+  #sgrid path{
+    stroke:#01454A;
+    stroke-width:0.4;
+    fill:none;
+  }
+  #grid path {
+    fill:none;
+    stroke:#005863;
+    stroke-opacity:0.4;
+    stroke-width:1;
+  }
+}
