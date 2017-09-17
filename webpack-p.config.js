@@ -1,11 +1,4 @@
-const webpack = require('webpack');
-var WebpackStripLoader = require('strip-loader');
-var devConfig = require('./webpack.config.js');
-
-devConfig.module.rules.push({
-  test: /\.js$/ ,
-  exclude: /node_modules/,
-  loader: WebpackStripLoader.loader('console.log')
-});
-
+const devConfig = require("./webpack.config.js");
+devConfig.entry= {index: "./src/index.js"};
+devConfig.output= {filename: "dist/index.js"};
 module.exports = devConfig;
