@@ -9,21 +9,26 @@ const WaveOption = ({ name, change, value }) =>
     </span>;
 
 class PanelEnvelope extends React.Component {
+    
     constructor(props) {
         super(props);
         this.state = Controller.wave;
         this.envelope = this.envelope.bind(this);
     }
+    
     componentWillMount() {
         this.live = true;
     }
+    
     componentWillUnmount() {
         this.live = false;
     }
+    
     envelope({ target }) {
         Controller.envelope[target.name] = Number(target.value);
         this.setState( Controller.envelope );
     }
+    
     render() {
         let { release, attack, decay, sustain } = Controller.envelope;
         return (
@@ -39,6 +44,7 @@ class PanelEnvelope extends React.Component {
             </div>
         );
     }
+    
 }
 
 export default PanelEnvelope;

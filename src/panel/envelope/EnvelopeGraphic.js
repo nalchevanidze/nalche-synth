@@ -15,8 +15,19 @@ const EnvelopeGraphic = ({ attack, release , sustain ,decay }) => {
     let point_sustain_down = [sustainX , 100];
     let point_attack_down = [attack , 100];
     
-    let Line_attack = [[attack, 0 ], [attack , 100] ];
-    let Line_sustain = [ [sustainX , 100] , [sustainX , sustain] ];
+    let Line_attack = [
+        
+        [attack, 0 ], 
+        [attack , 100] 
+        
+    ];
+    
+    let Line_sustain = [
+        
+        [sustainX , 100] , 
+        [sustainX , sustain] 
+        
+    ];
 
     return (
         <svg viewBox="0 -10 200 110" width="120px" height="80px" >
