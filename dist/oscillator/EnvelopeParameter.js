@@ -15,7 +15,7 @@ var _marked = [EnvelopeParameter].map(regeneratorRuntime.mark);
 
 var sampleRate = _Context2.default.sampleRate;
 function EnvelopeParameter() {
-        var life = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.5;
+        var SampleLifeTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.5;
         var start_value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
         var end_value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
         var difference, curve, left, level;
@@ -23,7 +23,7 @@ function EnvelopeParameter() {
                 while (1) {
                         switch (_context.prev = _context.next) {
                                 case 0:
-                                        if (!(life == 0)) {
+                                        if (!(SampleLifeTime === 0)) {
                                                 _context.next = 2;
                                                 break;
                                         }
@@ -31,25 +31,22 @@ function EnvelopeParameter() {
                                         return _context.abrupt("return", end_value);
 
                                 case 2:
-                                        // difference Size
                                         difference = end_value - start_value;
-                                        // Curve Forme
-
                                         curve = 1;
-                                        // LifeTime Samples
 
-                                        life = life * sampleRate;
-                                        // Main Cyrcle
+
+                                        SampleLifeTime = SampleLifeTime * sampleRate;
+
                                         left = 0;
 
                                 case 6:
-                                        if (!(++left < life)) {
+                                        if (!(++left < SampleLifeTime)) {
                                                 _context.next = 12;
                                                 break;
                                         }
 
                                         // Level Modyfied by Curve
-                                        level = Math.pow(left / life, curve);
+                                        level = Math.pow(left / SampleLifeTime, curve);
                                         _context.next = 10;
                                         return start_value + difference * level;
 

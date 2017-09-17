@@ -36,6 +36,7 @@ var EnvelopeGraphic = function EnvelopeGraphic(_ref) {
     var point_attack_down = [attack, 100];
 
     var Line_attack = [[attack, 0], [attack, 100]];
+
     var Line_sustain = [[sustainX, 100], [sustainX, sustain]];
 
     return _react2.default.createElement(

@@ -23,16 +23,21 @@ var _WaveLooper2 = _interopRequireDefault(_WaveLooper);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var wave = _Controller2.default.wave;
 function SoundEvent() {
+
     var position = new _WaveLooper2.default();
     var eventTimes = new _EventTimes2.default();
+
     function reset(frequency) {
-        position.set(frequency, _Controller2.default.wave.fm);
+        position.set(frequency, wave.fm, wave.fmFreq);
         eventTimes.restart();
     }
+
     function next() {
-        return eventTimes.next() * (0, _WaveForm2.default)(position.next(), _Controller2.default.wave);
+        return eventTimes.next() * (0, _WaveForm2.default)(position.next(), wave);
     }
+
     function end() {
         eventTimes.end();
     }

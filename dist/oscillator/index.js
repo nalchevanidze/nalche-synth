@@ -26,10 +26,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var sampleRate = _Context2.default.sampleRate,
     destination = _Context2.default.destination;
 function Oscillator() {
+
     var node = _Context2.default.createScriptProcessor(1024, 1, 1);
     var event = (0, _SoundEvent2.default)();
+
     node.onaudioprocess = function (_ref) {
         var outputBuffer = _ref.outputBuffer;
+
 
         var audio = outputBuffer.getChannelData(0);
         if (event.eventTimes.live) {
@@ -38,16 +41,23 @@ function Oscillator() {
             audio.fill(0);
         }
     };
+
     node.start = function (param) {
+
         var frequency = (0, _NoteToFrequency2.default)(param.note);
         event.reset(frequency);
     };
+
     node.end = function () {
+
         event.end();
     };
+
     node.isActive = function (e) {
         return event.eventTimes.live;
     };
+
     node.connect(destination);
+
     return node;
 }

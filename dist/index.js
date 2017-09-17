@@ -22,6 +22,14 @@ var _panel = require("./panel");
 
 var _panel2 = _interopRequireDefault(_panel);
 
+var _midiPlayer = require("./midiPlayer");
+
+var _midiPlayer2 = _interopRequireDefault(_midiPlayer);
+
+var _midiPanel = require("./midiPanel");
+
+var _midiPanel2 = _interopRequireDefault(_midiPanel);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40,24 +48,34 @@ var Synth = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
-        _this.state = { active: Array.from({ length: 24 }, function (e) {
+        _this.state = {
+            range: 2,
+            active: Array.from({ length: 24 }, function (e) {
                 return false;
-            }) };
+            })
+
+        };
         _this.keyPress = _this.keyPress.bind(_this);
         _this.keyUp = _this.keyUp.bind(_this);
         _this.osc = (0, _SynthesizerController2.default)();
+        _this.midi = new _midiPlayer2.default({
+            play: _this.keyPress,
+            stop: _this.keyUp
+        });
+
         return _this;
     }
 
     _createClass(Synth, [{
         key: "keyPress",
         value: function keyPress(e) {
+
             if (typeof e !== "number") {
                 e = keymap.indexOf(e.key);
                 if (e === -1) return;
             }
             this.state.active[e] = true;
-            this.osc.play(e + 24);
+            this.osc.play(e + this.state.range * 12);
             this.setState({ ha: Math.random() });
         }
     }, {
@@ -68,7 +86,7 @@ var Synth = function (_React$Component) {
                 if (e === -1) return;
             }
             this.state.active[e] = false;
-            this.osc.stop(e + 24);
+            this.osc.stop(e + this.state.range * 12);
             this.setState({ ha: Math.random() });
         }
     }, {
@@ -78,29 +96,90 @@ var Synth = function (_React$Component) {
             document.addEventListener("keyup", this.keyUp);
         }
     }, {
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement(
-                "div",
-                { className: "page piano" },
-                _react2.default.createElement(
-                    "section",
-                    { className: "keyboard" },
-                    _react2.default.createElement(_panel2.default, null),
-                    _react2.default.createElement(
-                        "ul",
-                        null,
-                        _react2.default.createElement(_Octave2.default, { index: 0, press: this.keyPress, up: this.keyUp, active: this.state.active }),
-                        _react2.default.createElement(_Octave2.default, { index: 1, press: this.keyPress, up: this.keyUp, active: this.state.active })
-                    )
-                )
-            );
-        }
-    }, {
         key: "componentWillUnmount",
         value: function componentWillUnmount() {
             document.removeEventListener("keydown", this.keyPress);
             document.removeEventListener("keyup", this.keyUp);
+        }
+    }, {
+        key: "midiActive",
+        value: function midiActive() {
+
+            console.log("ssf");
+
+            if (!this.midi) {
+                this.midi = true;
+
+                this.midiController.stop = this.keyUp;
+                this.midiController.start = this.keyPress;
+            } else {
+
+                this.midiController.stop = function () {};
+                this.midiController.start = function () {};
+                this.midi = false;
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "div",
+                    { className: "page piano" },
+                    _react2.default.createElement(
+                        "section",
+                        { className: "keyboard" },
+                        _react2.default.createElement(_panel2.default, null),
+                        _react2.default.createElement("input", {
+                            type: "range",
+                            min: "-1",
+                            max: "5",
+                            step: "1",
+                            value: this.state.range,
+                            onChange: function onChange(event) {
+                                _this2.setState({
+                                    range: event.target.value
+                                });
+                            }
+                        }),
+                        _react2.default.createElement(
+                            "label",
+                            null,
+                            " pitch "
+                        ),
+                        _react2.default.createElement(
+                            "ul",
+                            null,
+                            _react2.default.createElement(_Octave2.default, { index: 0, press: this.keyPress, up: this.keyUp, active: this.state.active }),
+                            _react2.default.createElement(_Octave2.default, { index: 1, press: this.keyPress, up: this.keyUp, active: this.state.active }),
+                            _react2.default.createElement(_Octave2.default, { index: 2, press: this.keyPress, up: this.keyUp, active: this.state.active })
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "section",
+                    null,
+                    _react2.default.createElement(
+                        "button",
+                        { onClick: function onClick() {
+                                return _this2.midi.play();
+                            } },
+                        "play"
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        { onClick: function onClick() {
+                                return _this2.midi.stop();
+                            } },
+                        "stop"
+                    )
+                ),
+                _react2.default.createElement(_midiPanel2.default, this.midi)
+            );
         }
     }]);
 

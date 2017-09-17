@@ -34,7 +34,8 @@ var WaveLooper = function () {
         this.stepSize = 0.1;
         this.FM = {
             state: 0,
-            level: 0
+            level: 0,
+            freq: 0.25
         };
     }
 
@@ -43,10 +44,19 @@ var WaveLooper = function () {
         value: function set() {
             var freq = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 440;
             var FMLevel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+            var FMFreq = arguments[2];
+
+
+            this.FM.freq = FMFreq !== undefined ? FMFreq * 4 : this.FM.freq;
+
+            if (this.FM.freq === 0) {
+                this.FM.freq = 1 / 16;
+            }
 
             this.freq = freq;
             this.state = 0;
             this.stepSize = freq / sampleRate;
+            this.FM.stepSize = this.stepSize * this.FM.freq;
             this.FM.state = 0;
             this.FM.level = FMLevel;
         }
@@ -57,13 +67,17 @@ var WaveLooper = function () {
                 stepSize = this.stepSize,
                 FM = this.FM;
 
+            // generate new wavePosition
 
-            this.state += this.stepSize;
-            this.state = this.state % 1;
-            if (FM.level === 0) return this.state;
+            state += stepSize;
+            this.state = state % 1;
 
-            FM.state = FM.state += this.stepSize;
-            return this.state * Rescale(Math.sin(FM.state), FM.level);
+            // new Fm Position
+            if (FM.level === 0) return state;
+            FM.state = FM.state += FM.stepSize;
+            var FMWaveFormPosition = Math.sin(FM.state);
+
+            return this.state * Rescale(FMWaveFormPosition, FM.level);
         }
     }]);
 
