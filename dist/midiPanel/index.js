@@ -55,7 +55,7 @@ var melody = function (_React$Component) {
 
 			return _react2.default.createElement(
 				"div",
-				null,
+				{ className: "midi-panel" },
 				_react2.default.createElement(
 					"h3",
 					null,

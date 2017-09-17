@@ -28,7 +28,7 @@ export default class melody extends React.Component {
 	
 	render() {
 		return (
-			<div>
+			<div className="midi-panel" >
 			<h3>sequencer</h3>
 			 <ul className="sequencer" >
 			    {

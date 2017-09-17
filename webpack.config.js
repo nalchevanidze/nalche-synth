@@ -1,4 +1,3 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const Loaders = require("./config/webpack/loaders");
 module.exports = {
     devServer: {
@@ -22,8 +21,5 @@ module.exports = {
     },
     resolve: {
         extensions: [".js", ".svg", ".json", ".jsx"]
-    },
-    plugins: [
-        new ExtractTextPlugin("./public/app.css")
-    ]
+    }
 };

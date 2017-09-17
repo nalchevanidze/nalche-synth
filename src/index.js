@@ -84,7 +84,7 @@ export default class Synth extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="nalche-synth" >
             <div className='page piano' >
                <section className="keyboard">
                     <Panel />
@@ -108,11 +108,11 @@ export default class Synth extends React.Component {
                     </ul>
                </section>
             </div>
-            <section>
+            <section className="playStop" >
                  <button onClick={ ()=>this.midi.play() }  >play</button>
                  <button onClick={ ()=>this.midi.stop() }  >stop</button>
-             </section>
-             <MidiPanel {...this.midi} />
+            </section>
+            <MidiPanel {...this.midi} />
             </div>
         );
     }

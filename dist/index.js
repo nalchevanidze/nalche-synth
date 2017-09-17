@@ -126,7 +126,7 @@ var Synth = function (_React$Component) {
 
             return _react2.default.createElement(
                 "div",
-                null,
+                { className: "nalche-synth" },
                 _react2.default.createElement(
                     "div",
                     { className: "page piano" },
@@ -162,7 +162,7 @@ var Synth = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     "section",
-                    null,
+                    { className: "playStop" },
                     _react2.default.createElement(
                         "button",
                         { onClick: function onClick() {
