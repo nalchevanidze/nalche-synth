@@ -94,5 +94,63 @@
 }
 
 @import "envelope";
-@import "oscillator";
 @import "grid";
+
+button {
+    
+    outline: none;
+    border:none;
+    background:none;
+    
+}
+    
+
+.sequencer{
+    display: flex;
+    > li {
+        width:20px;
+
+        list-style: none;
+        border: 1px solid #EEE;
+        
+        button{
+            background:none;
+            width:100%;
+            border-bottom:1px solid #EEE;
+            height:7px;
+            display:block;
+        }
+        .active{
+            background: #ffa929 ;
+        }
+            
+        
+    }
+}
+
+.midi {
+    display: flex;
+    padding:10px;
+    list-style: none;
+    border-left: 1px solid gray;
+    .quartel{
+        width:50px;
+        border-right: 1px solid #EEE;
+    }
+    
+    .note{
+        width:100%;
+        height:7px;
+        border-bottom:1px solid #EEE;
+        font-size:8px;
+        display:block;
+    }
+    
+    .black{
+        background: #EEE;
+    }
+    
+    .active{
+        background: #ffa929;
+    }
+}
