@@ -94,6 +94,26 @@
       border-bottom: 1px solid #f9fbe6;
       color: #b9bab2; }
 
+.grid-line .grids {
+  opacity: 0.1; }
+
+.grid-line pattern {
+  fill: none; }
+
+.grid-line .round {
+  fill-opacity: 0.3; }
+
+.grid-line #sgrid path {
+  stroke: #01454A;
+  stroke-width: 0.4;
+  fill: none; }
+
+.grid-line #grid path {
+  fill: none;
+  stroke: #005863;
+  stroke-opacity: 0.4;
+  stroke-width: 1; }
+
 .oscillator {
   display: flex; }
   .oscillator svg.wave-button {
@@ -125,22 +145,41 @@
       stroke: #2196F3;
       stroke-width: 2px; }
 
-.grid-line .grids {
-  opacity: 0.1; }
+button {
+  outline: none;
+  border: none;
+  background: none; }
 
-.grid-line pattern {
-  fill: none; }
+.sequencer {
+  display: flex; }
+  .sequencer > li {
+    width: 20px;
+    list-style: none;
+    border: 1px solid #EEE; }
+    .sequencer > li button {
+      background: none;
+      width: 100%;
+      border-bottom: 1px solid #EEE;
+      height: 7px;
+      display: block; }
+    .sequencer > li .active {
+      background: #ffa929; }
 
-.grid-line .round {
-  fill-opacity: 0.3; }
-
-.grid-line #sgrid path {
-  stroke: #01454A;
-  stroke-width: 0.4;
-  fill: none; }
-
-.grid-line #grid path {
-  fill: none;
-  stroke: #005863;
-  stroke-opacity: 0.4;
-  stroke-width: 1; }
+.midi {
+  display: flex;
+  padding: 10px;
+  list-style: none;
+  border-left: 1px solid gray; }
+  .midi .quartel {
+    width: 50px;
+    border-right: 1px solid #EEE; }
+  .midi .note {
+    width: 100%;
+    height: 7px;
+    border-bottom: 1px solid #EEE;
+    font-size: 8px;
+    display: block; }
+  .midi .black {
+    background: #EEE; }
+  .midi .active {
+    background: #ffa929; }

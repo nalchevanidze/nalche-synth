@@ -5,7 +5,6 @@ import WaveForm from "../../oscillator/WaveForm";
 
 import GridLine from "../GridLine";
 import ButtonWave from "./ButtonWave";
-import "./oscillator.scss";
 
 const WavePoint =  index => (1 - WaveForm(index) )*100 ;
 function GenerateWave() {
