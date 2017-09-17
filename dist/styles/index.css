@@ -1,0 +1,146 @@
+.piano {
+  font-size: 12px;
+  display: flex;
+  justify-content: center; }
+  .piano * {
+    font-family: sans-serif;
+    font-weight: 400; }
+  .piano ul {
+    padding: 0px;
+    margin: 0px; }
+  .piano .keyboard {
+    box-shadow: 0px 5px 10px gray;
+    width: 600px;
+    border: 1px solid #EEE;
+    border-radius: 3px; }
+  .piano input {
+    background-color: transparent;
+    border: 0px solid; }
+  .piano .panel {
+    width: 100%;
+    border-bottom: 2px solid #e9e9e9;
+    margin: 1px 0px; }
+  .piano ul {
+    display: flex; }
+    .piano ul li {
+      list-style-type: none;
+      display: flex;
+      position: relative;
+      width: 300px;
+      font-family: sans-serif;
+      font-size: bold;
+      cursor: pointer;
+      user-select: none;
+      justify-content: space-between; }
+      .piano ul li button {
+        width: 14.2%;
+        padding-top: 190px;
+        text-align: center;
+        border: 1px solid #c1c1c1;
+        display: block;
+        border-radius: 2px;
+        box-shadow: 2px 10px 2px rgba(0, 0, 0, 0.1);
+        color: #FF9800;
+        background: white; }
+        .piano ul li button.active {
+          background-color: #EEE;
+          padding-top: 175px; }
+        .piano ul li button.black {
+          background-color: black;
+          width: 10%;
+          position: absolute;
+          z-index: 100;
+          padding-top: 140px;
+          box-shadow: 2px 4px 1px rgba(0, 0, 0, 0.1); }
+          .piano ul li button.black.active {
+            background-color: #333;
+            padding-top: 135px; }
+        .piano ul li button:nth-child(2) {
+          left: 9.2%; }
+        .piano ul li button:nth-child(4) {
+          left: 23.6%; }
+        .piano ul li button:nth-child(7) {
+          left: 52.1%; }
+        .piano ul li button:nth-child(9) {
+          left: 66.5%; }
+        .piano ul li button:nth-child(11) {
+          left: 81.5%; }
+
+.panel {
+  user-select: nonde;
+  cursor: pointer;
+  padding: 10px;
+  display: flex; }
+  .panel * {
+    user-select: none; }
+  .panel h1 {
+    color: #EEE; }
+  .panel h4 {
+    margin: 0px;
+    color: #EEE; }
+
+.envelope > div {
+  width: 100%;
+  padding: 0px 10px;
+  display: flex;
+  justify-content: space-between; }
+  .envelope > div span {
+    width: 20%;
+    display: block; }
+    .envelope > div span * {
+      display: block;
+      width: 100%; }
+    .envelope > div span label {
+      border-bottom: 1px solid #f9fbe6;
+      color: #b9bab2; }
+
+.oscillator {
+  display: flex; }
+  .oscillator svg.wave-button {
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+    border-radius: 50%;
+    margin: 5px; }
+  .oscillator .screen svg {
+    width: 120px;
+    height: 120px; }
+  .oscillator .controllers {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap; }
+  .oscillator .controllers, .oscillator .fm {
+    width: 150px;
+    justify-content: space-around;
+    margin: 5px;
+    flex-shrink: 0; }
+  .oscillator .fm {
+    width: 70px; }
+    .oscillator .fm p {
+      color: #BBB;
+      text-align: center;
+      font-size: 10px;
+      width: 100%; }
+    .oscillator .fm path, .oscillator .fm circle {
+      stroke: #2196F3;
+      stroke-width: 2px; }
+
+.grid-line .grids {
+  opacity: 0.1; }
+
+.grid-line pattern {
+  fill: none; }
+
+.grid-line .round {
+  fill-opacity: 0.3; }
+
+.grid-line #sgrid path {
+  stroke: #01454A;
+  stroke-width: 0.4;
+  fill: none; }
+
+.grid-line #grid path {
+  fill: none;
+  stroke: #005863;
+  stroke-opacity: 0.4;
+  stroke-width: 1; }

@@ -14,10 +14,6 @@ var _SynthesizerController = require("./SynthesizerController");
 
 var _SynthesizerController2 = _interopRequireDefault(_SynthesizerController);
 
-var _index = require("./Styles/index.scss");
-
-var _index2 = _interopRequireDefault(_index);
-
 var _Octave = require("./panel/Octave");
 
 var _Octave2 = _interopRequireDefault(_Octave);

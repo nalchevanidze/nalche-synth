@@ -1,2 +1,2 @@
-import Synth from "./src";
+import Synth from "./dist";
 export default Synth;
