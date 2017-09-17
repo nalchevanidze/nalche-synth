@@ -1,38 +1,51 @@
 import NalcheOscillator from "./oscillator";
 import Context from "./Context";
 const nodes = []
+
+
 function FreeNodes() {
-    return nodes.filter( 
-        node => !node.isActive() 
-    );
+return nodes.filter(
+    node => !node.isActive()
+  );
 }
-function freeOscilator () {
-    let free_nodes = FreeNodes();
-    if (free_nodes.length < 1) {
-        let new_node = NalcheOscillator(Context);
-        nodes.push(new_node);
-        return new_node;
-    }
-    return free_nodes[0];
+
+
+function freeOscilator() {
+  let free_nodes = FreeNodes();
+  if (free_nodes.length < 1) {
+    let new_node = NalcheOscillator(Context);
+    nodes.push(new_node);
+    return new_node;
+  }
+  return free_nodes[0];
 };
+
+
 function MyOSC(note) {
-    let Oscilator = freeOscilator();
-    Oscilator.start( { note } );
-    return Oscilator;
+  let Oscilator = freeOscilator();
+  Oscilator.start({
+    note
+  });
+  return Oscilator;
 }
-export default function SynthPad () {
+
+export default function SynthPad() {
   const notes = {};
 
-  function play (value){
-    if( !notes[value] ){
+  function play(value) {
+    if (!notes[value]) {
       notes[value] = MyOSC(value);
     }
   }
-  function stop (value) {
-    if( notes[value] ){
+
+  function stop(value) {
+    if (notes[value]) {
       notes[value].end();
       delete notes[value];
     }
   };
-  return {play,stop};
+  return {
+    play,
+    stop
+  };
 };
