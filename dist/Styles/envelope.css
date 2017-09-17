@@ -1,0 +1,14 @@
+.envelope > div {
+  width: 100%;
+  padding: 0px 10px;
+  display: flex;
+  justify-content: space-between; }
+  .envelope > div span {
+    width: 20%;
+    display: block; }
+    .envelope > div span * {
+      display: block;
+      width: 100%; }
+    .envelope > div span label {
+      border-bottom: 1px solid #f9fbe6;
+      color: #b9bab2; }
