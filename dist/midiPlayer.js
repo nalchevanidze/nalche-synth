@@ -18,6 +18,9 @@ var midi = [];
 var endIndex = 0;
 
 var sequence = [1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 0, 2, 1, 0, 3, 0];
+var intence = ["F1,G#2,C3", "D#1,G2,C3", "D1,F2,A#2", "C#1,F2,A#2", "A#1,A#2,C#3", "G#1,G#2,C3", "F1,G#2,C3", "F1,G#2,C3"].map(function (e) {
+	return e.split(",");
+});
 
 function sequencer(c, start, end) {
 
@@ -67,10 +70,6 @@ function melody(melodyList) {
 	});
 };
 
-var intence = ["F1,G#2,C3", "D#1,G2,C3", "D1,F2,A#2", "C#1,F2,A#2", "A#1,A#2,C#3", "G#1,G#2,C3", "F1,G#2,C3", "F1,G#2,C3"].map(function (e) {
-	return e.split(",");
-});
-
 function addQuard(note, index) {
 
 	var noteStart = midi[index * 16].start;
@@ -86,7 +85,6 @@ var MidiPlayer = function () {
 		this.osc = osc;
 		this.BPM = 60 * 1000 / (128 * 8);
 		this.next = this.next.bind(this);
-		this.play();
 		this.seq = sequence;
 		this.melody = intence;
 		this.updateMidi = this.updateMidi.bind(this);
@@ -109,7 +107,6 @@ var MidiPlayer = function () {
 		key: "play",
 		value: function play() {
 			if (this.loop) return;
-
 			this.index = 0;
 			this.loop = setInterval(this.next, this.BPM);
 		}
@@ -128,11 +125,9 @@ var MidiPlayer = function () {
 		key: "next",
 		value: function next() {
 			this.state = midi[this.index];
-
 			if (this.state) {
 				this.executeState();
 			}
-
 			this.index++;
 			if (this.index >= endIndex) {
 				this.index = 0;

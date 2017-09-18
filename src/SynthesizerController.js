@@ -4,7 +4,7 @@ const nodes = []
 
 
 function FreeNodes() {
-return nodes.filter(
+  return nodes.filter(
     node => !node.isActive()
   );
 }
@@ -38,14 +38,27 @@ export default function SynthPad() {
     }
   }
 
+  function removeNote() {
+    notes[value].end();
+    delete notes[value];
+  }
+
   function stop(value) {
     if (notes[value]) {
       notes[value].end();
       delete notes[value];
     }
   };
+
+  function stopAll() {
+    Object.keys(notes).forEach((note) => {
+      stop(note)
+    })
+  }
+  
   return {
     play,
-    stop
+    stop,
+    stopAll
   };
 };

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -9,10 +9,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
-
-var _Sequencer = require("./Sequencer");
-
-var _Sequencer2 = _interopRequireDefault(_Sequencer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,81 +22,75 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 var list = [].concat(_toConsumableArray(keys.map(function (note) {
-	return note + "1";
+    return note + "1";
 })), _toConsumableArray(keys.map(function (note) {
-	return note + "2";
+    return note + "2";
 })), _toConsumableArray(keys.map(function (note) {
-	return note + "3";
+    return note + "3";
 }))).reverse();
-function isBlack(note) {
-	return note.charAt(1) === "#" ? "note black" : "note";
-}
+
+var Sequence = function Sequence(_ref) {
+    var _onClick = _ref.onClick,
+        active = _ref.active;
+    return _react2.default.createElement(
+        "li",
+        null,
+        [1, 2, 3].reverse().map(function (index) {
+            return _react2.default.createElement("button", {
+                className: index === active ? "active" : "",
+                key: index,
+                onClick: function onClick() {
+                    return _onClick(index);
+                }
+            });
+        })
+    );
+};
 
 var melody = function (_React$Component) {
-	_inherits(melody, _React$Component);
+    _inherits(melody, _React$Component);
 
-	function melody(props) {
-		_classCallCheck(this, melody);
+    function melody(props) {
+        _classCallCheck(this, melody);
 
-		var _this = _possibleConstructorReturn(this, (melody.__proto__ || Object.getPrototypeOf(melody)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (melody.__proto__ || Object.getPrototypeOf(melody)).call(this, props));
 
-		_this.state = {
-			value: 0
-		};
-		return _this;
-	}
+        _this.state = {
+            value: 0
+        };
+        return _this;
+    }
 
-	_createClass(melody, [{
-		key: "render",
-		value: function render() {
-			var _this2 = this;
+    _createClass(melody, [{
+        key: "setNew",
+        value: function setNew(i, index) {
+            this.props.seq[i] = this.props.seq[i] === index ? 0 : index;
+            this.props.updateMidi();
+            this.setState({ value: Math.random() });
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
 
-			return _react2.default.createElement(
-				"div",
-				{ className: "midi-panel" },
-				_react2.default.createElement(
-					"h3",
-					null,
-					"sequencer"
-				),
-				_react2.default.createElement(_Sequencer2.default, { seq: this.props.seq || [], updateMidi: this.props.updateMidi }),
-				_react2.default.createElement(
-					"h3",
-					null,
-					" midi "
-				),
-				_react2.default.createElement(
-					"ul",
-					{ className: "midi" },
-					this.props.melody.map(function (quard, i) {
-						return _react2.default.createElement(
-							"li",
-							{ key: i, className: "quartel" },
-							list.map(function (note, noteIndex) {
-								var chordIndex = quard.indexOf(note);
-								var selected = chordIndex !== -1 ? "active" : "";
-								return _react2.default.createElement("button", {
-									key: noteIndex,
-									className: isBlack(note) + " " + selected,
-									onClick: function onClick() {
-										if (chordIndex !== -1) {
-											quard.splice(chordIndex);
-										} else {
-											quard.push(note);
-										}
-										_this2.props.updateMidi();
-										_this2.setState({ value: Math.random() });
-									}
-								});
-							})
-						);
-					})
-				)
-			);
-		}
-	}]);
+            return _react2.default.createElement(
+                "ul",
+                { className: "sequencer" },
+                this.props.seq.map(function (selectedIndex, i) {
+                    return _react2.default.createElement(Sequence, {
+                        key: i,
+                        active: selectedIndex,
+                        onClick: function onClick(index) {
+                            return _this2.setNew(i, index);
+                        }
+                    });
+                })
+            );
+        }
+    }]);
 
-	return melody;
+    return melody;
 }(_react2.default.Component);
 
 exports.default = melody;
+;

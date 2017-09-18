@@ -41,7 +41,7 @@ var EnvelopeGraphic = function EnvelopeGraphic(_ref) {
 
     return _react2.default.createElement(
         "svg",
-        { viewBox: "0 -10 200 110", width: "120px", height: "80px" },
+        { viewBox: "0 -10 200 110", width: "200px", height: "120px" },
         _react2.default.createElement(_GridLine2.default, null),
         _react2.default.createElement("path", { id: "attack", d: "M" + [0, 100, 10, 100].concat(Line_attack, [0, 100]), fill: "#444", fillOpacity: "0.1" }),
         _react2.default.createElement("path", { id: "sustain", d: "M" + [].concat(_toConsumableArray(Line_attack.reverse()), [decay, sustain], _toConsumableArray(Line_sustain.reverse())), fill: "#444", fillOpacity: "0.15" }),

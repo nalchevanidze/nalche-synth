@@ -4,18 +4,20 @@ import Octave from "./panel/Octave";
 import Panel from "./panel";
 import midiPlayer from "./midiPlayer";
 import MidiPanel from "./midiPanel";
+import keymap from "./keymap";
 
-const keymap = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m", "q", "2", "w", "3", "e", "r", "5", "t", "6", "y", "7", "u"];
-
+function keyEvent(target, type) {
+    const name = (type ? "add" : "remove") + "EventListener";
+    document[name]("keydown", target.keyPress);
+    document[name]("keyup", target.keyUp);
+}
 
 export default class Synth extends React.Component {
-
     constructor(props) {
         super(props);
-        this.state = { 
-            range: 2, 
-            active: Array.from({ length: 24 }, e=>false) 
-            
+        this.state = {
+            range: 1,
+            active: Array.from({ length: 24 }, e => false)
         };
         this.keyPress = this.keyPress.bind(this);
         this.keyUp = this.keyUp.bind(this);
@@ -24,11 +26,8 @@ export default class Synth extends React.Component {
             play: this.keyPress,
             stop: this.keyUp
         });
-
     }
-
     keyPress(e) {
-
         if (typeof e !== "number") {
             e = keymap.indexOf(e.key);
             if (e === -1) return;
@@ -36,9 +35,7 @@ export default class Synth extends React.Component {
         this.state.active[e] = true;
         this.osc.play(e + this.state.range * 12);
         this.setState({ ha: Math.random() });
-
     }
-
     keyUp(e) {
         if (typeof e !== "number") {
             e = keymap.indexOf(e.key);
@@ -48,73 +45,53 @@ export default class Synth extends React.Component {
         this.osc.stop(e + this.state.range * 12);
         this.setState({ ha: Math.random() });
     }
-
+    stop() {
+        this.midi.stop()
+        this.osc.stopAll();
+        this.setState({
+            active:
+            this.state.active.map(() => false)
+        });
+    }
     componentDidMount() {
-        document.addEventListener("keydown", this.keyPress);
-        document.addEventListener("keyup", this.keyUp);
+        keyEvent(this, true);
     }
-
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.keyPress);
-        document.removeEventListener("keyup", this.keyUp);
+        this.midi.stop();
+        keyEvent(this, false);
     }
-
-    midiActive() {
-
-        console.log("ssf")
-
-        if (!this.midi) {
-            this.midi = true
-
-            this.midiController.stop = this.keyUp;
-            this.midiController.start = this.keyPress;
-
-
-        } else {
-
-            this.midiController.stop = () => {};
-            this.midiController.start = () => {};
-            this.midi = false
-
-        }
-
-
-
-    }
-
     render() {
         return (
             <div className="nalche-synth" >
-            <div className='page piano' >
-               <section className="keyboard">
-                    <Panel />
-                    <input 
-                       type="range" 
-                       min="-1" 
-                       max="5" 
-                       step="1" 
-                       value={this.state.range}
-                       onChange={ (event)=>{
-                           this.setState({
-                               range: event.target.value
-                           })
-                       }} 
-                    />
-                    <label> pitch </label>
-                    <ul>
-                    <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
-                    <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active}/>
-                    <Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active}/>
-                    </ul>
-               </section>
-            </div>
-            <section className="playStop" >
-                 <button onClick={ ()=>this.midi.play() }  >play</button>
-                 <button onClick={ ()=>this.midi.stop() }  >stop</button>
-            </section>
-            <MidiPanel {...this.midi} />
+                <div className='page piano' >
+                    <section className="keyboard">
+                        <Panel />
+                        <input
+                            type="range"
+                            min="-1"
+                            max="5"
+                            step="1"
+                            value={this.state.range}
+                            onChange={(event) => {
+                                this.setState({
+                                    range: event.target.value
+                                })
+                            }}
+                        />
+                        <label> pitch </label>
+                        <ul className="midi-keys" >
+                            <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
+                            <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />
+                            <Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active} />
+                        </ul>
+                    </section>
+                </div>
+                <section className="playStop" >
+                    <button onClick={() => this.midi.play()}  >play</button>
+                    <button onClick={() => this.stop()}  >stop</button>
+                </section>
+                <MidiPanel {...this.midi} />
             </div>
         );
     }
-
 };

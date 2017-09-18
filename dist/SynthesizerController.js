@@ -50,14 +50,27 @@ function SynthPad() {
     }
   }
 
+  function removeNote() {
+    notes[value].end();
+    delete notes[value];
+  }
+
   function stop(value) {
     if (notes[value]) {
       notes[value].end();
       delete notes[value];
     }
   };
+
+  function stopAll() {
+    Object.keys(notes).forEach(function (note) {
+      stop(note);
+    });
+  }
+
   return {
     play: play,
-    stop: stop
+    stop: stop,
+    stopAll: stopAll
   };
 };

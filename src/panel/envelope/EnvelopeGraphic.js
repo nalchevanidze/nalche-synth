@@ -30,7 +30,7 @@ const EnvelopeGraphic = ({ attack, release , sustain ,decay }) => {
     ];
 
     return (
-        <svg viewBox="0 -10 200 110" width="120px" height="80px" >
+        <svg viewBox="0 -10 200 110" width="200px" height="120px" >
             <GridLine />
             <path id="attack" d={ "M" + [0 ,100 ,10 ,100, ...Line_attack , 0 , 100] } fill="#444" fillOpacity="0.1" />
             <path id="sustain" d={"M" + [...Line_attack.reverse() , decay , sustain ,...Line_sustain.reverse() ]} fill="#444" fillOpacity="0.15" />

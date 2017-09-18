@@ -1,92 +1,69 @@
+.nalche-synth {
+  display: flex;
+  position: relative; }
+
+.playStop {
+  display: flex;
+  position: absolute; }
+  .playStop button {
+    display: block;
+    background: #e0e0e0;
+    color: black;
+    padding: 15px;
+    border: 1px solid #CCC;
+    font-size: 15px; }
+
+.midi-panel {
+  display: block;
+  flex-grow: 2;
+  margin: 20px; }
+
 .piano {
   font-size: 12px;
   display: flex;
   justify-content: center; }
-  .piano * {
-    font-family: sans-serif;
-    font-weight: 400; }
   .piano ul {
     padding: 0px;
     margin: 0px; }
   .piano .keyboard {
     box-shadow: 0px 5px 10px gray;
-    width: 600px;
+    width: 580px;
+    height: 445px;
     border: 1px solid #EEE;
     border-radius: 3px; }
   .piano input {
     background-color: transparent;
     border: 0px solid; }
   .piano .panel {
-    width: 100%;
-    border-bottom: 2px solid #e9e9e9;
-    margin: 1px 0px; }
-  .piano ul {
+    border-bottom: 1px solid #e9e9e9;
+    user-select: nonde;
+    padding: 5px;
+    cursor: pointer;
     display: flex; }
-    .piano ul li {
-      list-style-type: none;
-      display: flex;
-      position: relative;
-      width: 300px;
-      font-family: sans-serif;
-      font-size: bold;
-      cursor: pointer;
-      user-select: none;
-      justify-content: space-between; }
-      .piano ul li button {
-        width: 14.2%;
-        padding-top: 190px;
-        text-align: center;
-        border: 1px solid #c1c1c1;
-        display: block;
-        border-radius: 2px;
-        box-shadow: 2px 10px 2px rgba(0, 0, 0, 0.1);
-        color: #FF9800;
-        background: white; }
-        .piano ul li button.active {
-          background-color: #EEE;
-          padding-top: 175px; }
-        .piano ul li button.black {
-          background-color: black;
-          width: 10%;
-          position: absolute;
-          z-index: 100;
-          padding-top: 140px;
-          box-shadow: 2px 4px 1px rgba(0, 0, 0, 0.1); }
-          .piano ul li button.black.active {
-            background-color: #333;
-            padding-top: 135px; }
-        .piano ul li button:nth-child(2) {
-          left: 9.2%; }
-        .piano ul li button:nth-child(4) {
-          left: 23.6%; }
-        .piano ul li button:nth-child(7) {
-          left: 52.1%; }
-        .piano ul li button:nth-child(9) {
-          left: 66.5%; }
-        .piano ul li button:nth-child(11) {
-          left: 81.5%; }
+    .piano .panel * {
+      user-select: none; }
 
-.panel {
-  user-select: nonde;
-  cursor: pointer;
-  padding: 10px;
-  display: flex; }
-  .panel * {
-    user-select: none; }
-  .panel h1 {
-    color: #EEE; }
-  .panel h4 {
-    margin: 0px;
-    color: #EEE; }
+.nalche-synth * {
+  font-family: sans-serif;
+  font-weight: 400; }
+
+.nalche-synth h1, .nalche-synth h2, .nalche-synth h3 {
+  color: #EEE;
+  font-size: 16px;
+  margin: 0px; }
+
+.nalche-synth h4 {
+  margin: 0px;
+  color: #EEE; }
 
 .envelope > div {
   width: 100%;
-  padding: 0px 10px;
   display: flex;
   justify-content: space-between; }
   .envelope > div span {
-    width: 20%;
-    display: block; }
+    width: 40px;
+    display: block;
+    margin: 2px; }
     .envelope > div span * {
       display: block;
       width: 100%; }
@@ -117,11 +94,9 @@
 .oscillator {
   display: flex; }
   .oscillator svg.wave-button {
-    width: 60px;
-    height: 60px;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
-    border-radius: 50%;
-    margin: 5px; }
+    width: 50px;
+    height: 50px;
+    margin: 2px; }
   .oscillator .screen svg {
     width: 120px;
     height: 120px; }
@@ -142,26 +117,68 @@
       font-size: 10px;
       width: 100%; }
     .oscillator .fm path, .oscillator .fm circle {
-      stroke: #2196F3;
-      stroke-width: 2px; }
+      stroke: #2196F3; }
 
-button {
-  outline: none;
-  border: none;
-  background: none; }
+.midi-keys {
+  display: flex; }
+  .midi-keys li {
+    list-style-type: none;
+    display: flex;
+    position: relative;
+    width: 300px;
+    font-family: sans-serif;
+    font-size: bold;
+    cursor: pointer;
+    user-select: none;
+    justify-content: space-between;
+    align-items: start; }
+    .midi-keys li button {
+      width: 14.2%;
+      padding-top: 180px;
+      text-align: center;
+      border: 1px solid #c1c1c1;
+      display: block;
+      border-radius: 2px;
+      box-shadow: 2px 10px 2px rgba(0, 0, 0, 0.1);
+      color: #FF9800;
+      background: white;
+      flex-grow: 0; }
+      .midi-keys li button.active {
+        background-color: #EEE;
+        padding-top: 170px; }
+      .midi-keys li button.black {
+        background-color: black;
+        width: 10%;
+        position: absolute;
+        z-index: 100;
+        padding-top: 140px;
+        box-shadow: 2px 4px 1px rgba(0, 0, 0, 0.1); }
+        .midi-keys li button.black.active {
+          background-color: #333;
+          padding-top: 135px; }
+      .midi-keys li button:nth-child(2) {
+        left: 9.2%; }
+      .midi-keys li button:nth-child(4) {
+        left: 23.6%; }
+      .midi-keys li button:nth-child(7) {
+        left: 52.1%; }
+      .midi-keys li button:nth-child(9) {
+        left: 66.5%; }
+      .midi-keys li button:nth-child(11) {
+        left: 81.5%; }
 
 .sequencer {
   display: flex; }
   .sequencer > li {
     width: 20px;
     list-style: none;
-    border: 1px solid #EEE; }
+    border: 1px solid #717171; }
     .sequencer > li button {
-      background: none;
       width: 100%;
-      border-bottom: 1px solid #EEE;
-      height: 7px;
-      display: block; }
+      border-bottom: 1px solid #696969;
+      height: 20px;
+      display: block;
+      background: #808080; }
     .sequencer > li .active {
       background: #ffa929; }
 
@@ -175,11 +192,16 @@ button {
     border-right: 1px solid #EEE; }
   .midi .note {
     width: 100%;
-    height: 7px;
+    height: 8px;
     border-bottom: 1px solid #EEE;
     font-size: 8px;
     display: block; }
   .midi .black {
-    background: #EEE; }
+    background: #ececec; }
   .midi .active {
     background: #ffa929; }
+
+button {
+  outline: none;
+  border: none;
+  background: none; }

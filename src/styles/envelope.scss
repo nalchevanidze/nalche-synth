@@ -1,12 +1,12 @@
 .envelope{
           > div {
               width: 100%;
-              padding: 0px 10px;
               display: flex;
               justify-content: space-between;
             span{
-              width: 20%;
+              width: 40px;
               display: block;
+              margin:2px;
               *{
                   display: block;
                   width: 100%;
@@ -16,6 +16,5 @@
                   color: #b9bab2;
               }
           }
-          }
-       
+          }  
 }

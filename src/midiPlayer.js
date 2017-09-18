@@ -1,3 +1,5 @@
+import chordToKeys from "./keysToIndexes";
+
 let midi = [];
 let endIndex = 0;
 
@@ -7,6 +9,20 @@ const sequence = [
 	1, 0, 0, 2,
 	1, 0, 3, 0,
 ];
+const intence = [
+	"F1,G#2,C3",
+	"D#1,G2,C3",
+	"D1,F2,A#2",
+	"C#1,F2,A#2",
+	"A#1,A#2,C#3",
+	"G#1,G#2,C3",
+	"F1,G#2,C3",
+	"F1,G#2,C3",
+].map(
+	e => e.split(",")
+
+);
+
 
 function sequencer(c, start, end) {
 
@@ -51,9 +67,6 @@ function sequencer(c, start, end) {
 
 }
 
-
-import chordToKeys from "./keysToIndexes";
-
 function melody(melodyList) {
 
 	melodyList.forEach((e, i) => {
@@ -66,22 +79,6 @@ function melody(melodyList) {
 
 };
 
-const intence = [
-	"F1,G#2,C3",
-	"D#1,G2,C3",
-	"D1,F2,A#2",
-	"C#1,F2,A#2",
-	"A#1,A#2,C#3",
-	"G#1,G#2,C3",
-	"F1,G#2,C3",
-	"F1,G#2,C3",
-].map(
-	e => e.split(",")
-
-);
-
-
-
 function addQuard(note, index) {
 
 	const noteStart = midi[index * 16].start;
@@ -90,53 +87,40 @@ function addQuard(note, index) {
 	noteEnd.push(note);
 
 }
-
 export default class MidiPlayer {
-
 	constructor(osc) {
 		this.osc = osc;
 		this.BPM = 60 * 1000 / (128 * 8);
 		this.next = this.next.bind(this);
-		this.play();
 		this.seq = sequence;
 		this.melody = intence;
 		this.updateMidi = this.updateMidi.bind(this);
 		this.updateMidi();
-
-
 	}
-
 	updateMidi(seq) {
 		midi = [];
 		melody(this.melody)
 	}
-
 	stop() {
 		clearInterval(this.loop, this.BPM);
 		this.loop = undefined;
 	}
-
 	play() {
 		if (this.loop) return;
-
 		this.index = 0;
 		this.loop = setInterval(this.next, this.BPM);
 	}
-
 	executeState() {
 		const { end, start } = this.state;
 		const { osc } = this;
 		end.forEach(osc.stop);
 		start.forEach(osc.play)
 	}
-
 	next() {
 		this.state = midi[this.index];
-
 		if (this.state) {
 			this.executeState();
 		}
-
 		this.index++;
 		if (this.index >= endIndex) {
 			this.index = 0;

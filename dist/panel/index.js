@@ -18,7 +18,9 @@ var _envelope2 = _interopRequireDefault(_envelope);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Panel = function Panel() {
+var Panel = function Panel(_ref) {
+    var onChange = _ref.onChange,
+        range = _ref.range;
     return _react2.default.createElement(
         "div",
         { className: "panel" },

@@ -1,11 +1,11 @@
 .envelope > div {
   width: 100%;
-  padding: 0px 10px;
   display: flex;
   justify-content: space-between; }
   .envelope > div span {
-    width: 20%;
-    display: block; }
+    width: 40px;
+    display: block;
+    margin: 2px; }
     .envelope > div span * {
       display: block;
       width: 100%; }

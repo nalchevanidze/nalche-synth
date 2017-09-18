@@ -30,6 +30,10 @@ var _midiPanel = require("./midiPanel");
 
 var _midiPanel2 = _interopRequireDefault(_midiPanel);
 
+var _keymap = require("./keymap");
+
+var _keymap2 = _interopRequireDefault(_keymap);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38,7 +42,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var keymap = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m", "q", "2", "w", "3", "e", "r", "5", "t", "6", "y", "7", "u"];
+function keyEvent(target, type) {
+    var name = (type ? "add" : "remove") + "EventListener";
+    document[name]("keydown", target.keyPress);
+    document[name]("keyup", target.keyUp);
+}
 
 var Synth = function (_React$Component) {
     _inherits(Synth, _React$Component);
@@ -49,11 +57,10 @@ var Synth = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
         _this.state = {
-            range: 2,
+            range: 1,
             active: Array.from({ length: 24 }, function (e) {
                 return false;
             })
-
         };
         _this.keyPress = _this.keyPress.bind(_this);
         _this.keyUp = _this.keyUp.bind(_this);
@@ -62,16 +69,14 @@ var Synth = function (_React$Component) {
             play: _this.keyPress,
             stop: _this.keyUp
         });
-
         return _this;
     }
 
     _createClass(Synth, [{
         key: "keyPress",
         value: function keyPress(e) {
-
             if (typeof e !== "number") {
-                e = keymap.indexOf(e.key);
+                e = _keymap2.default.indexOf(e.key);
                 if (e === -1) return;
             }
             this.state.active[e] = true;
@@ -82,7 +87,7 @@ var Synth = function (_React$Component) {
         key: "keyUp",
         value: function keyUp(e) {
             if (typeof e !== "number") {
-                e = keymap.indexOf(e.key);
+                e = _keymap2.default.indexOf(e.key);
                 if (e === -1) return;
             }
             this.state.active[e] = false;
@@ -90,34 +95,26 @@ var Synth = function (_React$Component) {
             this.setState({ ha: Math.random() });
         }
     }, {
+        key: "stop",
+        value: function stop() {
+            this.midi.stop();
+            this.osc.stopAll();
+            this.setState({
+                active: this.state.active.map(function () {
+                    return false;
+                })
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
-            document.addEventListener("keydown", this.keyPress);
-            document.addEventListener("keyup", this.keyUp);
+            keyEvent(this, true);
         }
     }, {
         key: "componentWillUnmount",
         value: function componentWillUnmount() {
-            document.removeEventListener("keydown", this.keyPress);
-            document.removeEventListener("keyup", this.keyUp);
-        }
-    }, {
-        key: "midiActive",
-        value: function midiActive() {
-
-            console.log("ssf");
-
-            if (!this.midi) {
-                this.midi = true;
-
-                this.midiController.stop = this.keyUp;
-                this.midiController.start = this.keyPress;
-            } else {
-
-                this.midiController.stop = function () {};
-                this.midiController.start = function () {};
-                this.midi = false;
-            }
+            this.midi.stop();
+            keyEvent(this, false);
         }
     }, {
         key: "render",
@@ -153,7 +150,7 @@ var Synth = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             "ul",
-                            null,
+                            { className: "midi-keys" },
                             _react2.default.createElement(_Octave2.default, { index: 0, press: this.keyPress, up: this.keyUp, active: this.state.active }),
                             _react2.default.createElement(_Octave2.default, { index: 1, press: this.keyPress, up: this.keyUp, active: this.state.active }),
                             _react2.default.createElement(_Octave2.default, { index: 2, press: this.keyPress, up: this.keyUp, active: this.state.active })
@@ -173,7 +170,7 @@ var Synth = function (_React$Component) {
                     _react2.default.createElement(
                         "button",
                         { onClick: function onClick() {
-                                return _this2.midi.stop();
+                                return _this2.stop();
                             } },
                         "stop"
                     )

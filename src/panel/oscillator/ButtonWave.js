@@ -14,9 +14,9 @@ function SvgCoordinates(svg, event) {
 	return point.matrixTransform(svg.getScreenCTM().inverse());
 }
 
-function safeValue (){
-	
-	
+function safeValue() {
+
+
 }
 
 class ButtonWave extends React.Component {
@@ -44,10 +44,10 @@ class ButtonWave extends React.Component {
 	}
 
 	levelMove(event, ...e) {
-		
-		
-		
-		
+
+
+         const stepSize = 32;
+
 		if (event.type === "touchmove") {
 			event = event.touches[0]
 		}
@@ -55,18 +55,10 @@ class ButtonWave extends React.Component {
 
 		if (!this.hide) {
 			if (this.state.levelmove) {
-				
 				let { x, y } = SvgCoordinates(this.target, event);
-				
-
-				
 				const value = 1 - Math.min((Math.max(y - 5, 0) / 80), 1);
-				
-				console.log( value );
-
-	
-				this.props.target[this.props.id] = value;
-				
+				let fixed = Math.round(value * stepSize) /stepSize
+				this.props.target[this.props.id] = fixed;
 			}
 		}
 	}
@@ -87,50 +79,71 @@ class ButtonWave extends React.Component {
 		} = this.props;
 		let level = target[id];
 
+
+		const fullLength = 45 * 2 * Math.PI;
+		const step = fullLength / 16;
+		const dashArray = [1, step - 1];
+
 		return (
 			<svg
-		  
-			draggable={false} 
-			viewBox="0 0 100 100"
-			className="wave-button" 
-			
-			onMouseLeave={this.mouseUp} 
-			onTouchStart={ this.mouseDown }  
-			onTouchEnd={ this.mouseUp }
-			onMouseDown={ this.mouseDown } 
-			onMouseUp={ this.mouseUp }
-			onMouseMove={ this.levelMove }
-			onTouchMove={ this.levelMove }
-			
-		  >
-		  
-			  <g fill="none" stroke="#222" >
-			  
-				<path d={lib[id]} />
-				
-				
-				
-				<circle 
-					strokeWidth={0.7} 
-					cx={50} 
-					cy={50} 
-					r={45}  
-					strokeDasharray={[2,18]} 
-					opacity={0.6}
-				/>
-				
-				<circle 
-					strokeWidth={0.4} 
-					cx={50} 
-					cy={50} 
-					r={45}  
-					strokeDasharray={285} 
-					strokeDashoffset={285*(1-level)} 
-				/>
-			
-			  </g>
-			  
-		  </svg>
+
+				draggable={false}
+				viewBox="0 0 100 100"
+				className="wave-button"
+
+				onMouseLeave={this.mouseUp}
+				onTouchStart={this.mouseDown}
+				onTouchEnd={this.mouseUp}
+				onMouseDown={this.mouseDown}
+				onMouseUp={this.mouseUp}
+				onMouseMove={this.levelMove}
+				onTouchMove={this.levelMove}
+
+			>
+
+				<g fill="none" stroke="#222" >
+
+					<path d={lib[id]} />
+
+
+
+					<circle
+						strokeWidth={10}
+						cx={50}
+						cy={50}
+						r={45}
+						strokeDasharray={dashArray}
+						opacity={0.5}
+					/>
+
+					;
+                    <g strokeOpacity={0.1} >
+						<circle
+							strokeWidth={1}
+							cx={50}
+							cy={50}
+							r={49}
+						/>
+						<circle
+							strokeWidth={1}
+							cx={50}
+							cy={50}
+						/>
+					</g>
+
+					<circle
+						strokeWidth={10}
+						strokeOpacity={0.4}
+						cx={50}
+						cy={50}
+						r={45}
+						strokeDasharray={285}
+						strokeDashoffset={285 * (1 - level)}
+					/>
+
+				</g>
+
+			</svg>
 		)
 	}
 }

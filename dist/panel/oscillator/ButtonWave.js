@@ -73,6 +73,8 @@ var ButtonWave = function (_React$Component) {
 		key: "levelMove",
 		value: function levelMove(event) {
 
+			var stepSize = 32;
+
 			if (event.type === "touchmove") {
 				event = event.touches[0];
 			}
@@ -84,10 +86,8 @@ var ButtonWave = function (_React$Component) {
 					    y = _SvgCoordinates.y;
 
 					var value = 1 - Math.min(Math.max(y - 5, 0) / 80, 1);
-
-					console.log(value);
-
-					this.props.target[this.props.id] = value;
+					var fixed = Math.round(value * stepSize) / stepSize;
+					this.props.target[this.props.id] = fixed;
 				}
 			}
 		}
@@ -108,6 +108,10 @@ var ButtonWave = function (_React$Component) {
 			    target = _props.target;
 
 			var level = target[id];
+
+			var fullLength = 45 * 2 * Math.PI;
+			var step = fullLength / 16;
+			var dashArray = [1, step - 1];
 
 			return _react2.default.createElement(
 				"svg",
@@ -131,15 +135,32 @@ var ButtonWave = function (_React$Component) {
 					{ fill: "none", stroke: "#222" },
 					_react2.default.createElement("path", { d: _icons2.default[id] }),
 					_react2.default.createElement("circle", {
-						strokeWidth: 0.7,
+						strokeWidth: 10,
 						cx: 50,
 						cy: 50,
 						r: 45,
-						strokeDasharray: [2, 18],
-						opacity: 0.6
+						strokeDasharray: dashArray,
+						opacity: 0.5
 					}),
+					";",
+					_react2.default.createElement(
+						"g",
+						{ strokeOpacity: 0.1 },
+						_react2.default.createElement("circle", {
+							strokeWidth: 1,
+							cx: 50,
+							cy: 50,
+							r: 49
+						}),
+						_react2.default.createElement("circle", {
+							strokeWidth: 1,
+							cx: 50,
+							cy: 50
+						})
+					),
 					_react2.default.createElement("circle", {
-						strokeWidth: 0.4,
+						strokeWidth: 10,
+						strokeOpacity: 0.4,
 						cx: 50,
 						cy: 50,
 						r: 45,
