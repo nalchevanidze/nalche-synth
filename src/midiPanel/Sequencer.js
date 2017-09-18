@@ -6,12 +6,12 @@ let list = [
     ...keys.map(note => note + "3"),
 ].reverse();
 
-const Sequence = ({ onClick, active }) =>
+const Sequence = ({ chord, active , onClick }) =>
     <li>
         {
             [1, 2, 3].reverse().map((index) =>
                 <button
-                    className={(index === active) ? "active" : ""}
+                    className={(chord.indexOf(index) !== -1) ? "active" : ""}
                     key={index}
                     onClick={() => onClick(index)}
                 />
@@ -28,23 +28,34 @@ export default class melody extends React.Component {
         }
     }
     setNew(i, index) {
-        this.props.seq[i] = (this.props.seq[i] === index) ? 0 : index;
+
+        const chord = this.props.seq[i];
+
+        const chordIndex = chord.indexOf(index);
+        if (chordIndex === -1) {
+            chord.push(index);
+        } else {
+            chord.splice(chordIndex, 1);
+        }
         this.props.updateMidi();
         this.setState({ value: Math.random() })
     }
     render() {
         return (
-            <ul className="sequencer" >
-                {
-                    (this.props.seq).map((selectedIndex, i) =>
-                        <Sequence
-                            key={i}
-                            active={selectedIndex}
-                            onClick={(index) => this.setNew(i, index)}
-                        />
-                    )
-                }
-            </ul>
+            <div className="sequencer window-panel" >
+                <h3>sequencer</h3>
+                <ul>
+                    {
+                        this.props.seq.map((chord, i) =>
+                            <Sequence
+                                key={i}
+                                chord={chord}
+                                onClick={(index) => this.setNew(i, index)}
+                            />
+                        )
+                    }
+                </ul>
+            </div>
         )
     }
 };

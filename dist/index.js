@@ -57,7 +57,7 @@ var Synth = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
         _this.state = {
-            range: 1,
+            range: 0,
             active: Array.from({ length: 24 }, function (e) {
                 return false;
             })
@@ -131,22 +131,26 @@ var Synth = function (_React$Component) {
                         "section",
                         { className: "keyboard" },
                         _react2.default.createElement(_panel2.default, null),
-                        _react2.default.createElement("input", {
-                            type: "range",
-                            min: "-1",
-                            max: "5",
-                            step: "1",
-                            value: this.state.range,
-                            onChange: function onChange(event) {
-                                _this2.setState({
-                                    range: event.target.value
-                                });
-                            }
-                        }),
                         _react2.default.createElement(
-                            "label",
-                            null,
-                            " pitch "
+                            "div",
+                            { className: "pitch" },
+                            _react2.default.createElement("input", {
+                                type: "range",
+                                min: "-1",
+                                max: "5",
+                                step: "1",
+                                value: this.state.range,
+                                onChange: function onChange(event) {
+                                    _this2.setState({
+                                        range: event.target.value
+                                    });
+                                }
+                            }),
+                            _react2.default.createElement(
+                                "label",
+                                null,
+                                " pitch "
+                            )
                         ),
                         _react2.default.createElement(
                             "ul",

@@ -7,13 +7,13 @@ var parameters = {
 
 	wave: {
 		sine: 0,
-		square: 0.4,
+		square: 1,
 		saw: 0,
-		saw2: 0.75,
-		tech: 0.7,
+		saw2: 1,
+		tech: 0.5,
 		noise: 0,
 		fm: 0.5,
-		fmFreq: 0.25
+		fmFreq: 0
 	},
 
 	envelope: {

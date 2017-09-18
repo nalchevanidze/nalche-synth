@@ -4,11 +4,14 @@ let midi = [];
 let endIndex = 0;
 
 const sequence = [
-	1, 0, 2, 0,
-	1, 0, 3, 0,
-	1, 0, 0, 2,
-	1, 0, 3, 0,
-];
+	[2,3],[],[],
+	[1,3],[],[],
+	[2,3],[],[],
+	[1,3],[],[],
+	[2,3],[],
+	[1,3],[]
+]
+
 const intence = [
 	"F1,G#2,C3",
 	"D#1,G2,C3",
@@ -18,13 +21,11 @@ const intence = [
 	"G#1,G#2,C3",
 	"F1,G#2,C3",
 	"F1,G#2,C3",
-].map(
-	e => e.split(",")
-
-);
+].map(e => e.split(","));
 
 
-function sequencer(c, start, end) {
+
+function oldSequencer(c, start, end) {
 
 	start *= 32;
 	end = start + end * 32;
@@ -44,12 +45,12 @@ function sequencer(c, start, end) {
 		let noteIndex = sequence[arpIndex];
 
 		if (noteIndex > 0) {
-			
+
 			noteIndex--;
-			const outIndex = Math.floor( noteIndex / c.length );
-			noteIndex = noteIndex%c.length
-			note = c[noteIndex] + (12*outIndex) ;
-			
+			const outIndex = Math.floor(noteIndex / c.length);
+			noteIndex = noteIndex % c.length
+			note = c[noteIndex] + (12 * outIndex);
+
 			midi[i] = {
 				start: [note],
 				end: []
@@ -57,6 +58,55 @@ function sequencer(c, start, end) {
 			midi[i + 1] = {
 				start: [],
 				end: [note]
+			};
+		}
+
+		arpIndex++;
+		i += 2;
+
+	}
+
+}
+
+
+function sequencer(c, start, end) {
+
+	start *= 32;
+	end = start + end * 32;
+	endIndex = Math.max(end, endIndex);
+	let i = start;
+	let arpIndex = 0;
+	let direction = 1;
+
+	while (i <= end) {
+
+		let note = 0;
+
+		// makes saquence loop
+		if (arpIndex >= sequence.length) {
+			arpIndex = 0;
+		}
+
+
+		let currentChord = sequence[arpIndex];
+
+		if (currentChord.length > 0) {
+
+
+			const chord = currentChord.map((noteIndex) => {
+				noteIndex--;
+				const outIndex = Math.floor(noteIndex / c.length);
+				noteIndex = noteIndex % c.length
+				return c[noteIndex] + (12 * outIndex);
+			})
+
+			midi[i] = {
+				start: chord,
+				end: []
+			};
+			midi[i + 1] = {
+				start: [],
+				end: chord
 			};
 		}
 
@@ -90,7 +140,7 @@ function addQuard(note, index) {
 export default class MidiPlayer {
 	constructor(osc) {
 		this.osc = osc;
-		this.BPM = 60 * 1000 / (128 * 8);
+		this.BPM = 60 * 1000 /(128 * 8) ;
 		this.next = this.next.bind(this);
 		this.seq = sequence;
 		this.melody = intence;

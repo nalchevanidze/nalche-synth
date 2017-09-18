@@ -16,7 +16,7 @@ export default class Synth extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            range: 1,
+            range: 0,
             active: Array.from({ length: 24 }, e => false)
         };
         this.keyPress = this.keyPress.bind(this);
@@ -66,19 +66,21 @@ export default class Synth extends React.Component {
                 <div className='page piano' >
                     <section className="keyboard">
                         <Panel />
-                        <input
-                            type="range"
-                            min="-1"
-                            max="5"
-                            step="1"
-                            value={this.state.range}
-                            onChange={(event) => {
-                                this.setState({
-                                    range: event.target.value
-                                })
-                            }}
-                        />
-                        <label> pitch </label>
+                        <div className="pitch">
+                            <input
+                                type="range"
+                                min="-1"
+                                max="5"
+                                step="1"
+                                value={this.state.range}
+                                onChange={(event) => {
+                                    this.setState({
+                                        range: event.target.value
+                                    })
+                                }}
+                            />
+                            <label> pitch </label>
+                        </div>
                         <ul className="midi-keys" >
                             <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
                             <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />

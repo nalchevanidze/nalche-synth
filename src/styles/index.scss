@@ -9,9 +9,13 @@
         display: block;
         background: #e0e0e0;
         color: black;
-        padding: 15px;
-        border: 1px solid #CCC;
-        font-size: 15px;
+        padding: 3px 18px;
+        border: 1px solid #BBB;
+        font-size: 14px;
+        cursor: pointer;
+        &:hover{
+            background: #CCC;
+        }
     }
     position: absolute;
 }
@@ -31,7 +35,7 @@
     .keyboard {
         box-shadow: 0px 5px 10px gray;
         width: 580px;
-        height: 445px;        
+        height: 420px;        
         border: 1px solid #EEE;
         border-radius: 3px;
     }
@@ -72,9 +76,7 @@
 @import "midi";
 
 button {
-    
     outline: none;
     border:none;
-    background:none;
-    
+    background:none; 
 }

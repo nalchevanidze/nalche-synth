@@ -30,14 +30,15 @@ var list = [].concat(_toConsumableArray(keys.map(function (note) {
 }))).reverse();
 
 var Sequence = function Sequence(_ref) {
-    var _onClick = _ref.onClick,
-        active = _ref.active;
+    var chord = _ref.chord,
+        active = _ref.active,
+        _onClick = _ref.onClick;
     return _react2.default.createElement(
         "li",
         null,
         [1, 2, 3].reverse().map(function (index) {
             return _react2.default.createElement("button", {
-                className: index === active ? "active" : "",
+                className: chord.indexOf(index) !== -1 ? "active" : "",
                 key: index,
                 onClick: function onClick() {
                     return _onClick(index);
@@ -64,7 +65,15 @@ var melody = function (_React$Component) {
     _createClass(melody, [{
         key: "setNew",
         value: function setNew(i, index) {
-            this.props.seq[i] = this.props.seq[i] === index ? 0 : index;
+
+            var chord = this.props.seq[i];
+
+            var chordIndex = chord.indexOf(index);
+            if (chordIndex === -1) {
+                chord.push(index);
+            } else {
+                chord.splice(chordIndex, 1);
+            }
             this.props.updateMidi();
             this.setState({ value: Math.random() });
         }
@@ -74,17 +83,26 @@ var melody = function (_React$Component) {
             var _this2 = this;
 
             return _react2.default.createElement(
-                "ul",
-                { className: "sequencer" },
-                this.props.seq.map(function (selectedIndex, i) {
-                    return _react2.default.createElement(Sequence, {
-                        key: i,
-                        active: selectedIndex,
-                        onClick: function onClick(index) {
-                            return _this2.setNew(i, index);
-                        }
-                    });
-                })
+                "div",
+                { className: "sequencer window-panel" },
+                _react2.default.createElement(
+                    "h3",
+                    null,
+                    "sequencer"
+                ),
+                _react2.default.createElement(
+                    "ul",
+                    null,
+                    this.props.seq.map(function (chord, i) {
+                        return _react2.default.createElement(Sequence, {
+                            key: i,
+                            chord: chord,
+                            onClick: function onClick(index) {
+                                return _this2.setNew(i, index);
+                            }
+                        });
+                    })
+                )
             );
         }
     }]);

@@ -10,57 +10,70 @@ let list = [
 function isBlack(note) {
 	return (note.charAt(1) === "#") ? "note black" : "note"
 }
-export default class melody extends React.Component {
 
+
+class Quarter extends React.Component {
 	constructor(props) {
-
 		super(props);
-
 		this.state = {
 			value: 0
 		}
 	}
+	update(quard, chordIndex, note) {
+		console.log(quard,chordIndex,note);
+		if (chordIndex !== -1) {
+			quard.splice(chordIndex,1);
+		} else {
+			quard.push(note);
+		}
+		this.props.updateMidi();
+		this.setState({ value: Math.random() })
+	}
+	render() {
+		const quard = this.props.quard;
+		return (
+			<li className="quartel" >
+				{
+					list.map(
+						(note, noteIndex) => {
+							const chordIndex = quard.indexOf(note);
+							const selected = (chordIndex !== -1) ? "active" : "";
+							return (
+								<button
+									key={noteIndex}
+									className={isBlack(note) + " " + selected}
+									onClick={() => this.update(quard, chordIndex, note)}
+								/>
+							)
+						}
+					)
+
+				}
+			</li>
+		)
+	}
+}
+
+const MidiDesk = ({ midi, updateMidi }) =>
+	<div className="midi window-panel" >
+		<h3> midi </h3>
+		<ul >
+			{
+				midi.map((quard, i) =>
+					<Quarter key={i} quard={quard} updateMidi={updateMidi} />
+				)
+			}
+		</ul>
+	</div>
+	;
+
+
+export default class melody extends React.Component {
 	render() {
 		return (
 			<div className="midi-panel" >
-				<h3>sequencer</h3>
-				<Sequencer seq={this.props.seq || []} updateMidi={this.props.updateMidi}/>
-				<h3> midi </h3>
-				<ul className="midi" >
-					{
-						this.props.melody.map(
-							(quard, i) => {
-								return (
-									<li key={i} className="quartel" >
-										{
-											list.map(
-												(note, noteIndex) => {
-													const chordIndex = quard.indexOf(note);
-													const selected = (chordIndex !== -1) ? "active" : "";
-													return (
-														<button
-															key={noteIndex}
-															className={isBlack(note) + " " + selected}
-															onClick={() => {
-																if (chordIndex !== -1) {
-																	quard.splice(chordIndex)
-																} else {
-																	quard.push(note);
-																}
-																this.props.updateMidi();
-																this.setState({ value: Math.random() })
-															}}
-														/>
-													)
-												}
-											)
-
-										}
-									</li>);
-							}
-						)
-					}
-				</ul>
+				<Sequencer seq={this.props.seq || []} updateMidi={this.props.updateMidi} />
+				<MidiDesk midi={this.props.melody} updateMidi={this.props.updateMidi} />
 			</div>
 		)
 	}

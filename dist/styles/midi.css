@@ -46,36 +46,60 @@
       .midi-keys li button:nth-child(11) {
         left: 81.5%; }
 
-.sequencer {
-  display: flex; }
-  .sequencer > li {
-    width: 20px;
-    list-style: none;
-    border: 1px solid #717171; }
-    .sequencer > li button {
-      width: 100%;
-      border-bottom: 1px solid #696969;
-      height: 20px;
-      display: block;
-      background: #808080; }
-    .sequencer > li .active {
-      background: #ffa929; }
+.window-panel {
+  position: relative;
+  margin: 2px; }
+  .window-panel h3 {
+    background: grey;
+    padding: 2px;
+    color: white; }
+  .window-panel > ul {
+    display: flex;
+    margin: 0px;
+    padding: 0px; }
+
+.sequencer h3 {
+  width: 348px; }
+
+.sequencer li {
+  width: 20px;
+  list-style: none;
+  border: 1px solid #717171; }
+  .sequencer li button {
+    width: 100%;
+    border-bottom: 1px solid #696969;
+    height: 20px;
+    display: block;
+    background: #808080; }
+  .sequencer li .active {
+    background: #ffa929; }
+
+.pitch {
+  position: absolute;
+  position: absolute;
+  top: 180px;
+  width: 100px;
+  padding: 0px 10px;
+  color: #AAA; }
+  .pitch input {
+    width: 100px; }
 
 .midi {
-  display: flex;
-  padding: 10px;
-  list-style: none;
-  border-left: 1px solid gray; }
-  .midi .quartel {
-    width: 50px;
-    border-right: 1px solid #EEE; }
-  .midi .note {
-    width: 100%;
-    height: 8px;
-    border-bottom: 1px solid #EEE;
-    font-size: 8px;
-    display: block; }
-  .midi .black {
-    background: #ececec; }
-  .midi .active {
-    background: #ffa929; }
+  width: 400px; }
+  .midi > ul {
+    display: flex;
+    list-style: none;
+    border-left: 1px solid gray; }
+    .midi > ul .quartel {
+      width: 50px;
+      border-right: 1px solid #EEE; }
+    .midi > ul .note {
+      width: 100%;
+      height: 8px;
+      border-bottom: 1px solid #EEE;
+      font-size: 8px;
+      display: block; }
+    .midi > ul .black {
+      background: #ececec; }
+    .midi > ul .active {
+      background: #555; }

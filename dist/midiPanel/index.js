@@ -36,13 +36,13 @@ function isBlack(note) {
 	return note.charAt(1) === "#" ? "note black" : "note";
 }
 
-var melody = function (_React$Component) {
-	_inherits(melody, _React$Component);
+var Quarter = function (_React$Component) {
+	_inherits(Quarter, _React$Component);
 
-	function melody(props) {
-		_classCallCheck(this, melody);
+	function Quarter(props) {
+		_classCallCheck(this, Quarter);
 
-		var _this = _possibleConstructorReturn(this, (melody.__proto__ || Object.getPrototypeOf(melody)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (Quarter.__proto__ || Object.getPrototypeOf(Quarter)).call(this, props));
 
 		_this.state = {
 			value: 0
@@ -50,52 +50,83 @@ var melody = function (_React$Component) {
 		return _this;
 	}
 
-	_createClass(melody, [{
+	_createClass(Quarter, [{
+		key: "update",
+		value: function update(quard, chordIndex, note) {
+			console.log(quard, chordIndex, note);
+			if (chordIndex !== -1) {
+				quard.splice(chordIndex, 1);
+			} else {
+				quard.push(note);
+			}
+			this.props.updateMidi();
+			this.setState({ value: Math.random() });
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			var _this2 = this;
 
+			var quard = this.props.quard;
+			return _react2.default.createElement(
+				"li",
+				{ className: "quartel" },
+				list.map(function (note, noteIndex) {
+					var chordIndex = quard.indexOf(note);
+					var selected = chordIndex !== -1 ? "active" : "";
+					return _react2.default.createElement("button", {
+						key: noteIndex,
+						className: isBlack(note) + " " + selected,
+						onClick: function onClick() {
+							return _this2.update(quard, chordIndex, note);
+						}
+					});
+				})
+			);
+		}
+	}]);
+
+	return Quarter;
+}(_react2.default.Component);
+
+var MidiDesk = function MidiDesk(_ref) {
+	var midi = _ref.midi,
+	    updateMidi = _ref.updateMidi;
+	return _react2.default.createElement(
+		"div",
+		{ className: "midi window-panel" },
+		_react2.default.createElement(
+			"h3",
+			null,
+			" midi "
+		),
+		_react2.default.createElement(
+			"ul",
+			null,
+			midi.map(function (quard, i) {
+				return _react2.default.createElement(Quarter, { key: i, quard: quard, updateMidi: updateMidi });
+			})
+		)
+	);
+};
+
+var melody = function (_React$Component2) {
+	_inherits(melody, _React$Component2);
+
+	function melody() {
+		_classCallCheck(this, melody);
+
+		return _possibleConstructorReturn(this, (melody.__proto__ || Object.getPrototypeOf(melody)).apply(this, arguments));
+	}
+
+	_createClass(melody, [{
+		key: "render",
+		value: function render() {
 			return _react2.default.createElement(
 				"div",
 				{ className: "midi-panel" },
-				_react2.default.createElement(
-					"h3",
-					null,
-					"sequencer"
-				),
 				_react2.default.createElement(_Sequencer2.default, { seq: this.props.seq || [], updateMidi: this.props.updateMidi }),
-				_react2.default.createElement(
-					"h3",
-					null,
-					" midi "
-				),
-				_react2.default.createElement(
-					"ul",
-					{ className: "midi" },
-					this.props.melody.map(function (quard, i) {
-						return _react2.default.createElement(
-							"li",
-							{ key: i, className: "quartel" },
-							list.map(function (note, noteIndex) {
-								var chordIndex = quard.indexOf(note);
-								var selected = chordIndex !== -1 ? "active" : "";
-								return _react2.default.createElement("button", {
-									key: noteIndex,
-									className: isBlack(note) + " " + selected,
-									onClick: function onClick() {
-										if (chordIndex !== -1) {
-											quard.splice(chordIndex);
-										} else {
-											quard.push(note);
-										}
-										_this2.props.updateMidi();
-										_this2.setState({ value: Math.random() });
-									}
-								});
-							})
-						);
-					})
-				)
+				_react2.default.createElement(MidiDesk, { midi: this.props.melody, updateMidi: this.props.updateMidi })
 			);
 		}
 	}]);
