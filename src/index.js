@@ -12,6 +12,27 @@ function keyEvent(target, type) {
     document[name]("keyup", target.keyUp);
 }
 
+const sequence = [
+	[1,2,3,4],[],[],
+	[1,2,3,4],[],[],
+	[1,2,3,4],[],[],
+	[1,2,3,4],[],[],
+	[1,2,3,4],[],
+	[1,2,3,4],[]
+]
+
+const midi = [
+	"F1,G#2,C3",
+	"D#1,G2,C3",
+	"D1,F2,A#2",
+	"C#1,F2,A#2",
+	"A#1,A#2,C#3",
+	"G#1,G#2,C3",
+	"F1,G#2,C3",
+	"F1,G#2,C3",
+].map(e => e.split(","));
+
+
 export default class Synth extends React.Component {
     constructor(props) {
         super(props);
@@ -24,7 +45,9 @@ export default class Synth extends React.Component {
         this.osc = SynthesizerController();
         this.midi = new midiPlayer({
             play: this.keyPress,
-            stop: this.keyUp
+            stop: this.keyUp,
+            sequence,
+            midi
         });
     }
     keyPress(e) {

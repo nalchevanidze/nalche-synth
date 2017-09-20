@@ -11,34 +11,30 @@ export default function MoogFilter() {
     var node = Context.createScriptProcessor(bufferSize, 1, 1);
     var in1, in2, in3, in4, out1, out2, out3, out4;
     in1 = in2 = in3 = in4 = out1 = out2 = out3 = out4 = 0.0;
-
     let f, fb, state, envelope;
-
     node.start = () => {
         state = { done: false, value: 0 };
         envelope = EnvelopeParameter(0.3);
         let { cutoff, resonance } = filter;
         f = cutoff * 1.16;
     }
-
     node.start();
-
     function generate() {
         if (state.done) return 0;
         state = envelope.next();
         return state.value;
     }
-
+    let time = 36;
+    let k = (100000 + time*2) /100080 ;
     node.onaudioprocess = function (audio) {
         var input = audio.inputBuffer.getChannelData(0);
         var output = audio.outputBuffer.getChannelData(0);
 
-
         //main loop
         for (var i = 0; i < bufferSize; i++) {
 
-            if(f>0.02){
-                f *= 0.99983;
+            if(f>0.025){
+                f *= k;
             }
             
             fb = filter.resonance * (1.0 - 0.15 * f * f);

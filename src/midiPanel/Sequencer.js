@@ -9,7 +9,7 @@ let list = [
 const Sequence = ({ chord, active , onClick }) =>
     <li>
         {
-            [1, 2, 3].reverse().map((index) =>
+            [1, 2, 3, 4].reverse().map((index) =>
                 <button
                     className={(chord.indexOf(index) !== -1) ? "active" : ""}
                     key={index}

@@ -2,12 +2,12 @@ const parameters = {
 	
 	wave: {
 		 sine: 0 , 
-		 square: 0 , 
+		 square: 0.2 , 
 		 saw: 0 , 
 		 saw2: 0,
-		 tech: 0.5 ,
+		 tech: 0.7 ,
 		 noise: 0,
-		 fm: 0.5,
+		 fm: 0.25,
 		 fmFreq: 0
 	},
 	
@@ -19,8 +19,8 @@ const parameters = {
 	},
 
 	filter:{
-		cutoff: 0.5,
-		resonance: 0.5
+		cutoff: 0.14,
+		resonance: 0.25
 	}
 	
 }
