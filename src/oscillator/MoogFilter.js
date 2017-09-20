@@ -12,17 +12,19 @@ export default function MoogFilter() {
     var in1, in2, in3, in4, out1, out2, out3, out4;
     in1 = in2 = in3 = in4 = out1 = out2 = out3 = out4 = 0.0;
 
-    let state , envelope;
+    let f, fb, state, envelope;
 
-    node.start = ()=>{
-      state = {done:false, value:1};
-      envelope = EnvelopeParameter();
+    node.start = () => {
+        state = { done: false, value: 0 };
+        envelope = EnvelopeParameter(0.3);
+        let { cutoff, resonance } = filter;
+        f = cutoff * 1.16;
     }
 
     node.start();
 
-    function generate(){
-        if(state.done) return 0;
+    function generate() {
+        if (state.done) return 0;
         state = envelope.next();
         return state.value;
     }
@@ -31,17 +33,15 @@ export default function MoogFilter() {
         var input = audio.inputBuffer.getChannelData(0);
         var output = audio.outputBuffer.getChannelData(0);
 
-        // parameters
-        let { cutoff, resonance } = filter;
-        var f = cutoff * 1.16;
-        var fb = resonance * (1.0 - 0.15 * f * f);
-
 
         //main loop
         for (var i = 0; i < bufferSize; i++) {
 
-           // generate();
-
+            if(f>0.02){
+                f *= 0.99983;
+            }
+            
+            fb = filter.resonance * (1.0 - 0.15 * f * f);
 
             input[i] -= out4 * fb;
             input[i] *= 0.35013 * (f * f) * (f * f);

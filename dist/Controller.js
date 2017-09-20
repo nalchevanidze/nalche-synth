@@ -7,9 +7,9 @@ var parameters = {
 
 	wave: {
 		sine: 0,
-		square: 1,
+		square: 0,
 		saw: 0,
-		saw2: 1,
+		saw2: 0,
 		tech: 0.5,
 		noise: 0,
 		fm: 0.5,
@@ -24,7 +24,7 @@ var parameters = {
 	},
 
 	filter: {
-		cutoff: 0.2,
+		cutoff: 0.5,
 		resonance: 0.5
 	}
 
