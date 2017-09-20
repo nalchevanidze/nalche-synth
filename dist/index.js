@@ -48,6 +48,12 @@ function keyEvent(target, type) {
     document[name]("keyup", target.keyUp);
 }
 
+var sequence = [[1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [1, 2, 3, 4], []];
+
+var midi = ["F1,G#2,C3", "D#1,G2,C3", "D1,F2,A#2", "C#1,F2,A#2", "A#1,A#2,C#3", "G#1,G#2,C3", "F1,G#2,C3", "F1,G#2,C3"].map(function (e) {
+    return e.split(",");
+});
+
 var Synth = function (_React$Component) {
     _inherits(Synth, _React$Component);
 
@@ -67,7 +73,9 @@ var Synth = function (_React$Component) {
         _this.osc = (0, _SynthesizerController2.default)();
         _this.midi = new _midiPlayer2.default({
             play: _this.keyPress,
-            stop: _this.keyUp
+            stop: _this.keyUp,
+            sequence: sequence,
+            midi: midi
         });
         return _this;
     }

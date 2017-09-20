@@ -36,7 +36,7 @@ var Sequence = function Sequence(_ref) {
     return _react2.default.createElement(
         "li",
         null,
-        [1, 2, 3].reverse().map(function (index) {
+        [1, 2, 3, 4].reverse().map(function (index) {
             return _react2.default.createElement("button", {
                 className: chord.indexOf(index) !== -1 ? "active" : "",
                 key: index,

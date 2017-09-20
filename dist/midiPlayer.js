@@ -16,54 +16,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var midi = [];
 var endIndex = 0;
-
-var sequence = [[2, 3], [], [], [1, 3], [], [], [2, 3], [], [], [1, 3], [], [], [2, 3], [], [1, 3], []];
-
-var intence = ["F1,G#2,C3", "D#1,G2,C3", "D1,F2,A#2", "C#1,F2,A#2", "A#1,A#2,C#3", "G#1,G#2,C3", "F1,G#2,C3", "F1,G#2,C3"].map(function (e) {
-	return e.split(",");
-});
-
-function oldSequencer(c, start, end) {
-
-	start *= 32;
-	end = start + end * 32;
-	endIndex = Math.max(end, endIndex);
-	var i = start;
-	var arpIndex = 0;
-	var direction = 1;
-
-	while (i <= end) {
-
-		var note = 0;
-
-		if (arpIndex >= sequence.length) {
-			arpIndex = 0;
-		}
-
-		var noteIndex = sequence[arpIndex];
-
-		if (noteIndex > 0) {
-
-			noteIndex--;
-			var outIndex = Math.floor(noteIndex / c.length);
-			noteIndex = noteIndex % c.length;
-			note = c[noteIndex] + 12 * outIndex;
-
-			midi[i] = {
-				start: [note],
-				end: []
-			};
-			midi[i + 1] = {
-				start: [],
-				end: [note]
-			};
-		}
-
-		arpIndex++;
-		i += 2;
-	}
-}
-
+var sequence = [];
 function sequencer(c, start, end) {
 
 	start *= 32;
@@ -130,8 +83,9 @@ var MidiPlayer = function () {
 		this.osc = osc;
 		this.BPM = 60 * 1000 / (128 * 8);
 		this.next = this.next.bind(this);
-		this.seq = sequence;
-		this.melody = intence;
+		this.seq = osc.sequence;
+		sequence = osc.sequence;
+		this.melody = osc.midi;
 		this.updateMidi = this.updateMidi.bind(this);
 		this.updateMidi();
 	}

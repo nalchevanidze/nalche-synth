@@ -45,15 +45,11 @@ var sampleRate = _Context2.default.sampleRate,
 var quality = 1024; //1024;
 var bufferSize = quality; //4096;
 function Oscillator() {
-
     var node = _Context2.default.createScriptProcessor(2048, 1, 1);
     var event = (0, _SoundEvent2.default)();
     var filter = (0, _MoogFilter2.default)();
     node.connect(filter);
     filter.connect(destination);
-    //    node.connect(destination);
-
-
     node.onaudioprocess = function (_ref) {
         var outputBuffer = _ref.outputBuffer;
 
@@ -64,22 +60,16 @@ function Oscillator() {
             audio.fill(0);
         }
     };
-
     node.start = function (param) {
         var frequency = (0, _NoteToFrequency2.default)(param.note);
         event.reset(frequency);
         filter.start();
     };
-
     node.end = function () {
         event.end();
     };
-
     node.isActive = function (e) {
         return event.eventTimes.live;
     };
-
-    //filter.connect(destination);
-
     return node;
 }
