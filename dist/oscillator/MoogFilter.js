@@ -13,9 +13,15 @@ var _Controller = require("../Controller");
 
 var _Controller2 = _interopRequireDefault(_Controller);
 
+var _EnvelopeParameter = require("./EnvelopeParameter");
+
+var _EnvelopeParameter2 = _interopRequireDefault(_EnvelopeParameter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var filter = _Controller2.default.filter;
+
+
 // cutoff between 0.0 and 1.0
 //resonance between 0.0 and 4.0
 
@@ -24,6 +30,22 @@ function MoogFilter() {
     var node = _Context2.default.createScriptProcessor(bufferSize, 1, 1);
     var in1, in2, in3, in4, out1, out2, out3, out4;
     in1 = in2 = in3 = in4 = out1 = out2 = out3 = out4 = 0.0;
+
+    var state = void 0,
+        envelope = void 0;
+
+    node.start = function () {
+        state = { done: false, value: 1 };
+        envelope = (0, _EnvelopeParameter2.default)();
+    };
+
+    node.start();
+
+    function generate() {
+        if (state.done) return 0;
+        state = envelope.next();
+        return state.value;
+    }
 
     node.onaudioprocess = function (audio) {
         var input = audio.inputBuffer.getChannelData(0);
@@ -38,6 +60,9 @@ function MoogFilter() {
 
         //main loop
         for (var i = 0; i < bufferSize; i++) {
+
+            // generate();
+
 
             input[i] -= out4 * fb;
             input[i] *= 0.35013 * (f * f) * (f * f);

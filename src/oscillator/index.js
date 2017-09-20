@@ -33,6 +33,7 @@ export default function Oscillator() {
     node.start = function (param) {
         let frequency = NoteToFrequency(param.note)
         event.reset(frequency);
+        filter.start();
     }
 
     node.end = function () {

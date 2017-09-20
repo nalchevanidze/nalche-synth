@@ -1,6 +1,8 @@
 import Context from "../Context";
 import Controller from "../Controller";
 const { filter } = Controller;
+import EnvelopeParameter from "./EnvelopeParameter";
+
 // cutoff between 0.0 and 1.0
 //resonance between 0.0 and 4.0
 
@@ -9,6 +11,21 @@ export default function MoogFilter() {
     var node = Context.createScriptProcessor(bufferSize, 1, 1);
     var in1, in2, in3, in4, out1, out2, out3, out4;
     in1 = in2 = in3 = in4 = out1 = out2 = out3 = out4 = 0.0;
+
+    let state , envelope;
+
+    node.start = ()=>{
+      state = {done:false, value:1};
+      envelope = EnvelopeParameter();
+    }
+
+    node.start();
+
+    function generate(){
+        if(state.done) return 0;
+        state = envelope.next();
+        return state.value;
+    }
 
     node.onaudioprocess = function (audio) {
         var input = audio.inputBuffer.getChannelData(0);
@@ -22,6 +39,8 @@ export default function MoogFilter() {
 
         //main loop
         for (var i = 0; i < bufferSize; i++) {
+
+           // generate();
 
 
             input[i] -= out4 * fb;

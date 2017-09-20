@@ -68,6 +68,7 @@ function Oscillator() {
     node.start = function (param) {
         var frequency = (0, _NoteToFrequency2.default)(param.note);
         event.reset(frequency);
+        filter.start();
     };
 
     node.end = function () {
