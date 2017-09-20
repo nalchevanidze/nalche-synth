@@ -9,6 +9,7 @@ export default function SoundEvent(){
     
     const position = new WaveLooper();
     const eventTimes = new EventTimes();
+    let oldvalue = 0;
     
     function reset ( frequency ){
         position.set( frequency , wave.fm , wave.fmFreq );
@@ -16,7 +17,12 @@ export default function SoundEvent(){
     }
     
     function next (){
-        return  eventTimes.next() *  WaveForm( position.next() , wave );
+        let newValue = eventTimes.next() *  WaveForm( position.next() , wave );
+        return  ( 
+
+            oldvalue + (newValue - oldvalue)/2  
+
+        );
     }
     
     function end(){

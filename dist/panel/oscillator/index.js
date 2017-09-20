@@ -134,7 +134,7 @@ var PanelOscillator = function (_React$Component) {
 					_react2.default.createElement(
 						"h1",
 						null,
-						" FM Modular "
+						" FM "
 					),
 					_react2.default.createElement(_ButtonWave2.default, { id: "fm", target: _Controller2.default.wave }),
 					_react2.default.createElement(
@@ -147,6 +147,27 @@ var PanelOscillator = function (_React$Component) {
 						"p",
 						null,
 						"frequency"
+					)
+				),
+				_react2.default.createElement(
+					"div",
+					{ className: "fm" },
+					_react2.default.createElement(
+						"h1",
+						null,
+						" Filter "
+					),
+					_react2.default.createElement(_ButtonWave2.default, { id: "cutoff", target: _Controller2.default.filter }),
+					_react2.default.createElement(
+						"p",
+						null,
+						"cutoff"
+					),
+					_react2.default.createElement(_ButtonWave2.default, { id: "resonance", target: _Controller2.default.filter }),
+					_react2.default.createElement(
+						"p",
+						null,
+						"resonance"
 					)
 				)
 			);

@@ -28,6 +28,7 @@ function SoundEvent() {
 
     var position = new _WaveLooper2.default();
     var eventTimes = new _EventTimes2.default();
+    var oldvalue = 0;
 
     function reset(frequency) {
         position.set(frequency, wave.fm, wave.fmFreq);
@@ -35,7 +36,8 @@ function SoundEvent() {
     }
 
     function next() {
-        return eventTimes.next() * (0, _WaveForm2.default)(position.next(), wave);
+        var newValue = eventTimes.next() * (0, _WaveForm2.default)(position.next(), wave);
+        return oldvalue + (newValue - oldvalue) / 2;
     }
 
     function end() {

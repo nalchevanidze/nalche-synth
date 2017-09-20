@@ -16,6 +16,11 @@ const parameters = {
 		attack: 0,
 		sustain: 0.3,
 		decay: 0.3
+	},
+
+	filter:{
+		cutoff: 0.2,
+		resonance: 0.5
 	}
 	
 }

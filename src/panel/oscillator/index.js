@@ -1,46 +1,46 @@
 import React from "react";
 
-import Controller from "../../Controller" ;
+import Controller from "../../Controller";
 import WaveForm from "../../oscillator/WaveForm";
 
 import GridLine from "../GridLine";
 import ButtonWave from "./ButtonWave";
 
-const WavePoint =  index => (1 - WaveForm(index) )*100 ;
+const WavePoint = index => (1 - WaveForm(index)) * 100;
 function GenerateWave() {
 	let end = WavePoint(0);
 	let start = WavePoint(1);
-	let p = (start+end)/2
-	let wave = Array.from({ length: 200 }, (e, i) => (i  +" "+ WavePoint(i / 200) ));
-	return "M 0 "+p+" "+ wave +" 200 "+p;
+	let p = (start + end) / 2
+	let wave = Array.from({ length: 200 }, (e, i) => (i + " " + WavePoint(i / 200)));
+	return "M 0 " + p + " " + wave + " 200 " + p;
 }
 
 class PanelOscillator extends React.Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
-		this.state  = Controller.wave ;
+		this.state = Controller.wave;
 		this.change = this.change.bind(this);
 		this.update = this.update.bind(this);
 	}
-	update(){
-	  if(!this.live) return ;
-	  this.setState({v:Math.random });
-	  setTimeout( this.update , 100 );
+	update() {
+		if (!this.live) return;
+		this.setState({ v: Math.random });
+		setTimeout(this.update, 100);
 	}
-	componentWillMount(){
-	  this.live = true;
-	  this.update();  
+	componentWillMount() {
+		this.live = true;
+		this.update();
 	}
-	componentWillUnmount(){
-	   this.live = false;
+	componentWillUnmount() {
+		this.live = false;
 	}
-	change({target}){
-		Controller.wave[ target.name ] = Number(target.value) ;
+	change({ target }) {
+		Controller.wave[target.name] = Number(target.value);
 	}
 	render() {
-		let {release , attack , decay , sustain } = Controller.envelope;
-		return(
-		<div className="oscillator">
+		let { release, attack, decay, sustain } = Controller.envelope;
+		return (
+			<div className="oscillator">
 
 				<div className="screen" >
 					<h1> Oscillator </h1>
@@ -52,21 +52,29 @@ class PanelOscillator extends React.Component {
 				</div>
 
 				<div className="controllers" >
-					<ButtonWave  id="sine" target={Controller.wave} />
-					<ButtonWave  id="square" target={Controller.wave} />
-					<ButtonWave  id="saw" target={Controller.wave} />
-					<ButtonWave  id="saw2" target={Controller.wave} />
-					<ButtonWave  id="tech" target={Controller.wave} />
-					<ButtonWave  id="noise" target={Controller.wave} />
+					<ButtonWave id="sine" target={Controller.wave} />
+					<ButtonWave id="square" target={Controller.wave} />
+					<ButtonWave id="saw" target={Controller.wave} />
+					<ButtonWave id="saw2" target={Controller.wave} />
+					<ButtonWave id="tech" target={Controller.wave} />
+					<ButtonWave id="noise" target={Controller.wave} />
 				</div>
 
 				<div className="fm" >
-					<h1> FM Modular </h1>
+					<h1> FM </h1>
 					<ButtonWave id="fm" target={Controller.wave} />
 					<p>Amount</p>
 					<ButtonWave id="fmFreq" target={Controller.wave} />
 					<p>frequency</p>
-					
+
+				</div>
+
+				<div className="fm"  >
+					<h1> Filter </h1>
+					<ButtonWave id="cutoff" target={Controller.filter} />
+					<p>cutoff</p>
+					<ButtonWave id="resonance" target={Controller.filter} />
+					<p>resonance</p>
 				</div>
 			</div>
 		);

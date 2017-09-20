@@ -37,5 +37,5 @@ export default function WaveForm (WaveIndex){
 
         if( i==0 ) return 0 ;
         // mix
-        return mixin / i ;
+        return (mixin / i) ;
 }
