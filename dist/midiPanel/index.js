@@ -31,6 +31,8 @@ var list = [].concat(_toConsumableArray(keys.map(function (note) {
 	return note + "2";
 })), _toConsumableArray(keys.map(function (note) {
 	return note + "3";
+})), _toConsumableArray(keys.map(function (note) {
+	return note + "4";
 }))).reverse();
 function isBlack(note) {
 	return note.charAt(1) === "#" ? "note black" : "note";
@@ -103,6 +105,17 @@ var MidiDesk = function MidiDesk(_ref) {
 		_react2.default.createElement(
 			"ul",
 			null,
+			_react2.default.createElement(
+				"li",
+				{ className: "quartel" },
+				list.map(function (note) {
+					return _react2.default.createElement(
+						"button",
+						{ className: "note" },
+						note
+					);
+				})
+			),
 			midi.map(function (quard, i) {
 				return _react2.default.createElement(Quarter, { key: i, quard: quard, updateMidi: updateMidi });
 			})

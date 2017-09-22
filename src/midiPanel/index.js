@@ -6,6 +6,7 @@ let list = [
 	...keys.map(note => note + "1"),
 	...keys.map(note => note + "2"),
 	...keys.map(note => note + "3"),
+	...keys.map(note => note + "4"),
 ].reverse();
 function isBlack(note) {
 	return (note.charAt(1) === "#") ? "note black" : "note"
@@ -20,9 +21,9 @@ class Quarter extends React.Component {
 		}
 	}
 	update(quard, chordIndex, note) {
-		console.log(quard,chordIndex,note);
+		console.log(quard, chordIndex, note);
 		if (chordIndex !== -1) {
-			quard.splice(chordIndex,1);
+			quard.splice(chordIndex, 1);
 		} else {
 			quard.push(note);
 		}
@@ -58,6 +59,16 @@ const MidiDesk = ({ midi, updateMidi }) =>
 	<div className="midi window-panel" >
 		<h3> midi </h3>
 		<ul >
+			<li className="quartel" >
+				{
+					list.map(
+						(note) =>
+							<button className="note" >{note}</button>
+
+					)
+
+				}
+			</li>
 			{
 				midi.map((quard, i) =>
 					<Quarter key={i} quard={quard} updateMidi={updateMidi} />

@@ -7,10 +7,10 @@ var parameters = {
 
 	wave: {
 		sine: 0,
-		square: 0.2,
+		square: 0.25,
 		saw: 0,
-		saw2: 0,
-		tech: 0.7,
+		saw2: 0.25,
+		tech: 0.75,
 		noise: 0,
 		fm: 0.25,
 		fmFreq: 0
@@ -20,7 +20,7 @@ var parameters = {
 		release: 0.3,
 		attack: 0,
 		sustain: 0.3,
-		decay: 0.3
+		decay: 0.05
 	},
 
 	filter: {
