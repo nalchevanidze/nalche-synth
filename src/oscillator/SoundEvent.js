@@ -3,7 +3,7 @@ import WaveForm from "./WaveForm";
 import EventTimes from "./EventTimes";
 import WaveLooper from "./WaveLooper";
 
-const { wave } = Controller;
+const { wave  } = Controller;
 
 export default function SoundEvent(){
     
@@ -15,14 +15,13 @@ export default function SoundEvent(){
         position.set( frequency , wave.fm , wave.fmFreq );
         eventTimes.restart();
     }
-    
+
     function next (){
-        let newValue = eventTimes.next() *  WaveForm( position.next() , wave );
-        return  ( 
-
-            oldvalue + (newValue - oldvalue)/2  
-
+        return (
+            eventTimes.next() 
+            *  WaveForm( position.next() , wave )
         );
+
     }
     
     function end(){

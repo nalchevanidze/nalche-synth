@@ -62,8 +62,8 @@ const MidiDesk = ({ midi, updateMidi }) =>
 			<li className="quartel" >
 				{
 					list.map(
-						(note) =>
-							<button className="note" >{note}</button>
+						(note,i) =>
+							<button key={i} className="note" >{note}</button>
 
 					)
 
