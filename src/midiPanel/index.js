@@ -59,11 +59,11 @@ const MidiDesk = ({ midi, updateMidi }) =>
 	<div className="midi window-panel" >
 		<h3> midi </h3>
 		<ul >
-			<li className="quartel" >
+			<li className="names" >
 				{
 					list.map(
 						(note,i) =>
-							<button key={i} className="note" >{note}</button>
+							<button key={i} className={"note "+isBlack(note)} >{note}</button>
 
 					)
 
