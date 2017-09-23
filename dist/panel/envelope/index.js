@@ -30,23 +30,31 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PanelEnvelope = function (_React$Component) {
-    _inherits(PanelEnvelope, _React$Component);
+var PanelEnvelope = function (_React$PureComponent) {
+    _inherits(PanelEnvelope, _React$PureComponent);
 
-    function PanelEnvelope() {
+    function PanelEnvelope(props) {
         _classCallCheck(this, PanelEnvelope);
 
-        return _possibleConstructorReturn(this, (PanelEnvelope.__proto__ || Object.getPrototypeOf(PanelEnvelope)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (PanelEnvelope.__proto__ || Object.getPrototypeOf(PanelEnvelope)).call(this, props));
+
+        _this.state = { active: "volume" };
+        return _this;
     }
 
     _createClass(PanelEnvelope, [{
+        key: "switch",
+        value: function _switch(active) {
+            this.setState({ active: active });
+        }
+    }, {
         key: "render",
         value: function render() {
-            var _Controller$envelope = _Controller2.default.envelope,
-                release = _Controller$envelope.release,
-                attack = _Controller$envelope.attack,
-                decay = _Controller$envelope.decay,
-                sustain = _Controller$envelope.sustain;
+            var _this2 = this;
+
+            var active = this.state.active;
+            var envelope = _Controller2.default.envelope,
+                env = _Controller2.default.env;
 
             return _react2.default.createElement(
                 "div",
@@ -61,21 +69,32 @@ var PanelEnvelope = function (_React$Component) {
                     { className: "selector" },
                     _react2.default.createElement(
                         "button",
-                        { className: "active" },
+                        {
+                            onClick: function onClick() {
+                                return _this2.switch("volume");
+                            },
+                            className: active == "volume" ? "active" : ""
+                        },
                         "volume"
                     ),
                     _react2.default.createElement(
                         "button",
-                        null,
+                        {
+                            onClick: function onClick() {
+                                return _this2.switch("filter");
+                            },
+                            className: active == "filter" ? "active" : ""
+                        },
                         "filter"
                     )
                 ),
-                _react2.default.createElement(_EnvelopeGraphic2.default, _Controller2.default.envelope)
+                _react2.default.createElement(_EnvelopeGraphic2.default, { state: active == "filter" ? env.filter : envelope
+                })
             );
         }
     }]);
 
     return PanelEnvelope;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = PanelEnvelope;

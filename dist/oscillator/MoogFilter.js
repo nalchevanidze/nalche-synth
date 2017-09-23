@@ -23,7 +23,8 @@ var _MoogSampler2 = _interopRequireDefault(_MoogSampler);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var filter = _Controller2.default.filter;
+var filter = _Controller2.default.filter,
+    env = _Controller2.default.env;
 // cutoff between 0.0 and 1.0
 //resonance between 0.0 and 4.0
 
@@ -49,17 +50,27 @@ function MoogFilter() {
         return state.value;
     }
     var filterSample = (0, _MoogSampler2.default)();
-    var time = 36;
-    var k = (100000 + time * 2) / 100080;
+
     node.onaudioprocess = function (audio) {
         var input = audio.inputBuffer.getChannelData(0);
         var output = audio.outputBuffer.getChannelData(0);
         var inputSample = void 0;
+
+        //envelope
+        var _env$filter = env.filter,
+            decay = _env$filter.decay,
+            sustain = _env$filter.sustain;
+
+        var time = 80 * decay;
+        var k = (100000 + time) / 100080;
+        var threshhold = Math.max(sustain * filter.cutoff, 0.01);
         //main loop
         for (var i = 0; i < bufferSize; i++) {
-            if (f > 0.025) {
+
+            if (f > threshhold) {
                 f *= k;
             }
+
             fb = filter.resonance * (1.0 - 0.15 * f * f);
             inputSample = input[i];
             output[i] = filterSample(inputSample, f, fb);

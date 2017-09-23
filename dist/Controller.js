@@ -23,12 +23,19 @@ var parameters = {
 		decay: 0.2
 	},
 
-	filter: {
-		cutoff: 0.14,
-		resonance: 0.25
+	env: {
+
+		filter: {
+			release: 0.2,
+			attack: 0,
+			sustain: 0.07,
+			decay: 0.6
+		}
+
 	},
-
-	pitch: 1
-
+	filter: {
+		cutoff: 0.375,
+		resonance: 0.25
+	}
 };
 exports.default = parameters;

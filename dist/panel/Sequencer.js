@@ -48,8 +48,8 @@ var Sequence = function Sequence(_ref) {
     );
 };
 
-var melody = function (_React$Component) {
-    _inherits(melody, _React$Component);
+var melody = function (_React$PureComponent) {
+    _inherits(melody, _React$PureComponent);
 
     function melody(props) {
         _classCallCheck(this, melody);
@@ -108,7 +108,7 @@ var melody = function (_React$Component) {
     }]);
 
     return melody;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = melody;
 ;

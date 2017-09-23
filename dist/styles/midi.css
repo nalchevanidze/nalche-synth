@@ -83,7 +83,6 @@
       background: #777; }
 
 .midi > ul {
-  width: 450px;
   height: 400px;
   overflow: scroll;
   display: flex;
@@ -96,11 +95,11 @@
     width: 50px;
     border-right: 1px solid #EEE; }
     .midi > ul .names .black {
-      background: black;
+      background: #333;
       color: white; }
   .midi > ul .note {
     width: 100%;
-    height: 12px;
+    height: 14px;
     border-bottom: 1px solid #EEE;
     font-size: 8px;
     display: block; }

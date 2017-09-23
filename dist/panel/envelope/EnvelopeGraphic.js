@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
@@ -94,15 +92,20 @@ var PointCircle = function (_React$Component) {
     return PointCircle;
 }(_react2.default.Component);
 
-var EnvelopeGraphic = function (_React$Component2) {
-    _inherits(EnvelopeGraphic, _React$Component2);
+var EnvelopeGraphic = function (_React$PureComponent) {
+    _inherits(EnvelopeGraphic, _React$PureComponent);
 
     function EnvelopeGraphic(props) {
         _classCallCheck(this, EnvelopeGraphic);
 
         var _this2 = _possibleConstructorReturn(this, (EnvelopeGraphic.__proto__ || Object.getPrototypeOf(EnvelopeGraphic)).call(this, props));
 
-        _this2.state = _Controller2.default.envelope;
+        _this2.state = {
+            attack: 0,
+            release: 0,
+            sustain: 0,
+            decay: 0
+        };
         _this2.hide = false;
         _this2.position = _this2.position.bind(_this2);
         _this2.point = { current: null };
@@ -112,6 +115,20 @@ var EnvelopeGraphic = function (_React$Component2) {
     }
 
     _createClass(EnvelopeGraphic, [{
+        key: "componentWillMount",
+        value: function componentWillMount() {
+            this.state = this.props.state;
+            this.original = this.props.state;
+            this.hide = false;
+            this.target = _reactDom2.default.findDOMNode(this);
+        }
+    }, {
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(next) {
+            this.state = next.state;
+            this.original = next.state;
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             this.hide = false;
@@ -154,7 +171,7 @@ var EnvelopeGraphic = function (_React$Component2) {
     }, {
         key: "updateValues",
         value: function updateValues(state) {
-            _Controller2.default.envelope = _extends({}, _Controller2.default.envelope, state);
+            Object.assign(this.original, state);
             this.setState(state);
         }
     }, {
@@ -168,20 +185,17 @@ var EnvelopeGraphic = function (_React$Component2) {
                 sustain = _state.sustain,
                 decay = _state.decay;
 
-
             attack = attack * 100;
             decay = attack + decay * 100;
             var sustainX = decay + 20;
             sustain = (1 - sustain) * 100;
             release = sustainX + release * 100;
-
             //points
             var PointStart = [0, 100],
                 pointAttack = [attack, 0],
                 pointSustain = [sustainX, sustain],
                 pointDecay = [decay, sustain],
                 pointRelease = [release, 100];
-
             return _react2.default.createElement(
                 "svg",
                 {
@@ -266,6 +280,6 @@ var EnvelopeGraphic = function (_React$Component2) {
     }]);
 
     return EnvelopeGraphic;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = EnvelopeGraphic;

@@ -68,7 +68,7 @@ export default class MidiPlayer {
 		this.melody = osc.midi;
 		this.updateMidi = this.updateMidi.bind(this);
 		this.updateMidi();
-	//	this.updateComponent = osc.component;
+		this.updateComponent = osc.component;
 	}
 	updateMidi(seq) {
 		midi = [];

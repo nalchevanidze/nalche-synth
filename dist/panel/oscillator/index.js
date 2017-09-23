@@ -26,6 +26,10 @@ var _ButtonWave = require("../ButtonWave");
 
 var _ButtonWave2 = _interopRequireDefault(_ButtonWave);
 
+var _PitchButton = require("../ButtonWave/PitchButton");
+
+var _PitchButton2 = _interopRequireDefault(_PitchButton);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -47,8 +51,8 @@ function GenerateWave() {
 	return "M 0 " + p + " " + wave + " 200 " + p;
 }
 
-var PanelOscillator = function (_React$Component) {
-	_inherits(PanelOscillator, _React$Component);
+var PanelOscillator = function (_React$PureComponent) {
+	_inherits(PanelOscillator, _React$PureComponent);
 
 	function PanelOscillator(props) {
 		_classCallCheck(this, PanelOscillator);
@@ -63,16 +67,13 @@ var PanelOscillator = function (_React$Component) {
 
 	_createClass(PanelOscillator, [{
 		key: "update",
-		value: function update() {
-			if (!this.live) return;
-			this.setState({ v: Math.random });
-			setTimeout(this.update, 100);
+		value: function update(state) {
+			this.setState(state);
 		}
 	}, {
 		key: "componentWillMount",
 		value: function componentWillMount() {
 			this.live = true;
-			this.update();
 		}
 	}, {
 		key: "componentWillUnmount",
@@ -117,7 +118,7 @@ var PanelOscillator = function (_React$Component) {
 						}),
 						_react2.default.createElement(_GridLine2.default, null)
 					),
-					_react2.default.createElement(_ButtonWave2.default, {
+					_react2.default.createElement(_PitchButton2.default, {
 						id: "pitch",
 						target: { pitch: this.props.pitch },
 						onChange: this.props.changePitch,
@@ -137,12 +138,12 @@ var PanelOscillator = function (_React$Component) {
 						null,
 						" Oscillator "
 					),
-					_react2.default.createElement(_ButtonWave2.default, { id: "sine", target: _Controller2.default.wave }),
-					_react2.default.createElement(_ButtonWave2.default, { id: "square", target: _Controller2.default.wave }),
-					_react2.default.createElement(_ButtonWave2.default, { id: "saw", target: _Controller2.default.wave }),
-					_react2.default.createElement(_ButtonWave2.default, { id: "saw2", target: _Controller2.default.wave }),
-					_react2.default.createElement(_ButtonWave2.default, { id: "tech", target: _Controller2.default.wave }),
-					_react2.default.createElement(_ButtonWave2.default, { id: "noise", target: _Controller2.default.wave })
+					_react2.default.createElement(_ButtonWave2.default, { id: "sine", target: _Controller2.default.wave, onChange: this.update }),
+					_react2.default.createElement(_ButtonWave2.default, { id: "square", target: _Controller2.default.wave, onChange: this.update }),
+					_react2.default.createElement(_ButtonWave2.default, { id: "saw", target: _Controller2.default.wave, onChange: this.update }),
+					_react2.default.createElement(_ButtonWave2.default, { id: "saw2", target: _Controller2.default.wave, onChange: this.update }),
+					_react2.default.createElement(_ButtonWave2.default, { id: "tech", target: _Controller2.default.wave, onChange: this.update }),
+					_react2.default.createElement(_ButtonWave2.default, { id: "noise", target: _Controller2.default.wave, onChange: this.update })
 				),
 				_react2.default.createElement(
 					"div",
@@ -191,6 +192,6 @@ var PanelOscillator = function (_React$Component) {
 	}]);
 
 	return PanelOscillator;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = PanelOscillator;

@@ -10,17 +10,13 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _oscillator = require("./oscillator");
+var _reactDom = require("react-dom");
 
-var _oscillator2 = _interopRequireDefault(_oscillator);
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _envelope = require("./envelope");
+var _CirclerangeButton = require("./CirclerangeButton");
 
-var _envelope2 = _interopRequireDefault(_envelope);
-
-var _Sequencer = require("./Sequencer");
-
-var _Sequencer2 = _interopRequireDefault(_Sequencer);
+var _CirclerangeButton2 = _interopRequireDefault(_CirclerangeButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30,36 +26,37 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Panel = function (_React$PureComponent) {
-    _inherits(Panel, _React$PureComponent);
+var ButtonWave = function (_React$PureComponent) {
+    _inherits(ButtonWave, _React$PureComponent);
 
-    function Panel() {
-        _classCallCheck(this, Panel);
+    function ButtonWave() {
+        _classCallCheck(this, ButtonWave);
 
-        return _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (ButtonWave.__proto__ || Object.getPrototypeOf(ButtonWave)).apply(this, arguments));
     }
 
-    _createClass(Panel, [{
+    _createClass(ButtonWave, [{
         key: "render",
         value: function render() {
-            var props = this.props;
-
-
             return _react2.default.createElement(
-                "div",
-                { className: "panel" },
-                _react2.default.createElement(_oscillator2.default, props),
+                _CirclerangeButton2.default,
+                this.props,
                 _react2.default.createElement(
-                    "div",
-                    null,
-                    _react2.default.createElement(_envelope2.default, null),
-                    _react2.default.createElement(_Sequencer2.default, { seq: props.seq || [], updateMidi: props.updateMidi })
+                    "text",
+                    {
+                        x: "50",
+                        y: "65",
+                        fontSize: "40px",
+                        textAnchor: "middle",
+                        fill: "#CDDC39"
+                    },
+                    this.props.target.pitch * 8 - 4
                 )
             );
         }
     }]);
 
-    return Panel;
+    return ButtonWave;
 }(_react2.default.PureComponent);
 
-exports.default = Panel;
+exports.default = ButtonWave;

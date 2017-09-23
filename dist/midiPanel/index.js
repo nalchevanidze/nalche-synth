@@ -87,61 +87,124 @@ var Quarter = function (_React$Component) {
 	return Quarter;
 }(_react2.default.Component);
 
-var MidiDesk = function MidiDesk(_ref) {
-	var midi = _ref.midi,
-	    updateMidi = _ref.updateMidi,
-	    global = _ref.global,
-	    _ref$currentState = _ref.currentState,
-	    currentState = _ref$currentState === undefined ? 0 : _ref$currentState;
-	return _react2.default.createElement(
-		"div",
-		{ className: "midi window-panel" },
-		_react2.default.createElement(
-			"h3",
-			null,
-			_react2.default.createElement(
-				"section",
-				{ className: "playStop" },
-				_react2.default.createElement(
-					"button",
-					{ onClick: global.play },
-					"play"
-				),
-				_react2.default.createElement(
-					"button",
-					{ onClick: global.stop },
-					"stop"
-				)
-			)
-		),
-		_react2.default.createElement(
-			"div",
-			{ className: "time-line" },
-			_react2.default.createElement("button", { style: { left: currentState * 400 + 48 + "px" } })
-		),
-		_react2.default.createElement(
-			"ul",
-			null,
-			_react2.default.createElement(
-				"li",
-				{ className: "names" },
-				list.map(function (note, i) {
-					return _react2.default.createElement(
-						"button",
-						{ key: i, className: "note " + isBlack(note) },
-						note
-					);
-				})
-			),
-			midi.map(function (quard, i) {
-				return _react2.default.createElement(Quarter, { key: i, quard: quard, updateMidi: updateMidi });
-			})
-		)
-	);
-};
+var Keys = function (_React$PureComponent) {
+	_inherits(Keys, _React$PureComponent);
 
-var melody = function (_React$Component2) {
-	_inherits(melody, _React$Component2);
+	function Keys() {
+		_classCallCheck(this, Keys);
+
+		return _possibleConstructorReturn(this, (Keys.__proto__ || Object.getPrototypeOf(Keys)).apply(this, arguments));
+	}
+
+	_createClass(Keys, [{
+		key: "render",
+		value: function render() {
+			var _props = this.props,
+			    midi = _props.midi,
+			    updateMidi = _props.updateMidi;
+
+			return _react2.default.createElement(
+				"ul",
+				null,
+				_react2.default.createElement(
+					"li",
+					{ className: "names" },
+					list.map(function (note, i) {
+						return _react2.default.createElement(
+							"button",
+							{ key: i, className: "note " + isBlack(note) },
+							note
+						);
+					})
+				),
+				midi.map(function (quard, i) {
+					return _react2.default.createElement(Quarter, { key: i, quard: quard, updateMidi: updateMidi });
+				})
+			);
+		}
+	}]);
+
+	return Keys;
+}(_react2.default.PureComponent);
+
+var Header = function (_React$PureComponent2) {
+	_inherits(Header, _React$PureComponent2);
+
+	function Header() {
+		_classCallCheck(this, Header);
+
+		return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+	}
+
+	_createClass(Header, [{
+		key: "render",
+		value: function render() {
+			var _props$global = this.props.global,
+			    play = _props$global.play,
+			    stop = _props$global.stop;
+
+			return _react2.default.createElement(
+				"h3",
+				null,
+				_react2.default.createElement(
+					"section",
+					{ className: "playStop" },
+					_react2.default.createElement(
+						"button",
+						{ onClick: play },
+						"play"
+					),
+					_react2.default.createElement(
+						"button",
+						{ onClick: stop },
+						"stop"
+					)
+				)
+			);
+		}
+	}]);
+
+	return Header;
+}(_react2.default.PureComponent);
+
+var MidiDesk = function (_React$PureComponent3) {
+	_inherits(MidiDesk, _React$PureComponent3);
+
+	function MidiDesk() {
+		_classCallCheck(this, MidiDesk);
+
+		return _possibleConstructorReturn(this, (MidiDesk.__proto__ || Object.getPrototypeOf(MidiDesk)).apply(this, arguments));
+	}
+
+	_createClass(MidiDesk, [{
+		key: "render",
+		value: function render() {
+			var _props2 = this.props,
+			    midi = _props2.midi,
+			    updateMidi = _props2.updateMidi,
+			    global = _props2.global,
+			    _props2$currentState = _props2.currentState,
+			    currentState = _props2$currentState === undefined ? 0 : _props2$currentState;
+
+			return _react2.default.createElement(
+				"div",
+				{ className: "midi window-panel" },
+				_react2.default.createElement(Header, { global: global }),
+				_react2.default.createElement(
+					"div",
+					{ className: "time-line" },
+					_react2.default.createElement("button", { style: { left: currentState * 200 + 48 + "px" } })
+				),
+				_react2.default.createElement(Keys, { midi: midi, updateMidi: updateMidi })
+			);
+		}
+	}]);
+
+	return MidiDesk;
+}(_react2.default.PureComponent);
+
+var melody = function (_React$PureComponent4) {
+	_inherits(melody, _React$PureComponent4);
 
 	function melody() {
 		_classCallCheck(this, melody);
@@ -166,6 +229,6 @@ var melody = function (_React$Component2) {
 	}]);
 
 	return melody;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 exports.default = melody;
