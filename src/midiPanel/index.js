@@ -11,7 +11,6 @@ function isBlack(note) {
 	return (note.charAt(1) === "#") ? "note black" : "note"
 }
 
-
 class Quarter extends React.Component {
 	constructor(props) {
 		super(props);
@@ -54,37 +53,57 @@ class Quarter extends React.Component {
 	}
 }
 
+
+class Keys extends React.PureComponent {
+	render() {
+		let { midi, updateMidi } = this.props;
+		return (
+			<ul >
+				<li className="names" >
+					{
+						list.map(
+							(note, i) =>
+								<button key={i} className={"note " + isBlack(note)} >{note}</button>
+
+						)
+
+					}
+				</li>
+				{
+					midi.map((quard, i) =>
+						<Quarter key={i} quard={quard} updateMidi={updateMidi} />
+					)
+				}
+			</ul>
+		);
+	}
+}
+
+class Header extends React.PureComponent {
+	render() {
+		let { play, stop } = this.props.global;
+		return (
+			<h3>
+				<section className="playStop" >
+					<button onClick={play}  >play</button>
+					<button onClick={stop}  >stop</button>
+				</section>
+			</h3>
+		)
+	}
+}
+
+
 class MidiDesk extends React.PureComponent {
 	render() {
 		let { midi, updateMidi, global, currentState = 0 } = this.props;
 		return (
 			<div className="midi window-panel" >
-				<h3>
-					<section className="playStop" >
-						<button onClick={global.play}  >play</button>
-						<button onClick={global.stop}  >stop</button>
-					</section>
-				</h3>
+				<Header global={global} />
 				<div className="time-line" >
-					<button style={{ left: currentState * 400 + 48 + "px" }} />
+					<button style={{ left: currentState * 200 + 48 + "px" }} />
 				</div>
-				<ul >
-					<li className="names" >
-						{
-							list.map(
-								(note, i) =>
-									<button key={i} className={"note " + isBlack(note)} >{note}</button>
-
-							)
-
-						}
-					</li>
-					{
-						midi.map((quard, i) =>
-							<Quarter key={i} quard={quard} updateMidi={updateMidi} />
-						)
-					}
-				</ul>
+				<Keys midi={midi} updateMidi={updateMidi} />
 			</div>
 		)
 	}

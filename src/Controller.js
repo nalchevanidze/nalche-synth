@@ -21,22 +21,18 @@ const parameters = {
 	env: {
 
 		filter: {
-			release: 0.3,
+			release: 0.2,
 			attack: 0,
-			sustain: 0.3,
-			decay: 0.2
+			sustain: 0.07,
+			decay: 0.6
 		},
 
 		
 
 	},
-
 	filter: {
-		cutoff: 0.14,
+		cutoff: 0.375,
 		resonance: 0.25
-	},
-
-	pitch: 1
-
+	}
 }
 export default parameters;

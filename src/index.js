@@ -22,18 +22,11 @@ const sequence = [
 ]
 
 const midi = [
-
-    "F1,C#2,G#2,C3",
-    "G#1,C#2,G#2,C3",
-    "G#1,C#2,G#2,C#3",
-    "G#1,C#2,G#2,C#3",
-    "C#2,D#2,G#2,D#3",
-    "C#2,D#2,G#2,D#3",
-    "F1,D#2,G#2,F3",
-    "F1,D#2,G#2,D#3",
-
+    "F1,G#2,C3",
+    "G#1,G#2,C3",
+    "A#1,A#2,D#2",
+    "C#2,G#2,G#3",
 ].map(e => e.split(","));
-
 
 export default class Synth extends React.Component {
     constructor(props) {

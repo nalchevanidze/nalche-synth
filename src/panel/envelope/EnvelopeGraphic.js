@@ -50,10 +50,15 @@ class PointCircle extends React.Component {
         );
     }
 }
-export default class EnvelopeGraphic extends React.PureComponent  {
+export default class EnvelopeGraphic extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = Controller.envelope;
+        this.state = {
+            attack: 0,
+            release: 0,
+            sustain: 0,
+            decay: 0
+        };
         this.hide = false;
         this.position = this.position.bind(this);
         this.point = { current: null };
@@ -61,6 +66,16 @@ export default class EnvelopeGraphic extends React.PureComponent  {
         this.clearPoint = this.clearPoint.bind(this);
     }
 
+    componentWillMount() {
+        this.state = this.props.state;
+        this.original = this.props.state;
+        this.hide = false;
+        this.target = ReactDOM.findDOMNode(this);
+    }
+    componentWillReceiveProps(next) {
+        this.state = next.state;
+        this.original = next.state;
+    }
     componentDidMount() {
         this.hide = false;
         this.target = ReactDOM.findDOMNode(this);
@@ -69,7 +84,6 @@ export default class EnvelopeGraphic extends React.PureComponent  {
         this.hide = true;
         this.target = null;
     }
-
     position(event) {
         if (event.type === "touchmove") {
             event = event.touches[0]
@@ -80,41 +94,32 @@ export default class EnvelopeGraphic extends React.PureComponent  {
 
         return { x, y };
     }
-
     levelMove(event) {
         if (this.point.current) {
             this.point.current(event);
         }
     }
-
     clearPoint() {
         this.point.current = null;
 
     }
-
     updateValues(state) {
-        Controller.envelope = { ...Controller.envelope, ...state };
+        Object.assign(this.original, state);
         this.setState(state);
     }
-
     render() {
-
         let { attack, release, sustain, decay } = this.state;
-
-
         attack = attack * 100;
         decay = (attack + decay * 100);
         let sustainX = decay + 20;
         sustain = (1 - sustain) * 100;
         release = (sustainX + release * 100);
-
         //points
         let PointStart = [0, 100],
             pointAttack = [attack, 0],
             pointSustain = [sustainX, sustain],
             pointDecay = [decay, sustain],
             pointRelease = [release, 100];
-
         return (
             <svg
                 viewBox="-5 -5 210 110" width="200px" height="120px"
