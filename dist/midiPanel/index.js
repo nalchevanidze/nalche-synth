@@ -107,11 +107,11 @@ var MidiDesk = function MidiDesk(_ref) {
 			null,
 			_react2.default.createElement(
 				"li",
-				{ className: "quartel" },
-				list.map(function (note) {
+				{ className: "names" },
+				list.map(function (note, i) {
 					return _react2.default.createElement(
 						"button",
-						{ className: "note" },
+						{ key: i, className: "note " + isBlack(note) },
 						note
 					);
 				})

@@ -22,7 +22,7 @@ var _GridLine = require("../GridLine");
 
 var _GridLine2 = _interopRequireDefault(_GridLine);
 
-var _ButtonWave = require("./ButtonWave");
+var _ButtonWave = require("../ButtonWave");
 
 var _ButtonWave2 = _interopRequireDefault(_ButtonWave);
 

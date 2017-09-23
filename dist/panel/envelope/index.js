@@ -18,6 +18,10 @@ var _EnvelopeGraphic = require("./EnvelopeGraphic");
 
 var _EnvelopeGraphic2 = _interopRequireDefault(_EnvelopeGraphic);
 
+var _ButtonWave = require("../ButtonWave");
+
+var _ButtonWave2 = _interopRequireDefault(_ButtonWave);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,54 +30,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var WaveOption = function WaveOption(_ref) {
-    var name = _ref.name,
-        change = _ref.change,
-        value = _ref.value;
-    return _react2.default.createElement(
-        "span",
-        null,
-        _react2.default.createElement(
-            "label",
-            null,
-            name
-        ),
-        _react2.default.createElement("input", { value: value, type: "range", min: "0", max: "1", name: name, step: "0.05", onChange: change })
-    );
-};
-
 var PanelEnvelope = function (_React$Component) {
     _inherits(PanelEnvelope, _React$Component);
 
-    function PanelEnvelope(props) {
+    function PanelEnvelope() {
         _classCallCheck(this, PanelEnvelope);
 
-        var _this = _possibleConstructorReturn(this, (PanelEnvelope.__proto__ || Object.getPrototypeOf(PanelEnvelope)).call(this, props));
-
-        _this.state = _Controller2.default.wave;
-        _this.envelope = _this.envelope.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (PanelEnvelope.__proto__ || Object.getPrototypeOf(PanelEnvelope)).apply(this, arguments));
     }
 
     _createClass(PanelEnvelope, [{
-        key: "componentWillMount",
-        value: function componentWillMount() {
-            this.live = true;
-        }
-    }, {
-        key: "componentWillUnmount",
-        value: function componentWillUnmount() {
-            this.live = false;
-        }
-    }, {
-        key: "envelope",
-        value: function envelope(_ref2) {
-            var target = _ref2.target;
-
-            _Controller2.default.envelope[target.name] = Number(target.value);
-            this.setState(_Controller2.default.envelope);
-        }
-    }, {
         key: "render",
         value: function render() {
             var _Controller$envelope = _Controller2.default.envelope,
@@ -90,15 +56,7 @@ var PanelEnvelope = function (_React$Component) {
                     null,
                     " envelope "
                 ),
-                _react2.default.createElement(_EnvelopeGraphic2.default, _Controller2.default.envelope),
-                _react2.default.createElement(
-                    "div",
-                    { className: "controllers" },
-                    _react2.default.createElement(WaveOption, { name: "attack", change: this.envelope, value: attack }),
-                    _react2.default.createElement(WaveOption, { name: "decay", change: this.envelope, value: decay }),
-                    _react2.default.createElement(WaveOption, { name: "sustain", change: this.envelope, value: sustain }),
-                    _react2.default.createElement(WaveOption, { name: "release", change: this.envelope, value: release })
-                )
+                _react2.default.createElement(_EnvelopeGraphic2.default, _Controller2.default.envelope)
             );
         }
     }]);

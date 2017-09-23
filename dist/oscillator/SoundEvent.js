@@ -36,8 +36,7 @@ function SoundEvent() {
     }
 
     function next() {
-        var newValue = eventTimes.next() * (0, _WaveForm2.default)(position.next(), wave);
-        return oldvalue + (newValue - oldvalue) / 2;
+        return eventTimes.next() * (0, _WaveForm2.default)(position.next(), wave);
     }
 
     function end() {
