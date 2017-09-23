@@ -93,14 +93,28 @@ var Quarter = function (_React$Component) {
 
 var MidiDesk = function MidiDesk(_ref) {
 	var midi = _ref.midi,
-	    updateMidi = _ref.updateMidi;
+	    updateMidi = _ref.updateMidi,
+	    global = _ref.global;
 	return _react2.default.createElement(
 		"div",
 		{ className: "midi window-panel" },
 		_react2.default.createElement(
 			"h3",
 			null,
-			" midi "
+			_react2.default.createElement(
+				"section",
+				{ className: "playStop" },
+				_react2.default.createElement(
+					"button",
+					{ onClick: global.play },
+					"play"
+				),
+				_react2.default.createElement(
+					"button",
+					{ onClick: global.stop },
+					"stop"
+				)
+			)
 		),
 		_react2.default.createElement(
 			"ul",
@@ -139,7 +153,11 @@ var melody = function (_React$Component2) {
 				"div",
 				{ className: "midi-panel" },
 				_react2.default.createElement(_Sequencer2.default, { seq: this.props.seq || [], updateMidi: this.props.updateMidi }),
-				_react2.default.createElement(MidiDesk, { midi: this.props.melody, updateMidi: this.props.updateMidi })
+				_react2.default.createElement(MidiDesk, {
+					midi: this.props.melody,
+					updateMidi: this.props.updateMidi,
+					global: this.props.global
+				})
 			);
 		}
 	}]);

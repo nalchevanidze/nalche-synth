@@ -1,40 +1,44 @@
-.oscillator{
+.oscillator {
     display: flex;
-    
-   svg.wave-button{
-        width: 50px;
-        height: 50px;
-        margin: 2px;
-    }
-
-    .screen svg{
-          width:120px;
-          height: 120px;
-    }
-
-    .controllers  {
-          display: flex;
-          justify-content: flex-start;
-          flex-wrap: wrap;
-    }
-    .controllers, .fm {
-        width: 150px;
-        justify-content: space-around;
+    >div {
+        display: flex;
         margin: 5px;
-        flex-shrink: 0 ;
-    }
-
-    .fm {
-        width: 70px;
-        p{
-            color:#BBB;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        flex-shrink: 0;
+        .wave-button {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            flex-shrink: 0;
+            g {
+                stroke: #ffa929;
+            }
+        }
+        p {
+            color: #4b788c;
             text-align: center;
             font-size: 10px;
             width: 100%;
         }
-        path , circle {
+    }
+    .global {
+        width: 100px;
+        path,circle{
+            stroke: #CDDC39;
+        }
+        p {color: #CDDC39};
+        justify-content: center;
+    }
+    .controllers {
+        justify-content: flex-start;
+        width: 120px;
+    }
+    .fm {
+        width: 50px;
+        path,
+        circle {
             stroke: #2196F3;
         }
     }
-    
 }

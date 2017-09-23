@@ -18,13 +18,11 @@ var _envelope2 = _interopRequireDefault(_envelope);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Panel = function Panel(_ref) {
-    var onChange = _ref.onChange,
-        range = _ref.range;
+var Panel = function Panel(props) {
     return _react2.default.createElement(
         "div",
         { className: "panel" },
-        _react2.default.createElement(_oscillator2.default, null),
+        _react2.default.createElement(_oscillator2.default, props),
         _react2.default.createElement(_envelope2.default, null)
     );
 };

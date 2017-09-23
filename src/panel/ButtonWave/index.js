@@ -100,7 +100,6 @@ class ButtonWave extends React.Component {
 				draggable={false}
 				viewBox="0 0 100 100"
 				className="wave-button"
-
 				onMouseLeave={this.mouseUp}
 				onTouchStart={this.mouseDown}
 				onTouchEnd={this.mouseUp}
@@ -113,9 +112,10 @@ class ButtonWave extends React.Component {
 
 				<g fill="none" stroke="#222" >
 
-					<path d={lib[id]} />
-
-
+					<path
+						d={lib[id]}
+						strokeWidth={2}
+					/>
 
 					<circle
 						strokeWidth={10}
@@ -126,8 +126,7 @@ class ButtonWave extends React.Component {
 						opacity={0.5}
 					/>
 
-					;
-                    <g strokeOpacity={0.1} >
+					<g strokeOpacity={0.1} >
 						<circle
 							strokeWidth={1}
 							cx={50}

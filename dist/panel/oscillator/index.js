@@ -100,27 +100,38 @@ var PanelOscillator = function (_React$Component) {
 				{ className: "oscillator" },
 				_react2.default.createElement(
 					"div",
-					{ className: "screen" },
+					{ className: "global" },
 					_react2.default.createElement(
 						"h1",
 						null,
-						" Oscillator "
-					),
-					_react2.default.createElement(
-						"h4",
-						null,
-						" Waveform "
+						" global "
 					),
 					_react2.default.createElement(
 						"svg",
-						{ viewBox: "-1 0 202 200", width: "90px", height: "90px" },
-						_react2.default.createElement("path", { d: GenerateWave(), stroke: "#444", fill: "none", strokeWidth: 0.5 }),
+						{ viewBox: "-1 0 202 200", width: "100px", height: "100px" },
+						_react2.default.createElement("path", {
+							d: GenerateWave(),
+							stroke: "#CDDC39",
+							strokeWidth: 2,
+							fill: "none"
+						}),
 						_react2.default.createElement(_GridLine2.default, null)
+					),
+					_react2.default.createElement(_ButtonWave2.default, { id: "pitch", target: { pitch: this.props.pitch }, onChange: this.props.changePitch }),
+					_react2.default.createElement(
+						"p",
+						null,
+						"pitch"
 					)
 				),
 				_react2.default.createElement(
 					"div",
 					{ className: "controllers" },
+					_react2.default.createElement(
+						"h1",
+						null,
+						" Oscillator "
+					),
 					_react2.default.createElement(_ButtonWave2.default, { id: "sine", target: _Controller2.default.wave }),
 					_react2.default.createElement(_ButtonWave2.default, { id: "square", target: _Controller2.default.wave }),
 					_react2.default.createElement(_ButtonWave2.default, { id: "saw", target: _Controller2.default.wave }),

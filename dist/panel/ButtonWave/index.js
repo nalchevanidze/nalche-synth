@@ -133,7 +133,6 @@ var ButtonWave = function (_React$Component) {
 					draggable: false,
 					viewBox: "0 0 100 100",
 					className: "wave-button",
-
 					onMouseLeave: this.mouseUp,
 					onTouchStart: this.mouseDown,
 					onTouchEnd: this.mouseUp,
@@ -146,7 +145,10 @@ var ButtonWave = function (_React$Component) {
 				_react2.default.createElement(
 					"g",
 					{ fill: "none", stroke: "#222" },
-					_react2.default.createElement("path", { d: _icons2.default[id] }),
+					_react2.default.createElement("path", {
+						d: _icons2.default[id],
+						strokeWidth: 2
+					}),
 					_react2.default.createElement("circle", {
 						strokeWidth: 10,
 						cx: 50,
@@ -155,7 +157,6 @@ var ButtonWave = function (_React$Component) {
 						strokeDasharray: dashArray,
 						opacity: 0.5
 					}),
-					";",
 					_react2.default.createElement(
 						"g",
 						{ strokeOpacity: 0.1 },

@@ -13,12 +13,12 @@ function keyEvent(target, type) {
 }
 
 const sequence = [
-	[1,2,3,4],[],[],
-	[1,2,3,4],[],[],
-	[1,2,3,4],[],[],
-	[1,2,3,4],[],[],
-	[1,2,3,4],[],
-	[1,2,3,4],[]
+    [1, 2, 3, 4], [], [],
+    [1, 2, 3, 4], [], [],
+    [1, 2, 3, 4], [], [],
+    [1, 2, 3, 4], [], [],
+    [1, 2, 3, 4], [],
+    [1, 2, 3, 4], []
 ]
 
 const midi = [
@@ -39,7 +39,7 @@ export default class Synth extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            range: 1,
+            range: 0,
             active: Array.from({ length: 24 }, e => false)
         };
         this.keyPress = this.keyPress.bind(this);
@@ -85,27 +85,20 @@ export default class Synth extends React.Component {
         this.midi.stop();
         keyEvent(this, false);
     }
+    changePitch(value) {
+        this.setState({
+            range: Math.floor(value.pitch*16 - 8)
+        })
+    }
     render() {
         return (
             <div className="nalche-synth" >
                 <div className='page piano' >
                     <section className="keyboard">
-                        <Panel />
-                        <div className="pitch">
-                            <input
-                                type="range"
-                                min="-1"
-                                max="5"
-                                step="1"
-                                value={this.state.range}
-                                onChange={(event) => {
-                                    this.setState({
-                                        range: event.target.value
-                                    })
-                                }}
-                            />
-                            <label> pitch </label>
-                        </div>
+                        <Panel
+                            pitch={(this.state.range + 8)/16}
+                            changePitch={(e) => this.changePitch(e)}
+                        />
                         <ul className="midi-keys" >
                             <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
                             <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />
@@ -113,11 +106,13 @@ export default class Synth extends React.Component {
                         </ul>
                     </section>
                 </div>
-                <section className="playStop" >
-                    <button onClick={() => this.midi.play()}  >play</button>
-                    <button onClick={() => this.stop()}  >stop</button>
-                </section>
-                <MidiPanel {...this.midi} />
+                <MidiPanel {...this.midi} global={
+                    {
+                        play: () => { this.midi.play() },
+                        stop: () => this.stop()
+                    }
+                }
+                />
             </div>
         );
     }

@@ -15,13 +15,15 @@ const parameters = {
 		release: 0.3,
 		attack: 0,
 		sustain: 0.3,
-		decay: 0.05
+		decay: 0.2
 	},
 
 	filter:{
 		cutoff: 0.14,
 		resonance: 0.25
-	}
+	},
+
+	pitch: 1
 	
 }
 export default parameters;

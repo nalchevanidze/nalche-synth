@@ -1,20 +1,21 @@
-.envelope{
-          > div {
-              width: 100%;
-              display: flex;
-              justify-content: space-between;
-            span{
-              width: 40px;
-              display: block;
-              margin:2px;
-              *{
-                  display: block;
-                  width: 100%;
-              }
-              label{
-                  border-bottom: 1px solid #f9fbe6;
-                  color: #b9bab2;
-              }
-          }
-          }  
+.envelope {
+    margin: 5px;
+    >div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        span {
+            width: 40px;
+            display: block;
+            margin: 2px;
+            * {
+                display: block;
+                width: 100%;
+            }
+            label {
+                border-bottom: 1px solid #f9fbe6;
+                color: #b9bab2;
+            }
+        }
+    }
 }

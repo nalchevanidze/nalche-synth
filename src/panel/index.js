@@ -2,9 +2,9 @@ import React from "react";
 import PanelOscillator from "./oscillator";
 import PanelEnvelope from "./envelope";
 
-const Panel = ({onChange,range}) =>
+const Panel = (props) =>
     <div className="panel" >
-        <PanelOscillator />
+        <PanelOscillator  {...props} />
         <PanelEnvelope />
     </div>;
 

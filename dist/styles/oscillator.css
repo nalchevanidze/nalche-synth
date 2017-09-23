@@ -1,27 +1,35 @@
 .oscillator {
   display: flex; }
-  .oscillator svg.wave-button {
-    width: 50px;
-    height: 50px;
-    margin: 2px; }
-  .oscillator .screen svg {
-    width: 120px;
-    height: 120px; }
-  .oscillator .controllers {
+  .oscillator > div {
     display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap; }
-  .oscillator .controllers, .oscillator .fm {
-    width: 150px;
-    justify-content: space-around;
     margin: 5px;
+    justify-content: space-around;
+    flex-wrap: wrap;
     flex-shrink: 0; }
-  .oscillator .fm {
-    width: 70px; }
-    .oscillator .fm p {
-      color: #BBB;
+    .oscillator > div .wave-button {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      flex-shrink: 0; }
+      .oscillator > div .wave-button g {
+        stroke: #ffa929; }
+    .oscillator > div p {
+      color: #4b788c;
       text-align: center;
       font-size: 10px;
       width: 100%; }
-    .oscillator .fm path, .oscillator .fm circle {
+  .oscillator .global {
+    width: 100px;
+    justify-content: center; }
+    .oscillator .global path, .oscillator .global circle {
+      stroke: #CDDC39; }
+    .oscillator .global p {
+      color: #CDDC39; }
+  .oscillator .controllers {
+    justify-content: flex-start;
+    width: 120px; }
+  .oscillator .fm {
+    width: 50px; }
+    .oscillator .fm path,
+    .oscillator .fm circle {
       stroke: #2196F3; }

@@ -41,17 +41,22 @@ class PanelOscillator extends React.Component {
 		let { release, attack, decay, sustain } = Controller.envelope;
 		return (
 			<div className="oscillator">
-
-				<div className="screen" >
-					<h1> Oscillator </h1>
-					<h4> Waveform </h4>
-					<svg viewBox="-1 0 202 200" width="90px" height="90px" >
-						<path d={GenerateWave()} stroke="#444" fill="none" strokeWidth={0.5} />
+				<div className="global" >
+					<h1> global </h1>
+					<svg viewBox="-1 0 202 200" width="100px" height="100px" >
+						<path
+							d={GenerateWave()}
+							stroke="#CDDC39"
+							strokeWidth={2}
+							fill="none"
+						/>
 						<GridLine />
 					</svg>
+					<ButtonWave id="pitch" target={{pitch:this.props.pitch}} onChange={this.props.changePitch} />
+				    <p>pitch</p>
 				</div>
-
 				<div className="controllers" >
+					<h1> Oscillator </h1>
 					<ButtonWave id="sine" target={Controller.wave} />
 					<ButtonWave id="square" target={Controller.wave} />
 					<ButtonWave id="saw" target={Controller.wave} />
@@ -59,7 +64,6 @@ class PanelOscillator extends React.Component {
 					<ButtonWave id="tech" target={Controller.wave} />
 					<ButtonWave id="noise" target={Controller.wave} />
 				</div>
-
 				<div className="fm" >
 					<h1> FM </h1>
 					<ButtonWave id="fm" target={Controller.wave} />
@@ -68,7 +72,6 @@ class PanelOscillator extends React.Component {
 					<p>frequency</p>
 
 				</div>
-
 				<div className="fm"  >
 					<h1> Filter </h1>
 					<ButtonWave id="cutoff" target={Controller.filter} />

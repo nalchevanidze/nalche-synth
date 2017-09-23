@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
@@ -63,7 +65,7 @@ var Synth = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
         _this.state = {
-            range: 1,
+            range: 0,
             active: Array.from({ length: 24 }, function (e) {
                 return false;
             })
@@ -125,6 +127,13 @@ var Synth = function (_React$Component) {
             keyEvent(this, false);
         }
     }, {
+        key: "changePitch",
+        value: function changePitch(value) {
+            this.setState({
+                range: Math.floor(value.pitch * 16 - 8)
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -138,28 +147,12 @@ var Synth = function (_React$Component) {
                     _react2.default.createElement(
                         "section",
                         { className: "keyboard" },
-                        _react2.default.createElement(_panel2.default, null),
-                        _react2.default.createElement(
-                            "div",
-                            { className: "pitch" },
-                            _react2.default.createElement("input", {
-                                type: "range",
-                                min: "-1",
-                                max: "5",
-                                step: "1",
-                                value: this.state.range,
-                                onChange: function onChange(event) {
-                                    _this2.setState({
-                                        range: event.target.value
-                                    });
-                                }
-                            }),
-                            _react2.default.createElement(
-                                "label",
-                                null,
-                                " pitch "
-                            )
-                        ),
+                        _react2.default.createElement(_panel2.default, {
+                            pitch: (this.state.range + 8) / 16,
+                            changePitch: function changePitch(e) {
+                                return _this2.changePitch(e);
+                            }
+                        }),
                         _react2.default.createElement(
                             "ul",
                             { className: "midi-keys" },
@@ -169,25 +162,15 @@ var Synth = function (_React$Component) {
                         )
                     )
                 ),
-                _react2.default.createElement(
-                    "section",
-                    { className: "playStop" },
-                    _react2.default.createElement(
-                        "button",
-                        { onClick: function onClick() {
-                                return _this2.midi.play();
-                            } },
-                        "play"
-                    ),
-                    _react2.default.createElement(
-                        "button",
-                        { onClick: function onClick() {
-                                return _this2.stop();
-                            } },
-                        "stop"
-                    )
-                ),
-                _react2.default.createElement(_midiPanel2.default, this.midi)
+                _react2.default.createElement(_midiPanel2.default, _extends({}, this.midi, { global: {
+                        play: function play() {
+                            _this2.midi.play();
+                        },
+                        stop: function stop() {
+                            return _this2.stop();
+                        }
+                    }
+                }))
             );
         }
     }]);

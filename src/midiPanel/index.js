@@ -55,15 +55,20 @@ class Quarter extends React.Component {
 	}
 }
 
-const MidiDesk = ({ midi, updateMidi }) =>
+const MidiDesk = ({ midi, updateMidi, global }) =>
 	<div className="midi window-panel" >
-		<h3> midi </h3>
+		<h3>
+			<section className="playStop" >
+				<button onClick={global.play}  >play</button>
+				<button onClick={global.stop}  >stop</button>
+			</section>
+		</h3>
 		<ul >
 			<li className="names" >
 				{
 					list.map(
-						(note,i) =>
-							<button key={i} className={"note "+isBlack(note)} >{note}</button>
+						(note, i) =>
+							<button key={i} className={"note " + isBlack(note)} >{note}</button>
 
 					)
 
@@ -84,7 +89,11 @@ export default class melody extends React.Component {
 		return (
 			<div className="midi-panel" >
 				<Sequencer seq={this.props.seq || []} updateMidi={this.props.updateMidi} />
-				<MidiDesk midi={this.props.melody} updateMidi={this.props.updateMidi} />
+				<MidiDesk
+					midi={this.props.melody}
+					updateMidi={this.props.updateMidi}
+					global={this.props.global}
+				/>
 			</div>
 		)
 	}
