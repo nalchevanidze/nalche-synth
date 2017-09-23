@@ -4,7 +4,7 @@ import Controller from "../../Controller";
 import WaveForm from "../../oscillator/WaveForm";
 
 import GridLine from "../GridLine";
-import ButtonWave from "./ButtonWave";
+import ButtonWave from "../ButtonWave";
 
 const WavePoint = index => (1 - WaveForm(index)) * 100;
 function GenerateWave() {

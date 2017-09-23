@@ -45,8 +45,10 @@ class ButtonWave extends React.Component {
 
 	levelMove(event, ...e) {
 
+		let { onChange, target, id } = this.props;
 
-         const stepSize = 32;
+
+		const stepSize = 32;
 
 		if (event.type === "touchmove") {
 			event = event.touches[0]
@@ -55,10 +57,18 @@ class ButtonWave extends React.Component {
 
 		if (!this.hide) {
 			if (this.state.levelmove) {
+
 				let { x, y } = SvgCoordinates(this.target, event);
 				const value = 1 - Math.min((Math.max(y - 5, 0) / 80), 1);
-				let fixed = Math.round(value * stepSize) /stepSize
-				this.props.target[this.props.id] = fixed;
+				let fixed = Math.round(value * stepSize) / stepSize
+				if (target) {
+					target[id] = fixed;
+				};
+
+				if (onChange) {
+					onChange({ [id]: fixed });
+				}
+
 			}
 		}
 	}
