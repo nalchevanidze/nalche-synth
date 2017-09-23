@@ -16,11 +16,7 @@ const keys = [
 
 ];
 
-export default class Octave extends React.PureComponent {
-  render() {
-
-    let { index, active = [], press, up } = this.props;
-    return (
+const Octave =({ index, active = [], press, up })=>
       <li>
         {
           keys.map(({ id, semi }, i) =>
@@ -35,6 +31,6 @@ export default class Octave extends React.PureComponent {
           )
         }
       </li>
-    );
-  }
-}
+;
+
+export default Octave;
