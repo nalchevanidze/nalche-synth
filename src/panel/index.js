@@ -3,13 +3,20 @@ import PanelOscillator from "./oscillator";
 import PanelEnvelope from "./envelope";
 import Sequencer from "./Sequencer";
 
-const Panel = (props) =>
-    <div className="panel" >
-        <PanelOscillator  {...props} />
-        <div>
-            <PanelEnvelope />
-            <Sequencer seq={props.seq || []} updateMidi={props.updateMidi} />
-        </div>
-    </div>;
+export default class Panel extends React.PureComponent {
 
-export default Panel;
+    render() {
+        let { props } = this;
+
+        return (
+            <div className="panel" >
+                <PanelOscillator  {...props} />
+                <div>
+                    <PanelEnvelope />
+                    <Sequencer seq={props.seq || []} updateMidi={props.updateMidi} />
+                </div>
+            </div>
+        );
+    }
+}
+

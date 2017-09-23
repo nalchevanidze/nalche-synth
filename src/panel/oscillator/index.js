@@ -15,21 +15,18 @@ function GenerateWave() {
 	return "M 0 " + p + " " + wave + " 200 " + p;
 }
 
-class PanelOscillator extends React.Component {
+class PanelOscillator extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = Controller.wave;
 		this.change = this.change.bind(this);
 		this.update = this.update.bind(this);
 	}
-	update() {
-		if (!this.live) return;
-		this.setState({ v: Math.random });
-		setTimeout(this.update, 100);
+	update(state) {
+		this.setState(state);
 	}
 	componentWillMount() {
 		this.live = true;
-		this.update();
 	}
 	componentWillUnmount() {
 		this.live = false;
@@ -53,21 +50,21 @@ class PanelOscillator extends React.Component {
 						<GridLine />
 					</svg>
 					<ButtonWave
-						id="pitch" 
-						target={{ pitch: this.props.pitch }} 
-						onChange={this.props.changePitch} 
+						id="pitch"
+						target={{ pitch: this.props.pitch }}
+						onChange={this.props.changePitch}
 						steps={8}
 					/>
 					<p>pitch</p>
 				</div>
 				<div className="controllers" >
 					<h1> Oscillator </h1>
-					<ButtonWave id="sine" target={Controller.wave} />
-					<ButtonWave id="square" target={Controller.wave} />
-					<ButtonWave id="saw" target={Controller.wave} />
-					<ButtonWave id="saw2" target={Controller.wave} />
-					<ButtonWave id="tech" target={Controller.wave} />
-					<ButtonWave id="noise" target={Controller.wave} />
+					<ButtonWave id="sine" target={Controller.wave} onChange={this.update} />
+					<ButtonWave id="square" target={Controller.wave} onChange={this.update} />
+					<ButtonWave id="saw" target={Controller.wave} onChange={this.update} />
+					<ButtonWave id="saw2" target={Controller.wave} onChange={this.update} />
+					<ButtonWave id="tech" target={Controller.wave} onChange={this.update} />
+					<ButtonWave id="noise" target={Controller.wave} onChange={this.update} />
 				</div>
 				<div className="fm" >
 					<h1> FM </h1>

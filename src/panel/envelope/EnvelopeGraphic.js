@@ -50,7 +50,7 @@ class PointCircle extends React.Component {
         );
     }
 }
-export default class EnvelopeGraphic extends React.Component {
+export default class EnvelopeGraphic extends React.PureComponent  {
     constructor(props) {
         super(props);
         this.state = Controller.envelope;

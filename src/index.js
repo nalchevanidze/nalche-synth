@@ -40,16 +40,27 @@ export default class Synth extends React.Component {
         super(props);
         this.state = {
             range: 0,
-            active: Array.from({ length: 24 }, e => false)
+            active: Array.from({ length: 24 }, e => false),
+            time: 0,
         };
         this.keyPress = this.keyPress.bind(this);
         this.keyUp = this.keyUp.bind(this);
         this.osc = SynthesizerController();
+        this.changePitch = this.changePitch.bind(this);
+
+        this.global = {
+            play: () => { this.midi.play() },
+            stop: () => this.stop()
+        };
+
         this.midi = new midiPlayer({
             play: this.keyPress,
             stop: this.keyUp,
             sequence,
-            midi
+            midi,
+            component: (time) => {
+                this.setState({ time })
+            }
         });
     }
     keyPress(e) {
@@ -59,7 +70,7 @@ export default class Synth extends React.Component {
         }
         this.state.active[e] = true;
         this.osc.play(e + this.state.range * 12);
-        this.setState({ ha: Math.random() });
+        this.setState({ time: this.midi.currentState });
     }
     keyUp(e) {
         if (typeof e !== "number") {
@@ -68,7 +79,7 @@ export default class Synth extends React.Component {
         }
         this.state.active[e] = false;
         this.osc.stop(e + this.state.range * 12);
-        this.setState({ ha: Math.random() });
+        this.setState({ time: this.midi.currentState });
     }
     stop() {
         this.midi.stop()
@@ -87,7 +98,7 @@ export default class Synth extends React.Component {
     }
     changePitch(value) {
         this.setState({
-            range: Math.floor(value.pitch*8 - 4)
+            range: Math.floor(value.pitch * 8 - 4)
         })
     }
     render() {
@@ -96,8 +107,8 @@ export default class Synth extends React.Component {
                 <div className='page piano' >
                     <section className="keyboard">
                         <Panel
-                            pitch={(this.state.range + 4)/8}
-                            changePitch={(e) => this.changePitch(e)}
+                            pitch={(this.state.range + 4) / 8}
+                            changePitch={this.changePitch}
                             seq={this.midi.seq}
                             updateMidi={this.midi.updateMidi}
                         />
@@ -108,12 +119,7 @@ export default class Synth extends React.Component {
                         </ul>
                     </section>
                 </div>
-                <MidiPanel {...this.midi} global={
-                    {
-                        play: () => { this.midi.play() },
-                        stop: () => this.stop()
-                    }
-                }
+                <MidiPanel {...this.midi} global={this.global}
                 />
             </div>
         );

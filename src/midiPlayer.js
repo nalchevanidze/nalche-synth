@@ -3,36 +3,26 @@ let midi = [];
 let endIndex = 0;
 let sequence = [];
 function sequencer(c, start, end) {
-
 	start *= 32;
 	end = start + end * 32;
 	endIndex = Math.max(end, endIndex);
 	let i = start;
 	let arpIndex = 0;
 	let direction = 1;
-
 	while (i <= end) {
-
 		let note = 0;
-
 		// makes saquence loop
 		if (arpIndex >= sequence.length) {
 			arpIndex = 0;
 		}
-
-
 		let currentChord = sequence[arpIndex];
-
 		if (currentChord.length > 0) {
-
-
 			const chord = currentChord.map((noteIndex) => {
 				noteIndex--;
 				const outIndex = Math.floor(noteIndex / c.length);
 				noteIndex = noteIndex % c.length
 				return c[noteIndex] + (12 * outIndex);
 			})
-
 			midi[i] = {
 				start: chord,
 				end: []
@@ -42,12 +32,9 @@ function sequencer(c, start, end) {
 				end: chord
 			};
 		}
-
 		arpIndex++;
 		i += 2;
-
 	}
-
 }
 
 function melody(melodyList) {
@@ -63,13 +50,13 @@ function melody(melodyList) {
 };
 
 function addQuard(note, index) {
-
 	const noteStart = midi[index * 16].start;
 	noteStart.push(note);
 	const noteEnd = midi[(index + 1) * 16 - 1].end;
 	noteEnd.push(note);
-
 }
+
+
 export default class MidiPlayer {
 	constructor(osc) {
 		this.osc = osc;
@@ -81,6 +68,7 @@ export default class MidiPlayer {
 		this.melody = osc.midi;
 		this.updateMidi = this.updateMidi.bind(this);
 		this.updateMidi();
+	//	this.updateComponent = osc.component;
 	}
 	updateMidi(seq) {
 		midi = [];
@@ -104,6 +92,11 @@ export default class MidiPlayer {
 	}
 	next() {
 		this.currentState = this.index / endIndex;
+
+		if(this.updateComponent){
+			this.updateComponent(this.currentState);
+		}
+
 		this.state = midi[this.index];
 		if (this.state) {
 			this.executeState();

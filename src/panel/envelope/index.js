@@ -4,7 +4,7 @@ import EnvelopeGraphic from './EnvelopeGraphic';
 import ButtonWave from "../ButtonWave";
 
 
-class PanelEnvelope extends React.Component {
+class PanelEnvelope extends React.PureComponent  {
     render() {
         let { release, attack, decay, sustain } = Controller.envelope;
         return (

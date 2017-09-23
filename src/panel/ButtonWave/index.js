@@ -19,7 +19,8 @@ function safeValue() {
 
 }
 
-class ButtonWave extends React.Component {
+
+class ButtonWave extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
@@ -53,16 +54,19 @@ class ButtonWave extends React.Component {
 			event = event.touches[0]
 		}
 
-
 		if (!this.hide) {
 			if (this.state.levelmove) {
 
 				let { x, y } = SvgCoordinates(this.target, event);
+				this.setState({x,y});
+				
 				const value = 1 - Math.min((Math.max(y - 5, 0) / 80), 1);
 				let fixed = Math.round(value * stepSize) / stepSize
 				if (target) {
 					target[id] = fixed;
 				};
+
+				
 
 				if (onChange) {
 					onChange({ [id]: fixed });

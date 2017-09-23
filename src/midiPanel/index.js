@@ -54,39 +54,43 @@ class Quarter extends React.Component {
 	}
 }
 
-const MidiDesk = ({ midi, updateMidi, global, currentState = 0 }) =>
-	<div className="midi window-panel" >
-		<h3>
-			<section className="playStop" >
-				<button onClick={global.play}  >play</button>
-				<button onClick={global.stop}  >stop</button>
-			</section>
-		</h3>
-		<div className="time-line" >
-			<button style={{ left: currentState * 400 + 48 + "px" }} />
-		</div>
-		<ul >
-			<li className="names" >
-				{
-					list.map(
-						(note, i) =>
-							<button key={i} className={"note " + isBlack(note)} >{note}</button>
+class MidiDesk extends React.PureComponent {
+	render() {
+		let { midi, updateMidi, global, currentState = 0 } = this.props;
+		return (
+			<div className="midi window-panel" >
+				<h3>
+					<section className="playStop" >
+						<button onClick={global.play}  >play</button>
+						<button onClick={global.stop}  >stop</button>
+					</section>
+				</h3>
+				<div className="time-line" >
+					<button style={{ left: currentState * 400 + 48 + "px" }} />
+				</div>
+				<ul >
+					<li className="names" >
+						{
+							list.map(
+								(note, i) =>
+									<button key={i} className={"note " + isBlack(note)} >{note}</button>
 
-					)
+							)
 
-				}
-			</li>
-			{
-				midi.map((quard, i) =>
-					<Quarter key={i} quard={quard} updateMidi={updateMidi} />
-				)
-			}
-		</ul>
-	</div>
-	;
+						}
+					</li>
+					{
+						midi.map((quard, i) =>
+							<Quarter key={i} quard={quard} updateMidi={updateMidi} />
+						)
+					}
+				</ul>
+			</div>
+		)
+	}
+}
 
-
-export default class melody extends React.Component {
+export default class melody extends React.PureComponent {
 	render() {
 		return (
 			<div className="midi-panel" >

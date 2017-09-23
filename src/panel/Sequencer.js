@@ -20,7 +20,7 @@ const Sequence = ({ chord, active , onClick }) =>
     </li>
     ;
 
-export default class melody extends React.Component {
+export default class melody extends React.PureComponent  {
     constructor(props) {
         super(props);
         this.state = {
