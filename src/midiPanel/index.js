@@ -1,5 +1,4 @@
 import React from "react";
-import Sequencer from "./Sequencer";
 
 const keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 let list = [
@@ -55,7 +54,7 @@ class Quarter extends React.Component {
 	}
 }
 
-const MidiDesk = ({ midi, updateMidi, global }) =>
+const MidiDesk = ({ midi, updateMidi, global, currentState = 0 }) =>
 	<div className="midi window-panel" >
 		<h3>
 			<section className="playStop" >
@@ -63,6 +62,9 @@ const MidiDesk = ({ midi, updateMidi, global }) =>
 				<button onClick={global.stop}  >stop</button>
 			</section>
 		</h3>
+		<div className="time-line" >
+			<button style={{ left: currentState * 400 + 48 + "px" }} />
+		</div>
 		<ul >
 			<li className="names" >
 				{
@@ -88,8 +90,8 @@ export default class melody extends React.Component {
 	render() {
 		return (
 			<div className="midi-panel" >
-				<Sequencer seq={this.props.seq || []} updateMidi={this.props.updateMidi} />
 				<MidiDesk
+					currentState={this.props.currentState}
 					midi={this.props.melody}
 					updateMidi={this.props.updateMidi}
 					global={this.props.global}

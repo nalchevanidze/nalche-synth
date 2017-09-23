@@ -43,7 +43,7 @@ export default class melody extends React.Component {
     render() {
         return (
             <div className="sequencer window-panel" >
-                <h3>sequencer</h3>
+                <h1>sequencer</h1>
                 <ul>
                     {
                         this.props.seq.map((chord, i) =>

@@ -24,11 +24,7 @@
 
 
 
-.midi-panel {
-    display: block;
-    flex-grow: 2;
-    margin: 20px;
-}
+
 
 .piano {
     font-size: 12px;
@@ -63,6 +59,7 @@
 @import "grid";
 @import "oscillator";
 @import "midi";
+@import "sequencer";
 button {
     outline: none;
     border: none;

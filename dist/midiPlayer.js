@@ -83,6 +83,7 @@ var MidiPlayer = function () {
 		this.osc = osc;
 		this.BPM = 60 * 1000 / (128 * 8);
 		this.next = this.next.bind(this);
+		this.currentState = 0;
 		this.seq = osc.sequence;
 		sequence = osc.sequence;
 		this.melody = osc.midi;
@@ -101,6 +102,7 @@ var MidiPlayer = function () {
 		value: function stop() {
 			clearInterval(this.loop, this.BPM);
 			this.loop = undefined;
+			this.currentState = 0;
 		}
 	}, {
 		key: "play",
@@ -123,6 +125,7 @@ var MidiPlayer = function () {
 	}, {
 		key: "next",
 		value: function next() {
+			this.currentState = this.index / endIndex;
 			this.state = midi[this.index];
 			if (this.state) {
 				this.executeState();

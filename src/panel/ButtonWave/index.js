@@ -45,10 +45,9 @@ class ButtonWave extends React.Component {
 
 	levelMove(event, ...e) {
 
-		let { onChange, target, id } = this.props;
+		let { onChange, target, id , steps = 32 } = this.props;
 
-
-		const stepSize = 32;
+		const stepSize = steps;
 
 		if (event.type === "touchmove") {
 			event = event.touches[0]
@@ -85,13 +84,14 @@ class ButtonWave extends React.Component {
 
 		let {
 			id,
-			target
+			target,
+			steps=16
 		} = this.props;
 		let level = target[id];
 
 
 		const fullLength = 45 * 2 * Math.PI;
-		const step = fullLength / 16;
+		const step = fullLength / steps;
 		const dashArray = [1, step - 1];
 
 		return (

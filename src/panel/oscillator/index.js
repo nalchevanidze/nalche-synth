@@ -52,8 +52,13 @@ class PanelOscillator extends React.Component {
 						/>
 						<GridLine />
 					</svg>
-					<ButtonWave id="pitch" target={{pitch:this.props.pitch}} onChange={this.props.changePitch} />
-				    <p>pitch</p>
+					<ButtonWave
+						id="pitch" 
+						target={{ pitch: this.props.pitch }} 
+						onChange={this.props.changePitch} 
+						steps={8}
+					/>
+					<p>pitch</p>
 				</div>
 				<div className="controllers" >
 					<h1> Oscillator </h1>

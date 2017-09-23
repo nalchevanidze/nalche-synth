@@ -87,7 +87,7 @@ export default class Synth extends React.Component {
     }
     changePitch(value) {
         this.setState({
-            range: Math.floor(value.pitch*16 - 8)
+            range: Math.floor(value.pitch*8 - 4)
         })
     }
     render() {
@@ -96,8 +96,10 @@ export default class Synth extends React.Component {
                 <div className='page piano' >
                     <section className="keyboard">
                         <Panel
-                            pitch={(this.state.range + 8)/16}
+                            pitch={(this.state.range + 4)/8}
                             changePitch={(e) => this.changePitch(e)}
+                            seq={this.midi.seq}
+                            updateMidi={this.midi.updateMidi}
                         />
                         <ul className="midi-keys" >
                             <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />

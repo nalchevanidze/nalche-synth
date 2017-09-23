@@ -10,6 +10,10 @@ class PanelEnvelope extends React.Component {
         return (
             <div className="envelope" >
                 <h1> envelope </h1>
+                <div className="selector" >
+                   <button className="active" >volume</button>
+                   <button>filter</button>
+                </div>
                 <EnvelopeGraphic {...Controller.envelope} />
             </div>
         );

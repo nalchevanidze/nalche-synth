@@ -56,6 +56,20 @@ var PanelEnvelope = function (_React$Component) {
                     null,
                     " envelope "
                 ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "selector" },
+                    _react2.default.createElement(
+                        "button",
+                        { className: "active" },
+                        "volume"
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        null,
+                        "filter"
+                    )
+                ),
                 _react2.default.createElement(_EnvelopeGraphic2.default, _Controller2.default.envelope)
             );
         }

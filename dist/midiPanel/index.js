@@ -10,10 +10,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Sequencer = require("./Sequencer");
-
-var _Sequencer2 = _interopRequireDefault(_Sequencer);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -94,7 +90,9 @@ var Quarter = function (_React$Component) {
 var MidiDesk = function MidiDesk(_ref) {
 	var midi = _ref.midi,
 	    updateMidi = _ref.updateMidi,
-	    global = _ref.global;
+	    global = _ref.global,
+	    _ref$currentState = _ref.currentState,
+	    currentState = _ref$currentState === undefined ? 0 : _ref$currentState;
 	return _react2.default.createElement(
 		"div",
 		{ className: "midi window-panel" },
@@ -115,6 +113,11 @@ var MidiDesk = function MidiDesk(_ref) {
 					"stop"
 				)
 			)
+		),
+		_react2.default.createElement(
+			"div",
+			{ className: "time-line" },
+			_react2.default.createElement("button", { style: { left: currentState * 400 + 48 + "px" } })
 		),
 		_react2.default.createElement(
 			"ul",
@@ -152,8 +155,8 @@ var melody = function (_React$Component2) {
 			return _react2.default.createElement(
 				"div",
 				{ className: "midi-panel" },
-				_react2.default.createElement(_Sequencer2.default, { seq: this.props.seq || [], updateMidi: this.props.updateMidi }),
 				_react2.default.createElement(MidiDesk, {
+					currentState: this.props.currentState,
 					midi: this.props.melody,
 					updateMidi: this.props.updateMidi,
 					global: this.props.global

@@ -75,6 +75,7 @@ export default class MidiPlayer {
 		this.osc = osc;
 		this.BPM = 60 * 1000 /(128 * 8) ;
 		this.next = this.next.bind(this);
+		this.currentState = 0;
 		this.seq = osc.sequence;
 		sequence = osc.sequence;
 		this.melody = osc.midi;
@@ -88,6 +89,7 @@ export default class MidiPlayer {
 	stop() {
 		clearInterval(this.loop, this.BPM);
 		this.loop = undefined;
+		this.currentState = 0;
 	}
 	play() {
 		if (this.loop) return;
@@ -101,6 +103,7 @@ export default class MidiPlayer {
 		start.forEach(osc.play)
 	}
 	next() {
+		this.currentState = this.index / endIndex;
 		this.state = midi[this.index];
 		if (this.state) {
 			this.executeState();

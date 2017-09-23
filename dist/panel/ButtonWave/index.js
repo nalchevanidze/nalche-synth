@@ -77,10 +77,12 @@ var ButtonWave = function (_React$Component) {
 			var _props = this.props,
 			    onChange = _props.onChange,
 			    target = _props.target,
-			    id = _props.id;
+			    id = _props.id,
+			    _props$steps = _props.steps,
+			    steps = _props$steps === undefined ? 32 : _props$steps;
 
 
-			var stepSize = 32;
+			var stepSize = steps;
 
 			if (event.type === "touchmove") {
 				event = event.touches[0];
@@ -118,12 +120,14 @@ var ButtonWave = function (_React$Component) {
 		value: function render() {
 			var _props2 = this.props,
 			    id = _props2.id,
-			    target = _props2.target;
+			    target = _props2.target,
+			    _props2$steps = _props2.steps,
+			    steps = _props2$steps === undefined ? 16 : _props2$steps;
 
 			var level = target[id];
 
 			var fullLength = 45 * 2 * Math.PI;
-			var step = fullLength / 16;
+			var step = fullLength / steps;
 			var dashArray = [1, step - 1];
 
 			return _react2.default.createElement(

@@ -117,7 +117,12 @@ var PanelOscillator = function (_React$Component) {
 						}),
 						_react2.default.createElement(_GridLine2.default, null)
 					),
-					_react2.default.createElement(_ButtonWave2.default, { id: "pitch", target: { pitch: this.props.pitch }, onChange: this.props.changePitch }),
+					_react2.default.createElement(_ButtonWave2.default, {
+						id: "pitch",
+						target: { pitch: this.props.pitch },
+						onChange: this.props.changePitch,
+						steps: 8
+					}),
 					_react2.default.createElement(
 						"p",
 						null,

@@ -46,6 +46,17 @@
       .midi-keys li button:nth-child(11) {
         left: 81.5%; }
 
+.time-line {
+  height: 10px;
+  background: gray; }
+  .time-line button {
+    width: 2px;
+    height: 395px;
+    position: absolute;
+    background: red;
+    padding: 0px;
+    left: 98px; }
+
 .window-panel {
   position: relative;
   margin: 2px; }
@@ -57,22 +68,6 @@
     display: flex;
     margin: 0px;
     padding: 0px; }
-
-.sequencer h3 {
-  width: 348px; }
-
-.sequencer li {
-  width: 20px;
-  list-style: none;
-  border: 1px solid #717171; }
-  .sequencer li button {
-    width: 100%;
-    border-bottom: 1px solid #696969;
-    height: 20px;
-    display: block;
-    background: #808080; }
-  .sequencer li .active {
-    background: #ffa929; }
 
 .playStop {
   display: flex; }
@@ -87,28 +82,29 @@
     .playStop button:hover {
       background: #777; }
 
-.midi {
-  width: 400px; }
-  .midi > ul {
-    display: flex;
-    list-style: none;
-    border-left: 1px solid gray; }
-    .midi > ul .quartel {
-      width: 50px;
-      border-right: 1px solid #EEE; }
-    .midi > ul .names {
-      width: 50px;
-      border-right: 1px solid #EEE; }
-      .midi > ul .names .black {
-        background: black;
-        color: white; }
-    .midi > ul .note {
-      width: 100%;
-      height: 9px;
-      border-bottom: 1px solid #EEE;
-      font-size: 8px;
-      display: block; }
-    .midi > ul .black {
-      background: #ececec; }
-    .midi > ul .active {
-      background: #555; }
+.midi > ul {
+  width: 450px;
+  height: 400px;
+  overflow: scroll;
+  display: flex;
+  list-style: none;
+  border-left: 1px solid gray; }
+  .midi > ul .quartel {
+    width: 50px;
+    border-right: 1px solid #EEE; }
+  .midi > ul .names {
+    width: 50px;
+    border-right: 1px solid #EEE; }
+    .midi > ul .names .black {
+      background: black;
+      color: white; }
+  .midi > ul .note {
+    width: 100%;
+    height: 12px;
+    border-bottom: 1px solid #EEE;
+    font-size: 8px;
+    display: block; }
+  .midi > ul .black {
+    background: #ececec; }
+  .midi > ul .active {
+    background: #606a79; }

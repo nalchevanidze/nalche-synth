@@ -17,11 +17,6 @@
     margin: 0px;
     color: #EEE; }
 
-.midi-panel {
-  display: block;
-  flex-grow: 2;
-  margin: 20px; }
-
 .piano {
   font-size: 12px;
   display: flex;
@@ -47,6 +42,16 @@
 
 .envelope {
   margin: 5px; }
+  .envelope .selector {
+    display: flex;
+    margin-top: 5px; }
+    .envelope .selector button {
+      border: 1px solid #222;
+      width: 50%; }
+      .envelope .selector button:hover {
+        background: #555; }
+    .envelope .selector button.active {
+      color: #FFA928; }
   .envelope > div {
     width: 100%;
     display: flex;
@@ -166,6 +171,17 @@
       .midi-keys li button:nth-child(11) {
         left: 81.5%; }
 
+.time-line {
+  height: 10px;
+  background: gray; }
+  .time-line button {
+    width: 2px;
+    height: 395px;
+    position: absolute;
+    background: red;
+    padding: 0px;
+    left: 98px; }
+
 .window-panel {
   position: relative;
   margin: 2px; }
@@ -177,22 +193,6 @@
     display: flex;
     margin: 0px;
     padding: 0px; }
-
-.sequencer h3 {
-  width: 348px; }
-
-.sequencer li {
-  width: 20px;
-  list-style: none;
-  border: 1px solid #717171; }
-  .sequencer li button {
-    width: 100%;
-    border-bottom: 1px solid #696969;
-    height: 20px;
-    display: block;
-    background: #808080; }
-  .sequencer li .active {
-    background: #ffa929; }
 
 .playStop {
   display: flex; }
@@ -207,31 +207,47 @@
     .playStop button:hover {
       background: #777; }
 
-.midi {
-  width: 400px; }
-  .midi > ul {
-    display: flex;
+.midi > ul {
+  width: 450px;
+  height: 400px;
+  overflow: scroll;
+  display: flex;
+  list-style: none;
+  border-left: 1px solid gray; }
+  .midi > ul .quartel {
+    width: 50px;
+    border-right: 1px solid #EEE; }
+  .midi > ul .names {
+    width: 50px;
+    border-right: 1px solid #EEE; }
+    .midi > ul .names .black {
+      background: black;
+      color: white; }
+  .midi > ul .note {
+    width: 100%;
+    height: 12px;
+    border-bottom: 1px solid #EEE;
+    font-size: 8px;
+    display: block; }
+  .midi > ul .black {
+    background: #ececec; }
+  .midi > ul .active {
+    background: #606a79; }
+
+.sequencer {
+  padding: 5px; }
+  .sequencer li {
+    width: 10px;
     list-style: none;
-    border-left: 1px solid gray; }
-    .midi > ul .quartel {
-      width: 50px;
-      border-right: 1px solid #EEE; }
-    .midi > ul .names {
-      width: 50px;
-      border-right: 1px solid #EEE; }
-      .midi > ul .names .black {
-        background: black;
-        color: white; }
-    .midi > ul .note {
+    border: 1px solid #333; }
+    .sequencer li button {
       width: 100%;
-      height: 9px;
-      border-bottom: 1px solid #EEE;
-      font-size: 8px;
-      display: block; }
-    .midi > ul .black {
-      background: #ececec; }
-    .midi > ul .active {
+      border-bottom: 1px solid #333;
+      height: 10px;
+      display: block;
       background: #555; }
+    .sequencer li .active {
+      background: #ffa929; }
 
 button {
   outline: none;

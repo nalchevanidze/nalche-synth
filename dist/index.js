@@ -130,7 +130,7 @@ var Synth = function (_React$Component) {
         key: "changePitch",
         value: function changePitch(value) {
             this.setState({
-                range: Math.floor(value.pitch * 16 - 8)
+                range: Math.floor(value.pitch * 8 - 4)
             });
         }
     }, {
@@ -148,10 +148,12 @@ var Synth = function (_React$Component) {
                         "section",
                         { className: "keyboard" },
                         _react2.default.createElement(_panel2.default, {
-                            pitch: (this.state.range + 8) / 16,
+                            pitch: (this.state.range + 4) / 8,
                             changePitch: function changePitch(e) {
                                 return _this2.changePitch(e);
-                            }
+                            },
+                            seq: this.midi.seq,
+                            updateMidi: this.midi.updateMidi
                         }),
                         _react2.default.createElement(
                             "ul",
