@@ -90,6 +90,7 @@ export default class Synth extends React.Component {
         });
     }
     componentDidMount() {
+        this.midi.melody = this.props.midi || this.midi.melody;
         keyEvent(this, true);
     }
     componentWillUnmount() {

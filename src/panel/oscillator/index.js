@@ -5,6 +5,7 @@ import WaveForm from "../../oscillator/WaveForm";
 
 import GridLine from "../GridLine";
 import ButtonWave from "../ButtonWave";
+import PitchButton from "../ButtonWave/PitchButton";
 
 const WavePoint = index => (1 - WaveForm(index)) * 100;
 function GenerateWave() {
@@ -49,7 +50,7 @@ class PanelOscillator extends React.PureComponent {
 						/>
 						<GridLine />
 					</svg>
-					<ButtonWave
+					<PitchButton
 						id="pitch"
 						target={{ pitch: this.props.pitch }}
 						onChange={this.props.changePitch}
