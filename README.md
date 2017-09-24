@@ -1,3 +1,4 @@
-#nalche-Synth
+# nalche-Synth
+### used: React , WebAudio
 
-[(audio Demo)](http://nalchevanidze.com/synth)
+[Preview](http://nalchevanidze.com/synth)
