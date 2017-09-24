@@ -108,15 +108,23 @@
         display: flex;
         list-style: none;
         border-left: 1px solid gray;
+        .background {
+            width: 100%;
+            .black {
+                background: #ececec;
+            }
+            position: relative;
+        }
         .quartel {
             width: 50px;
             border-right: 1px solid #EEE;
+            position: relative;
         }
         .names {
             width: 50px;
             border-right: 1px solid #EEE;
             .black {
-                background:#333;
+                background: #333;
                 color: white;
             }
         }
@@ -124,11 +132,9 @@
             width: 100%;
             height: 14px;
             border-bottom: 1px solid #EEE;
+            opacity: 0.5;
             font-size: 8px;
             display: block;
-        }
-        .black {
-            background: #ececec;
         }
         .active {
             background: #606a79;

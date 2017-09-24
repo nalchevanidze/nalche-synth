@@ -1,7 +1,6 @@
 const keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
-
-function keysToIndexes(note) {
+export default function keysToIndexes(note) {
 	const indexPosition = note.length - 1;
 	let noteNumber = Number(note.charAt(indexPosition));
 	note = note.slice(0, indexPosition);
@@ -12,10 +11,4 @@ function keysToIndexes(note) {
 	}
 
 	return index;
-}
-
-export default function chordToKeys(list) {
-	return list.map(
-		keysToIndexes
-	);
 }

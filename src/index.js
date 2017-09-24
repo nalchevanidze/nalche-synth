@@ -20,6 +20,9 @@ const sequence = [
     [1, 2, 3, 4], []
 ]
 
+
+
+
 const midi = [
     "F1,G#2,C3",
     "G#1,G#2,C3",

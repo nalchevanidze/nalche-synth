@@ -11,12 +11,6 @@ function isBlack(note) {
 	return (note.charAt(1) === "#") ? "note black" : "note"
 }
 
-function findIndex(note){
-	
-	return (list.indexOf(note.id) * 10);
-
-}
-
 const standartMidi = [
 
 	[
@@ -59,7 +53,6 @@ const standartMidi = [
 	null
 ];
 
-import keysToIndexes from "../keysToIndexes";
 class Quarter extends React.Component {
 	constructor(props) {
 		super(props);
@@ -80,27 +73,72 @@ class Quarter extends React.Component {
 	}
 	render() {
 		const quard = this.props.quard;
+		const names = this.props.quard.map(e => e.id);
 		return (
-			<g>
+			<li className="quartel" >
 				{
-					quard.map(
-						(note, noteIndex) =>
-							<rect
-							    fill="red"
-								width={ 50 * note.length/8 }
-								height={10}
-								key={noteIndex}
-								x={(this.props.index + note.at/8) * 50}
-								y={ findIndex(note) }
-							/>
+					list.map(
+						(note, noteIndex) => {
+							const chordIndex = names.indexOf(note);
+							let style = {};
+
+							if (chordIndex !== -1) {
+
+								let { at, length } = quard[chordIndex];
+								style = {
+									"marginLeft": (at * 10) + "px",
+									"width": (length / 8) * 100 + "%"
+								};
+								console.log(style);
+							}
+
+							const selected = (chordIndex !== -1) ? "active" : "";
+
+							return (
+								<button
+									key={noteIndex}
+									className={isBlack(note) + " " + selected}
+									onClick={() => this.update(quard, chordIndex, note)}
+									style={style}
+								/>
+							)
+						}
 					)
+
 				}
-			</g>
+			</li>
 		)
 	}
 }
 
+
+class Keys extends React.PureComponent {
+	render() {
+		let { midi, updateMidi } = this.props;
+		return (
+			<ul >
+				<li className="names" >
+					{
+						list.map(
+							(note, i) =>
+								<button key={i} className={"note " + isBlack(note)} >{note}</button>
+
+						)
+
+					}
+				</li>
+				{
+					standartMidi.map((quard, i) =>
+						<Quarter key={i} quard={quard || []} updateMidi={updateMidi} />
+					)
+				}
+			</ul>
+		);
+	}
+}
+
 class Header extends React.PureComponent {
+
 	render() {
 		let { play, stop } = this.props.global;
 		return (
@@ -112,23 +150,19 @@ class Header extends React.PureComponent {
 			</h3>
 		)
 	}
+
 }
+
+
+
+
 
 class KeyboardSVG extends React.PureComponent {
 	render() {
 		let notestep = 10;
-		let state = this.props.currentState * 200;
 		return (
 			<svg viewBox="0 0 200 400" width="200px" height="400px" >
-				<KeyboardPattern />
-				<line x1={state} x2={state} y1="0" y2="400" stroke="red" />
-				<g>
-					{
-						standartMidi.map((quard, i) =>
-							<Quarter key={i} quard={quard || []} index={i} />
-						)
-					}
-				</g>
+               <KeyboardPatern />
 			</svg>
 		)
 	}
@@ -141,7 +175,11 @@ class MidiDesk extends React.PureComponent {
 		return (
 			<div className="midi window-panel" >
 				<Header global={global} />
-				<KeyboardSVG currentState={currentState} />
+				<div className="time-line" >
+					<button style={{ left: currentState * 200 + 48 + "px" }} />
+				</div>
+				<KeyboardSVG />
+				{/* <Keys midi={midi} updateMidi={updateMidi} /> */}
 			</div>
 		)
 	}
