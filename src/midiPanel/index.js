@@ -1,5 +1,8 @@
 import React from "react";
 import KeyboardPattern from "./KeyboardPattern";
+import ReactDOM from "react-dom";
+import svgCordinates from "../panel/svgCordinates";
+
 
 const keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 let list = [
@@ -11,9 +14,9 @@ function isBlack(note) {
 	return (note.charAt(1) === "#") ? "note black" : "note"
 }
 
-function findIndex(note){
-	
-	return (list.indexOf(note.id)+5) * 10;
+function findIndex(note) {
+
+	return (list.indexOf(note.id) + 5) * 10;
 
 }
 
@@ -59,7 +62,7 @@ const standartMidi = [
 	null
 ];
 
-import keysToIndexes from "../keysToIndexes";
+
 class Quarter extends React.Component {
 	constructor(props) {
 		super(props);
@@ -67,17 +70,7 @@ class Quarter extends React.Component {
 			value: 0
 		}
 	}
-	update(quard, chordIndex, note) {
-
-		if (chordIndex !== -1) {
-			quard.splice(chordIndex, 1);
-		} else {
-			quard.push(note);
-		}
-		this.props.updateMidi();
-		this.setState({ value: Math.random() })
-
-	}
+	update() { }
 	render() {
 		const quard = this.props.quard;
 		return (
@@ -86,12 +79,12 @@ class Quarter extends React.Component {
 					quard.map(
 						(note, noteIndex) =>
 							<rect
-							    fill="#f75927"
-								width={ 40 * note.length/8 }
+								fill="#f75927"
+								width={40 * note.length / 8}
 								height={10}
 								key={noteIndex}
-								x={ (this.props.index + note.at/8) * 40}
-								y={ findIndex(note) }
+								x={(this.props.index + note.at / 8) * 40}
+								y={findIndex(note)}
 							/>
 					)
 				}
@@ -99,6 +92,7 @@ class Quarter extends React.Component {
 		)
 	}
 }
+
 
 class Header extends React.PureComponent {
 	render() {
@@ -114,12 +108,63 @@ class Header extends React.PureComponent {
 	}
 }
 
+
+
 class KeyboardSVG extends React.PureComponent {
+
+	constructor(props) {
+		super(props);
+		this.state = {};
+		this.position = this.position.bind(this);
+		this.levelMove = this.levelMove.bind(this);
+		this.clearPoint = this.clearPoint.bind(this);
+		this.point = { current: null };
+		this.hide = false;
+	}
+	componentWillMount() {
+		this.hide = false;
+		this.target = ReactDOM.findDOMNode(this);
+	}
+	componentWillReceiveProps(next) {
+	}
+	componentDidMount() {
+		this.hide = false;
+		this.target = ReactDOM.findDOMNode(this);
+	}
+	componentWillUnmount() {
+		this.hide = true;
+		this.target = null;
+	}
+	position(event) {
+
+		if (event.type === "touchmove") {
+			event = event.touches[0]
+		}
+		let { x, y } = svgCordinates(this.target, event)
+		x = Math.min((Math.max(x, 0) / 100), 1);
+		y = 1 - Math.min((Math.max(y, 0) / 100), 1);
+		return { x, y };
+	}
+	levelMove(event) {
+		if (this.point.current) {
+			this.point.current(event);
+		}
+	}
+	clearPoint() {
+		this.point.current = null;
+	}
 	render() {
 		let notestep = 10;
 		let state = this.props.currentState * 200;
 		return (
-			<svg viewBox="0 0 200 400" width="200px" height="400px" >
+			<svg
+				viewBox="0 0 200 400" width="200px" height="400px"
+				onMouseMove={this.levelMove}
+				onTouchMove={this.levelMove}
+				onMouseLeave={this.clearPoint}
+				onTouchEnd={this.clearPoint}
+				onMouseUp={this.clearPoint}
+			>
 				<KeyboardPattern />
 				<line x1={state} x2={state} y1="0" y2="400" stroke="red" />
 				<g>
@@ -132,7 +177,6 @@ class KeyboardSVG extends React.PureComponent {
 			</svg>
 		)
 	}
-
 };
 
 class MidiDesk extends React.PureComponent {
@@ -146,6 +190,7 @@ class MidiDesk extends React.PureComponent {
 		)
 	}
 }
+
 
 export default class melody extends React.PureComponent {
 	render() {

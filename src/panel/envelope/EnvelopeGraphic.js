@@ -2,18 +2,8 @@ import React from "react";
 import GridLine from "../GridLine";
 import ReactDOM from "react-dom";
 import Controller from "../../Controller";
+import svgCordinates from "../svgCordinates";
 
-
-function SvgCoordinates(svg, event) {
-    let {
-		clientX,
-        clientY
-	} = event;
-    var point = svg.createSVGPoint();
-    point.x = clientX;
-    point.y = clientY;
-    return point.matrixTransform(svg.getScreenCTM().inverse());
-}
 
 class PointCircle extends React.Component {
     constructor(props) {
@@ -88,7 +78,7 @@ export default class EnvelopeGraphic extends React.PureComponent {
         if (event.type === "touchmove") {
             event = event.touches[0]
         }
-        let { x, y } = SvgCoordinates(this.target, event)
+        let { x, y } = svgCordinates(this.target, event)
         x = Math.min((Math.max(x, 0) / 100), 1);
         y = 1 - Math.min((Math.max(y, 0) / 100), 1);
 
