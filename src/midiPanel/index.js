@@ -58,13 +58,14 @@ class Quarter extends React.Component {
 
 class Header extends React.PureComponent {
 	render() {
-		let { play, stop } = this.props.global;
+		let { play, stop , setBPM  , BPM } = this.props.global;
 		return (
 			<h3>
 				<section className="playStop" >
 					<button onClick={play}  >play</button>
 					<button onClick={stop}  >stop</button>
 				</section>
+				<input onChange={setBPM} defaultValue={BPM()} />
 			</h3>
 		)
 	}

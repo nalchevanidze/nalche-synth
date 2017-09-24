@@ -43,10 +43,7 @@ export default class Synth extends React.Component {
         this.osc = SynthesizerController();
         this.changePitch = this.changePitch.bind(this);
 
-        this.global = {
-            play: () => { this.midi.play() },
-            stop: () => this.stop()
-        };
+
 
         this.midi = new midiPlayer({
             play: this.keyPress,
@@ -57,6 +54,18 @@ export default class Synth extends React.Component {
                 this.setState({ time })
             }
         });
+
+        this.global = {
+            setBPM:(event)=>{
+
+               this.midi.setBPM(event.target.value);
+
+            } ,
+            BPM: ()=>this.midi.BPM ,
+            play: () => { this.midi.play() },
+            stop: () => this.stop()
+        };
+
     }
     keyPress(e) {
         if (typeof e !== "number") {
