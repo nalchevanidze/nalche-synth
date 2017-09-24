@@ -58,53 +58,7 @@ function setNote(startIndex, note) {
 	setValue(start, "start", note.id);
 	setValue(end, "end", note.id);
 }
-
-// "F1,G#2,C3",
-// "G#1,G#2,C3",
-// "A#1,A#2,D#2",
-// "C#2,G#2,G#3",
-const standartMidi = [
-
-	[
-		{
-			at: 0,
-			id: "F#1",
-			length: 2
-		},
-		{
-			at: 2,
-			id: "G#2",
-			length: 2
-		},
-		{
-			at: 3,
-			id: "C#3",
-			length: 1
-		}
-	],
-
-	null,
-
-	[
-		{
-			at: 4,
-			id: "F#1",
-			length: 2
-		},
-		{
-			at: 2,
-			id: "G#2",
-			length: 4
-		},
-		{
-			at: 0,
-			id: "C#3",
-			length: 24
-		}
-	],
-	null
-];
-
+import standartMidi from "./standartMidi";
 function melody(melodyList) {
 	standartMidi.forEach((e, i) => {
 		if (e) {
@@ -125,14 +79,6 @@ function melody(melodyList) {
 	// });
 };
 
-function addQuard(note, index) {
-	const noteStart = midi[index * 16].start;
-	noteStart.push(note);
-	const noteEnd = midi[(index + 1) * 16 - 1].end;
-	noteEnd.push(note);
-}
-
-
 export default class MidiPlayer {
 	constructor(osc) {
 		this.osc = osc;
@@ -148,7 +94,8 @@ export default class MidiPlayer {
 	}
 	updateMidi(seq) {
 		midi = [];
-		melody(this.melody)
+		melody(standartMidi);
+		//melody(this.melody)
 	}
 	stop() {
 		clearInterval(this.loop, this.BPM);
