@@ -19,7 +19,7 @@ class Quarter extends React.Component {
 		}
 	}
 	update(quard, chordIndex, note) {
-		console.log(quard, chordIndex, note);
+
 		if (chordIndex !== -1) {
 			quard.splice(chordIndex, 1);
 		} else {
@@ -27,6 +27,7 @@ class Quarter extends React.Component {
 		}
 		this.props.updateMidi();
 		this.setState({ value: Math.random() })
+		
 	}
 	render() {
 		const quard = this.props.quard;

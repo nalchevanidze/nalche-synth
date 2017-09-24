@@ -50,7 +50,7 @@ function keyEvent(target, type) {
     document[name]("keyup", target.keyUp);
 }
 
-var sequence = [[1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [1, 2, 3, 4], []];
+var sequence = [[1], [2], [3], [4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [1, 2, 3, 4], []];
 
 var midi = ["F1,G#2,C3", "G#1,G#2,C3", "A#1,A#2,D#2", "C#2,G#2,G#3"].map(function (e) {
     return e.split(",");
@@ -65,7 +65,7 @@ var Synth = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
         _this.state = {
-            range: 0,
+            range: 1,
             active: Array.from({ length: 24 }, function (e) {
                 return false;
             }),

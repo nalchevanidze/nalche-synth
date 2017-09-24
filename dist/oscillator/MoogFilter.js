@@ -34,16 +34,22 @@ function MoogFilter() {
     var f = void 0,
         fb = void 0,
         state = void 0,
-        envelope = void 0;
+        envelope = void 0,
+        type = void 0;
+    var maxCutoff = 1.16;
+
     node.start = function () {
         state = { done: false, value: 0 };
         envelope = (0, _EnvelopeParameter2.default)(0.3);
         var cutoff = filter.cutoff,
             resonance = filter.resonance;
 
-        f = cutoff * 1.16;
+        type = "attack";
+        maxCutoff = cutoff * 1.16;
+        f = 0.1;
     };
     node.start();
+
     function generate() {
         if (state.done) return 0;
         state = envelope.next();
@@ -55,23 +61,36 @@ function MoogFilter() {
         var input = audio.inputBuffer.getChannelData(0);
         var output = audio.outputBuffer.getChannelData(0);
         var inputSample = void 0;
-
         //envelope
         var _env$filter = env.filter,
             decay = _env$filter.decay,
-            sustain = _env$filter.sustain;
+            sustain = _env$filter.sustain,
+            attack = _env$filter.attack;
 
-        var time = 80 * decay;
-        var k = (100000 + time) / 100080;
-        var threshhold = Math.max(sustain * filter.cutoff, 0.01);
+
+        var decayStep = Math.min(1, 1 / (bufferSize * 20 * decay));
+
+        var attackStep = Math.min(1, 1 / (bufferSize * 40 * attack));
+
+        var threshhold = Math.max(sustain * maxCutoff, 0.001);
+
         //main loop
         for (var i = 0; i < bufferSize; i++) {
 
-            if (f > threshhold) {
-                f *= k;
+            if (type == "attack") {
+
+                f += attackStep;
+
+                if (f >= maxCutoff) {
+                    type = "decay";
+                    f = maxCutoff;
+                }
+            } else if (f > threshhold) {
+                f -= decayStep;
+                f = Math.max(f, 0.01);
             }
 
-            fb = filter.resonance * (1.0 - 0.15 * f * f);
+            fb = filter.resonance * 4 * (1.0 - 0.15 * f * f);
             inputSample = input[i];
             output[i] = filterSample(inputSample, f, fb);
         }

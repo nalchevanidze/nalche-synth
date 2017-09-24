@@ -12,19 +12,19 @@ const parameters = {
 	},
 
 	envelope: {
-		release: 0.3,
+		release: 0.34,
 		attack: 0,
-		sustain: 0.3,
-		decay: 0.2
+		sustain: 0.5,
+		decay: 0.3
 	},
 
 	env: {
 
 		filter: {
-			release: 0.2,
+			release: 0.1,
 			attack: 0,
-			sustain: 0.07,
-			decay: 0.6
+			sustain: 0.35,
+			decay: 0.4
 		},
 
 		
@@ -32,7 +32,7 @@ const parameters = {
 	},
 	filter: {
 		cutoff: 0.375,
-		resonance: 0.25
+		resonance: 0.15
 	}
 }
 export default parameters;

@@ -51,7 +51,7 @@ var Quarter = function (_React$Component) {
 	_createClass(Quarter, [{
 		key: "update",
 		value: function update(quard, chordIndex, note) {
-			console.log(quard, chordIndex, note);
+
 			if (chordIndex !== -1) {
 				quard.splice(chordIndex, 1);
 			} else {
