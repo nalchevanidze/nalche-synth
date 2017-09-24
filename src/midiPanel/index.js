@@ -13,7 +13,7 @@ function isBlack(note) {
 
 function findIndex(note){
 	
-	return (list.indexOf(note.id) * 10);
+	return (list.indexOf(note.id)+5) * 10;
 
 }
 
@@ -31,7 +31,7 @@ const standartMidi = [
 			length: 2
 		},
 		{
-			at: 3,
+			at: 4,
 			id: "C#3",
 			length: 1
 		}
@@ -86,11 +86,11 @@ class Quarter extends React.Component {
 					quard.map(
 						(note, noteIndex) =>
 							<rect
-							    fill="red"
-								width={ 50 * note.length/8 }
+							    fill="#f75927"
+								width={ 40 * note.length/8 }
 								height={10}
 								key={noteIndex}
-								x={(this.props.index + note.at/8) * 50}
+								x={ (this.props.index + note.at/8) * 40}
 								y={ findIndex(note) }
 							/>
 					)
