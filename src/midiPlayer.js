@@ -62,21 +62,11 @@ import standartMidi from "./standartMidi";
 function melody(melodyList) {
 	standartMidi.forEach((e, i) => {
 		if (e) {
-
 			e.forEach((note) => {
-
 				setNote(i * 8, note);
-
 			})
 		}
 	})
-	// melodyList.forEach((e, i) => {
-	// 	sequencer(
-	// 		chordToKeys(e),
-	// 		i,
-	// 		1
-	// 	)
-	// });
 };
 
 export default class MidiPlayer {
@@ -93,12 +83,12 @@ export default class MidiPlayer {
 		this.updateComponent = osc.component;
 		this.setBPM = this.setBPM.bind(this);
 	}
-	setBPM(value){
+	setBPM(value) {
 		this.BPM = value;
 		console.log(this.BPM);
 		this.updateComponent(this.currentState);
 		clearInterval(this.loop);
-		
+
 	}
 	updateMidi(seq) {
 		midi = [];
@@ -123,18 +113,19 @@ export default class MidiPlayer {
 	}
 	next() {
 		this.currentState = this.index / endIndex;
-
 		if (this.updateComponent) {
 			this.updateComponent(this.currentState);
 		}
-
 		this.state = midi[this.index];
 		if (this.state) {
 			this.executeState();
 		}
-		this.index++;
+		
 		if (this.index >= endIndex) {
 			this.index = 0;
-		};
+		} else {
+			this.index++;
+		}
+
 	}
 }

@@ -166,7 +166,7 @@ class KeyboardSVG extends React.PureComponent {
 				<KeyboardPattern />
 				<rect
 					fillOpacity="0"
-					width={200} height={400}
+					width={360} height={400}
 					onTouchStart={this.mouseDown}
 					onMouseDown={this.mouseDown}
 				/>
