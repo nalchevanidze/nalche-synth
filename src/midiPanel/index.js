@@ -58,7 +58,7 @@ class Quarter extends React.Component {
 
 class Header extends React.PureComponent {
 	render() {
-		let { play, stop , setBPM  , BPM } = this.props.global;
+		let { play, stop, setBPM, BPM } = this.props.global;
 		return (
 			<h3>
 				<section className="playStop" >
@@ -98,26 +98,40 @@ class KeyboardSVG extends React.PureComponent {
 		this.target = null;
 	}
 	position(event) {
-
 		if (event.type === "touchmove") {
 			event = event.touches[0]
 		}
-		let { x, y } = svgCordinates(this.target, event)
-		x = Math.min((Math.max(x, 0) / 100), 1);
-		y = 1 - Math.min((Math.max(y, 0) / 100), 1);
-		return { x, y };
+		let { x, y } = svgCordinates(this.target, event);
+
+		let length = x - this.createAt;
+
+		if (length > 0) {
+			this.create.length = Math.floor(length / 4.5);
+			console.log(this.create);
+		}
+		this.setState(
+			{ m: Math.random() }
+		)
 	}
 	levelMove(event) {
-		if (this.point.current) {
-			this.point.current(event);
+		if (this.create) {
+			this.position(event);
 		}
 	}
 	clearPoint() {
-		this.point.current = null;
-	}
 
+		this.point.current = null;
+		this.create = null;
+		this.createAt = 0;
+		this.props.updateMidi();
+
+		window.localStorage.midi = JSON.stringify(standartMidi);
+
+	}
 	mouseDown(event) {
+
 		let { x, y } = svgCordinates(this.target, event);
+		this.createAt = x;
 		let noteIndex = Math.floor(y / 10 - 5);
 		let id = list[noteIndex];
 		let at = Math.floor(x / 10);
@@ -126,15 +140,17 @@ class KeyboardSVG extends React.PureComponent {
 		if (!standartMidi[index]) {
 			standartMidi[index] = [];
 		}
-		standartMidi[index].push({
+		this.create = {
 			at,
 			length: 2,
 			id
-		});
-		this.setState({ m: Math.random() })
-		this.props.updateMidi();
+		};
+		standartMidi[index].push(this.create);
+	    this.props.updateMidi();
+		this.setState(
+			{ m: Math.random() }
+		);
 	}
-
 	render() {
 		let notestep = 10;
 		let state = this.props.currentState * 320;
