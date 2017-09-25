@@ -95,7 +95,7 @@ var MidiPlayer = function () {
 		_classCallCheck(this, MidiPlayer);
 
 		this.osc = osc;
-		this.BPM = 100;
+		this.BPM = 128;
 		this.next = this.next.bind(this);
 		this.currentState = 0;
 		this.seq = osc.sequence;
@@ -119,7 +119,6 @@ var MidiPlayer = function () {
 		value: function updateMidi(seq) {
 			midi = [];
 			melody(_standartMidi2.default);
-			//melody(this.melody)
 		}
 	}, {
 		key: "stop",
@@ -149,7 +148,9 @@ var MidiPlayer = function () {
 	}, {
 		key: "next",
 		value: function next() {
-			this.currentState = this.index / endIndex;
+			this.currentState = this.index;
+			// / endIndex;
+
 			if (this.updateComponent) {
 				this.updateComponent(this.currentState);
 			}

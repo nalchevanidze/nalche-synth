@@ -1,8 +1,6 @@
-import Controller from "../Controller";
+export default function WaveForm (WaveIndex , wave){
 
-export default function WaveForm (WaveIndex){
-
-          let { sine , square , saw , saw2 , noise , tech } = Controller.wave ;
+          let { sine , square , saw , saw2 , noise , tech } = wave ;
           
           let mixin = 0;
           let i = 0;

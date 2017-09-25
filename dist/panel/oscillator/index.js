@@ -39,7 +39,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var WavePoint = function WavePoint(index) {
-	return (1 - (0, _WaveForm2.default)((index + _Controller2.default.wave.offset) % 1)) * 100;
+	return (1 - (0, _WaveForm2.default)((index + _Controller2.default.wave.offset) % 1, _Controller2.default.wave)) * 100;
 };
 
 function GenerateWave() {
@@ -146,7 +146,8 @@ var PanelOscillator = function (_React$PureComponent) {
 					_react2.default.createElement(_ButtonWave2.default, { id: "saw2", target: _Controller2.default.wave, onChange: this.update }),
 					_react2.default.createElement(_ButtonWave2.default, { id: "tech", target: _Controller2.default.wave, onChange: this.update }),
 					_react2.default.createElement(_ButtonWave2.default, { id: "noise", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { id: "offset", target: _Controller2.default.wave, onChange: this.update })
+					_react2.default.createElement(_ButtonWave2.default, { id: "offset", target: _Controller2.default.wave, onChange: this.update }),
+					_react2.default.createElement(_ButtonWave2.default, { id: "voices", target: _Controller2.default.wave, onChange: this.update })
 				),
 				_react2.default.createElement(
 					"div",

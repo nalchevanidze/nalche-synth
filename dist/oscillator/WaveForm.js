@@ -4,21 +4,13 @@ Object.defineProperty(exports, "__esModule", {
    value: true
 });
 exports.default = WaveForm;
-
-var _Controller = require("../Controller");
-
-var _Controller2 = _interopRequireDefault(_Controller);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function WaveForm(WaveIndex) {
-   var _Controller$wave = _Controller2.default.wave,
-       sine = _Controller$wave.sine,
-       square = _Controller$wave.square,
-       saw = _Controller$wave.saw,
-       saw2 = _Controller$wave.saw2,
-       noise = _Controller$wave.noise,
-       tech = _Controller$wave.tech;
+function WaveForm(WaveIndex, wave) {
+   var sine = wave.sine,
+       square = wave.square,
+       saw = wave.saw,
+       saw2 = wave.saw2,
+       noise = wave.noise,
+       tech = wave.tech;
 
 
    var mixin = 0;
@@ -46,9 +38,9 @@ function WaveForm(WaveIndex) {
    }
 
    if (tech) {
-      var wave = 0;
-      if (WaveIndex < 0.15) wave = Math.min((0.05 - WaveIndex % 0.05) * 50 - 0.7, 1);
-      mixin += wave * tech;
+      var _wave = 0;
+      if (WaveIndex < 0.15) _wave = Math.min((0.05 - WaveIndex % 0.05) * 50 - 0.7, 1);
+      mixin += _wave * tech;
       i += tech;
    }
 

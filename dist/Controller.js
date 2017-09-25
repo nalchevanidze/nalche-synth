@@ -14,7 +14,8 @@ var parameters = {
 		noise: 0,
 		fm: 0.25,
 		fmFreq: 0,
-		offset: 0.5
+		offset: 0.5,
+		voices: 1
 	},
 
 	envelope: {

@@ -218,7 +218,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 
 			var notestep = 10;
 			var stageWidth = count * 80;
-			var state = this.props.currentState * stageWidth;
+			var state = this.props.currentState * notestep / 2;
 			return _react2.default.createElement(
 				"svg",
 				{

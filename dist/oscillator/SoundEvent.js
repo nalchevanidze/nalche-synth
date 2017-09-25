@@ -35,10 +35,21 @@ function SoundEvent() {
         eventTimes.restart();
     }
 
-    function next() {
-        return eventTimes.next() * (0, _WaveForm2.default)(position.next(), wave);
-    }
+    function multyVoices(p) {
+        var voices = 1 + Math.round(5 * wave.voices);
+        var value = 0;
+        var vocieOffset = 1 / voices;
 
+        for (var i = 1; i <= voices; i++) {
+            value += (0, _WaveForm2.default)(p * i * vocieOffset, wave);
+        }
+
+        return value / voices;
+    }
+    function next() {
+        var p = position.next();
+        return eventTimes.next() * multyVoices(p);
+    }
     function end() {
         eventTimes.end();
     }

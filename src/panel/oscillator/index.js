@@ -7,7 +7,13 @@ import GridLine from "../GridLine";
 import ButtonWave from "../ButtonWave";
 import PitchButton from "../ButtonWave/PitchButton";
 
-const WavePoint = index => (1 - WaveForm( (index + Controller.wave.offset)%1 )) * 100;
+const WavePoint = index => (
+	1 - WaveForm(
+		(index + Controller.wave.offset) % 1
+		,
+		Controller.wave
+	)
+) * 100;
 
 function GenerateWave() {
 
