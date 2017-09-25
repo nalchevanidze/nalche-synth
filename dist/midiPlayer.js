@@ -6,9 +6,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _chordToKeys = require("./chordToKeys");
+
+var _chordToKeys2 = _interopRequireDefault(_chordToKeys);
+
 var _keysToIndexes = require("./keysToIndexes");
 
 var _keysToIndexes2 = _interopRequireDefault(_keysToIndexes);
+
+var _standartMidi = require("./standartMidi");
+
+var _standartMidi2 = _interopRequireDefault(_standartMidi);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52,26 +60,42 @@ function sequencer(c, start, end) {
 	}
 }
 
-function melody(melodyList) {
+function setValue(i, type, value) {
 
-	melodyList.forEach(function (e, i) {
-		sequencer((0, _keysToIndexes2.default)(e), i, 1);
+	if (!midi[i]) {
+		midi[i] = {
+			start: [],
+			end: []
+		};
+	};
+	midi[i][type].push((0, _keysToIndexes2.default)(value));
+
+	endIndex = Math.max(i, endIndex);
+}
+
+function setNote(startIndex, note) {
+	var start = startIndex + note.at;
+	var end = start + note.length;
+	setValue(start, "start", note.id);
+	setValue(end, "end", note.id);
+}
+
+function melody(melodyList) {
+	_standartMidi2.default.forEach(function (e, i) {
+		if (e) {
+			e.forEach(function (note) {
+				setNote(i * 8, note);
+			});
+		}
 	});
 };
-
-function addQuard(note, index) {
-	var noteStart = midi[index * 16].start;
-	noteStart.push(note);
-	var noteEnd = midi[(index + 1) * 16 - 1].end;
-	noteEnd.push(note);
-}
 
 var MidiPlayer = function () {
 	function MidiPlayer(osc) {
 		_classCallCheck(this, MidiPlayer);
 
 		this.osc = osc;
-		this.BPM = 60 * 1000 / (128 * 8);
+		this.BPM = 100;
 		this.next = this.next.bind(this);
 		this.currentState = 0;
 		this.seq = osc.sequence;
@@ -80,18 +104,27 @@ var MidiPlayer = function () {
 		this.updateMidi = this.updateMidi.bind(this);
 		this.updateMidi();
 		this.updateComponent = osc.component;
+		this.setBPM = this.setBPM.bind(this);
 	}
 
 	_createClass(MidiPlayer, [{
+		key: "setBPM",
+		value: function setBPM(value) {
+			this.BPM = value;
+			this.updateComponent(this.currentState);
+			clearInterval(this.loop);
+		}
+	}, {
 		key: "updateMidi",
 		value: function updateMidi(seq) {
 			midi = [];
-			melody(this.melody);
+			melody(_standartMidi2.default);
+			//melody(this.melody)
 		}
 	}, {
 		key: "stop",
 		value: function stop() {
-			clearInterval(this.loop, this.BPM);
+			clearInterval(this.loop);
 			this.loop = undefined;
 			this.currentState = 0;
 		}
@@ -100,7 +133,7 @@ var MidiPlayer = function () {
 		value: function play() {
 			if (this.loop) return;
 			this.index = 0;
-			this.loop = setInterval(this.next, this.BPM);
+			this.loop = setInterval(this.next, 60 * 1000 / (this.BPM * 8));
 		}
 	}, {
 		key: "executeState",
@@ -117,19 +150,19 @@ var MidiPlayer = function () {
 		key: "next",
 		value: function next() {
 			this.currentState = this.index / endIndex;
-
 			if (this.updateComponent) {
 				this.updateComponent(this.currentState);
 			}
-
 			this.state = midi[this.index];
 			if (this.state) {
 				this.executeState();
 			}
-			this.index++;
+
 			if (this.index >= endIndex) {
 				this.index = 0;
-			};
+			} else {
+				this.index++;
+			}
 		}
 	}]);
 

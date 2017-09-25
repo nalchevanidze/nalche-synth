@@ -76,15 +76,6 @@ var Synth = function (_React$Component) {
         _this.osc = (0, _SynthesizerController2.default)();
         _this.changePitch = _this.changePitch.bind(_this);
 
-        _this.global = {
-            play: function play() {
-                _this.midi.play();
-            },
-            stop: function stop() {
-                return _this.stop();
-            }
-        };
-
         _this.midi = new _midiPlayer2.default({
             play: _this.keyPress,
             stop: _this.keyUp,
@@ -94,6 +85,23 @@ var Synth = function (_React$Component) {
                 _this.setState({ time: time });
             }
         });
+
+        _this.global = {
+            setBPM: function setBPM(event) {
+
+                _this.midi.setBPM(event.target.value);
+            },
+            BPM: function BPM() {
+                return _this.midi.BPM;
+            },
+            play: function play() {
+                _this.midi.play();
+            },
+            stop: function stop() {
+                return _this.stop();
+            }
+        };
+
         return _this;
     }
 

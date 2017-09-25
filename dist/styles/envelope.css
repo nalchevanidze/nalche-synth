@@ -10,17 +10,3 @@
         background: #555; }
     .envelope .selector button.active {
       color: #FFA928; }
-  .envelope > div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between; }
-    .envelope > div span {
-      width: 40px;
-      display: block;
-      margin: 2px; }
-      .envelope > div span * {
-        display: block;
-        width: 100%; }
-      .envelope > div span label {
-        border-bottom: 1px solid #f9fbe6;
-        color: #b9bab2; }

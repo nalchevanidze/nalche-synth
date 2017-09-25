@@ -10,6 +10,10 @@ var _Context = require("../Context");
 
 var _Context2 = _interopRequireDefault(_Context);
 
+var _Controller = require("../Controller");
+
+var _Controller2 = _interopRequireDefault(_Controller);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -55,6 +59,12 @@ var WaveLooper = function () {
 
             this.freq = freq;
             this.state = 0;
+
+            //unision
+            // this.state = Math.random();
+            this.state = _Controller2.default.wave.offset;
+
+            //this
             this.stepSize = freq / sampleRate;
             this.FM.stepSize = this.stepSize * this.FM.freq;
             this.FM.state = 0;

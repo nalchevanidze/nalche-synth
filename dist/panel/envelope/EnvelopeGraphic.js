@@ -22,6 +22,10 @@ var _Controller = require("../../Controller");
 
 var _Controller2 = _interopRequireDefault(_Controller);
 
+var _svgCordinates2 = require("../svgCordinates");
+
+var _svgCordinates3 = _interopRequireDefault(_svgCordinates2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29,16 +33,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function SvgCoordinates(svg, event) {
-    var clientX = event.clientX,
-        clientY = event.clientY;
-
-    var point = svg.createSVGPoint();
-    point.x = clientX;
-    point.y = clientY;
-    return point.matrixTransform(svg.getScreenCTM().inverse());
-}
 
 var PointCircle = function (_React$Component) {
     _inherits(PointCircle, _React$Component);
@@ -147,9 +141,9 @@ var EnvelopeGraphic = function (_React$PureComponent) {
                 event = event.touches[0];
             }
 
-            var _SvgCoordinates = SvgCoordinates(this.target, event),
-                x = _SvgCoordinates.x,
-                y = _SvgCoordinates.y;
+            var _svgCordinates = (0, _svgCordinates3.default)(this.target, event),
+                x = _svgCordinates.x,
+                y = _svgCordinates.y;
 
             x = Math.min(Math.max(x, 0) / 100, 1);
             y = 1 - Math.min(Math.max(y, 0) / 100, 1);

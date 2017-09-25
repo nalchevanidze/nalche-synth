@@ -53,20 +53,6 @@
         background: #555; }
     .envelope .selector button.active {
       color: #FFA928; }
-  .envelope > div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between; }
-    .envelope > div span {
-      width: 40px;
-      display: block;
-      margin: 2px; }
-      .envelope > div span * {
-        display: block;
-        width: 100%; }
-      .envelope > div span label {
-        border-bottom: 1px solid #f9fbe6;
-        color: #b9bab2; }
 
 .grid-line .grids {
   opacity: 0.1; }
@@ -172,17 +158,6 @@
       .midi-keys li button:nth-child(11) {
         left: 81.5%; }
 
-.time-line {
-  height: 10px;
-  background: gray; }
-  .time-line button {
-    width: 2px;
-    height: 395px;
-    position: absolute;
-    background: red;
-    padding: 0px;
-    left: 98px; }
-
 .window-panel {
   position: relative;
   margin: 2px; }
@@ -208,31 +183,9 @@
     .playStop button:hover {
       background: #777; }
 
-.midi > ul {
-  height: 400px;
-  overflow: scroll;
-  display: flex;
-  list-style: none;
-  border-left: 1px solid gray; }
-  .midi > ul .quartel {
-    width: 50px;
-    border-right: 1px solid #EEE; }
-  .midi > ul .names {
-    width: 50px;
-    border-right: 1px solid #EEE; }
-    .midi > ul .names .black {
-      background: #333;
-      color: white; }
-  .midi > ul .note {
-    width: 100%;
-    height: 14px;
-    border-bottom: 1px solid #EEE;
-    font-size: 8px;
-    display: block; }
-  .midi > ul .black {
-    background: #ececec; }
-  .midi > ul .active {
-    background: #606a79; }
+.midi {
+  width: 300px;
+  overflow: scroll; }
 
 .sequencer {
   padding: 5px; }

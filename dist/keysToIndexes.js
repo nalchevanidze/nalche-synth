@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.default = chordToKeys;
+exports.default = keysToIndexes;
 var keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
 function keysToIndexes(note) {
@@ -17,8 +17,4 @@ function keysToIndexes(note) {
 	}
 
 	return index;
-}
-
-function chordToKeys(list) {
-	return list.map(keysToIndexes);
 }
