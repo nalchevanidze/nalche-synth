@@ -7,8 +7,10 @@ import GridLine from "../GridLine";
 import ButtonWave from "../ButtonWave";
 import PitchButton from "../ButtonWave/PitchButton";
 
-const WavePoint = index => (1 - WaveForm(index)) * 100;
+const WavePoint = index => (1 - WaveForm( (index + Controller.wave.offset)%1 )) * 100;
+
 function GenerateWave() {
+
 	let end = WavePoint(0);
 	let start = WavePoint(1);
 	let p = (start + end) / 2
@@ -66,6 +68,7 @@ class PanelOscillator extends React.PureComponent {
 					<ButtonWave id="saw2" target={Controller.wave} onChange={this.update} />
 					<ButtonWave id="tech" target={Controller.wave} onChange={this.update} />
 					<ButtonWave id="noise" target={Controller.wave} onChange={this.update} />
+					<ButtonWave id="offset" target={Controller.wave} onChange={this.update} />
 				</div>
 				<div className="fm" >
 					<h1> FM </h1>

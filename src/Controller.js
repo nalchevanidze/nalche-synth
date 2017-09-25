@@ -8,7 +8,8 @@ const parameters = {
 		tech: 0.75,
 		noise: 0,
 		fm: 0.25,
-		fmFreq: 0
+		fmFreq: 0,
+		offset: 0.5
 	},
 
 	envelope: {

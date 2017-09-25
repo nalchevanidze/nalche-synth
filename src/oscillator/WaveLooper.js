@@ -1,5 +1,6 @@
 import Context from "../Context";
 const { sampleRate } = Context;
+import Controller from "../Controller";
 
 function Rescale(value, deep) {
     deep = 2 / (deep ** 2);
@@ -35,6 +36,12 @@ export default class WaveLooper {
 
         this.freq = freq;
         this.state = 0;
+
+        //unision
+       // this.state = Math.random();
+        this.state = Controller.wave.offset;
+
+        //this
         this.stepSize = freq / sampleRate;
         this.FM.stepSize = this.stepSize * this.FM.freq;
         this.FM.state = 0;

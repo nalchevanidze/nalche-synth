@@ -89,7 +89,7 @@ class Quarter extends React.Component {
 									"marginLeft": (at * 10) + "px",
 									"width": (length / 8) * 100 + "%"
 								};
-								console.log(style);
+							
 							}
 
 							const selected = (chordIndex !== -1) ? "active" : "";
