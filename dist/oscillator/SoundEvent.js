@@ -25,26 +25,34 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var wave = _Controller2.default.wave;
 function SoundEvent() {
-
+    var positions = [];
     var position = new _WaveLooper2.default();
+    var position2 = new _WaveLooper2.default();
+    var position3 = new _WaveLooper2.default();
+    var position4 = new _WaveLooper2.default();
+    var position5 = new _WaveLooper2.default();
     var eventTimes = new _EventTimes2.default();
     var oldvalue = 0;
-
     function reset(frequency) {
         position.set(frequency, wave.fm, wave.fmFreq);
+        position2.set(frequency - 1 * wave.offset, wave.fm, wave.fmFreq);
+        position3.set(frequency + 1 * wave.offset, wave.fm, wave.fmFreq);
+        position4.set(frequency - 2 * wave.offset, wave.fm, wave.fmFreq);
+        position5.set(frequency + 2 * wave.offset, wave.fm, wave.fmFreq);
         eventTimes.restart();
     }
 
     function multyVoices(p) {
-        var voices = 1 + Math.round(5 * wave.voices);
-        var value = 0;
-        var vocieOffset = 1 / voices;
-
-        for (var i = 1; i <= voices; i++) {
-            value += (0, _WaveForm2.default)(p * i * vocieOffset, wave);
+        if (wave.voices > 0.75) {
+            return ((0, _WaveForm2.default)(position.next(), wave) + (0, _WaveForm2.default)(position2.next(), wave) + (0, _WaveForm2.default)(position3.next(), wave) + (0, _WaveForm2.default)(position4.next(), wave) + (0, _WaveForm2.default)(position5.next(), wave)) / 5;
         }
-
-        return value / voices;
+        if (wave.voices > 0.5) {
+            return ((0, _WaveForm2.default)(position.next(), wave) + (0, _WaveForm2.default)(position2.next(), wave) + (0, _WaveForm2.default)(position3.next(), wave)) / 3;
+        }
+        if (wave.voices > 0.25) {
+            return ((0, _WaveForm2.default)(position.next(), wave) + (0, _WaveForm2.default)(position2.next(), wave)) / 2;
+        }
+        return (0, _WaveForm2.default)(position.next(), wave);
     }
     function next() {
         var p = position.next();

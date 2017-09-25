@@ -61,8 +61,9 @@ var WaveLooper = function () {
             this.state = 0;
 
             //unision
-            // this.state = Math.random();
-            this.state = _Controller2.default.wave.offset;
+            this.state = Math.random();
+            // this.state = Controller.wave.offset;
+
 
             //this
             this.stepSize = freq / sampleRate;
