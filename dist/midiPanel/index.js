@@ -62,7 +62,7 @@ var Header = function (_React$PureComponent) {
 					null,
 					"BPM"
 				),
-				_react2.default.createElement("input", { onChange: setBPM, defaultValue: BPM() })
+				_react2.default.createElement("input", { className: "bpm-value", onChange: setBPM, defaultValue: BPM() })
 			);
 		}
 	}]);

@@ -183,6 +183,9 @@
     .playStop button:hover {
       background: #777; }
 
+.midi-panel .bpm-value {
+  color: black; }
+
 .midi {
   width: 300px;
   overflow: scroll; }

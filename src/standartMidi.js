@@ -1,92 +1,61 @@
 export default
     [
         [
-            { "at": 0, "length": 0, "id": "C#2" },
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 0, "id": "F#3" },
-            { "at": 0, "length": 2, "id": "F#3" },
-            { "at": 4, "length": 0, "id": "F#3" },
-            { "at": 4, "length": 0, "id": "F#3" },
-            { "at": 4, "length": 2, "id": "F#3" }
+            { "at": 0, "length": 1, "id": "D1" },
+            { "at": 0, "length": 1, "id": "A1" },
+            { "at": 0, "length": 1, "id": "D2" },
+            { "at": 0, "length": 1, "id": "F2" },
+            { "at": 0, "length": 1, "id": "A2" },
+            { "at": 0, "length": 1, "id": "D3" },
         ],
         [
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 0, "id": "C#2" },
-            { "at": 4, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 2, "id": "F#3" },
-            { "at": 4, "length": 0, "id": "F#3" },
-            { "at": 4, "length": 2, "id": "F#3" }
+            { "at": 0, "length": 4, "id": "D1" },
+            { "at": 0, "length": 4, "id": "A1" },
+            { "at": 0, "length": 4, "id": "D2" },
+            { "at": 0, "length": 4, "id": "F2" },
+            { "at": 0, "length": 4, "id": "A2" }
         ],
         [
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 0, "id": "F#3" },
-            { "at": 0, "length": 0, "id": "F#3" },
-            { "at": 0, "length": 2, "id": "F#3" },
-            { "at": 4, "length": 2, "id": "G#3" }
+            { "at": 4, "length": 2, "id": "D1" },
+            { "at": 4, "length": 2, "id": "A1" },
+            { "at": 4, "length": 2, "id": "A2" },
+            { "at": 4, "length": 2, "id": "F2" },
+            { "at": 4, "length": 2, "id": "D2" }
         ],
         [
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 2, "id": "G#3" },
-            { "at": 4, "length": 2, "id": "G#3" }
+            { "at": 4, "length": 2, "id": "D1" },
+            { "at": 4, "length": 2, "id": "A1" },
+            { "at": 4, "length": 2, "id": "A2" },
+            { "at": 4, "length": 2, "id": "F2" },
+            { "at": 4, "length": 2, "id": "D2" }
         ],
         [
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 0, "length": 2, "id": "G#3" },
-            { "at": 4, "length": 2, "id": "A#3" },
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 2, "id": "C#2" }
+            { "at": 0, "length": 1, "id": "D1" },
+            { "at": 0, "length": 1, "id": "A1" },
+            { "at": 0, "length": 1, "id": "D2" },
+            { "at": 0, "length": 1, "id": "F2" },
+            { "at": 0, "length": 1, "id": "A2" },
+            { "at": 0, "length": 1, "id": "D3" },
         ],
         [
-            { "at": 0, "length": 2, "id": "A#3" },
-            { "at": 4, "length": 0, "id": "A#3" },
-            { "at": 4, "length": 2, "id": "A#3" },
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 2, "id": "C#2" }
+            { "at": 0, "length": 4, "id": "D1" },
+            { "at": 0, "length": 4, "id": "A1" },
+            { "at": 0, "length": 4, "id": "D2" },
+            { "at": 0, "length": 4, "id": "F2" },
+            { "at": 0, "length": 4, "id": "A2" }
         ],
         [
-            { "at": 0, "length": 2, "id": "A#3" },
-            { "at": 4, "length": 2, "id": "G#3" },
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 2, "id": "C#2" }
+            { "at": 4, "length": 2, "id": "D1" },
+            { "at": 4, "length": 2, "id": "A1" },
+            { "at": 4, "length": 2, "id": "A2" },
+            { "at": 4, "length": 2, "id": "F2" },
+            { "at": 4, "length": 2, "id": "D2" }
         ],
         [
-            { "at": 0, "length": 2, "id": "G#3" },
-            { "at": 4, "length": 2, "id": "G#3" },
-            { "at": 0, "length": 2, "id": "A#2" },
-            { "at": 0, "length": 2, "id": "F#2" },
-            { "at": 0, "length": 2, "id": "C#2" },
-            { "at": 4, "length": 2, "id": "A#2" },
-            { "at": 4, "length": 2, "id": "F#2" },
-            { "at": 4, "length": 2, "id": "C#2" }
+            { "at": 4, "length": 2, "id": "D1" },
+            { "at": 4, "length": 2, "id": "A1" },
+            { "at": 4, "length": 2, "id": "A2" },
+            { "at": 4, "length": 2, "id": "F2" },
+            { "at": 4, "length": 2, "id": "D2" }
         ]
-    ];
+    ]

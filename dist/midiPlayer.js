@@ -23,12 +23,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var midi = [];
-var endIndex = 0;
 var sequence = [];
 function sequencer(c, start, end) {
 	start *= 32;
 	end = start + end * 32;
-	endIndex = Math.max(end, endIndex);
 	var i = start;
 	var arpIndex = 0;
 	var direction = 1;
@@ -59,7 +57,6 @@ function sequencer(c, start, end) {
 		i += 2;
 	}
 }
-
 function setValue(i, type, value) {
 
 	if (!midi[i]) {
@@ -69,10 +66,7 @@ function setValue(i, type, value) {
 		};
 	};
 	midi[i][type].push((0, _keysToIndexes2.default)(value));
-
-	endIndex = Math.max(i, endIndex);
 }
-
 function setNote(startIndex, note) {
 	var start = startIndex + note.at;
 	var end = start + note.length;
@@ -105,6 +99,7 @@ var MidiPlayer = function () {
 		this.updateMidi();
 		this.updateComponent = osc.component;
 		this.setBPM = this.setBPM.bind(this);
+		this.endIndex = _standartMidi2.default.length * 8;
 	}
 
 	_createClass(MidiPlayer, [{
@@ -119,6 +114,7 @@ var MidiPlayer = function () {
 		value: function updateMidi(seq) {
 			midi = [];
 			melody(_standartMidi2.default);
+			this.endIndex = _standartMidi2.default.length * 8;
 		}
 	}, {
 		key: "stop",
@@ -149,8 +145,6 @@ var MidiPlayer = function () {
 		key: "next",
 		value: function next() {
 			this.currentState = this.index;
-			// / endIndex;
-
 			if (this.updateComponent) {
 				this.updateComponent(this.currentState);
 			}
@@ -159,7 +153,7 @@ var MidiPlayer = function () {
 				this.executeState();
 			}
 
-			if (this.index >= endIndex) {
+			if (this.index >= this.endIndex) {
 				this.index = 0;
 			} else {
 				this.index++;

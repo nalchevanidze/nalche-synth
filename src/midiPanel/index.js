@@ -11,7 +11,7 @@ class Header extends React.PureComponent {
 					<button onClick={stop}  >stop</button>
 				</section>
 				<label>BPM</label>
-				<input onChange={setBPM} defaultValue={BPM()} />
+				<input className="bpm-value" onChange={setBPM} defaultValue={BPM()} />
 			</h3>
 		)
 	}

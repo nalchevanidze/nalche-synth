@@ -1,13 +1,10 @@
 import chordToKeys from "./chordToKeys";
 import keysToIndexes from "./keysToIndexes";
-
 let midi = [];
-let endIndex = 0;
 let sequence = [];
 function sequencer(c, start, end) {
 	start *= 32;
 	end = start + end * 32;
-	endIndex = Math.max(end, endIndex);
 	let i = start;
 	let arpIndex = 0;
 	let direction = 1;
@@ -37,8 +34,8 @@ function sequencer(c, start, end) {
 		arpIndex++;
 		i += 2;
 	}
-}
 
+}
 function setValue(i, type, value) {
 
 	if (!midi[i]) {
@@ -49,9 +46,7 @@ function setValue(i, type, value) {
 	};
 	midi[i][type].push(keysToIndexes(value));
 
-	endIndex = Math.max(i, endIndex);
 }
-
 function setNote(startIndex, note) {
 	let start = startIndex + note.at;
 	let end = start + note.length;
@@ -68,7 +63,6 @@ function melody(melodyList) {
 		}
 	})
 };
-
 export default class MidiPlayer {
 	constructor(osc) {
 		this.osc = osc;
@@ -82,6 +76,7 @@ export default class MidiPlayer {
 		this.updateMidi();
 		this.updateComponent = osc.component;
 		this.setBPM = this.setBPM.bind(this);
+		this.endIndex = standartMidi.length * 8 ;
 	}
 	setBPM(value) {
 		this.BPM = value;
@@ -92,6 +87,7 @@ export default class MidiPlayer {
 	updateMidi(seq) {
 		midi = [];
 		melody(standartMidi);
+		this.endIndex = standartMidi.length * 8 ;
 	}
 	stop() {
 		clearInterval(this.loop);
@@ -111,8 +107,6 @@ export default class MidiPlayer {
 	}
 	next() {
 		this.currentState = this.index;
-		// / endIndex;
-
 		if (this.updateComponent) {
 			this.updateComponent(this.currentState);
 		}
@@ -121,7 +115,7 @@ export default class MidiPlayer {
 			this.executeState();
 		}
 		
-		if (this.index >= endIndex) {
+		if (this.index >= this.endIndex) {
 			this.index = 0;
 		} else {
 			this.index++;
