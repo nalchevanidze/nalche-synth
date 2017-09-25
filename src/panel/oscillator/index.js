@@ -69,6 +69,7 @@ class PanelOscillator extends React.PureComponent {
 					<ButtonWave id="tech" target={Controller.wave} onChange={this.update} />
 					<ButtonWave id="noise" target={Controller.wave} onChange={this.update} />
 					<ButtonWave id="offset" target={Controller.wave} onChange={this.update} />
+					<ButtonWave id="voices" target={Controller.wave} onChange={this.update} />
 				</div>
 				<div className="fm" >
 					<h1> FM </h1>

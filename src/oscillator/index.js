@@ -10,28 +10,37 @@ import Controller from "../Controller";
 import EventTimes from "./EventTimes";
 import MoogFilter from "./MoogFilter";
 
+
 export default function Oscillator() {
-    const node = Context.createScriptProcessor(2048, 1, 1);
+
     const event = SoundEvent();
     const filter = MoogFilter();
-    node.connect(filter);
-    filter.connect(destination);
-    node.onaudioprocess = function ({ outputBuffer }) {
+    function onProcess({ outputBuffer }) {
         let audio = outputBuffer.getChannelData(0);
         if (event.eventTimes.live) {
             FillAudioChenel(audio, event);
         } else {
             audio.fill(0);
         }
+    }
+
+    const node = Context.createScriptProcessor(2048, 1, 1);
+    node.connect(filter);
+    filter.connect(destination);
+    node.onaudioprocess = onProcess;
+
+
+    return {
+        start(param) {
+            let frequency = NoteToFrequency(param.note)
+            event.reset(frequency);
+            filter.start();
+        },
+        end() {
+            event.end();
+        },
+        isActive() {
+            return event.eventTimes.live
+        }
     };
-    node.start = function (param) {
-        let frequency = NoteToFrequency(param.note)
-        event.reset(frequency);
-        filter.start();
-    }
-    node.end = function () {
-        event.end();
-    }
-    node.isActive = e => event.eventTimes.live;
-    return node;
 }

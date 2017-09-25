@@ -72,7 +72,7 @@ function melody(melodyList) {
 export default class MidiPlayer {
 	constructor(osc) {
 		this.osc = osc;
-		this.BPM = 100;
+		this.BPM = 128;
 		this.next = this.next.bind(this);
 		this.currentState = 0;
 		this.seq = osc.sequence;
@@ -92,7 +92,6 @@ export default class MidiPlayer {
 	updateMidi(seq) {
 		midi = [];
 		melody(standartMidi);
-		//melody(this.melody)
 	}
 	stop() {
 		clearInterval(this.loop);
@@ -111,7 +110,9 @@ export default class MidiPlayer {
 		start.forEach(osc.play)
 	}
 	next() {
-		this.currentState = this.index / endIndex;
+		this.currentState = this.index;
+		// / endIndex;
+
 		if (this.updateComponent) {
 			this.updateComponent(this.currentState);
 		}

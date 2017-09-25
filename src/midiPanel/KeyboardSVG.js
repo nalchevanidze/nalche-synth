@@ -138,7 +138,7 @@ export default class KeyboardSVG extends React.PureComponent {
 	render() {
 		let notestep = 10;
 		let stageWidth = count * 80;
-		let state = this.props.currentState * stageWidth;
+		let state = this.props.currentState * notestep/2;
 		return (
 			<svg
 				viewBox={"0 0 " + stageWidth + " 400"}
