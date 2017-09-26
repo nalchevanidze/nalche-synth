@@ -24,6 +24,43 @@ function GenerateWave() {
 	return "M 0 " + p + " " + wave + " 200 " + p;
 }
 
+const styles = {
+	main: {
+		display: "flex"
+	},
+	panel: {
+		display: "flex",
+		margin: "5px",
+		justifyContent: "space-around",
+		flexWrap: "wrap",
+		flexShrink: 0
+	},
+	panelHeader: {
+		color: "#03A9F4",
+		fontSize: "12px",
+		margin: "0px",
+		width: "100%",
+		textAlign: "center",
+		textTransform: "uppercase",
+	}
+}
+
+const Panel = ({
+	children,
+	label,
+	size = 1
+}) =>
+	<div style={{
+		...styles.panel,
+		width: (size * 50 + (size - 1) * 20 )+"px"
+	}}
+	>
+		<h1 style={styles.panelHeader} > {label} </h1>
+		{
+			children
+		}
+	</div>
+
 class PanelOscillator extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -46,9 +83,8 @@ class PanelOscillator extends React.PureComponent {
 	render() {
 		let { release, attack, decay, sustain } = Controller.envelope;
 		return (
-			<div className="oscillator">
-				<div className="global" >
-					<h1> global </h1>
+			<div className="oscillator" style={styles.main} >
+				<Panel label="global" size={2} >
 					<svg viewBox="-1 0 202 200" width="100px" height="100px" >
 						<path
 							d={GenerateWave()}
@@ -66,9 +102,8 @@ class PanelOscillator extends React.PureComponent {
 						steps={8}
 					/>
 					<p>pitch</p>
-				</div>
-				<div className="controllers" >
-					<h1> Oscillator </h1>
+				</Panel>
+				<Panel label="Oscillator" size={2} >
 					<ButtonWave color={"#ffa929"} id="sine" target={Controller.wave} onChange={this.update} />
 					<ButtonWave color={"#ffa929"} id="square" target={Controller.wave} onChange={this.update} />
 					<ButtonWave color={"#ffa929"} id="saw" target={Controller.wave} onChange={this.update} />
@@ -77,9 +112,8 @@ class PanelOscillator extends React.PureComponent {
 					<ButtonWave color={"#ffa929"} id="noise" target={Controller.wave} onChange={this.update} />
 					<ButtonWave color={"#ffa929"} id="offset" target={Controller.wave} onChange={this.update} />
 					<ButtonWave color={"#ffa929"} id="voices" target={Controller.wave} onChange={this.update} />
-				</div>
-				<div className="fm" >
-					<h1> FM </h1>
+				</Panel>
+				<Panel label="FM" >
 					<ButtonWave
 						id="fm"
 						color="#2196f3"
@@ -92,10 +126,8 @@ class PanelOscillator extends React.PureComponent {
 						color="#2196f3"
 					/>
 					<p>frequency</p>
-
-				</div>
-				<div className="fm"  >
-					<h1> Filter </h1>
+				</Panel>
+				<Panel label="Filter" >
 					<ButtonWave
 						id="cutoff"
 						target={Controller.filter}
@@ -103,12 +135,12 @@ class PanelOscillator extends React.PureComponent {
 					/>
 					<p>cutoff</p>
 					<ButtonWave
-						id="resonance" 
+						id="resonance"
 						target={Controller.filter}
-						color="#2196f3"  
+						color="#2196f3"
 					/>
 					<p>resonance</p>
-				</div>
+				</Panel>
 			</div>
 		);
 	}

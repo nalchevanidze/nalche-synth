@@ -1,11 +1,5 @@
 .oscillator {
-    display: flex;
     >div {
-        display: flex;
-        margin: 5px;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        flex-shrink: 0;
         .wave-button {
             margin: 5px;
             flex-shrink: 0;
@@ -17,15 +11,7 @@
             width: 100%;
         }
     }
-    .global {
-        width: 100px;
-        p {color: #CDDC38};
-        justify-content: center;
-    }
-    .controllers {
-        justify-content: flex-start;
-        width: 120px;
-    }
+    
     .fm {
         width: 50px;
     }
