@@ -6,24 +6,11 @@
         font-family: sans-serif;
         font-weight: 400;
     }
-    // h1,
-    // h2,
-    // h3,
-    // {
-    //     color: #03A9F4;
-    //     font-size: 12px;
-    //     margin: 0px;
-    //     width: 100%;
-    //     text-align: center;
-    //     text-transform: uppercase;
-    // }
-    // h4 {
-    //     margin: 0px;
-    //     color: #EEE
-    // }
 }
+
 .piano {
-    font-size: 12px;
+    display: flex;
+    justify-content: center;
     ul {
         padding: 0px;
         margin: 0px;
@@ -35,12 +22,7 @@
         border-radius: 3px;
         background: #333333;
     }
-    input {
-        background-color: transparent;
-        border: 0px solid;
-    }
-    display: flex;
-    justify-content: center;
+    
     .panel {
         user-select: nonde;
         padding: 5px;
@@ -50,7 +32,16 @@
         }
     }
 }
-@import "oscillator";
+
+.oscillator {
+    p {
+        color: #4b788c;
+        text-align: center;
+        font-size: 10px;
+        width: 100%;
+    }
+}
+
 @import "midi";
 @import "sequencer";
 button {

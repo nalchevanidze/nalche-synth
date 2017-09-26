@@ -79,7 +79,7 @@ export default class CirclerangeButton extends React.PureComponent {
             target,
             steps = 16,
             children,
-            color ="#222"
+            color = "#222"
 		} = this.props;
         let level = target[id];
 
@@ -102,6 +102,10 @@ export default class CirclerangeButton extends React.PureComponent {
                 onTouchMove={this.levelMove}
                 width="50px"
                 height="50px"
+                style={{
+                    margin: "5px",
+                    flexShrink: 0
+                }}
             >
                 {
                     children

@@ -1,11 +1,10 @@
 import React from "react";
-
 import Controller from "../../Controller";
 import WaveForm from "../../oscillator/WaveForm";
-
 import GridLine from "../GridLine";
 import ButtonWave from "../ButtonWave";
 import PitchButton from "../ButtonWave/PitchButton";
+import Panel from "../DisplayPanel";
 
 const WavePoint = index => (
 	1 - WaveForm(
@@ -27,39 +26,8 @@ function GenerateWave() {
 const styles = {
 	main: {
 		display: "flex"
-	},
-	panel: {
-		display: "flex",
-		margin: "5px",
-		justifyContent: "space-around",
-		flexWrap: "wrap",
-		flexShrink: 0
-	},
-	panelHeader: {
-		color: "#03A9F4",
-		fontSize: "12px",
-		margin: "0px",
-		width: "100%",
-		textAlign: "center",
-		textTransform: "uppercase",
 	}
 }
-
-const Panel = ({
-	children,
-	label,
-	size = 1
-}) =>
-	<div style={{
-		...styles.panel,
-		width: (size * 50 + (size - 1) * 20 )+"px"
-	}}
-	>
-		<h1 style={styles.panelHeader} > {label} </h1>
-		{
-			children
-		}
-	</div>
 
 class PanelOscillator extends React.PureComponent {
 	constructor(props) {
