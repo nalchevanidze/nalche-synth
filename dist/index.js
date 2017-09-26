@@ -162,7 +162,14 @@ var Synth = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 "div",
-                { className: "nalche-synth" },
+                {
+                    className: "nalche-synth",
+                    style: {
+                        display: "flex",
+                        position: "relative",
+                        justifyContent: "center"
+                    }
+                },
                 _react2.default.createElement(
                     "section",
                     {

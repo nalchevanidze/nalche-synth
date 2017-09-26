@@ -1,7 +1,4 @@
 .nalche-synth {
-    display: flex;
-    position: relative;
-    justify-content: center;
     * {
         font-family: sans-serif;
         font-weight: 400;
@@ -24,4 +21,3 @@
         }
     }
 }
-@import "midi";

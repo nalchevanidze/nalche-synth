@@ -108,7 +108,14 @@ export default class Synth extends React.Component {
     }
     render() {
         return (
-            <div className="nalche-synth" >
+            <div
+                className="nalche-synth"
+                style={{
+                    display: "flex",
+                    position: "relative",
+                    justifyContent: "center"
+                }}
+            >
                 <section
                     style={{
                         boxShadow: "0px 5px 10px gray",

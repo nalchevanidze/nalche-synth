@@ -10,11 +10,11 @@ gulp.task("babel", function () {
 
 });
 
-gulp.task("sass", function () {
-    return gulp.src("src/**/*.scss")
-        .pipe(sass().on("error", sass.logError))
-        .pipe(gulp.dest("dist/"));
-});
+// gulp.task("sass", function () {
+//     return gulp.src("src/**/*.scss")
+//         .pipe(sass().on("error", sass.logError))
+//         .pipe(gulp.dest("dist/"));
+// });
 
 gulp.task("default", ["babel","sass"]);
 gulp.watch("src/**/*.js", ["babel"]);

@@ -16,6 +16,30 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 var keys = [{ id: "C" }, { semi: true, id: "C#" }, { id: "D" }, { semi: true, id: "D#" }, { id: "E" }, { id: "F" }, { semi: true, id: "F#" }, { id: "G" }, { semi: true, id: "G#" }, { id: "A" }, { semi: true, id: "A#" }, { id: "B" }];
 
+var keyStyle = {
+  default: {
+    display: "block",
+    textAlign: "center",
+    border: "1px solid #c1c1c1",
+    borderRadius: "2px",
+    boxShadow: "2px 10px 2px rgba(0, 0, 0, 0.1)",
+    width: "14.2%",
+    paddingTop: "180px",
+    color: "#FF9800",
+    background: "white",
+    flexGrow: 0
+  }
+};
+
+keyStyle.black = _extends({}, keyStyle.default, {
+  backgroundColor: "black",
+  width: "10%",
+  position: "absolute",
+  zIndex: 100,
+  paddingTop: "140px"
+  // box-shadow: 2px 4px 1px rgba(0, 0, 0, 0.1);
+});
+
 var Key = function Key(_ref) {
   var index = _ref.index,
       _ref$active = _ref.active,
@@ -29,6 +53,7 @@ var Key = function Key(_ref) {
   return _react2.default.createElement(
     "button",
     {
+      style: semi ? keyStyle.black : keyStyle.default,
       className: (semi && "black" || "") + " " + (active[index] && "active" || ""), id: index,
       onTouchStart: press.bind(undefined, index),
       onTouchEnd: press.bind(undefined, index),

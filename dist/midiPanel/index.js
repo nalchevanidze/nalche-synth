@@ -22,6 +22,27 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var Button = function Button(_ref) {
+	var id = _ref.id,
+	    onClick = _ref.onClick;
+	return _react2.default.createElement(
+		"button",
+		{
+			onClick: onClick,
+			style: {
+				fontSize: "16px",
+				textTransform: "uppercase",
+				display: "block",
+				color: "#ffa929",
+				padding: "3px 18px",
+				cursor: "pointer",
+				background: "#444"
+			}
+		},
+		id
+	);
+};
+
 var Header = function (_React$PureComponent) {
 	_inherits(Header, _React$PureComponent);
 
@@ -42,27 +63,33 @@ var Header = function (_React$PureComponent) {
 
 			return _react2.default.createElement(
 				"h3",
-				null,
+				{ style: {
+
+						background: "#444"
+
+					} },
 				_react2.default.createElement(
 					"section",
-					{ className: "playStop" },
-					_react2.default.createElement(
-						"button",
-						{ onClick: play },
-						"play"
-					),
-					_react2.default.createElement(
-						"button",
-						{ onClick: stop },
-						"stop"
-					)
+					{
+						style: {
+							display: "flex"
+
+						}
+					},
+					_react2.default.createElement(Button, { onClick: play, id: "play" }),
+					_react2.default.createElement(Button, { onClick: stop, id: "stop" })
 				),
 				_react2.default.createElement(
 					"label",
 					null,
 					"BPM"
 				),
-				_react2.default.createElement("input", { className: "bpm-value", onChange: setBPM, defaultValue: BPM() })
+				_react2.default.createElement("input", {
+					className: "bpm-value",
+					onChange: setBPM,
+					defaultValue: BPM(),
+					style: { color: "black" }
+				})
 			);
 		}
 	}]);
@@ -91,7 +118,12 @@ var MidiDesk = function (_React$PureComponent2) {
 
 			return _react2.default.createElement(
 				"div",
-				{ className: "midi" },
+				{
+					style: {
+						width: "300px",
+						overflow: "scroll"
+					}
+				},
 				_react2.default.createElement(_KeyboardSVG2.default, { currentState: currentState, updateMidi: this.props.updateMidi })
 			);
 		}
@@ -116,7 +148,11 @@ var melody = function (_React$PureComponent3) {
 
 			return _react2.default.createElement(
 				"div",
-				{ className: "midi-panel window-panel" },
+				{
+					style: {
+						position: "relative"
+					}
+				},
 				_react2.default.createElement(Header, { global: global }),
 				_react2.default.createElement(MidiDesk, {
 					currentState: this.props.currentState,
