@@ -14,31 +14,53 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-var keys = [{ id: "C" }, { semi: true, id: "C#" }, { id: "D" }, { semi: true, id: "D#" }, { id: "E" }, { id: "F" }, { semi: true, id: "F#" }, { id: "G" }, { semi: true, id: "G#" }, { id: "A" }, { semi: true, id: "A#" }, { id: "B" }];
+var keys = [{ id: "C" }, { semi: true, id: "C#", left: 9.2 }, { id: "D" }, { semi: true, id: "D#", left: 23.6 }, { id: "E" }, { id: "F" }, { semi: true, id: "F#", left: 52.1 }, { id: "G" }, { semi: true, id: "G#", left: 66.5 }, { id: "A" }, { semi: true, id: "A#", left: 81.5 }, { id: "B" }].map(function (key, i) {
+  return _extends({}, key, { i: i });
+});
+
+var whiteKeys = keys.filter(function (e) {
+  return !e.semi;
+});
+var blackKeys = keys.filter(function (e) {
+  return e.semi;
+});
 
 var keyStyle = {
   default: {
     display: "block",
-    textAlign: "center",
     border: "1px solid #c1c1c1",
     borderRadius: "2px",
+    flexGrow: 0,
     boxShadow: "2px 10px 2px rgba(0, 0, 0, 0.1)",
     width: "14.2%",
     paddingTop: "180px",
-    color: "#FF9800",
-    background: "white",
-    flexGrow: 0
+    background: "white"
+
   }
 };
 
 keyStyle.black = _extends({}, keyStyle.default, {
-  backgroundColor: "black",
+  background: "black",
   width: "10%",
   position: "absolute",
-  zIndex: 100,
   paddingTop: "140px"
-  // box-shadow: 2px 4px 1px rgba(0, 0, 0, 0.1);
 });
+
+var StyleBlack = {
+  active: _extends({}, keyStyle.black, {
+    background: "#333",
+    paddingTop: "135px"
+  }),
+  default: keyStyle.black
+};
+
+var StyleWhite = {
+  default: keyStyle.default,
+  active: _extends({}, keyStyle.default, {
+    background: "#EEE",
+    paddingTop: "170px"
+  })
+};
 
 var Key = function Key(_ref) {
   var index = _ref.index,
@@ -46,22 +68,18 @@ var Key = function Key(_ref) {
       active = _ref$active === undefined ? [] : _ref$active,
       press = _ref.press,
       up = _ref.up,
-      semi = _ref.semi,
-      id = _ref.id;
+      style = _ref.style,
+      left = _ref.left;
+  return _react2.default.createElement("button", {
+    style: _extends({}, active[index] ? style.active : style.default, {
+      left: left
 
-
-  return _react2.default.createElement(
-    "button",
-    {
-      style: semi ? keyStyle.black : keyStyle.default,
-      className: (semi && "black" || "") + " " + (active[index] && "active" || ""), id: index,
-      onTouchStart: press.bind(undefined, index),
-      onTouchEnd: press.bind(undefined, index),
-      onMouseDown: press.bind(undefined, index),
-      onMouseUp: up.bind(undefined, index)
-    },
-    id
-  );
+    }),
+    onTouchStart: press.bind(undefined, index),
+    onTouchEnd: press.bind(undefined, index),
+    onMouseDown: press.bind(undefined, index),
+    onMouseUp: up.bind(undefined, index)
+  });
 };
 
 var styles = {
@@ -82,10 +100,14 @@ var Octave = function Octave(_ref2) {
   return _react2.default.createElement(
     "li",
     { style: styles },
-    keys.map(function (_ref3, i) {
-      var id = _ref3.id,
-          semi = _ref3.semi;
-      return _react2.default.createElement(Key, _extends({}, props, { id: id, semi: semi, index: index * 12 + i, key: i }));
+    whiteKeys.map(function (_ref3) {
+      var i = _ref3.i;
+      return _react2.default.createElement(Key, _extends({}, props, { index: index * 12 + i, key: i, style: StyleWhite }));
+    }),
+    blackKeys.map(function (_ref4) {
+      var i = _ref4.i,
+          left = _ref4.left;
+      return _react2.default.createElement(Key, _extends({}, props, { left: left + "%", index: index * 12 + i, key: i, style: StyleBlack }));
     })
   );
 };
