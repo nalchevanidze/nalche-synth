@@ -8,6 +8,5 @@ module.exports = [
             { loader: "babel" },
            // { loader: "eslint" }
         ]
-    },
-    postcss
+    }
 ];

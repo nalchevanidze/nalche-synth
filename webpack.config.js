@@ -1,4 +1,5 @@
 const Loaders = require("./config/webpack/loaders");
+
 module.exports = {
     devServer: {
         contentBase: "./public",
