@@ -113,7 +113,8 @@ export default class Synth extends React.Component {
                 style={{
                     display: "flex",
                     position: "relative",
-                    justifyContent: "center"
+                    justifyContent: "center",
+                    fontFamily: "sans-serif"
                 }}
             >
                 <section
@@ -131,7 +132,14 @@ export default class Synth extends React.Component {
                         seq={this.midi.seq}
                         updateMidi={this.midi.updateMidi}
                     />
-                    <ul className="midi-keys" style={{ display: "flex" }}>
+                    <ul
+
+                        style={{
+                            display: "flex",
+                            padding: "0px",
+                            margin: "0px"
+                        }}
+                    >
                         <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
                         <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />
                         <Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active} />

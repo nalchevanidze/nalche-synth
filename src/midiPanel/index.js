@@ -9,6 +9,8 @@ const Button = ({ id, onClick }) =>
 	<button
 		onClick={onClick}
 		style={{
+			outline: "none",
+			border: "none",
 			fontSize: "16px",
 			textTransform: "uppercase",
 			display: "block",
@@ -62,7 +64,7 @@ class MidiDesk extends React.PureComponent {
 				style={{
 					width: "300px",
 					overflow: "scroll"
-				}} 
+				}}
 			>
 				<KeyboardSVG currentState={currentState} updateMidi={this.props.updateMidi} />
 			</div>

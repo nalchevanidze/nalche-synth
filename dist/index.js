@@ -167,7 +167,8 @@ var Synth = function (_React$Component) {
                     style: {
                         display: "flex",
                         position: "relative",
-                        justifyContent: "center"
+                        justifyContent: "center",
+                        fontFamily: "sans-serif"
                     }
                 },
                 _react2.default.createElement(
@@ -189,7 +190,14 @@ var Synth = function (_React$Component) {
                     }),
                     _react2.default.createElement(
                         "ul",
-                        { className: "midi-keys", style: { display: "flex" } },
+                        {
+
+                            style: {
+                                display: "flex",
+                                padding: "0px",
+                                margin: "0px"
+                            }
+                        },
                         _react2.default.createElement(_Octave2.default, { index: 0, press: this.keyPress, up: this.keyUp, active: this.state.active }),
                         _react2.default.createElement(_Octave2.default, { index: 1, press: this.keyPress, up: this.keyUp, active: this.state.active }),
                         _react2.default.createElement(_Octave2.default, { index: 2, press: this.keyPress, up: this.keyUp, active: this.state.active })

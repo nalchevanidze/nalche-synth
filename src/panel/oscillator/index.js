@@ -5,6 +5,7 @@ import GridLine from "../GridLine";
 import ButtonWave from "../ButtonWave";
 import PitchButton from "../ButtonWave/PitchButton";
 import Panel from "../DisplayPanel";
+
 const WavePoint = index => (
 	1 - WaveForm(
 		(index + Controller.wave.offset) % 1
@@ -21,7 +22,9 @@ function GenerateWave() {
 }
 const styles = {
 	main: {
-		display: "flex"
+		display: "flex",
+		fontSize: "10px",
+		color:"#2287f4"
 	}
 }
 class PanelOscillator extends React.PureComponent {

@@ -30,6 +30,8 @@ var Button = function Button(_ref) {
 		{
 			onClick: onClick,
 			style: {
+				outline: "none",
+				border: "none",
 				fontSize: "16px",
 				textTransform: "uppercase",
 				display: "block",

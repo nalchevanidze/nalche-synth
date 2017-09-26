@@ -6,6 +6,8 @@ import radium from 'radium';
 
 const styles = {
     button: {
+        outline: "none",
+        background:"none",
         border: "1px solid #222",
         width: "50%"
     },

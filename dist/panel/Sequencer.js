@@ -54,6 +54,8 @@ var Sequence = function Sequence(_ref) {
             return _react2.default.createElement("button", {
                 style: {
                     width: "100%",
+                    border: "none",
+                    outline: "none",
                     borderBottom: "1px solid #333",
                     height: stepSize + "px",
                     display: "block",

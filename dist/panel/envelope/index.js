@@ -42,6 +42,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var styles = {
     button: {
+        outline: "none",
+        background: "none",
         border: "1px solid #222",
         width: "50%"
     },

@@ -56,7 +56,9 @@ function GenerateWave() {
 }
 var styles = {
 	main: {
-		display: "flex"
+		display: "flex",
+		fontSize: "10px",
+		color: "#2287f4"
 	}
 };
 
