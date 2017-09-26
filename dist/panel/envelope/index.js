@@ -28,6 +28,10 @@ var _radium = require("radium");
 
 var _radium2 = _interopRequireDefault(_radium);
 
+var _DisplayPanel = require("../DisplayPanel");
+
+var _DisplayPanel2 = _interopRequireDefault(_DisplayPanel);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39,11 +43,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var styles = {
     button: {
         border: "1px solid #222",
-        width: "50%",
-        ":hover": {
-            background: "#555"
-
-        }
+        width: "50%"
+    },
+    nav: {
+        marginTop: "10px",
+        width: "80%"
     }
 };
 
@@ -91,16 +95,11 @@ var PanelEnvelope = function (_React$PureComponent) {
                 env = _Controller2.default.env;
 
             return _react2.default.createElement(
-                "div",
-                { className: "envelope" },
-                _react2.default.createElement(
-                    "h1",
-                    null,
-                    " envelope "
-                ),
+                _DisplayPanel2.default,
+                { label: "envelope", size: 3 },
                 _react2.default.createElement(
                     "div",
-                    { className: "selector" },
+                    { style: styles.nav },
                     _react2.default.createElement(Button, { id: "volume", active: active, onClick: this.switch }),
                     _react2.default.createElement(Button, { id: "filter", active: active, onClick: this.switch })
                 ),
@@ -113,4 +112,4 @@ var PanelEnvelope = function (_React$PureComponent) {
     return PanelEnvelope;
 }(_react2.default.PureComponent);
 
-exports.default = (0, _radium2.default)(PanelEnvelope);
+exports.default = PanelEnvelope;

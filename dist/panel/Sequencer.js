@@ -10,6 +10,10 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _DisplayPanel = require("./DisplayPanel");
+
+var _DisplayPanel2 = _interopRequireDefault(_DisplayPanel);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29,16 +33,33 @@ var list = [].concat(_toConsumableArray(keys.map(function (note) {
     return note + "3";
 }))).reverse();
 
+var stepSize = 8;
+
 var Sequence = function Sequence(_ref) {
     var chord = _ref.chord,
         active = _ref.active,
         _onClick = _ref.onClick;
     return _react2.default.createElement(
         "li",
-        null,
+        {
+
+            style: {
+                width: stepSize + "px",
+                listStyle: "none",
+                border: "1px solid #333"
+            }
+
+        },
         [1, 2, 3, 4].reverse().map(function (index) {
             return _react2.default.createElement("button", {
-                className: chord.indexOf(index) !== -1 ? "active" : "",
+                style: {
+                    width: "100%",
+                    borderBottom: "1px solid #333",
+                    height: stepSize + "px",
+                    display: "block",
+                    background: chord.indexOf(index) !== -1 ? "#ffa929" : "#555"
+
+                },
                 key: index,
                 onClick: function onClick() {
                     return _onClick(index);
@@ -48,13 +69,13 @@ var Sequence = function Sequence(_ref) {
     );
 };
 
-var melody = function (_React$PureComponent) {
-    _inherits(melody, _React$PureComponent);
+var Sequencer = function (_React$PureComponent) {
+    _inherits(Sequencer, _React$PureComponent);
 
-    function melody(props) {
-        _classCallCheck(this, melody);
+    function Sequencer(props) {
+        _classCallCheck(this, Sequencer);
 
-        var _this = _possibleConstructorReturn(this, (melody.__proto__ || Object.getPrototypeOf(melody)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Sequencer.__proto__ || Object.getPrototypeOf(Sequencer)).call(this, props));
 
         _this.state = {
             value: 0
@@ -62,7 +83,7 @@ var melody = function (_React$PureComponent) {
         return _this;
     }
 
-    _createClass(melody, [{
+    _createClass(Sequencer, [{
         key: "setNew",
         value: function setNew(i, index) {
 
@@ -83,16 +104,18 @@ var melody = function (_React$PureComponent) {
             var _this2 = this;
 
             return _react2.default.createElement(
-                "div",
-                { className: "sequencer window-panel" },
-                _react2.default.createElement(
-                    "h1",
-                    null,
-                    "sequencer"
-                ),
+                _DisplayPanel2.default,
+                { label: "sequencer", size: 3 },
                 _react2.default.createElement(
                     "ul",
-                    null,
+                    {
+                        style: {
+                            display: "flex",
+                            margin: "0px",
+                            padding: "0px"
+                        }
+
+                    },
                     this.props.seq.map(function (chord, i) {
                         return _react2.default.createElement(Sequence, {
                             key: i,
@@ -107,8 +130,8 @@ var melody = function (_React$PureComponent) {
         }
     }]);
 
-    return melody;
+    return Sequencer;
 }(_react2.default.PureComponent);
 
-exports.default = melody;
+exports.default = Sequencer;
 ;

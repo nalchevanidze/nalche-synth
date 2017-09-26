@@ -1,50 +1,37 @@
-.midi-keys {
-  display: flex; }
-  .midi-keys li {
-    list-style-type: none;
-    display: flex;
-    position: relative;
-    width: 300px;
-    font-family: sans-serif;
-    font-size: bold;
-    cursor: pointer;
-    user-select: none;
-    justify-content: space-between;
-    align-items: start; }
-    .midi-keys li button {
-      width: 14.2%;
-      padding-top: 180px;
-      text-align: center;
-      border: 1px solid #c1c1c1;
-      display: block;
-      border-radius: 2px;
-      box-shadow: 2px 10px 2px rgba(0, 0, 0, 0.1);
-      color: #FF9800;
-      background: white;
-      flex-grow: 0; }
-      .midi-keys li button.active {
-        background-color: #EEE;
-        padding-top: 170px; }
-      .midi-keys li button.black {
-        background-color: black;
-        width: 10%;
-        position: absolute;
-        z-index: 100;
-        padding-top: 140px;
-        box-shadow: 2px 4px 1px rgba(0, 0, 0, 0.1); }
-        .midi-keys li button.black.active {
-          background-color: #333;
-          padding-top: 135px; }
-      .midi-keys li button:nth-child(2) {
-        left: 9.2%; }
-      .midi-keys li button:nth-child(4) {
-        left: 23.6%; }
-      .midi-keys li button:nth-child(7) {
-        left: 52.1%; }
-      .midi-keys li button:nth-child(9) {
-        left: 66.5%; }
-      .midi-keys li button:nth-child(11) {
-        left: 81.5%; }
+.midi-keys li button {
+  width: 14.2%;
+  padding-top: 180px;
+  text-align: center;
+  border: 1px solid #c1c1c1;
+  display: block;
+  border-radius: 2px;
+  box-shadow: 2px 10px 2px rgba(0, 0, 0, 0.1);
+  color: #FF9800;
+  background: white;
+  flex-grow: 0; }
+  .midi-keys li button.active {
+    background-color: #EEE;
+    padding-top: 170px; }
+  .midi-keys li button.black {
+    background-color: black;
+    width: 10%;
+    position: absolute;
+    z-index: 100;
+    padding-top: 140px;
+    box-shadow: 2px 4px 1px rgba(0, 0, 0, 0.1); }
+    .midi-keys li button.black.active {
+      background-color: #333;
+      padding-top: 135px; }
+  .midi-keys li button:nth-child(2) {
+    left: 9.2%; }
+  .midi-keys li button:nth-child(4) {
+    left: 23.6%; }
+  .midi-keys li button:nth-child(7) {
+    left: 52.1%; }
+  .midi-keys li button:nth-child(9) {
+    left: 66.5%; }
+  .midi-keys li button:nth-child(11) {
+    left: 81.5%; }
 
 .window-panel {
   position: relative;
@@ -53,10 +40,6 @@
     background: #444;
     padding: 2px;
     color: white; }
-  .window-panel > ul {
-    display: flex;
-    margin: 0px;
-    padding: 0px; }
 
 .playStop {
   display: flex; }

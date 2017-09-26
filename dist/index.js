@@ -164,24 +164,28 @@ var Synth = function (_React$Component) {
                 "div",
                 { className: "nalche-synth" },
                 _react2.default.createElement(
-                    "div",
-                    { className: "page piano" },
+                    "section",
+                    {
+                        style: {
+                            boxShadow: "0px 5px 10px gray",
+                            width: "580px",
+                            height: "410px",
+                            borderRadius: "3px",
+                            background: "#333333"
+                        }
+                    },
+                    _react2.default.createElement(_panel2.default, {
+                        pitch: (this.state.range + 4) / 8,
+                        changePitch: this.changePitch,
+                        seq: this.midi.seq,
+                        updateMidi: this.midi.updateMidi
+                    }),
                     _react2.default.createElement(
-                        "section",
-                        { className: "keyboard" },
-                        _react2.default.createElement(_panel2.default, {
-                            pitch: (this.state.range + 4) / 8,
-                            changePitch: this.changePitch,
-                            seq: this.midi.seq,
-                            updateMidi: this.midi.updateMidi
-                        }),
-                        _react2.default.createElement(
-                            "ul",
-                            { className: "midi-keys" },
-                            _react2.default.createElement(_Octave2.default, { index: 0, press: this.keyPress, up: this.keyUp, active: this.state.active }),
-                            _react2.default.createElement(_Octave2.default, { index: 1, press: this.keyPress, up: this.keyUp, active: this.state.active }),
-                            _react2.default.createElement(_Octave2.default, { index: 2, press: this.keyPress, up: this.keyUp, active: this.state.active })
-                        )
+                        "ul",
+                        { className: "midi-keys", style: { display: "flex" } },
+                        _react2.default.createElement(_Octave2.default, { index: 0, press: this.keyPress, up: this.keyUp, active: this.state.active }),
+                        _react2.default.createElement(_Octave2.default, { index: 1, press: this.keyPress, up: this.keyUp, active: this.state.active }),
+                        _react2.default.createElement(_Octave2.default, { index: 2, press: this.keyPress, up: this.keyUp, active: this.state.active })
                     )
                 ),
                 _react2.default.createElement(_midiPanel2.default, _extends({}, this.midi, { global: this.global

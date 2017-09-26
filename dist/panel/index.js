@@ -47,7 +47,7 @@ var Panel = function (_React$PureComponent) {
 
             return _react2.default.createElement(
                 "div",
-                { className: "panel" },
+                { style: { display: "flex", padding: "5px" } },
                 _react2.default.createElement(_oscillator2.default, props),
                 _react2.default.createElement(
                     "div",

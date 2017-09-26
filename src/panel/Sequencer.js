@@ -6,12 +6,29 @@ let list = [
     ...keys.map(note => note + "3"),
 ].reverse();
 
-const Sequence = ({ chord, active , onClick }) =>
-    <li>
+let stepSize = 8;
+
+const Sequence = ({ chord, active, onClick }) =>
+    <li
+
+        style={{
+            width: stepSize + "px",
+            listStyle: "none",
+            border: "1px solid #333"
+        }}
+
+    >
         {
             [1, 2, 3, 4].reverse().map((index) =>
                 <button
-                    className={(chord.indexOf(index) !== -1) ? "active" : ""}
+                    style={{
+                        width: "100%",
+                        borderBottom: "1px solid #333",
+                        height: stepSize + "px",
+                        display: "block",
+                        background: (chord.indexOf(index) !== -1) ? "#ffa929" : "#555"
+
+                    }}
                     key={index}
                     onClick={() => onClick(index)}
                 />
@@ -20,7 +37,10 @@ const Sequence = ({ chord, active , onClick }) =>
     </li>
     ;
 
-export default class melody extends React.PureComponent  {
+import Panel from "./DisplayPanel";
+
+
+export default class Sequencer extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,9 +62,15 @@ export default class melody extends React.PureComponent  {
     }
     render() {
         return (
-            <div className="sequencer window-panel" >
-                <h1>sequencer</h1>
-                <ul>
+            <Panel label="sequencer" size={3} >
+                <ul
+                    style={{
+                        display: "flex",
+                        margin: "0px",
+                        padding: "0px"
+                    }}
+
+                >
                     {
                         this.props.seq.map((chord, i) =>
                             <Sequence
@@ -55,7 +81,7 @@ export default class melody extends React.PureComponent  {
                         )
                     }
                 </ul>
-            </div>
+            </Panel >
         )
     }
 };

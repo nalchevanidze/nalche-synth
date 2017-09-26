@@ -9,7 +9,7 @@ export default class Panel extends React.PureComponent {
         let { props } = this;
 
         return (
-            <div className="panel" >
+            <div style={{ display: "flex" , padding: "5px" }} >
                 <PanelOscillator  {...props} />
                 <div>
                     <PanelEnvelope />

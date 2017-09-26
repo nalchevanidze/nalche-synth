@@ -34,7 +34,7 @@ export default class Synth extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            range: 0 ,
+            range: 0,
             active: Array.from({ length: 24 }, e => false),
             time: 0,
         };
@@ -56,12 +56,12 @@ export default class Synth extends React.Component {
         });
 
         this.global = {
-            setBPM:(event)=>{
+            setBPM: (event) => {
 
-               this.midi.setBPM(event.target.value);
+                this.midi.setBPM(event.target.value);
 
-            } ,
-            BPM: ()=>this.midi.BPM ,
+            },
+            BPM: () => this.midi.BPM,
             play: () => { this.midi.play() },
             stop: () => this.stop()
         };
@@ -109,24 +109,31 @@ export default class Synth extends React.Component {
     render() {
         return (
             <div className="nalche-synth" >
-                <div className='page piano' >
-                    <section className="keyboard">
-                        <Panel
-                            pitch={(this.state.range + 4) / 8}
-                            changePitch={this.changePitch}
-                            seq={this.midi.seq}
-                            updateMidi={this.midi.updateMidi}
-                        />
-                        <ul className="midi-keys" >
-                            <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
-                            <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />
-                            <Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active} />
-                        </ul>
-                    </section>
-                </div>
+                <section
+                    style={{
+                        boxShadow: "0px 5px 10px gray",
+                        width: "580px",
+                        height: "410px",
+                        borderRadius: "3px",
+                        background: "#333333"
+                    }}
+                >
+                    <Panel
+                        pitch={(this.state.range + 4) / 8}
+                        changePitch={this.changePitch}
+                        seq={this.midi.seq}
+                        updateMidi={this.midi.updateMidi}
+                    />
+                    <ul className="midi-keys" style={{ display: "flex" }}>
+                        <Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
+                        <Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />
+                        <Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active} />
+                    </ul>
+                </section>
+
                 <MidiPanel {...this.midi} global={this.global}
                 />
-            </div>
+            </div >
         );
     }
 };

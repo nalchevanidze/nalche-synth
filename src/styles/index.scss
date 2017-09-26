@@ -6,46 +6,22 @@
         font-family: sans-serif;
         font-weight: 400;
     }
-}
-
-.piano {
-    display: flex;
-    justify-content: center;
     ul {
         padding: 0px;
         margin: 0px;
     }
-    .keyboard {
-        box-shadow: 0px 5px 10px gray;
-        width: 580px;
-        height: 410px;
-        border-radius: 3px;
-        background: #333333;
+    button {
+        outline: none;
+        border: none;
+        background: none;
     }
-    
-    .panel {
-        user-select: nonde;
-        padding: 5px;
-        display: flex;
-        * {
-            user-select: none;
+    .oscillator {
+        p {
+            color: #4b788c;
+            text-align: center;
+            font-size: 10px;
+            width: 100%;
         }
     }
 }
-
-.oscillator {
-    p {
-        color: #4b788c;
-        text-align: center;
-        font-size: 10px;
-        width: 100%;
-    }
-}
-
 @import "midi";
-@import "sequencer";
-button {
-    outline: none;
-    border: none;
-    background: none;
-}

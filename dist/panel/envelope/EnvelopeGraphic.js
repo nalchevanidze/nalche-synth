@@ -193,7 +193,7 @@ var EnvelopeGraphic = function (_React$PureComponent) {
             return _react2.default.createElement(
                 "svg",
                 {
-                    viewBox: "-5 -5 210 110", width: "200px", height: "120px",
+                    viewBox: "-5 -5 210 110", width: "180px", height: "100px",
                     onMouseMove: this.levelMove,
                     onTouchMove: this.levelMove,
                     onMouseLeave: this.clearPoint,

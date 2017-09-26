@@ -16,21 +16,40 @@ const keys = [
 
 ];
 
-const Octave =({ index, active = [], press, up })=>
-      <li>
-        {
-          keys.map(({ id, semi }, i) =>
-            <button key={i} className={(semi && "black" || "") + " " + (active[index * 12 + i] && "active" || "")} id={index * 12 + i}
-              onTouchStart={press.bind(this, index * 12 + i)}
-              onTouchEnd={press.bind(this, index * 12 + i)}
-              onMouseDown={press.bind(this, index * 12 + i)}
-              onMouseUp={up.bind(this, index * 12 + i)}
-            >
-              {id}
-            </button>
-          )
-        }
-      </li>
-;
+const Key = ({ index, active = [], press, up, semi, id }) => {
+
+  return (
+    <button
+      className={(semi && "black" || "") + " " + (active[index] && "active" || "")} id={index}
+      onTouchStart={press.bind(this, index)}
+      onTouchEnd={press.bind(this, index)}
+      onMouseDown={press.bind(this, index)}
+      onMouseUp={up.bind(this, index)}
+    >
+      {id}
+    </button>
+  );
+}
+
+const styles = {
+  listStyleType: "none",
+  cursor: "pointer",
+  display: "flex",
+  position: "relative",
+  width: "300px",
+  userSelect: "none",
+  justifyContent: "space-between",
+  alignItems: "start"
+}
+
+const Octave = ({ index, ...props }) =>
+  <li style={styles} >
+    {
+      keys.map(({ id, semi }, i) =>
+        <Key {...props} id={id} semi={semi} index={index * 12 + i} key={i} />
+      )
+    }
+  </li>
+  ;
 
 export default Octave;

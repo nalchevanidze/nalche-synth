@@ -1,16 +1,5 @@
 .midi-keys {
-    display: flex;
     li {
-        list-style-type: none;
-        display: flex;
-        position: relative;
-        width: 300px;
-        font-family: sans-serif;
-        font-size: bold;
-        cursor: pointer;
-        user-select: none;
-        justify-content: space-between;
-        align-items: start;
         button {
             width: 14.2%;
             padding-top: 180px;
@@ -62,11 +51,6 @@
         background: #444;
         padding: 2px;
         color: white;
-    }
-    >ul {
-        display: flex;
-        margin: 0px;
-        padding: 0px;
     }
     margin: 2px;
 }

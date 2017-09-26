@@ -122,7 +122,9 @@ var CirclerangeButton = function (_React$PureComponent) {
                 target = _props2.target,
                 _props2$steps = _props2.steps,
                 steps = _props2$steps === undefined ? 16 : _props2$steps,
-                children = _props2.children;
+                children = _props2.children,
+                _props2$color = _props2.color,
+                color = _props2$color === undefined ? "#222" : _props2$color;
 
             var level = target[id];
 
@@ -142,12 +144,18 @@ var CirclerangeButton = function (_React$PureComponent) {
                     onMouseDown: this.mouseDown,
                     onMouseUp: this.mouseUp,
                     onMouseMove: this.levelMove,
-                    onTouchMove: this.levelMove
+                    onTouchMove: this.levelMove,
+                    width: "50px",
+                    height: "50px",
+                    style: {
+                        margin: "5px",
+                        flexShrink: 0
+                    }
                 },
                 children,
                 _react2.default.createElement(
                     "g",
-                    { fill: "none", stroke: "#222" },
+                    { fill: "none", stroke: color },
                     _react2.default.createElement("circle", {
                         strokeWidth: 10,
                         cx: 50,

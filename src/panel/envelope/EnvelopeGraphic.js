@@ -112,7 +112,7 @@ export default class EnvelopeGraphic extends React.PureComponent {
             pointRelease = [release, 100];
         return (
             <svg
-                viewBox="-5 -5 210 110" width="200px" height="120px"
+                viewBox="-5 -5 210 110" width="180px" height="100px"
                 onMouseMove={this.levelMove}
                 onTouchMove={this.levelMove}
                 onMouseLeave={this.clearPoint}

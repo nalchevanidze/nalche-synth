@@ -50,7 +50,8 @@ var ButtonWave = function (_React$PureComponent) {
 					{ fill: "none" },
 					_react2.default.createElement("path", {
 						d: _icons2.default[this.props.id],
-						strokeWidth: 2
+						strokeWidth: 2,
+						stroke: this.props.color
 					})
 				)
 			);

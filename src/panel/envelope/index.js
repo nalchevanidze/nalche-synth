@@ -7,11 +7,11 @@ import radium from 'radium';
 const styles = {
     button: {
         border: "1px solid #222",
-        width: "50%",
-        ":hover": {
-            background: "#555",
-
-        }
+        width: "50%"
+    },
+    nav:{
+        marginTop: "10px",
+        width: "80%"
     }
 };
 
@@ -27,6 +27,7 @@ const Button = ({ id, active, onClick }) =>
     </button >
 ;
 
+import Panel from "../DisplayPanel";
 
 class PanelEnvelope extends React.PureComponent {
 
@@ -42,9 +43,8 @@ class PanelEnvelope extends React.PureComponent {
         let { active } = this.state;
         let { envelope, env } = Controller;
         return (
-            <div className="envelope" >
-                <h1> envelope </h1>
-                <div className="selector" >
+            <Panel label="envelope" size={3} >
+                <div style={styles.nav} >
                     <Button id="volume" active={active} onClick={this.switch} />
                     <Button id="filter" active={active} onClick={this.switch} />
                 </div>
@@ -54,9 +54,9 @@ class PanelEnvelope extends React.PureComponent {
                         env.filter : envelope
                 }
                 />
-            </div>
+            </Panel>
         );
     }
 }
 
-export default radium(PanelEnvelope);
+export default PanelEnvelope;
