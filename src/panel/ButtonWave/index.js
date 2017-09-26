@@ -12,6 +12,7 @@ export default class ButtonWave extends React.PureComponent {
 					<path
 						d={lib[this.props.id]}
 						strokeWidth={2}
+						stroke={this.props.color}
 					/>
 				</g>
 			</CirclerangeButton>

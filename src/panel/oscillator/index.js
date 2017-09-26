@@ -62,34 +62,51 @@ class PanelOscillator extends React.PureComponent {
 						id="pitch"
 						target={{ pitch: this.props.pitch }}
 						onChange={this.props.changePitch}
+						color={"#CDDC39"}
 						steps={8}
 					/>
 					<p>pitch</p>
 				</div>
 				<div className="controllers" >
 					<h1> Oscillator </h1>
-					<ButtonWave id="sine" target={Controller.wave} onChange={this.update} />
-					<ButtonWave id="square" target={Controller.wave} onChange={this.update} />
-					<ButtonWave id="saw" target={Controller.wave} onChange={this.update} />
-					<ButtonWave id="saw2" target={Controller.wave} onChange={this.update} />
-					<ButtonWave id="tech" target={Controller.wave} onChange={this.update} />
-					<ButtonWave id="noise" target={Controller.wave} onChange={this.update} />
-					<ButtonWave id="offset" target={Controller.wave} onChange={this.update} />
-					<ButtonWave id="voices" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="sine" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="square" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="saw" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="saw2" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="tech" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="noise" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="offset" target={Controller.wave} onChange={this.update} />
+					<ButtonWave color={"#ffa929"} id="voices" target={Controller.wave} onChange={this.update} />
 				</div>
 				<div className="fm" >
 					<h1> FM </h1>
-					<ButtonWave id="fm" target={Controller.wave} />
+					<ButtonWave
+						id="fm"
+						color="#2196f3"
+						target={Controller.wave}
+					/>
 					<p>Amount</p>
-					<ButtonWave id="fmFreq" target={Controller.wave} />
+					<ButtonWave
+						id="fmFreq"
+						target={Controller.wave}
+						color="#2196f3"
+					/>
 					<p>frequency</p>
 
 				</div>
 				<div className="fm"  >
 					<h1> Filter </h1>
-					<ButtonWave id="cutoff" target={Controller.filter} />
+					<ButtonWave
+						id="cutoff"
+						target={Controller.filter}
+						color="#2196f3"
+					/>
 					<p>cutoff</p>
-					<ButtonWave id="resonance" target={Controller.filter} />
+					<ButtonWave
+						id="resonance" 
+						target={Controller.filter}
+						color="#2196f3"  
+					/>
 					<p>resonance</p>
 				</div>
 			</div>

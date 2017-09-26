@@ -12,7 +12,10 @@ export default class ButtonWave extends React.PureComponent {
                     y="65"
                     fontSize="40px"
                     textAnchor="middle"
-                    fill="#CDDC39"
+                    fill={
+                        this.props.color
+                        || "#222"
+                    }
                 >
                     {
                         this.props.target.pitch * 8 - 4
