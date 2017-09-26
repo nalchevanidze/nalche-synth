@@ -41,19 +41,6 @@
     .piano .panel * {
       user-select: none; }
 
-.envelope {
-  margin: 5px; }
-  .envelope .selector {
-    display: flex;
-    margin-top: 5px; }
-    .envelope .selector button {
-      border: 1px solid #222;
-      width: 50%; }
-      .envelope .selector button:hover {
-        background: #555; }
-    .envelope .selector button.active {
-      color: #FFA928; }
-
 .grid-line .grids {
   opacity: 0.1; }
 
