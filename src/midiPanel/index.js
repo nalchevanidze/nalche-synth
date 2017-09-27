@@ -1,70 +1,44 @@
 import React from "react";
 import KeyboardSVG from "./KeyboardSVG";
-
-
-
-
-
-const Button = ({ id, onClick }) =>
-	<button
-		onClick={onClick}
-		style={{
-			outline: "none",
-			border: "none",
-			fontSize: "14px",
-			textTransform: "uppercase",
-			display: "block",
-			color: "#ffa929",
-			padding: "3px 18px",
-			cursor: "pointer",
-			background: "#444"
-		}}
-	>
-		{
-			id
-		}
-	</button>
-	;
+import HeaderButton from "./HeaderButton";
 
 
 class Header extends React.Component {
 	render() {
-		let { play, pause, stop, setBPM, BPM, isPlayng } = this.props.global;
+		let { stop, setBPM, BPM, isPlayng } = this.props.global;
 		let id = isPlayng ? "pause" : "play";
-		let action = this.props.global[id];
 		return (
 			<section
 				style={{
 					background: "#444",
 					color: "#ffa929",
 					padding: "5px",
-					fontSize:"12px",
-					border: "1px solid #333"
+					border: "1px solid #333",
+					display: "flex"
 				}}
 			>
-				<h3 style={{
-					margin: "0px",
-					padding: "0px",
-					display: "flex"
-				}}>
-					<Button onClick={action} id={id} />
-					<Button onClick={stop} id="stop" />
-				</h3>
-				<label>BPM</label>
-				<input
-
+				<HeaderButton id={id} actions={this.props.global} />
+				<HeaderButton id={"stop"} actions={this.props.global} />
+				<div
 					style={{
-						background: "#444",
-						margin: "10px 5px",
-						border: "none",
-						color: "#ffa929"
+						padding: "5px",
+						fontSize: "12px",
 					}}
+				>
+					<label>BPM</label>
+					<input
+						style={{
+							background: "#444",
+							border: "none",
+							color: "#ffa929",
+							borderBottom: "1px solid"
+						}}
+						className="bpm-value"
+						onChange={setBPM}
+						defaultValue={BPM()}
 
-					className="bpm-value"
-					onChange={setBPM}
-					defaultValue={BPM()}
-
-				/>
+					/>
+				</div>
 			</section>
 		)
 	}
