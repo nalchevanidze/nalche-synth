@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Synth from "./src";
+import Synth from "./dist";
 var stage = document.getElementById('page');
 
 ReactDOM.render( 
