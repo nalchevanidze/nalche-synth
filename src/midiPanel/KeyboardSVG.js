@@ -5,50 +5,9 @@ import svgCordinates from "../panel/svgCordinates";
 import standartMidi from "../standartMidi";
 import noteDetector from "./noteDetector";
 import TimelinePattern from "./TimelinePattern";
-
-
-
-class Quarter extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			value: 0
-		}
-		this.mouseDown = this.mouseDown.bind(this);
-	}
-	mouseDown(note, event) {
-		const array = standartMidi[this.props.index];
-		let arrayIndex = array.indexOf(note);
-		array.splice(arrayIndex, 1);
-		this.props.updateMidi();
-		this.setState({ M: Math.random() });
-	}
-	render() {
-		const quard = this.props.quard;
-		return (
-			<g>
-				{
-					quard.map(
-						(note, noteIndex) =>
-							<rect
-								onTouchStart={(event) => this.mouseDown(note, event)}
-								onMouseDown={(event) => this.mouseDown(note, event)}
-								fill="#f75927"
-								width={40 * note.length / 8}
-								height={10}
-								stroke="#000"
-								strokeWidth={0.25}
-								key={noteIndex}
-								x={(this.props.index + note.at / 8) * 40}
-								y={360 - noteDetector.indexOf(note) * 10}
-							/>
-					)
-				}
-			</g>
-		)
-	}
-}
+import Quarter from "./Quarter";
 const count = 8;
+
 export default class KeyboardSVG extends React.PureComponent {
 
 	constructor(props) {
@@ -76,6 +35,7 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.hide = true;
 		this.target = null;
 	}
+
 	position(event) {
 		if (event.type === "touchmove") {
 			event = event.touches[0]
@@ -83,71 +43,72 @@ export default class KeyboardSVG extends React.PureComponent {
 		let { x, y } = svgCordinates(this.target, event);
 		let length = x - this.createAt;
 		if (length > 0) {
-			this.create.length = Math.floor(length / 4.5);
+			this.create.length = Math.max(
+				Math.floor(length / 4.5),
+				1
+			)
 		}
-		this.setState(
-			{ m: Math.random() }
-		)
+		this.setState({ m: Math.random() })
 	}
+
 	levelMove(event) {
 		if (this.create) {
 			this.position(event);
 		}
 	}
+
 	clearPoint() {
+		let { index } = this;
+		if (this.create && this.index !== null) {
+			if (!standartMidi[index]) {
+				standartMidi[index] = [];
+			}
+			standartMidi[index].push(this.create);
+
+		}
 		this.point.current = null;
 		this.create = null;
+		this.index = null;
 		this.createAt = 0;
 		this.props.updateMidi();
 		window.localStorage.midi = JSON.stringify(standartMidi);
-
+		this.setState({m: Math.random()});
 	}
-
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
 		let time = Math.floor(x / 5);
 		this.props.setTime(time);
 	}
 	noteFromXY(x, y) {
-
 		// findNote Name
 		let noteIndex = Math.floor((360 - y) / 10);
-
 		let id = noteDetector.idByIndex(noteIndex);
-
 		// Note
-		let at = Math.floor(x / 10);
-		let index = Math.floor(at / 4);
-		at = (at % 4) * 2;
+		let at = Math.floor(x / 5);
+		let index = Math.floor(at / 8);
+
+		at = (at % 8);
 
 		return {
 			index,
 			note: {
 				at,
-				length: 2,
+				length: 1,
 				id
 			}
 		};
-
 	}
-
 
 	mouseDown(event) {
-
 		let { x, y } = svgCordinates(this.target, event);
-		this.createAt = x;
 		let { index, note } = this.noteFromXY(x, y);
-		if (!standartMidi[index]) {
-			standartMidi[index] = [];
-		}
+		this.createAt = x;
+		this.index = index;
 		this.create = note;
-
-		standartMidi[index].push(this.create);
-		this.props.updateMidi();
-		this.setState(
-			{ m: Math.random() }
-		);
+		console.log("start");
 	}
+
+
 	render() {
 		let notestep = 10;
 		let stageWidth = count * 80;
@@ -196,6 +157,14 @@ export default class KeyboardSVG extends React.PureComponent {
 								updateMidi={this.props.updateMidi}
 							/>
 						)
+					}
+					{
+						this.create ?
+							<Quarter
+								quard={[this.create]}
+								index={this.index}
+								updateMidi={this.props.updateMidi}
+							/>: null
 					}
 				</g>
 			</svg>

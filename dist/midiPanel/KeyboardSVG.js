@@ -34,6 +34,10 @@ var _TimelinePattern = require("./TimelinePattern");
 
 var _TimelinePattern2 = _interopRequireDefault(_TimelinePattern);
 
+var _Quarter = require("./Quarter");
+
+var _Quarter2 = _interopRequireDefault(_Quarter);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41,64 +45,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Quarter = function (_React$Component) {
-	_inherits(Quarter, _React$Component);
-
-	function Quarter(props) {
-		_classCallCheck(this, Quarter);
-
-		var _this = _possibleConstructorReturn(this, (Quarter.__proto__ || Object.getPrototypeOf(Quarter)).call(this, props));
-
-		_this.state = {
-			value: 0
-		};
-		_this.mouseDown = _this.mouseDown.bind(_this);
-		return _this;
-	}
-
-	_createClass(Quarter, [{
-		key: "mouseDown",
-		value: function mouseDown(note, event) {
-			var array = _standartMidi2.default[this.props.index];
-			var arrayIndex = array.indexOf(note);
-			array.splice(arrayIndex, 1);
-			this.props.updateMidi();
-			this.setState({ M: Math.random() });
-		}
-	}, {
-		key: "render",
-		value: function render() {
-			var _this2 = this;
-
-			var quard = this.props.quard;
-			return _react2.default.createElement(
-				"g",
-				null,
-				quard.map(function (note, noteIndex) {
-					return _react2.default.createElement("rect", {
-						onTouchStart: function onTouchStart(event) {
-							return _this2.mouseDown(note, event);
-						},
-						onMouseDown: function onMouseDown(event) {
-							return _this2.mouseDown(note, event);
-						},
-						fill: "#f75927",
-						width: 40 * note.length / 8,
-						height: 10,
-						stroke: "#000",
-						strokeWidth: 0.25,
-						key: noteIndex,
-						x: (_this2.props.index + note.at / 8) * 40,
-						y: 360 - _noteDetector2.default.indexOf(note) * 10
-					});
-				})
-			);
-		}
-	}]);
-
-	return Quarter;
-}(_react2.default.Component);
 
 var count = 8;
 
@@ -108,17 +54,17 @@ var KeyboardSVG = function (_React$PureComponent) {
 	function KeyboardSVG(props) {
 		_classCallCheck(this, KeyboardSVG);
 
-		var _this3 = _possibleConstructorReturn(this, (KeyboardSVG.__proto__ || Object.getPrototypeOf(KeyboardSVG)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (KeyboardSVG.__proto__ || Object.getPrototypeOf(KeyboardSVG)).call(this, props));
 
-		_this3.state = {};
-		_this3.position = _this3.position.bind(_this3);
-		_this3.levelMove = _this3.levelMove.bind(_this3);
-		_this3.clearPoint = _this3.clearPoint.bind(_this3);
-		_this3.mouseDown = _this3.mouseDown.bind(_this3);
-		_this3.setTime = _this3.setTime.bind(_this3);
-		_this3.point = { current: null };
-		_this3.hide = false;
-		return _this3;
+		_this.state = {};
+		_this.position = _this.position.bind(_this);
+		_this.levelMove = _this.levelMove.bind(_this);
+		_this.clearPoint = _this.clearPoint.bind(_this);
+		_this.mouseDown = _this.mouseDown.bind(_this);
+		_this.setTime = _this.setTime.bind(_this);
+		_this.point = { current: null };
+		_this.hide = false;
+		return _this;
 	}
 
 	_createClass(KeyboardSVG, [{
@@ -155,7 +101,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 
 			var length = x - this.createAt;
 			if (length > 0) {
-				this.create.length = Math.floor(length / 4.5);
+				this.create.length = Math.max(Math.floor(length / 4.5), 1);
 			}
 			this.setState({ m: Math.random() });
 		}
@@ -169,11 +115,21 @@ var KeyboardSVG = function (_React$PureComponent) {
 	}, {
 		key: "clearPoint",
 		value: function clearPoint() {
+			var index = this.index;
+
+			if (this.create && this.index !== null) {
+				if (!_standartMidi2.default[index]) {
+					_standartMidi2.default[index] = [];
+				}
+				_standartMidi2.default[index].push(this.create);
+			}
 			this.point.current = null;
 			this.create = null;
+			this.index = null;
 			this.createAt = 0;
 			this.props.updateMidi();
 			window.localStorage.midi = JSON.stringify(_standartMidi2.default);
+			this.setState({ m: Math.random() });
 		}
 	}, {
 		key: "setTime",
@@ -187,22 +143,20 @@ var KeyboardSVG = function (_React$PureComponent) {
 	}, {
 		key: "noteFromXY",
 		value: function noteFromXY(x, y) {
-
 			// findNote Name
 			var noteIndex = Math.floor((360 - y) / 10);
-
 			var id = _noteDetector2.default.idByIndex(noteIndex);
-
 			// Note
-			var at = Math.floor(x / 10);
-			var index = Math.floor(at / 4);
-			at = at % 4 * 2;
+			var at = Math.floor(x / 5);
+			var index = Math.floor(at / 8);
+
+			at = at % 8;
 
 			return {
 				index: index,
 				note: {
 					at: at,
-					length: 2,
+					length: 1,
 					id: id
 				}
 			};
@@ -214,25 +168,19 @@ var KeyboardSVG = function (_React$PureComponent) {
 			    x = _svgCordinates3.x,
 			    y = _svgCordinates3.y;
 
-			this.createAt = x;
-
 			var _noteFromXY = this.noteFromXY(x, y),
 			    index = _noteFromXY.index,
 			    note = _noteFromXY.note;
 
-			if (!_standartMidi2.default[index]) {
-				_standartMidi2.default[index] = [];
-			}
+			this.createAt = x;
+			this.index = index;
 			this.create = note;
-
-			_standartMidi2.default[index].push(this.create);
-			this.props.updateMidi();
-			this.setState({ m: Math.random() });
+			console.log("start");
 		}
 	}, {
 		key: "render",
 		value: function render() {
-			var _this4 = this;
+			var _this2 = this;
 
 			var notestep = 10;
 			var stageWidth = count * 80;
@@ -271,13 +219,18 @@ var KeyboardSVG = function (_React$PureComponent) {
 					"g",
 					null,
 					_standartMidi2.default.map(function (quard, i) {
-						return _react2.default.createElement(Quarter, {
+						return _react2.default.createElement(_Quarter2.default, {
 							key: i,
 							quard: quard || [],
 							index: i,
-							updateMidi: _this4.props.updateMidi
+							updateMidi: _this2.props.updateMidi
 						});
-					})
+					}),
+					this.create ? _react2.default.createElement(_Quarter2.default, {
+						quard: [this.create],
+						index: this.index,
+						updateMidi: this.props.updateMidi
+					}) : null
 				)
 			);
 		}
