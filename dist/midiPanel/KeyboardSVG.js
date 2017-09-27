@@ -18,9 +18,9 @@ var _reactDom = require("react-dom");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _svgCordinates4 = require("../panel/svgCordinates");
+var _svgCordinates3 = require("../panel/svgCordinates");
 
-var _svgCordinates5 = _interopRequireDefault(_svgCordinates4);
+var _svgCordinates4 = _interopRequireDefault(_svgCordinates3);
 
 var _standartMidi = require("../standartMidi");
 
@@ -47,6 +47,29 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var count = 8;
+function noteFromXY(_ref) {
+	var x = _ref.x,
+	    y = _ref.y;
+
+	// findNote Name
+	var noteIndex = Math.floor((360 - y) / 10);
+	var id = _noteDetector2.default.idByIndex(noteIndex);
+	// Note
+	var at = Math.floor(x / 5);
+	var index = Math.floor(at / 8);
+
+	at = at % 8;
+
+	return {
+		startedAt: x,
+		index: index,
+		note: {
+			at: at,
+			length: 1,
+			id: id
+		}
+	};
+}
 
 var KeyboardSVG = function (_React$PureComponent) {
 	_inherits(KeyboardSVG, _React$PureComponent);
@@ -95,38 +118,37 @@ var KeyboardSVG = function (_React$PureComponent) {
 				event = event.touches[0];
 			}
 
-			var _svgCordinates = (0, _svgCordinates5.default)(this.target, event),
+			var _svgCordinates = (0, _svgCordinates4.default)(this.target, event),
 			    x = _svgCordinates.x,
 			    y = _svgCordinates.y;
 
-			var length = x - this.createAt;
+			var length = x - this.currentNote.startedAt;
 			if (length > 0) {
-				this.create.length = Math.max(Math.floor(length / 4.5), 1);
+				this.currentNote.note.length = Math.max(Math.floor(length / 4.5), 1);
 			}
 			this.setState({ m: Math.random() });
 		}
 	}, {
 		key: "levelMove",
 		value: function levelMove(event) {
-			if (this.create) {
+			if (this.currentNote) {
 				this.position(event);
 			}
 		}
 	}, {
 		key: "clearPoint",
 		value: function clearPoint() {
-			var index = this.index;
+			if (this.currentNote) {
+				var _currentNote = this.currentNote,
+				    index = _currentNote.index,
+				    note = _currentNote.note;
 
-			if (this.create && this.index !== null) {
 				if (!_standartMidi2.default[index]) {
 					_standartMidi2.default[index] = [];
 				}
-				_standartMidi2.default[index].push(this.create);
+				_standartMidi2.default[index].push(note);
 			}
-			this.point.current = null;
-			this.create = null;
-			this.index = null;
-			this.createAt = 0;
+			this.currentNote = null;
 			this.props.updateMidi();
 			window.localStorage.midi = JSON.stringify(_standartMidi2.default);
 			this.setState({ m: Math.random() });
@@ -134,48 +156,16 @@ var KeyboardSVG = function (_React$PureComponent) {
 	}, {
 		key: "setTime",
 		value: function setTime(event) {
-			var _svgCordinates2 = (0, _svgCordinates5.default)(this.target, event),
+			var _svgCordinates2 = (0, _svgCordinates4.default)(this.target, event),
 			    x = _svgCordinates2.x;
 
 			var time = Math.floor(x / 5);
 			this.props.setTime(time);
 		}
 	}, {
-		key: "noteFromXY",
-		value: function noteFromXY(x, y) {
-			// findNote Name
-			var noteIndex = Math.floor((360 - y) / 10);
-			var id = _noteDetector2.default.idByIndex(noteIndex);
-			// Note
-			var at = Math.floor(x / 5);
-			var index = Math.floor(at / 8);
-
-			at = at % 8;
-
-			return {
-				index: index,
-				note: {
-					at: at,
-					length: 1,
-					id: id
-				}
-			};
-		}
-	}, {
 		key: "mouseDown",
 		value: function mouseDown(event) {
-			var _svgCordinates3 = (0, _svgCordinates5.default)(this.target, event),
-			    x = _svgCordinates3.x,
-			    y = _svgCordinates3.y;
-
-			var _noteFromXY = this.noteFromXY(x, y),
-			    index = _noteFromXY.index,
-			    note = _noteFromXY.note;
-
-			this.createAt = x;
-			this.index = index;
-			this.create = note;
-			console.log("start");
+			this.currentNote = noteFromXY((0, _svgCordinates4.default)(this.target, event));
 		}
 	}, {
 		key: "render",
@@ -226,9 +216,9 @@ var KeyboardSVG = function (_React$PureComponent) {
 							updateMidi: _this2.props.updateMidi
 						});
 					}),
-					this.create ? _react2.default.createElement(_Quarter2.default, {
-						quard: [this.create],
-						index: this.index,
+					this.currentNote ? _react2.default.createElement(_Quarter2.default, {
+						quard: [this.currentNote.note],
+						index: this.currentNote.index,
 						updateMidi: this.props.updateMidi
 					}) : null
 				)

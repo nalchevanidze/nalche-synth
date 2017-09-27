@@ -7,9 +7,27 @@ import noteDetector from "./noteDetector";
 import TimelinePattern from "./TimelinePattern";
 import Quarter from "./Quarter";
 const count = 8;
+function noteFromXY({ x, y }) {
+	// findNote Name
+	let noteIndex = Math.floor((360 - y) / 10);
+	let id = noteDetector.idByIndex(noteIndex);
+	// Note
+	let at = Math.floor(x / 5);
+	let index = Math.floor(at / 8);
 
+	at = (at % 8);
+
+	return {
+		startedAt: x,
+		index,
+		note: {
+			at,
+			length: 1,
+			id
+		}
+	};
+}
 export default class KeyboardSVG extends React.PureComponent {
-
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -35,80 +53,49 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.hide = true;
 		this.target = null;
 	}
-
 	position(event) {
 		if (event.type === "touchmove") {
 			event = event.touches[0]
 		}
 		let { x, y } = svgCordinates(this.target, event);
-		let length = x - this.createAt;
+		let length = x - this.currentNote.startedAt;
 		if (length > 0) {
-			this.create.length = Math.max(
+			this.currentNote.note.length = Math.max(
 				Math.floor(length / 4.5),
 				1
 			)
 		}
 		this.setState({ m: Math.random() })
 	}
-
 	levelMove(event) {
-		if (this.create) {
+		if (this.currentNote) {
 			this.position(event);
 		}
 	}
-
 	clearPoint() {
-		let { index } = this;
-		if (this.create && this.index !== null) {
+		if (this.currentNote) {
+			let { index, note } = this.currentNote;
 			if (!standartMidi[index]) {
 				standartMidi[index] = [];
 			}
-			standartMidi[index].push(this.create);
-
+			standartMidi[index].push(note);
 		}
-		this.point.current = null;
-		this.create = null;
-		this.index = null;
-		this.createAt = 0;
+		this.currentNote = null;
 		this.props.updateMidi();
 		window.localStorage.midi = JSON.stringify(standartMidi);
-		this.setState({m: Math.random()});
+		this.setState({ m: Math.random() });
 	}
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
 		let time = Math.floor(x / 5);
 		this.props.setTime(time);
 	}
-	noteFromXY(x, y) {
-		// findNote Name
-		let noteIndex = Math.floor((360 - y) / 10);
-		let id = noteDetector.idByIndex(noteIndex);
-		// Note
-		let at = Math.floor(x / 5);
-		let index = Math.floor(at / 8);
-
-		at = (at % 8);
-
-		return {
-			index,
-			note: {
-				at,
-				length: 1,
-				id
-			}
-		};
-	}
 
 	mouseDown(event) {
-		let { x, y } = svgCordinates(this.target, event);
-		let { index, note } = this.noteFromXY(x, y);
-		this.createAt = x;
-		this.index = index;
-		this.create = note;
-		console.log("start");
+		this.currentNote = noteFromXY(
+			svgCordinates(this.target, event)
+		);
 	}
-
-
 	render() {
 		let notestep = 10;
 		let stageWidth = count * 80;
@@ -135,9 +122,6 @@ export default class KeyboardSVG extends React.PureComponent {
 					onTouchStart={this.mouseDown}
 					onMouseDown={this.mouseDown}
 				/>
-				{
-					// timelineActions
-				}
 				<rect
 					fillOpacity="0"
 					y={-20}
@@ -159,12 +143,12 @@ export default class KeyboardSVG extends React.PureComponent {
 						)
 					}
 					{
-						this.create ?
+						this.currentNote ?
 							<Quarter
-								quard={[this.create]}
-								index={this.index}
+								quard={[this.currentNote.note]}
+								index={this.currentNote.index}
 								updateMidi={this.props.updateMidi}
-							/>: null
+							/> : null
 					}
 				</g>
 			</svg>
