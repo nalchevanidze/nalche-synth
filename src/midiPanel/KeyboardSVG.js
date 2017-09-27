@@ -3,20 +3,11 @@ import KeyboardPattern from "./KeyboardPattern";
 import ReactDOM from "react-dom";
 import svgCordinates from "../panel/svgCordinates";
 import standartMidi from "../standartMidi";
-const keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-let list = [
-	...keys.map(note => note + "1"),
-	...keys.map(note => note + "2"),
-	...keys.map(note => note + "3")
-].reverse();
-function isBlack(note) {
-	return (note.charAt(1) === "#") ? "note black" : "note"
-}
-function findIndex(note) {
+import noteDetector from "./noteDetector";
+import TimelinePattern from "./TimelinePattern";
 
-	return (list.indexOf(note.id) + 5) * 10;
 
-}
+
 class Quarter extends React.Component {
 	constructor(props) {
 		super(props);
@@ -49,7 +40,7 @@ class Quarter extends React.Component {
 								strokeWidth={0.25}
 								key={noteIndex}
 								x={(this.props.index + note.at / 8) * 40}
-								y={findIndex(note)}
+								y={360 - noteDetector.indexOf(note) * 10}
 							/>
 					)
 				}
@@ -67,6 +58,7 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.levelMove = this.levelMove.bind(this);
 		this.clearPoint = this.clearPoint.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
+		this.setTime = this.setTime.bind(this);
 		this.point = { current: null };
 		this.hide = false;
 	}
@@ -103,32 +95,53 @@ export default class KeyboardSVG extends React.PureComponent {
 		}
 	}
 	clearPoint() {
-
 		this.point.current = null;
 		this.create = null;
 		this.createAt = 0;
 		this.props.updateMidi();
-
 		window.localStorage.midi = JSON.stringify(standartMidi);
 
 	}
+
+	setTime(event) {
+		let { x } = svgCordinates(this.target, event);
+		let time = Math.floor(x / 5);
+		this.props.setTime(time);
+	}
+	noteFromXY(x, y) {
+
+		// findNote Name
+		let noteIndex = Math.floor((360 - y) / 10);
+
+		let id = noteDetector.idByIndex(noteIndex);
+
+		// Note
+		let at = Math.floor(x / 10);
+		let index = Math.floor(at / 4);
+		at = (at % 4) * 2;
+
+		return {
+			index,
+			note: {
+				at,
+				length: 2,
+				id
+			}
+		};
+
+	}
+
+
 	mouseDown(event) {
 
 		let { x, y } = svgCordinates(this.target, event);
 		this.createAt = x;
-		let noteIndex = Math.floor(y / 10 - 5);
-		let id = list[noteIndex];
-		let at = Math.floor(x / 10);
-		let index = Math.floor(at / 4);
-		at = (at % 4) * 2;
+		let { index, note } = this.noteFromXY(x, y);
 		if (!standartMidi[index]) {
 			standartMidi[index] = [];
 		}
-		this.create = {
-			at,
-			length: 2,
-			id
-		};
+		this.create = note;
+
 		standartMidi[index].push(this.create);
 		this.props.updateMidi();
 		this.setState(
@@ -138,26 +151,41 @@ export default class KeyboardSVG extends React.PureComponent {
 	render() {
 		let notestep = 10;
 		let stageWidth = count * 80;
-		let state = this.props.currentState * notestep/2;
+		let state = this.props.currentState * notestep / 2;
+		let stageHeigth = 360;
 		return (
 			<svg
-				viewBox={"0 0 " + stageWidth + " 400"}
+				viewBox={
+					[0, -20, stageWidth, stageHeigth].join(" ")
+				}
 				width={stageWidth + "px"}
-				height="400px"
+				height={stageHeigth + "px"}
 				onMouseMove={this.levelMove}
 				onTouchMove={this.levelMove}
 				onMouseLeave={this.clearPoint}
 				onTouchEnd={this.clearPoint}
 				onMouseUp={this.clearPoint}
 			>
+				<TimelinePattern />
 				<KeyboardPattern />
 				<rect
 					fillOpacity="0"
-					width={stageWidth} height={400}
+					width={stageWidth} height={360}
 					onTouchStart={this.mouseDown}
 					onMouseDown={this.mouseDown}
 				/>
-				<line x1={state} x2={state} y1="0" y2="400" stroke="red" />
+				{
+					// timelineActions
+				}
+				<rect
+					fillOpacity="0"
+					y={-20}
+					height={20}
+					width={stageWidth}
+					onTouchStart={this.setTime}
+					onMouseDown={this.setTime}
+				/>
+				<line x1={state} x2={state} y1={-20} y2={stageHeigth} stroke="red" />
 				<g>
 					{
 						standartMidi.map((quard, i) =>

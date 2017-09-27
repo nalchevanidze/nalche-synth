@@ -32,7 +32,7 @@ var Button = function Button(_ref) {
 			style: {
 				outline: "none",
 				border: "none",
-				fontSize: "16px",
+				fontSize: "14px",
 				textTransform: "uppercase",
 				display: "block",
 				color: "#ffa929",
@@ -45,8 +45,8 @@ var Button = function Button(_ref) {
 	);
 };
 
-var Header = function (_React$PureComponent) {
-	_inherits(Header, _React$PureComponent);
+var Header = function (_React$Component) {
+	_inherits(Header, _React$Component);
 
 	function Header() {
 		_classCallCheck(this, Header);
@@ -59,26 +59,33 @@ var Header = function (_React$PureComponent) {
 		value: function render() {
 			var _props$global = this.props.global,
 			    play = _props$global.play,
+			    pause = _props$global.pause,
 			    stop = _props$global.stop,
 			    setBPM = _props$global.setBPM,
-			    BPM = _props$global.BPM;
+			    BPM = _props$global.BPM,
+			    isPlayng = _props$global.isPlayng;
 
+			var id = isPlayng ? "pause" : "play";
+			var action = this.props.global[id];
 			return _react2.default.createElement(
-				"h3",
-				{ style: {
-
-						background: "#444"
-
-					} },
+				"section",
+				{
+					style: {
+						background: "#444",
+						color: "#ffa929",
+						padding: "5px",
+						fontSize: "12px",
+						border: "1px solid #333"
+					}
+				},
 				_react2.default.createElement(
-					"section",
-					{
-						style: {
+					"h3",
+					{ style: {
+							margin: "0px",
+							padding: "0px",
 							display: "flex"
-
-						}
-					},
-					_react2.default.createElement(Button, { onClick: play, id: "play" }),
+						} },
+					_react2.default.createElement(Button, { onClick: action, id: id }),
 					_react2.default.createElement(Button, { onClick: stop, id: "stop" })
 				),
 				_react2.default.createElement(
@@ -87,20 +94,28 @@ var Header = function (_React$PureComponent) {
 					"BPM"
 				),
 				_react2.default.createElement("input", {
+
+					style: {
+						background: "#444",
+						margin: "10px 5px",
+						border: "none",
+						color: "#ffa929"
+					},
+
 					className: "bpm-value",
 					onChange: setBPM,
-					defaultValue: BPM(),
-					style: { color: "black" }
+					defaultValue: BPM()
+
 				})
 			);
 		}
 	}]);
 
 	return Header;
-}(_react2.default.PureComponent);
+}(_react2.default.Component);
 
-var MidiDesk = function (_React$PureComponent2) {
-	_inherits(MidiDesk, _React$PureComponent2);
+var MidiDesk = function (_React$PureComponent) {
+	_inherits(MidiDesk, _React$PureComponent);
 
 	function MidiDesk() {
 		_classCallCheck(this, MidiDesk);
@@ -126,7 +141,11 @@ var MidiDesk = function (_React$PureComponent2) {
 						overflow: "scroll"
 					}
 				},
-				_react2.default.createElement(_KeyboardSVG2.default, { currentState: currentState, updateMidi: this.props.updateMidi })
+				_react2.default.createElement(_KeyboardSVG2.default, {
+					currentState: currentState,
+					updateMidi: this.props.updateMidi,
+					setTime: this.props.setTime
+				})
 			);
 		}
 	}]);
@@ -134,8 +153,8 @@ var MidiDesk = function (_React$PureComponent2) {
 	return MidiDesk;
 }(_react2.default.PureComponent);
 
-var melody = function (_React$PureComponent3) {
-	_inherits(melody, _React$PureComponent3);
+var melody = function (_React$PureComponent2) {
+	_inherits(melody, _React$PureComponent2);
 
 	function melody() {
 		_classCallCheck(this, melody);
@@ -160,6 +179,7 @@ var melody = function (_React$PureComponent3) {
 					currentState: this.props.currentState,
 					midi: this.props.melody,
 					updateMidi: this.props.updateMidi,
+					setTime: this.props.setTime,
 					global: this.props.global
 				})
 			);

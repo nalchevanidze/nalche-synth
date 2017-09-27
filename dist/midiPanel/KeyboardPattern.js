@@ -51,7 +51,7 @@ var KeyboardPattern = function KeyboardPattern() {
                         strokeWidth: 0.2
                     },
                     _react2.default.createElement("line", { x1: 0, x2: 200, y1: 1, y2: 1 }),
-                    _react2.default.createElement("line", { x1: 0, x2: 200, y1: 50, y2: 50 }),
+                    _react2.default.createElement("line", { x1: 0, x2: 200, y1: 70, y2: 70 }),
                     _react2.default.createElement("line", { x1: gridSize, x2: gridSize, y1: 0, y2: 120 })
                 ),
                 _react2.default.createElement(
@@ -62,7 +62,7 @@ var KeyboardPattern = function KeyboardPattern() {
                     },
                     _react2.default.createElement("rect", { y: 10, width: gridSize, height: "10" }),
                     _react2.default.createElement("rect", { y: 30, width: gridSize, height: "10" }),
-                    _react2.default.createElement("rect", { y: 60, width: gridSize, height: "10" }),
+                    _react2.default.createElement("rect", { y: 50, width: gridSize, height: "10" }),
                     _react2.default.createElement("rect", { y: 80, width: gridSize, height: "10" }),
                     _react2.default.createElement("rect", { y: 100, width: gridSize, height: "10" })
                 ),
@@ -73,7 +73,7 @@ var KeyboardPattern = function KeyboardPattern() {
                 })
             )
         ),
-        _react2.default.createElement("rect", { width: "100%", height: "100%", fill: "url(#key)", className: "grids" })
+        _react2.default.createElement("rect", { width: "100%", height: 120 * 3, fill: "url(#key)", className: "grids" })
     );
 };
 exports.default = KeyboardPattern;

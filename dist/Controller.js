@@ -31,7 +31,7 @@ var parameters = {
 		}
 	},
 	filter: {
-		cutoff: 0.5,
+		cutoff: 0.75,
 		resonance: 0.15
 	}
 };

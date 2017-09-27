@@ -55,6 +55,8 @@ export default class Synth extends React.Component {
             }
         });
 
+        const midiplayer = this.midi;
+
         this.global = {
             setBPM: (event) => {
 
@@ -63,7 +65,11 @@ export default class Synth extends React.Component {
             },
             BPM: () => this.midi.BPM,
             play: () => { this.midi.play() },
-            stop: () => this.stop()
+            stop: () => this.stop(),
+            pause: () => this.pause(),
+            get isPlayng() {
+                return (midiplayer.loop !== undefined)
+            }
         };
 
     }
@@ -85,13 +91,18 @@ export default class Synth extends React.Component {
         this.osc.stop(e + this.state.range * 12);
         this.setState({ time: this.midi.currentState });
     }
-    stop() {
-        this.midi.stop()
-        this.osc.stopAll();
+    pause() {
+        this.midi.pause();
         this.setState({
             active:
             this.state.active.map(() => false)
         });
+        this.osc.stopAll();
+    }
+    stop() {
+        this.midi.stop();
+        this.pause();
+
     }
     componentDidMount() {
         this.midi.melody = this.props.midi || this.midi.melody;

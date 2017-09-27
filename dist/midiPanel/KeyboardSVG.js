@@ -18,13 +18,21 @@ var _reactDom = require("react-dom");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _svgCordinates3 = require("../panel/svgCordinates");
+var _svgCordinates4 = require("../panel/svgCordinates");
 
-var _svgCordinates4 = _interopRequireDefault(_svgCordinates3);
+var _svgCordinates5 = _interopRequireDefault(_svgCordinates4);
 
 var _standartMidi = require("../standartMidi");
 
 var _standartMidi2 = _interopRequireDefault(_standartMidi);
+
+var _noteDetector = require("./noteDetector");
+
+var _noteDetector2 = _interopRequireDefault(_noteDetector);
+
+var _TimelinePattern = require("./TimelinePattern");
+
+var _TimelinePattern2 = _interopRequireDefault(_TimelinePattern);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,24 +41,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-var list = [].concat(_toConsumableArray(keys.map(function (note) {
-	return note + "1";
-})), _toConsumableArray(keys.map(function (note) {
-	return note + "2";
-})), _toConsumableArray(keys.map(function (note) {
-	return note + "3";
-}))).reverse();
-function isBlack(note) {
-	return note.charAt(1) === "#" ? "note black" : "note";
-}
-function findIndex(note) {
-
-	return (list.indexOf(note.id) + 5) * 10;
-}
 
 var Quarter = function (_React$Component) {
 	_inherits(Quarter, _React$Component);
@@ -100,7 +90,7 @@ var Quarter = function (_React$Component) {
 						strokeWidth: 0.25,
 						key: noteIndex,
 						x: (_this2.props.index + note.at / 8) * 40,
-						y: findIndex(note)
+						y: 360 - _noteDetector2.default.indexOf(note) * 10
 					});
 				})
 			);
@@ -125,6 +115,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 		_this3.levelMove = _this3.levelMove.bind(_this3);
 		_this3.clearPoint = _this3.clearPoint.bind(_this3);
 		_this3.mouseDown = _this3.mouseDown.bind(_this3);
+		_this3.setTime = _this3.setTime.bind(_this3);
 		_this3.point = { current: null };
 		_this3.hide = false;
 		return _this3;
@@ -158,7 +149,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 				event = event.touches[0];
 			}
 
-			var _svgCordinates = (0, _svgCordinates4.default)(this.target, event),
+			var _svgCordinates = (0, _svgCordinates5.default)(this.target, event),
 			    x = _svgCordinates.x,
 			    y = _svgCordinates.y;
 
@@ -178,35 +169,62 @@ var KeyboardSVG = function (_React$PureComponent) {
 	}, {
 		key: "clearPoint",
 		value: function clearPoint() {
-
 			this.point.current = null;
 			this.create = null;
 			this.createAt = 0;
 			this.props.updateMidi();
-
 			window.localStorage.midi = JSON.stringify(_standartMidi2.default);
+		}
+	}, {
+		key: "setTime",
+		value: function setTime(event) {
+			var _svgCordinates2 = (0, _svgCordinates5.default)(this.target, event),
+			    x = _svgCordinates2.x;
+
+			var time = Math.floor(x / 5);
+			this.props.setTime(time);
+		}
+	}, {
+		key: "noteFromXY",
+		value: function noteFromXY(x, y) {
+
+			// findNote Name
+			var noteIndex = Math.floor((360 - y) / 10);
+
+			var id = _noteDetector2.default.idByIndex(noteIndex);
+
+			// Note
+			var at = Math.floor(x / 10);
+			var index = Math.floor(at / 4);
+			at = at % 4 * 2;
+
+			return {
+				index: index,
+				note: {
+					at: at,
+					length: 2,
+					id: id
+				}
+			};
 		}
 	}, {
 		key: "mouseDown",
 		value: function mouseDown(event) {
-			var _svgCordinates2 = (0, _svgCordinates4.default)(this.target, event),
-			    x = _svgCordinates2.x,
-			    y = _svgCordinates2.y;
+			var _svgCordinates3 = (0, _svgCordinates5.default)(this.target, event),
+			    x = _svgCordinates3.x,
+			    y = _svgCordinates3.y;
 
 			this.createAt = x;
-			var noteIndex = Math.floor(y / 10 - 5);
-			var id = list[noteIndex];
-			var at = Math.floor(x / 10);
-			var index = Math.floor(at / 4);
-			at = at % 4 * 2;
+
+			var _noteFromXY = this.noteFromXY(x, y),
+			    index = _noteFromXY.index,
+			    note = _noteFromXY.note;
+
 			if (!_standartMidi2.default[index]) {
 				_standartMidi2.default[index] = [];
 			}
-			this.create = {
-				at: at,
-				length: 2,
-				id: id
-			};
+			this.create = note;
+
 			_standartMidi2.default[index].push(this.create);
 			this.props.updateMidi();
 			this.setState({ m: Math.random() });
@@ -219,26 +237,36 @@ var KeyboardSVG = function (_React$PureComponent) {
 			var notestep = 10;
 			var stageWidth = count * 80;
 			var state = this.props.currentState * notestep / 2;
+			var stageHeigth = 360;
 			return _react2.default.createElement(
 				"svg",
 				{
-					viewBox: "0 0 " + stageWidth + " 400",
+					viewBox: [0, -20, stageWidth, stageHeigth].join(" "),
 					width: stageWidth + "px",
-					height: "400px",
+					height: stageHeigth + "px",
 					onMouseMove: this.levelMove,
 					onTouchMove: this.levelMove,
 					onMouseLeave: this.clearPoint,
 					onTouchEnd: this.clearPoint,
 					onMouseUp: this.clearPoint
 				},
+				_react2.default.createElement(_TimelinePattern2.default, null),
 				_react2.default.createElement(_KeyboardPattern2.default, null),
 				_react2.default.createElement("rect", {
 					fillOpacity: "0",
-					width: stageWidth, height: 400,
+					width: stageWidth, height: 360,
 					onTouchStart: this.mouseDown,
 					onMouseDown: this.mouseDown
 				}),
-				_react2.default.createElement("line", { x1: state, x2: state, y1: "0", y2: "400", stroke: "red" }),
+				_react2.default.createElement("rect", {
+					fillOpacity: "0",
+					y: -20,
+					height: 20,
+					width: stageWidth,
+					onTouchStart: this.setTime,
+					onMouseDown: this.setTime
+				}),
+				_react2.default.createElement("line", { x1: state, x2: state, y1: -20, y2: stageHeigth, stroke: "red" }),
 				_react2.default.createElement(
 					"g",
 					null,

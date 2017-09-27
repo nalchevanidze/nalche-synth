@@ -30,8 +30,7 @@ const KeyboardPattern = () =>
                     strokeWidth={0.2}
                 >
                     <line x1={0} x2={200} y1={1} y2={1} />
-                    <line x1={0} x2={200} y1={50} y2={50} />
-
+                    <line x1={0} x2={200} y1={70} y2={70} />
                     <line x1={gridSize} x2={gridSize} y1={0} y2={120} />
                 </g>
                 <g
@@ -40,7 +39,7 @@ const KeyboardPattern = () =>
                 >
                     <rect y={10}  width={gridSize} height="10" />
                     <rect y={30}  width={gridSize} height="10" />
-                    <rect y={60}  width={gridSize} height="10" />
+                    <rect y={50}  width={gridSize} height="10" />
                     <rect y={80}  width={gridSize} height="10" />
                     <rect y={100} width={gridSize} height="10" />
                 </g>
@@ -52,7 +51,7 @@ const KeyboardPattern = () =>
                 />
             </pattern>
         </defs>
-        <rect width="100%" height="100%" fill="url(#key)" className="grids" />
+        <rect width="100%" height={120*3} fill="url(#key)" className="grids" />
     </g>
     ;
 export default KeyboardPattern;

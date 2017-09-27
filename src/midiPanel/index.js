@@ -11,7 +11,7 @@ const Button = ({ id, onClick }) =>
 		style={{
 			outline: "none",
 			border: "none",
-			fontSize: "16px",
+			fontSize: "14px",
 			textTransform: "uppercase",
 			display: "block",
 			color: "#ffa929",
@@ -27,32 +27,45 @@ const Button = ({ id, onClick }) =>
 	;
 
 
-class Header extends React.PureComponent {
+class Header extends React.Component {
 	render() {
-		let { play, stop, setBPM, BPM } = this.props.global;
+		let { play, pause, stop, setBPM, BPM, isPlayng } = this.props.global;
+		let id = isPlayng ? "pause" : "play";
+		let action = this.props.global[id];
 		return (
-			<h3 style={{
-
-				background: "#444"
-
-			}}>
-				<section
-					style={{
-						display: "flex",
-
-					}}
-				>
-					<Button onClick={play} id="play" />
+			<section
+				style={{
+					background: "#444",
+					color: "#ffa929",
+					padding: "5px",
+					fontSize:"12px",
+					border: "1px solid #333"
+				}}
+			>
+				<h3 style={{
+					margin: "0px",
+					padding: "0px",
+					display: "flex"
+				}}>
+					<Button onClick={action} id={id} />
 					<Button onClick={stop} id="stop" />
-				</section>
+				</h3>
 				<label>BPM</label>
 				<input
+
+					style={{
+						background: "#444",
+						margin: "10px 5px",
+						border: "none",
+						color: "#ffa929"
+					}}
+
 					className="bpm-value"
 					onChange={setBPM}
 					defaultValue={BPM()}
-					style={{ color: "black" }}
+
 				/>
-			</h3>
+			</section>
 		)
 	}
 }
@@ -66,7 +79,11 @@ class MidiDesk extends React.PureComponent {
 					overflow: "scroll"
 				}}
 			>
-				<KeyboardSVG currentState={currentState} updateMidi={this.props.updateMidi} />
+				<KeyboardSVG
+					currentState={currentState}
+					updateMidi={this.props.updateMidi}
+					setTime={this.props.setTime}
+				/>
 			</div>
 		)
 	}
@@ -77,7 +94,7 @@ export default class melody extends React.PureComponent {
 		return (
 			<div
 				style={{
-					position: "relative"
+					position: "relative",
 				}}
 			>
 				<Header global={global} />
@@ -85,6 +102,7 @@ export default class melody extends React.PureComponent {
 					currentState={this.props.currentState}
 					midi={this.props.melody}
 					updateMidi={this.props.updateMidi}
+					setTime={this.props.setTime}
 					global={this.props.global}
 				/>
 			</div>

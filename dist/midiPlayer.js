@@ -97,6 +97,7 @@ var MidiPlayer = function () {
 		this.melody = osc.midi;
 		this.updateMidi = this.updateMidi.bind(this);
 		this.updateMidi();
+		this.setTime = this.setTime.bind(this);
 		this.updateComponent = osc.component;
 		this.setBPM = this.setBPM.bind(this);
 		this.endIndex = _standartMidi2.default.length * 8;
@@ -110,6 +111,13 @@ var MidiPlayer = function () {
 			clearInterval(this.loop);
 		}
 	}, {
+		key: "setTime",
+		value: function setTime(value) {
+			this.currentState = value;
+			this.index = this.currentState;
+			this.updateComponent();
+		}
+	}, {
 		key: "updateMidi",
 		value: function updateMidi(seq) {
 			midi = [];
@@ -119,15 +127,20 @@ var MidiPlayer = function () {
 	}, {
 		key: "stop",
 		value: function stop() {
+			this.pause();
+			this.currentState = 0;
+		}
+	}, {
+		key: "pause",
+		value: function pause() {
 			clearInterval(this.loop);
 			this.loop = undefined;
-			this.currentState = 0;
 		}
 	}, {
 		key: "play",
 		value: function play() {
 			if (this.loop) return;
-			this.index = 0;
+			this.index = this.currentState;
 			this.loop = setInterval(this.next, 60 * 1000 / (this.BPM * 8));
 		}
 	}, {

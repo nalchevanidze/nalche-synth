@@ -86,6 +86,8 @@ var Synth = function (_React$Component) {
             }
         });
 
+        var midiplayer = _this.midi;
+
         _this.global = {
             setBPM: function setBPM(event) {
 
@@ -99,6 +101,12 @@ var Synth = function (_React$Component) {
             },
             stop: function stop() {
                 return _this.stop();
+            },
+            pause: function pause() {
+                return _this.pause();
+            },
+            get isPlayng() {
+                return midiplayer.loop !== undefined;
             }
         };
 
@@ -128,15 +136,21 @@ var Synth = function (_React$Component) {
             this.setState({ time: this.midi.currentState });
         }
     }, {
-        key: "stop",
-        value: function stop() {
-            this.midi.stop();
-            this.osc.stopAll();
+        key: "pause",
+        value: function pause() {
+            this.midi.pause();
             this.setState({
                 active: this.state.active.map(function () {
                     return false;
                 })
             });
+            this.osc.stopAll();
+        }
+    }, {
+        key: "stop",
+        value: function stop() {
+            this.midi.stop();
+            this.pause();
         }
     }, {
         key: "componentDidMount",
