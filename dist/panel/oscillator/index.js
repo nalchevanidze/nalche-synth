@@ -195,6 +195,16 @@ var PanelOscillator = function (_React$PureComponent) {
 						"p",
 						null,
 						"resonance"
+					),
+					_react2.default.createElement(_ButtonWave2.default, {
+						id: "envelope",
+						target: _Controller2.default.filter,
+						color: "#2196f3"
+					}),
+					_react2.default.createElement(
+						"p",
+						null,
+						"envelope"
 					)
 				)
 			);

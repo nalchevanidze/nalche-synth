@@ -30,45 +30,49 @@ export default function MoogFilter() {
     const filterSample = MoogSampler();
 
     node.onaudioprocess = function (audio) {
-        var input = audio.inputBuffer.getChannelData(0);
-        var output = audio.outputBuffer.getChannelData(0);
-        let inputSample;
-        //envelope
-        let { decay, sustain, attack } = env.filter;
 
-        let decayStep = Math.min(1, 1 / (bufferSize * 20 * decay));
+        const input = audio.inputBuffer.getChannelData(0);
+        const output = audio.outputBuffer.getChannelData(0);
 
-        let attackStep = Math.min(1, 1 / (bufferSize * 40 * attack));
+        
+
+        if (filter.envelope > 0){
+            
 
 
-        let threshhold = Math.max(sustain * maxCutoff, 0.001);
+            
+            let inputSample;
+            //envelope
+            let { decay, sustain, attack } = env.filter;
+            let decayStep = Math.min(1, 1 / (bufferSize * 20 * decay));
+            let attackStep = Math.min(1, 1 / (bufferSize * 40 * attack));
+            let threshhold = Math.max(sustain * maxCutoff, 0.001);
+            //main loop
+            for (var i = 0; i < bufferSize; i++) {
 
-        //main loop
-        for (var i = 0; i < bufferSize; i++) {
+                // generate
+                if (type == "attack") {
+                    f += attackStep;
+                    if (f >= maxCutoff) {
+                        type = "decay";
+                        f = maxCutoff;
+                    }
 
-            if (type == "attack") {
-
-                f += attackStep;
-
-                if (f >= maxCutoff) {
-                    type = "decay";
-                    f = maxCutoff;
+                } else if (f > threshhold) {
+                    f -= decayStep;
+                    f = Math.max(f, 0.01);
                 }
-
-            } else if (f > threshhold) {
-                f -= decayStep;
-                f = Math.max(f, 0.01);
+                inputSample = input[i];
+                output[i] = filterSample(
+                    inputSample,
+                    maxCutoff - (maxCutoff - f) * filter.envelope,
+                    filter.resonance
+                );
             }
-
-
-
-
-
-
-            fb = (filter.resonance * 4) * (1.0 - 0.15 * f * f);
-            inputSample = input[i];
-            output[i] = filterSample(inputSample, f, fb);
+        }else{
+            output.set(input);
         }
+
     }
     return node;
 };

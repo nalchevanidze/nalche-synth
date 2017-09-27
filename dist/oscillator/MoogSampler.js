@@ -14,7 +14,11 @@ function MoogSampler() {
         out3 = void 0,
         out4 = void 0;
     in1 = in2 = in3 = in4 = out1 = out2 = out3 = out4 = 0;
-    return function sampleGenerate(inputSample, f, fb) {
+    var fb = 0;
+
+    return function sampleGenerate(inputSample, f, resonance) {
+
+        fb = resonance * 4 * (1.0 - 0.15 * f * f);
 
         inputSample -= out4 * fb;
 

@@ -27,7 +27,8 @@ const parameters = {
 	},
 	filter: {
 		cutoff: 0.75,
-		resonance: 0.15
+		resonance: 0.15,
+		envelope: 0.15
 	}
 }
 export default parameters;

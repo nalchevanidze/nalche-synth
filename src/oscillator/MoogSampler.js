@@ -1,11 +1,15 @@
 export default function MoogSampler() {
     let in1, in2, in3, in4, out1, out2, out3, out4;
     in1 = in2 = in3 = in4 = out1 = out2 = out3 = out4 = 0;
-    return function sampleGenerate(inputSample, f, fb) {
+    let fb = 0;
+
+    return function sampleGenerate(inputSample, f, resonance) {
+
+        fb = (resonance * 4) * (1.0 - 0.15 * f * f);
 
         inputSample -= out4 * fb;
 
-        inputSample *= 0.35013 *(f ** 4);
+        inputSample *= 0.35013 * (f ** 4);
         out1 = inputSample + 0.3 * in1 + (1 - f) * out1; // Pole 1
 
         in1 = inputSample;
@@ -20,4 +24,5 @@ export default function MoogSampler() {
         in4 = out3;
         return out4;
     }
+
 };

@@ -106,6 +106,12 @@ class PanelOscillator extends React.PureComponent {
 						color="#2196f3"
 					/>
 					<p>resonance</p>
+					<ButtonWave
+						id="envelope"
+						target={Controller.filter}
+						color="#2196f3"
+					/>
+					<p>envelope</p>
 				</Panel>
 			</div>
 		);
