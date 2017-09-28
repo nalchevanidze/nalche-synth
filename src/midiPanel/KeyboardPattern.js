@@ -14,7 +14,7 @@ const KeyboardPattern = () =>
                     fill="none"
                     width="10"
                     height="120"
-                    stroke="gray"
+                    stroke="#000"
                     strokeWidth={0.1}
                 />
             </pattern>
@@ -35,7 +35,7 @@ const KeyboardPattern = () =>
                 </g>
                 <g
                     fill="black"
-                    fillOpacity="0.1"
+                    fillOpacity="0.2"
                 >
                     <rect y={10}  width={gridSize} height="10" />
                     <rect y={30}  width={gridSize} height="10" />

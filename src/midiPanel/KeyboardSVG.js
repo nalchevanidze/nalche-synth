@@ -8,7 +8,7 @@ import Quarter from "./Quarter";
 const count = 8;
 import noteFromXY from "./noteFromXY";
 import noteDetector from "./noteDetector";
-
+import KeysPattern from './KeysPattern';
 
 const flatten = arr => arr.reduce(
 	(acc, val, i) =>
@@ -115,13 +115,33 @@ export default class KeyboardSVG extends React.PureComponent {
 	setZone(event) {
 
 		let { x, y } = svgCordinates(this.target, event);
-		let { x1, y1 } = this.state.selectZone;
+		let { x1, y1, startX, startY } = this.state.selectZone;
+		let x2, y2;
+
+		if (startX > x) {
+			x1 = x;
+			x2 = startX
+		} else {
+			x1 = startX;
+			x2 = x;
+		}
+
+		if (startY > y) {
+			y1 = y;
+			y2 = startY
+		} else {
+			y1 = startY;
+			y2 = y;
+		}
+
 		this.setState({
 			selectZone: {
+				startX, 
+				startY ,
 				x1,
 				y1,
-				x2: x,
-				y2: y
+				x2,
+				y2
 			}
 		})
 	}
@@ -135,7 +155,9 @@ export default class KeyboardSVG extends React.PureComponent {
 			this.setZone(event);
 		}
 	}
-	clearPoint() {
+	clearPoint(event) {
+
+		
 
 		if (this.currentNote) {
 			let { index, note } = this.currentNote;
@@ -230,6 +252,8 @@ export default class KeyboardSVG extends React.PureComponent {
 			this.setState(
 				{
 					selectZone: {
+						startX: x,
+						startY: y,
 						x1: x,
 						y1: y,
 						x2: x,
@@ -248,18 +272,22 @@ export default class KeyboardSVG extends React.PureComponent {
 		return (
 			<svg
 				viewBox={
-					[0, -20, stageWidth, stageHeigth].join(" ")
+					[-20, -10, stageWidth, stageHeigth ].join(" ")
 				}
-				width={stageWidth + "px"}
-				height={stageHeigth + "px"}
+				width={stageWidth+20 + "px"}
+				height={stageHeigth+30 + "px"}
 				onMouseMove={this.levelMove}
 				onTouchMove={this.levelMove}
 				onMouseLeave={this.clearPoint}
 				onTouchEnd={this.clearPoint}
 				onMouseUp={this.clearPoint}
+				style={{
+					background:"#3c474a"
+				}}
 			>
 				<TimelinePattern />
 				<KeyboardPattern />
+				<KeysPattern />
 				<rect
 					fillOpacity="0"
 					width={stageWidth} height={360}

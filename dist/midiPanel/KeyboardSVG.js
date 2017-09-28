@@ -44,6 +44,10 @@ var _noteDetector = require("./noteDetector");
 
 var _noteDetector2 = _interopRequireDefault(_noteDetector);
 
+var _KeysPattern = require("./KeysPattern");
+
+var _KeysPattern2 = _interopRequireDefault(_KeysPattern);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -173,14 +177,37 @@ var KeyboardSVG = function (_React$PureComponent) {
 
 			var _state$selectZone = this.state.selectZone,
 			    x1 = _state$selectZone.x1,
-			    y1 = _state$selectZone.y1;
+			    y1 = _state$selectZone.y1,
+			    startX = _state$selectZone.startX,
+			    startY = _state$selectZone.startY;
+
+			var x2 = void 0,
+			    y2 = void 0;
+
+			if (startX > x) {
+				x1 = x;
+				x2 = startX;
+			} else {
+				x1 = startX;
+				x2 = x;
+			}
+
+			if (startY > y) {
+				y1 = y;
+				y2 = startY;
+			} else {
+				y1 = startY;
+				y2 = y;
+			}
 
 			this.setState({
 				selectZone: {
+					startX: startX,
+					startY: startY,
 					x1: x1,
 					y1: y1,
-					x2: x,
-					y2: y
+					x2: x2,
+					y2: y2
 				}
 			});
 		}
@@ -197,7 +224,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 		}
 	}, {
 		key: "clearPoint",
-		value: function clearPoint() {
+		value: function clearPoint(event) {
 
 			if (this.currentNote) {
 				var _currentNote = this.currentNote,
@@ -291,6 +318,8 @@ var KeyboardSVG = function (_React$PureComponent) {
 
 				this.setState({
 					selectZone: {
+						startX: x,
+						startY: y,
 						x1: x,
 						y1: y,
 						x2: x,
@@ -309,17 +338,21 @@ var KeyboardSVG = function (_React$PureComponent) {
 			return _react2.default.createElement(
 				"svg",
 				{
-					viewBox: [0, -20, stageWidth, stageHeigth].join(" "),
-					width: stageWidth + "px",
-					height: stageHeigth + "px",
+					viewBox: [-20, -10, stageWidth, stageHeigth].join(" "),
+					width: stageWidth + 20 + "px",
+					height: stageHeigth + 30 + "px",
 					onMouseMove: this.levelMove,
 					onTouchMove: this.levelMove,
 					onMouseLeave: this.clearPoint,
 					onTouchEnd: this.clearPoint,
-					onMouseUp: this.clearPoint
+					onMouseUp: this.clearPoint,
+					style: {
+						background: "#3c474a"
+					}
 				},
 				_react2.default.createElement(_TimelinePattern2.default, null),
 				_react2.default.createElement(_KeyboardPattern2.default, null),
+				_react2.default.createElement(_KeysPattern2.default, null),
 				_react2.default.createElement("rect", {
 					fillOpacity: "0",
 					width: stageWidth, height: 360,

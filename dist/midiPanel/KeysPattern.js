@@ -11,7 +11,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var gridSize = 40;
-var KeyboardPattern = function KeyboardPattern() {
+var KeysPattern = function KeysPattern() {
     return _react2.default.createElement(
         "g",
         null,
@@ -21,28 +21,12 @@ var KeyboardPattern = function KeyboardPattern() {
             _react2.default.createElement(
                 "pattern",
                 {
-                    width: "10",
-                    height: "120",
-                    patternUnits: "userSpaceOnUse",
-                    id: "quart"
-                },
-                _react2.default.createElement("rect", {
-                    y: 0,
-                    fill: "none",
-                    width: "10",
-                    height: "120",
-                    stroke: "#000",
-                    strokeWidth: 0.1
-                })
-            ),
-            _react2.default.createElement(
-                "pattern",
-                {
                     width: gridSize,
                     height: "120",
                     patternUnits: "userSpaceOnUse",
-                    id: "key"
+                    id: "startkeys"
                 },
+                _react2.default.createElement("rect", { width: gridSize, height: 120, fill: "white" }),
                 _react2.default.createElement(
                     "g",
                     {
@@ -56,24 +40,22 @@ var KeyboardPattern = function KeyboardPattern() {
                 ),
                 _react2.default.createElement(
                     "g",
-                    {
-                        fill: "black",
-                        fillOpacity: "0.2"
-                    },
+                    { fill: "black" },
                     _react2.default.createElement("rect", { y: 10, width: gridSize, height: "10" }),
                     _react2.default.createElement("rect", { y: 30, width: gridSize, height: "10" }),
                     _react2.default.createElement("rect", { y: 50, width: gridSize, height: "10" }),
                     _react2.default.createElement("rect", { y: 80, width: gridSize, height: "10" }),
                     _react2.default.createElement("rect", { y: 100, width: gridSize, height: "10" })
-                ),
-                _react2.default.createElement("rect", {
-                    width: gridSize,
-                    height: "120",
-                    fill: "url(#quart)"
-                })
+                )
             )
         ),
-        _react2.default.createElement("rect", { width: "100%", height: 120 * 3, fill: "url(#key)", className: "grids" })
+        _react2.default.createElement("rect", {
+            x: -20,
+            width: "20",
+            height: 120 * 3,
+            fill: "url(#startkeys)",
+            stroke: "black"
+        })
     );
 };
-exports.default = KeyboardPattern;
+exports.default = KeysPattern;
