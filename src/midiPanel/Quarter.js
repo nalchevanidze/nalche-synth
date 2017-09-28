@@ -6,14 +6,13 @@ export default class Quarter extends React.Component {
 	render() {
 		const quard = this.props.quard;
 		return (
-			<g>
+			<g fill={this.props.color || "#f75927"} >
 				{
 					quard.map(
 						(note, noteIndex) =>
 							<rect
 								onTouchStart={(event) => this.props.mouseDown(note, event)}
 								onMouseDown={(event) => this.props.mouseDown(note, event)}
-								fill="#f75927"
 								width={40 * note.length / 8}
 								height={10}
 								stroke="#000"
