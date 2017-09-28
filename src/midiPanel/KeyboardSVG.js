@@ -200,7 +200,6 @@ export default class KeyboardSVG extends React.PureComponent {
 			standartMidi[index].push(note);
 			this.currentNote = null;
 			this.props.updateMidi();
-			window.localStorage.midi = JSON.stringify(standartMidi);
 			this.setState(
 				{ notes: flatten(standartMidi) }
 			);

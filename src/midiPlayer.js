@@ -94,6 +94,7 @@ export default class MidiPlayer {
 		midi = [];
 		melody(standartMidi);
 		this.endIndex = standartMidi.length * 8 ;
+		window.localStorage.midi = JSON.stringify(standartMidi);
 	}
 	stop() {
 		this.pause();
