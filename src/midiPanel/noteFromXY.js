@@ -5,10 +5,9 @@ export default function noteFromXY({ x, y }) {
 	let noteIndex = Math.floor((360 - y) / 10);
 	let id = noteDetector.idByIndex(noteIndex);
 	// Note
-	let at = Math.floor(x / 5);
-	let index = Math.floor(at / 8);
-
-	at = (at % 8);
+	let position = Math.floor(x / 5);
+	let index = Math.floor(position / 8);
+	let at = (at % 8);
 
 	return {
 		startedAt: x,
@@ -17,7 +16,8 @@ export default function noteFromXY({ x, y }) {
 			at,
 			length: 1,
 			id,
-			index
+			index,
+			position
 		}
 	};
 }

@@ -24,6 +24,7 @@ const flatten = arr => arr.reduce(
 					{
 						...e,
 						index: i,
+						i: noteDetector.indexOf(e),
 						position: notePosition(i, e.at)
 					}
 				)
@@ -44,9 +45,10 @@ function deepen(flat) {
 	);
 
 	flat.forEach(
-		({ id, length, position }) => {
+		({  length, position , i }) => {
 			let index = Math.floor(position / 8);
 			let at = (position % 8);
+			let id = noteDetector.idByIndex(i-1);
 			standartMidi[index].push({ at, id, length });
 		}
 	)
@@ -156,19 +158,18 @@ export default class KeyboardSVG extends React.PureComponent {
 
 		let { x, y } = svgCordinates(this.target, event);
 		let diff = Math.floor((x - this.state.moveStart.x) / 5);
-
-
+		let noteDiff = Math.floor((y - this.state.moveStart.y) / 10);
 
 		let selected = this.state.selected.map(
 			e => {
+				let oldI = e.oldI || e.i;
 				let oldPosition = e.oldPosition || e.position;
-				
+
 				let position = oldPosition + diff;
-				return { ...e, position, oldPosition };
+				let i = oldI - noteDiff;
+				return { ...e, position, oldPosition, i, oldI };
 			}
 		)
-
-		console.log(selected[0].oldPosition)
 
 		this.setState(
 			{ selected }
@@ -190,44 +191,32 @@ export default class KeyboardSVG extends React.PureComponent {
 	}
 	clearPoint(event) {
 
-
-
 		if (this.currentNote) {
-			let { index, note } = this.currentNote;
-			if (!standartMidi[index]) {
-				standartMidi[index] = [];
-			}
-			standartMidi[index].push(note);
-			this.currentNote = null;
-			this.props.updateMidi();
-			this.setState(
-				{ notes: flatten(standartMidi) }
-			);
-		}
 
+			let { index, note } = this.currentNote;
+			let notes = [...this.state.notes, note];
+			this.currentNote = null;
+			deepen(notes);
+			this.props.updateMidi();
+			this.setState({ notes });
+		}
 		if (this.state.selectZone) {
-			this.setState({
-				selectZone: null
-			});
+			this.setState({ selectZone: null });
 			this.select();
 		}
 
 		if (this.state.moveStart) {
 			this.state.moveStart = null;
-
-			let notes = this.allNotes().map( e=>{ 
+			let notes = this.allNotes().map(e => {
 				e.oldPosition = null;
 				return e;
 			});
-
-			let selected = [];
 			this.setState({
 				notes,
-				selected
+				selected: []
 			})
 			deepen(notes);
 			this.props.updateMidi();
-
 		}
 	}
 
@@ -254,7 +243,7 @@ export default class KeyboardSVG extends React.PureComponent {
 		function ff(e) {
 
 			let index = noteDetector.indexOf(e);
-			let x = (e.index * 8 + e.at) * 5;
+			let x = e.position * 5;
 			return (
 				x > x1
 				&& x < x2
