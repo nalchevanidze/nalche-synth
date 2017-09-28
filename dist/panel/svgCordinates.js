@@ -5,8 +5,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = SvgCoordinates;
 function SvgCoordinates(svg, event) {
-    var clientX = event.clientX,
-        clientY = event.clientY;
+
+    if (event.type === "touchmove") {
+        event = event.touches[0];
+    }
+
+    var _event = event,
+        clientX = _event.clientX,
+        clientY = _event.clientY;
 
     var point = svg.createSVGPoint();
     point.x = clientX;

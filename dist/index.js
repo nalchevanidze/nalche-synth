@@ -65,7 +65,7 @@ var Synth = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
         _this.state = {
-            range: 0,
+            range: 1,
             active: Array.from({ length: 24 }, function (e) {
                 return false;
             }),

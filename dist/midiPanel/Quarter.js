@@ -29,28 +29,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Quarter = function (_React$Component) {
 	_inherits(Quarter, _React$Component);
 
-	function Quarter(props) {
+	function Quarter() {
 		_classCallCheck(this, Quarter);
 
-		var _this = _possibleConstructorReturn(this, (Quarter.__proto__ || Object.getPrototypeOf(Quarter)).call(this, props));
-
-		_this.state = {
-			value: 0
-		};
-		_this.mouseDown = _this.mouseDown.bind(_this);
-		return _this;
+		return _possibleConstructorReturn(this, (Quarter.__proto__ || Object.getPrototypeOf(Quarter)).apply(this, arguments));
 	}
 
 	_createClass(Quarter, [{
-		key: "mouseDown",
-		value: function mouseDown(note, event) {
-			var array = _standartMidi2.default[this.props.index];
-			var arrayIndex = array.indexOf(note);
-			array.splice(arrayIndex, 1);
-			this.props.updateMidi();
-			this.setState({ M: Math.random() });
-		}
-	}, {
 		key: "render",
 		value: function render() {
 			var _this2 = this;
@@ -58,22 +43,21 @@ var Quarter = function (_React$Component) {
 			var quard = this.props.quard;
 			return _react2.default.createElement(
 				"g",
-				null,
+				{ fill: this.props.color || "#f75927" },
 				quard.map(function (note, noteIndex) {
 					return _react2.default.createElement("rect", {
 						onTouchStart: function onTouchStart(event) {
-							return _this2.mouseDown(note, event);
+							return _this2.props.mouseDown(note, event);
 						},
 						onMouseDown: function onMouseDown(event) {
-							return _this2.mouseDown(note, event);
+							return _this2.props.mouseDown(note, event);
 						},
-						fill: "#f75927",
 						width: 40 * note.length / 8,
 						height: 10,
 						stroke: "#000",
 						strokeWidth: 0.25,
 						key: noteIndex,
-						x: (_this2.props.index + note.at / 8) * 40,
+						x: (note.index + note.at / 8) * 40,
 						y: 360 - _noteDetector2.default.indexOf(note) * 10
 					});
 				})

@@ -5,12 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 var parameters = {
 	wave: {
-		sine: 0.25,
+		sine: 0,
 		square: 0.5,
 		saw: 1,
 		saw2: 1,
 		tech: 1,
-		noise: 0,
+		noise: 0.25,
 		fm: 0.0,
 		fmFreq: 0,
 		offset: 0.9,
@@ -31,9 +31,9 @@ var parameters = {
 		}
 	},
 	filter: {
-		cutoff: 0.75,
-		resonance: 0.15,
-		envelope: 0.15
+		cutoff: 1,
+		resonance: 0.25,
+		envelope: 0.25
 	}
 };
 exports.default = parameters;
