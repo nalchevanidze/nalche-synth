@@ -23,6 +23,31 @@ const flatten = arr => arr.reduce(
 	[]
 );
 
+function deepen(flat) {
+
+
+	standartMidi.forEach(
+		(e, i) => {
+			standartMidi[i] = null;
+		}
+	);
+
+	flat.forEach(
+		({ index, at, id, length }) => {
+
+			if (!standartMidi[index]) {
+				standartMidi[index] = [];
+			}
+
+			standartMidi[index].push({ at, id, length });
+
+
+		}
+	)
+
+	return standartMidi;
+}
+
 export default class KeyboardSVG extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -57,7 +82,9 @@ export default class KeyboardSVG extends React.PureComponent {
 			});
 
 		}
-		
+		deepen(this.state.notes);
+		this.props.updateMidi();
+
 	}
 	componentWillReceiveProps(next) {
 		this.state.notes = flatten(standartMidi);

@@ -28,7 +28,7 @@ export default class melody extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			actionType: "draw"
+			actionType: "select"
 		};
 
 		this.modes = {
