@@ -69,6 +69,7 @@ class MidiDesk extends React.PureComponent {
 					currentState={currentState}
 					updateMidi={this.props.updateMidi}
 					setTime={this.props.setTime}
+					actionType={this.props.actionType}
 				/>
 			</div>
 		)

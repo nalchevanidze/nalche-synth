@@ -30,13 +30,14 @@ function noteFromXY({ x, y }) {
 export default class KeyboardSVG extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			selectZone: null
+		};
 		this.position = this.position.bind(this);
 		this.levelMove = this.levelMove.bind(this);
 		this.clearPoint = this.clearPoint.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
 		this.setTime = this.setTime.bind(this);
-		this.point = { current: null };
 		this.hide = false;
 	}
 	componentWillMount() {
@@ -54,9 +55,7 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.target = null;
 	}
 	position(event) {
-		if (event.type === "touchmove") {
-			event = event.touches[0]
-		}
+
 		let { x, y } = svgCordinates(this.target, event);
 		let length = x - this.currentNote.startedAt;
 		if (length > 0) {
@@ -66,24 +65,54 @@ export default class KeyboardSVG extends React.PureComponent {
 			)
 		}
 		this.setState({ m: Math.random() })
+
 	}
+
+	setZone(event) {
+
+		let { x, y } = svgCordinates(this.target, event);
+		let { x1, y1 } = this.state.selectZone;
+		this.setState({
+			selectZone: {
+				x1,
+				y1,
+				x2: x,
+				y2: y
+			}
+		})
+	}
+
 	levelMove(event) {
+
 		if (this.currentNote) {
 			this.position(event);
 		}
+		if (this.state.selectZone) {
+			this.setZone(event);
+		}
 	}
 	clearPoint() {
+
 		if (this.currentNote) {
 			let { index, note } = this.currentNote;
 			if (!standartMidi[index]) {
 				standartMidi[index] = [];
 			}
 			standartMidi[index].push(note);
+			this.currentNote = null;
+			this.props.updateMidi();
+			window.localStorage.midi = JSON.stringify(standartMidi);
+			this.setState({ m: Math.random() });
 		}
-		this.currentNote = null;
-		this.props.updateMidi();
-		window.localStorage.midi = JSON.stringify(standartMidi);
-		this.setState({ m: Math.random() });
+
+		if (this.state.selectZone) {
+			this.setState({
+				selectZone: null
+			})
+		}
+
+
+
 	}
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
@@ -92,9 +121,26 @@ export default class KeyboardSVG extends React.PureComponent {
 	}
 
 	mouseDown(event) {
-		this.currentNote = noteFromXY(
-			svgCordinates(this.target, event)
-		);
+
+		if (this.props.actionType === "draw") {
+			this.currentNote = noteFromXY(
+				svgCordinates(this.target, event)
+			);
+		}
+		if (this.props.actionType === "select") {
+			let { x, y } = svgCordinates(this.target, event)
+			this.setState(
+				{
+					selectZone: {
+						x1: x,
+						y1: y,
+						x2: x,
+						y2: y
+					}
+				}
+			);
+		}
+
 	}
 	render() {
 		let notestep = 10;
@@ -151,6 +197,19 @@ export default class KeyboardSVG extends React.PureComponent {
 							/> : null
 					}
 				</g>
+				{
+					this.state.selectZone ?
+						<rect
+						    stroke={"red"}
+							fill={"red"}
+							fillOpacity={0.1}
+							x={this.state.selectZone.x1}
+							y={this.state.selectZone.y1}
+							width={this.state.selectZone.x2 - this.state.selectZone.x1}
+							height={this.state.selectZone.y2 - this.state.selectZone.y1}
+						/>
+						: null
+				}
 			</svg>
 		)
 	}

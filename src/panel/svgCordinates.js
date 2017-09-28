@@ -1,4 +1,9 @@
 export default function SvgCoordinates(svg, event) {
+
+    if (event.type === "touchmove") {
+        event = event.touches[0]
+    }
+
     let {
 		clientX,
         clientY
@@ -7,4 +12,5 @@ export default function SvgCoordinates(svg, event) {
     point.x = clientX;
     point.y = clientY;
     return point.matrixTransform(svg.getScreenCTM().inverse());
+    
 }
