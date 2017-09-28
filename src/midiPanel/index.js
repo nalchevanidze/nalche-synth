@@ -19,6 +19,8 @@ class Header extends React.Component {
 			>
 				<HeaderButton id={id} actions={this.props.global} />
 				<HeaderButton id={"stop"} actions={this.props.global} />
+
+
 				<div
 					style={{
 						padding: "5px",
@@ -39,6 +41,16 @@ class Header extends React.Component {
 
 					/>
 				</div>
+				<HeaderButton
+					id={"draw"}
+					color={this.props.actionType === "draw" ? "#ffa929" : "#777"}
+					actions={this.props.setMode}
+				/>
+				<HeaderButton
+					id={"select"}
+					color={this.props.actionType === "select" ? "#ffa929" : "#777"}
+					actions={this.props.setMode}
+				/>
 			</section>
 		)
 	}
@@ -63,6 +75,24 @@ class MidiDesk extends React.PureComponent {
 	}
 }
 export default class melody extends React.PureComponent {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			actionType: "draw"
+		};
+
+		this.modes = {
+			draw: () => {
+				this.setState({ actionType: "draw" })
+			}
+			,
+			select: () => {
+				this.setState({ actionType: "select" })
+			}
+		};
+
+	}
 	render() {
 		let { global } = this.props;
 		return (
@@ -71,13 +101,18 @@ export default class melody extends React.PureComponent {
 					position: "relative",
 				}}
 			>
-				<Header global={global} />
+				<Header
+					global={global}
+					setMode={this.modes}
+					actionType={this.state.actionType}
+				/>
 				<MidiDesk
 					currentState={this.props.currentState}
 					midi={this.props.melody}
 					updateMidi={this.props.updateMidi}
 					setTime={this.props.setTime}
 					global={this.props.global}
+					actionType={this.state.actionType}
 				/>
 			</div>
 		)
