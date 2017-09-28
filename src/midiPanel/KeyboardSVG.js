@@ -38,12 +38,26 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.clearPoint = this.clearPoint.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
 		this.setTime = this.setTime.bind(this);
+		this.deleteEvent = this.deleteEvent.bind(this);
 		this.hide = false;
 	}
 	componentWillMount() {
 		this.hide = false;
 		this.target = ReactDOM.findDOMNode(this);
 		this.state.notes = flatten(standartMidi);
+		document.addEventListener("keydown", this.deleteEvent);
+
+	}
+	deleteEvent(event) {
+
+		if (event.key === "Delete") {
+
+			this.setState({
+				selected: []
+			});
+
+		}
+		
 	}
 	componentWillReceiveProps(next) {
 		this.state.notes = flatten(standartMidi);
@@ -55,6 +69,7 @@ export default class KeyboardSVG extends React.PureComponent {
 	componentWillUnmount() {
 		this.hide = true;
 		this.target = null;
+		document.removeEventListener("keydown", this.deleteEvent);
 	}
 	position(event) {
 
