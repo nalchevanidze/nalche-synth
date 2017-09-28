@@ -10,12 +10,23 @@ import noteFromXY from "./noteFromXY";
 import noteDetector from "./noteDetector";
 import KeysPattern from './KeysPattern';
 
+
+function notePosition(index, at) {
+	return index * 8 + at;
+}
+
 const flatten = arr => arr.reduce(
 	(acc, val, i) =>
 		Array.isArray(val) ? acc.concat(
 			val.map(
 
-				e => ({ ...e, index: i })
+				e => (
+					{
+						...e,
+						index: i,
+						position: notePosition(i, e.at)
+					}
+				)
 
 			)
 		) : acc
@@ -28,20 +39,15 @@ function deepen(flat) {
 
 	standartMidi.forEach(
 		(e, i) => {
-			standartMidi[i] = null;
+			standartMidi[i] = [];
 		}
 	);
 
 	flat.forEach(
-		({ index, at, id, length }) => {
-
-			if (!standartMidi[index]) {
-				standartMidi[index] = [];
-			}
-
+		({ id, length, position }) => {
+			let index = Math.floor(position / 8);
+			let at = (position % 8);
 			standartMidi[index].push({ at, id, length });
-
-
 		}
 	)
 
@@ -136,14 +142,37 @@ export default class KeyboardSVG extends React.PureComponent {
 
 		this.setState({
 			selectZone: {
-				startX, 
-				startY ,
+				startX,
+				startY,
 				x1,
 				y1,
 				x2,
 				y2
 			}
 		})
+	}
+
+	moveNotes(event) {
+
+		let { x, y } = svgCordinates(this.target, event);
+		let diff = Math.floor((x - this.state.moveStart.x) / 5);
+
+
+
+		let selected = this.state.selected.map(
+			e => {
+				let oldPosition = e.oldPosition || e.position;
+				
+				let position = oldPosition + diff;
+				return { ...e, position, oldPosition };
+			}
+		)
+
+		console.log(selected[0].oldPosition)
+
+		this.setState(
+			{ selected }
+		)
 	}
 
 	levelMove(event) {
@@ -154,10 +183,14 @@ export default class KeyboardSVG extends React.PureComponent {
 		if (this.state.selectZone) {
 			this.setZone(event);
 		}
+
+		if (this.state.moveStart) {
+			this.moveNotes(event);
+		}
 	}
 	clearPoint(event) {
 
-		
+
 
 		if (this.currentNote) {
 			let { index, note } = this.currentNote;
@@ -179,14 +212,37 @@ export default class KeyboardSVG extends React.PureComponent {
 			});
 			this.select();
 		}
+
+		if (this.state.moveStart) {
+			this.state.moveStart = null;
+
+			let notes = this.allNotes().map( e=>{ 
+				e.oldPosition = null;
+				return e;
+			});
+
+			let selected = [];
+			this.setState({
+				notes,
+				selected
+			})
+			deepen(notes);
+			this.props.updateMidi();
+
+		}
 	}
 
-	select() {
-
-		let rawNotes = [
+	allNotes() {
+		return [
 			...this.state.selected,
 			...this.state.notes
 		];
+	}
+
+
+	select() {
+
+		let rawNotes = this.allNotes();
 
 		let selected = [],
 			notes = [];
@@ -235,6 +291,20 @@ export default class KeyboardSVG extends React.PureComponent {
 		);
 	}
 
+	selectSingleNote(note) {
+		let notes = this.allNotes().filter(e => e !== note);
+		this.setState({
+			notes,
+			selected: [note]
+		})
+	}
+
+	startMoveSelectedNotes(note, event) {
+		this.setState({
+			moveStart: svgCordinates(this.target, event)
+		})
+	}
+
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
 		let time = Math.floor(x / 5);
@@ -272,17 +342,17 @@ export default class KeyboardSVG extends React.PureComponent {
 		return (
 			<svg
 				viewBox={
-					[-20, -10, stageWidth, stageHeigth ].join(" ")
+					[-20, -10, stageWidth, stageHeigth].join(" ")
 				}
-				width={stageWidth+20 + "px"}
-				height={stageHeigth+30 + "px"}
+				width={stageWidth + 20 + "px"}
+				height={stageHeigth + 30 + "px"}
 				onMouseMove={this.levelMove}
 				onTouchMove={this.levelMove}
 				onMouseLeave={this.clearPoint}
 				onTouchEnd={this.clearPoint}
 				onMouseUp={this.clearPoint}
 				style={{
-					background:"#3c474a"
+					background: "#3c474a"
 				}}
 			>
 				<TimelinePattern />
@@ -307,7 +377,18 @@ export default class KeyboardSVG extends React.PureComponent {
 					<Quarter
 						quard={this.state.notes}
 						index={0}
-						mouseDown={this.deleteNote.bind(this)}
+						mouseDown={
+							this.props.actionType === "draw" ?
+								this.deleteNote.bind(this) :
+								this.selectSingleNote.bind(this)
+
+						}
+						updateMidi={this.props.updateMidi}
+					/>
+					<Quarter
+						quard={this.state.selected}
+						color={"#03A9F4"}
+						mouseDown={this.startMoveSelectedNotes.bind(this)}
 						updateMidi={this.props.updateMidi}
 					/>
 					{
@@ -319,13 +400,7 @@ export default class KeyboardSVG extends React.PureComponent {
 							/> : null
 					}
 
-					<Quarter
-						quard={this.state.selected}
-						index={0}
-						color={"#03A9F4"}
-						mouseDown={this.deleteNote.bind(this)}
-						updateMidi={this.props.updateMidi}
-					/>
+
 
 				</g>
 				{

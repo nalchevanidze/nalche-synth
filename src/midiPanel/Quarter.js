@@ -18,7 +18,7 @@ export default class Quarter extends React.Component {
 								stroke="#000"
 								strokeWidth={0.25}
 								key={noteIndex}
-								x={(note.index + note.at / 8) * 40}
+								x={note.position * 5}
 								y={360 - noteDetector.indexOf(note) * 10}
 							/>
 					)
