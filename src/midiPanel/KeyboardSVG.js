@@ -71,7 +71,7 @@ export default class KeyboardSVG extends React.PureComponent {
 	setZone(event) {
 
 		let { x, y } = svgCordinates(this.target, event);
-		let { x1, y1 } = this.state.selectZone;
+		let { x1 , y1 } = this.state.selectZone;
 		this.setState({
 			selectZone: {
 				x1,
