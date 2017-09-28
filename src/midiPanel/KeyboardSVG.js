@@ -3,30 +3,24 @@ import KeyboardPattern from "./KeyboardPattern";
 import ReactDOM from "react-dom";
 import svgCordinates from "../panel/svgCordinates";
 import standartMidi from "../standartMidi";
-import noteDetector from "./noteDetector";
 import TimelinePattern from "./TimelinePattern";
 import Quarter from "./Quarter";
 const count = 8;
-function noteFromXY({ x, y }) {
-	// findNote Name
-	let noteIndex = Math.floor((360 - y) / 10);
-	let id = noteDetector.idByIndex(noteIndex);
-	// Note
-	let at = Math.floor(x / 5);
-	let index = Math.floor(at / 8);
+import noteFromXY from "./noteFromXY";
 
-	at = (at % 8);
+const flatten = arr => arr.reduce(
+	(acc, val, i) =>
+		Array.isArray(val) ? acc.concat(
+			val.map(
 
-	return {
-		startedAt: x,
-		index,
-		note: {
-			at,
-			length: 1,
-			id
-		}
-	};
-}
+				e => ({ ...e, index: i })
+
+			)
+		) : acc
+	,
+	[]
+);
+
 export default class KeyboardSVG extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -71,7 +65,7 @@ export default class KeyboardSVG extends React.PureComponent {
 	setZone(event) {
 
 		let { x, y } = svgCordinates(this.target, event);
-		let { x1 , y1 } = this.state.selectZone;
+		let { x1, y1 } = this.state.selectZone;
 		this.setState({
 			selectZone: {
 				x1,
@@ -110,16 +104,26 @@ export default class KeyboardSVG extends React.PureComponent {
 				selectZone: null
 			})
 		}
-
-
-
 	}
+
+	deleteNote (note, event) {
+		const array = standartMidi[note.index];
+
+		let arrayIndex = array.findIndex( 
+
+			(arrayNote)=> note.at === arrayNote.at && note.id === arrayNote.id
+
+		);
+		array.splice(arrayIndex, 1);
+		this.props.updateMidi();
+		this.setState({ M: Math.random() });
+	}
+
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
 		let time = Math.floor(x / 5);
 		this.props.setTime(time);
 	}
-
 	mouseDown(event) {
 
 		if (this.props.actionType === "draw") {
@@ -178,16 +182,16 @@ export default class KeyboardSVG extends React.PureComponent {
 				/>
 				<line x1={state} x2={state} y1={-20} y2={stageHeigth} stroke="red" />
 				<g>
-					{
-						standartMidi.map((quard, i) =>
-							<Quarter
-								key={i}
-								quard={quard || []}
-								index={i}
-								updateMidi={this.props.updateMidi}
-							/>
-						)
-					}
+
+
+					<Quarter
+
+						quard={flatten(standartMidi) || []}
+						index={0}
+						mouseDown={this.deleteNote.bind(this)}
+						updateMidi={this.props.updateMidi}
+					/>
+
 					{
 						this.currentNote ?
 							<Quarter
@@ -200,7 +204,7 @@ export default class KeyboardSVG extends React.PureComponent {
 				{
 					this.state.selectZone ?
 						<rect
-						    stroke={"red"}
+							stroke={"red"}
 							fill={"red"}
 							fillOpacity={0.1}
 							x={this.state.selectZone.x1}
