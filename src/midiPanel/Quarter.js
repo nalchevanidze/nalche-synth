@@ -27,6 +27,9 @@ export default class Quarter extends React.Component {
 									height={10}
 									fill={"gray"}
 									fillOpacity={0.1}
+									onClick={
+										(event) => this.props.resize(note, event)
+									}
 									style={{
 										cursor: "e-resize"
 									}}

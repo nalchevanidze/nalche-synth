@@ -45,10 +45,10 @@ function deepen(flat) {
 	);
 
 	flat.forEach(
-		({  length, position , i }) => {
+		({ length, position, i }) => {
 			let index = Math.floor(position / 8);
 			let at = (position % 8);
-			let id = noteDetector.idByIndex(i-1);
+			let id = noteDetector.idByIndex(i - 1);
 			standartMidi[index].push({ at, id, length });
 		}
 	)
@@ -176,6 +176,28 @@ export default class KeyboardSVG extends React.PureComponent {
 		)
 	}
 
+	resizeNotes(event) {
+
+		let { x, y } = svgCordinates(this.target, event);
+		let diff = Math.floor((x - this.state.moveStart.x) / 5);
+		let noteDiff = Math.floor((y - this.state.moveStart.y) / 10);
+
+		let selected = this.state.selected.map(
+			e => {
+				let oldI = e.oldI || e.i;
+				let oldPosition = e.oldPosition || e.position;
+
+				let position = oldPosition + diff;
+				let i = oldI - noteDiff;
+				return { ...e, position, oldPosition, i, oldI };
+			}
+		)
+
+		this.setState(
+			{ selected }
+		)
+	}
+
 	levelMove(event) {
 
 		if (this.currentNote) {
@@ -189,6 +211,7 @@ export default class KeyboardSVG extends React.PureComponent {
 			this.moveNotes(event);
 		}
 	}
+
 	clearPoint(event) {
 
 		if (this.currentNote) {
@@ -293,6 +316,12 @@ export default class KeyboardSVG extends React.PureComponent {
 		})
 	}
 
+	startResizeSelectedNotes(note, event) {
+		this.setState({
+			resizeStart: svgCordinates(this.target, event)
+		})
+	}
+
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
 		let time = Math.floor(x / 5);
@@ -377,6 +406,7 @@ export default class KeyboardSVG extends React.PureComponent {
 						quard={this.state.selected}
 						color={"#03A9F4"}
 						mouseDown={this.startMoveSelectedNotes.bind(this)}
+						resize={this.startResizeSelectedNotes.bind(this)}
 						updateMidi={this.props.updateMidi}
 					/>
 					{
