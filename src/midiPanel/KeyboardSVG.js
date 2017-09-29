@@ -179,20 +179,15 @@ export default class KeyboardSVG extends React.PureComponent {
 	resizeNotes(event) {
 
 		let { x, y } = svgCordinates(this.target, event);
-		let diff = Math.floor((x - this.state.moveStart.x) / 5);
-		let noteDiff = Math.floor((y - this.state.moveStart.y) / 10);
+		let diff = Math.round( (x - this.state.resizeStart.x) / 5);
 
 		let selected = this.state.selected.map(
 			e => {
-				let oldI = e.oldI || e.i;
-				let oldPosition = e.oldPosition || e.position;
-
-				let position = oldPosition + diff;
-				let i = oldI - noteDiff;
-				return { ...e, position, oldPosition, i, oldI };
+				let oldLength = e.oldLength ||  e.length ;
+				let length = oldLength + diff;
+				return { ...e, length, oldLength };
 			}
 		)
-
 		this.setState(
 			{ selected }
 		)
@@ -201,14 +196,23 @@ export default class KeyboardSVG extends React.PureComponent {
 	levelMove(event) {
 
 		if (this.currentNote) {
+
 			this.position(event);
+
 		}
 		if (this.state.selectZone) {
+
 			this.setZone(event);
+
 		}
 
 		if (this.state.moveStart) {
+
 			this.moveNotes(event);
+
+		}
+		if(this.state.resizeStart){
+			 this.resizeNotes(event);
 		}
 	}
 
@@ -232,6 +236,20 @@ export default class KeyboardSVG extends React.PureComponent {
 			this.state.moveStart = null;
 			let notes = this.allNotes().map(e => {
 				e.oldPosition = null;
+				return e;
+			});
+			this.setState({
+				notes,
+				selected: []
+			})
+			deepen(notes);
+			this.props.updateMidi();
+		}
+
+		if (this.state.resizeStart) {
+			this.state.resizeStart = null;
+			let notes = this.allNotes().map(e => {
+				e.oldLength = null;
 				return e;
 			});
 			this.setState({
