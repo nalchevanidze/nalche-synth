@@ -15,6 +15,7 @@ export default function noteFromXY({ x, y }) {
 		note: {
 			at,
 			length: 1,
+			i: noteIndex,
 			id,
 			index,
 			position

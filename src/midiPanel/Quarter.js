@@ -10,17 +10,31 @@ export default class Quarter extends React.Component {
 				{
 					quard.map(
 						(note, noteIndex) =>
-							<rect
-								onTouchStart={(event) => this.props.mouseDown(note, event)}
-								onMouseDown={(event) => this.props.mouseDown(note, event)}
-								width={40 * note.length / 8}
-								height={10}
-								stroke="#000"
-								strokeWidth={0.25}
-								key={noteIndex}
-								x={note.position * 5}
-								y={360 - note.i * 10}
-							/>
+							<g>
+								<rect
+									onTouchStart={(event) => this.props.mouseDown(note, event)}
+									onMouseDown={(event) => this.props.mouseDown(note, event)}
+									width={5 * note.length}
+									height={10}
+									stroke="#000"
+									strokeWidth={0.25}
+									key={noteIndex}
+									x={note.position * 5}
+									y={360 - note.i * 10}
+								/>
+								<rect
+									width={5}
+									height={10}
+									fill={"gray"}
+									fillOpacity={0.1}
+									style={{
+										cursor: "e-resize"
+									}}
+									key={"s" + noteIndex}
+									x={(note.position + note.length - 1) * 5}
+									y={360 - note.i * 10}
+								/>
+							</g>
 					)
 				}
 			</g>
