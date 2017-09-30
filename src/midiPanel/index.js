@@ -5,7 +5,6 @@ import MidiHeader from "./MidiHeader";
 
 class MidiDesk extends React.PureComponent {
 	render() {
-		let { midi, updateMidi, global, currentState = 0 } = this.props;
 		return (
 			<div
 				style={{
@@ -13,15 +12,9 @@ class MidiDesk extends React.PureComponent {
 					overflow: "scroll"
 				}}
 			>
-				<KeyboardSVG
-					midi={this.props.midi}
-					currentState={currentState}
-					updateMidi={this.props.updateMidi}
-					setTime={this.props.setTime}
-					actionType={this.props.actionType}
-				/>
+				<KeyboardSVG {...this.props} />
 			</div>
-		)
+		);
 	}
 }
 export default class melody extends React.PureComponent {
@@ -36,11 +29,11 @@ export default class melody extends React.PureComponent {
 
 		this.modes = {
 			draw: () => {
-				this.setState({ actionType: "draw" })
+				this.setState({ actionType: "draw" });
 			}
 			,
 			select: () => {
-				this.setState({ actionType: "select" })
+				this.setState({ actionType: "select" });
 			}
 		};
 
@@ -67,6 +60,6 @@ export default class melody extends React.PureComponent {
 					actionType={this.state.actionType}
 				/>
 			</div>
-		)
+		);
 	}
 }

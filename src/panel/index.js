@@ -4,19 +4,17 @@ import PanelEnvelope from "./envelope";
 import Sequencer from "./Sequencer";
 
 export default class Panel extends React.PureComponent {
-
-    render() {
-        let { props } = this;
-
-        return (
-            <div style={{ display: "flex" , padding: "5px" }} >
-                <PanelOscillator  {...props} />
-                <div>
-                    <PanelEnvelope />
-                    <Sequencer seq={props.seq || []} updateMidi={props.updateMidi} />
-                </div>
-            </div>
-        );
-    }
+	render() {
+		let { props } = this;
+		return (
+			<div style={{ display: "flex" , padding: "5px" }} >
+				<PanelOscillator {...props} />
+				<div>
+					<PanelEnvelope />
+					<Sequencer seq={props.seq || []} updateMidi={props.updateMidi} />
+				</div>
+			</div>
+		);
+	}
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import HeaderButton from "./HeaderButton";
 export default class MidiHeader extends React.Component {
 	render() {
-		let { stop, setBPM, BPM, isPlayng } = this.props.global;
+		let { setBPM, BPM, isPlayng } = this.props.global;
 		let id = isPlayng ? "pause" : "play";
 		return (
 			<section
@@ -49,6 +49,6 @@ export default class MidiHeader extends React.Component {
 					actions={this.props.setMode}
 				/>
 			</section>
-		)
+		);
 	}
 }

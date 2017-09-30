@@ -7,9 +7,9 @@ export default function createMelodySet(rowArray) {
 			if (quarter) {
 				quarter.forEach((note) => {
 					setNote(midi, i * 8, note);
-				})
+				});
 			}
 		}
-	)
+	);
 	return midi;
-};
+}

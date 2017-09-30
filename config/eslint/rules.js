@@ -1,7 +1,7 @@
 module.exports = {
     "indent": [
         "error", 
-        4,
+        "tab",
         {"SwitchCase": 1 }
     ],
 

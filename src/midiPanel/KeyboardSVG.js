@@ -8,7 +8,7 @@ import Quarter from "./Quarter";
 const count = 8;
 import noteFromXY from "./noteFromXY";
 import noteDetector from "./noteDetector";
-import KeysPattern from './KeysPattern';
+import KeysPattern from "./KeysPattern";
 
 
 function notePosition(index, at) {
@@ -16,7 +16,7 @@ function notePosition(index, at) {
 }
 
 function sortNumbers(n1, n2) {
-	return [n1, n2].sort((a, b) => a > b ? 1 : -1)
+	return [n1, n2].sort((a, b) => a > b ? 1 : -1);
 }
 
 function isInArea(
@@ -31,7 +31,7 @@ function isInArea(
 ) {
 	let y = 360 - 10 * i;
 	let x = position * 5;
-	return (x > x1 && x < x2 && y > y1 && y < y2)
+	return (x > x1 && x < x2 && y > y1 && y < y2);
 }
 
 const flatten = arr => arr.reduce(
@@ -71,10 +71,10 @@ function deepen(flat) {
 			let index = Math.floor(position / 8);
 			let at = (position % 8);
 			let id = noteDetector.idByIndex(i - 1);
-			midi[index] = midi[index] || []
+			midi[index] = midi[index] || [];
 			midi[index].push({ at, id, length });
 		}
-	)
+	);
 
 	return midi;
 }
@@ -132,23 +132,23 @@ export default class KeyboardSVG extends React.PureComponent {
 			currentNote: noteFromXY(
 				svgCordinates(this.target, event)
 			)
-		})
+		});
 
 	}
 	startMoveSelectedNotes(note, event) {
 		this.setState({
 			moveStart: svgCordinates(this.target, event)
-		})
+		});
 	}
 
 	startResizeSelectedNotes(note, event) {
 		this.setState({
 			resizeStart: svgCordinates(this.target, event)
-		})
+		});
 	}
 
 	startSelecting(event) {
-		let { x, y } = svgCordinates(this.target, event)
+		let { x, y } = svgCordinates(this.target, event);
 		this.setState(
 			{
 				selectZone: {
@@ -207,7 +207,7 @@ export default class KeyboardSVG extends React.PureComponent {
 				x2,
 				y2
 			}
-		})
+		});
 	}
 	moveNotes(event) {
 		let { x, y } = svgCordinates(this.target, event);
@@ -222,14 +222,14 @@ export default class KeyboardSVG extends React.PureComponent {
 				let i = oldI - noteDiff;
 				return { ...e, position, oldPosition, i, oldI };
 			}
-		)
+		);
 		this.setState(
 			{ selected }
-		)
+		);
 	}
 
 	resizeNotes(event) {
-		let { x, y } = svgCordinates(this.target, event);
+		let { x } = svgCordinates(this.target, event);
 		let diff = Math.round((x - this.state.resizeStart.x) / 5);
 		let selected = this.state.selected.map(
 			e => {
@@ -237,10 +237,10 @@ export default class KeyboardSVG extends React.PureComponent {
 				let length = oldLength + diff;
 				return { ...e, length, oldLength };
 			}
-		)
+		);
 		this.setState(
 			{ selected }
-		)
+		);
 	}
 
 
@@ -257,7 +257,7 @@ export default class KeyboardSVG extends React.PureComponent {
 				({ i, position, length })
 		);
 
-		this.setNewResetState(notes)
+		this.setNewResetState(notes);
 
 	}
 
@@ -266,9 +266,8 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.setState({
 			notes,
 			selected: []
-		})
+		});
 	}
-
 
 
 	select() {
@@ -278,14 +277,14 @@ export default class KeyboardSVG extends React.PureComponent {
 				isInArea(this.state.selectZone, note) ?
 					selected.push(note) : notes.push(note)
 
-		)
+		);
 		this.setState({
 			selected,
 			notes
-		})
+		});
 	}
 
-	deleteNote(note, event) {
+	deleteNote(note) {
 		const notes = this.allNotes()
 			.filter(arrayNote =>
 				arrayNote !== note
@@ -301,7 +300,7 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.setState({
 			notes,
 			selected: [note]
-		})
+		});
 	}
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
@@ -309,7 +308,7 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.props.setTime(time);
 	}
 
-	clearPoint(event) {
+	clearPoint() {
 
 		if (this.state.currentNote) {
 			let notes = [...this.state.notes, this.state.currentNote];
@@ -335,7 +334,7 @@ export default class KeyboardSVG extends React.PureComponent {
 			this.startCreatingNote(event);
 		}
 		if (this.props.actionType === "select") {
-			this.startSelecting(event)
+			this.startSelecting(event);
 		}
 	}
 	render() {
@@ -401,7 +400,6 @@ export default class KeyboardSVG extends React.PureComponent {
 					}
 
 
-
 				</g>
 				{
 					this.state.selectZone ?
@@ -417,6 +415,6 @@ export default class KeyboardSVG extends React.PureComponent {
 						: null
 				}
 			</svg>
-		)
+		);
 	}
-};
+}

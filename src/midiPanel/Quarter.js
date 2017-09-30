@@ -1,6 +1,4 @@
 import React from "react";
-import noteDetector from "./noteDetector";
-import standartMidi from "../standartMidi";
 
 export default class Quarter extends React.Component {
 	render() {
@@ -18,7 +16,7 @@ export default class Quarter extends React.Component {
 									height={10}
 									stroke="#000"
 									strokeWidth={0.25}
-									
+
 									x={note.position * 5}
 									y={360 - note.i * 10}
 								/>
@@ -28,11 +26,11 @@ export default class Quarter extends React.Component {
 									fill={"gray"}
 									fillOpacity={0.1}
 									onTouchStart={(event) => this.props.resize && this.props.resize(note, event)}
-									onMouseDown={(event) =>{
-                                        
-										 if(this.props.resize){
-											this.props.resize(note, event)
-										 }
+									onMouseDown={(event) => {
+
+										if (this.props.resize) {
+											this.props.resize(note, event);
+										}
 									}}
 									style={{
 										cursor: "e-resize"
@@ -45,6 +43,6 @@ export default class Quarter extends React.Component {
 					)
 				}
 			</g>
-		)
+		);
 	}
 }

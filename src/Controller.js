@@ -5,10 +5,10 @@ const parameters = {
 		saw: 1,
 		saw2: 1,
 		tech: 1,
-		noise: 0.25,
+		noise: 0.5,
 		fm: 0.0,
 		fmFreq: 0,
-		offset: 0.9,
+		offset: 0.7,
 		voices: 1
 	},
 	envelope: {
@@ -30,5 +30,5 @@ const parameters = {
 		resonance: 0.25,
 		envelope: 0.25
 	}
-}
+};
 export default parameters;

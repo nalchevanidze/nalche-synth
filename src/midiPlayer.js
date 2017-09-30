@@ -47,7 +47,7 @@ export default class MidiPlayer {
 		const { end, start } = this.state;
 		const { osc } = this;
 		end.forEach(osc.stop);
-		start.forEach(osc.play)
+		start.forEach(osc.play);
 	}
 	next() {
 		this.currentState = this.index;

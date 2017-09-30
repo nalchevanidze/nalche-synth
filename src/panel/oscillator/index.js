@@ -2,7 +2,6 @@ import React from "react";
 import Controller from "../../Controller";
 import WaveForm from "../../oscillator/WaveForm";
 import GridLine from "../GridLine";
-import ButtonWave from "../ButtonWave";
 import PitchButton from "../ButtonWave/PitchButton";
 import Panel from "../DisplayPanel";
 
@@ -16,7 +15,7 @@ const WavePoint = index => (
 function GenerateWave() {
 	let end = WavePoint(0);
 	let start = WavePoint(1);
-	let p = (start + end) / 2
+	let p = (start + end) / 2;
 	let wave = Array.from({ length: 200 }, (e, i) => (i + " " + WavePoint(i / 200)));
 	return "M 0 " + p + " " + wave + " 200 " + p;
 }
@@ -24,33 +23,26 @@ const styles = {
 	main: {
 		display: "flex",
 		fontSize: "10px",
-		color: "#2287f4"
+		alignItems: "flex-start"
 	}
-}
+};
 class PanelOscillator extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = Controller.wave;
-		this.change = this.change.bind(this);
 		this.update = this.update.bind(this);
 	}
 	update(state) {
 		this.setState(state);
 	}
-	componentWillMount() {
-		this.live = true;
-	}
-	componentWillUnmount() {
-		this.live = false;
-	}
-	change({ target }) {
-		Controller.wave[target.name] = Number(target.value);
-	}
 	render() {
-		let { release, attack, decay, sustain } = Controller.envelope;
 		return (
 			<div className="oscillator" style={styles.main} >
-				<Panel label="global" size={2} >
+				<Panel
+					label="global"
+					size={2}
+					color={"#CDDC39"}
+				>
 					<svg viewBox="-1 0 202 200" width="100px" height="100px" >
 						<path
 							d={GenerateWave()}
@@ -67,7 +59,6 @@ class PanelOscillator extends React.PureComponent {
 						color={"#CDDC39"}
 						steps={8}
 					/>
-					<p>pitch</p>
 				</Panel>
 				<Panel
 					label="Oscillator"
@@ -94,7 +85,7 @@ class PanelOscillator extends React.PureComponent {
 						{ id: "fmFreq" }
 					]}
 					target={Controller.wave}
-					color={"#2196f3"}
+					color={"#FF5722"}
 				/>
 				<Panel
 					label="Filter"
@@ -109,6 +100,6 @@ class PanelOscillator extends React.PureComponent {
 			</div >
 		);
 	}
-};
+}
 
 export default PanelOscillator;

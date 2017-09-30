@@ -1,13 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import lib from "./icons";
-
+import TextWrapper from "./TextWrapper";
 import CirclerangeButton from "./CirclerangeButton";
 
 export default class ButtonWave extends React.PureComponent {
 	render() {
 		return (
-			<div>
+			<TextWrapper {...this.props} >
 				<CirclerangeButton {...this.props}>
 					<g fill="none" >
 						<path
@@ -17,14 +16,7 @@ export default class ButtonWave extends React.PureComponent {
 						/>
 					</g>
 				</CirclerangeButton>
-				<p
-					style={{
-						color: this.props.color,
-						width: "100%",
-						textAlign:"center"
-					}}
-				>{this.props.id}</p>
-			</div>
+			</TextWrapper >
 		);
 	}
 

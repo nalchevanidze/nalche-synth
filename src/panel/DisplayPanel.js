@@ -17,7 +17,7 @@ const styles = {
 		textAlign: "center",
 		textTransform: "uppercase",
 	}
-}
+};
 
 const DisplayPanel = ({
 	children,
@@ -33,7 +33,20 @@ const DisplayPanel = ({
 		width: (size * 50 + (size - 1) * 20) + "px"
 	}}
 	>
-		<h1 style={styles.panelHeader} > {label} </h1>
+		<h1
+			style={{
+				color: color,
+				fontSize: "12px",
+				margin: "0px",
+				width: "100%",
+				textAlign: "center",
+				textTransform: "uppercase",
+			}}
+		>
+			{
+				label
+			}
+		</h1>
 		{
 			children
 		}{
@@ -43,10 +56,14 @@ const DisplayPanel = ({
 					key={i}
 					color={color}
 					target={target}
-					onChange={(...e) => { if (onChange) { onChange(...e) } }}
+					onChange={(...e) => {
+						if (onChange) {
+							onChange(...e);
+						}
+					}}
 				/>
 			)
 		}
-	</div>
+	</div>;
 
 export default DisplayPanel;

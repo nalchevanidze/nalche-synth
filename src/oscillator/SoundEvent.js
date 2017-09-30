@@ -6,59 +6,46 @@ import WaveLooper from "./WaveLooper";
 const { wave } = Controller;
 
 export default function SoundEvent() {
-    let positions = [];
-    const position = new WaveLooper();
-    const position2 = new WaveLooper();
-    const position3 = new WaveLooper();
-    const position4 = new WaveLooper();
-    const position5 = new WaveLooper();
-    const eventTimes = new EventTimes();
-    let oldvalue = 0;
-    function reset(frequency) {
-        position.set(frequency, wave.fm, wave.fmFreq);
-        position2.set(frequency - 1 * wave.offset, wave.fm, wave.fmFreq);
-        position3.set(frequency + 1 * wave.offset, wave.fm, wave.fmFreq);
-        position4.set(frequency - 2 * wave.offset, wave.fm, wave.fmFreq);
-        position5.set(frequency + 2 * wave.offset, wave.fm, wave.fmFreq);
-        eventTimes.restart();
-    }
+	const maxVoices = 8;
+	const maxOffset = 2;
+	const positions = Array.from(
+		{ length: maxVoices },
+		() => new WaveLooper()
+	);
 
-    function multyVoices(p) {
-        if (wave.voices > 0.75) {
-            return (
-                WaveForm(position.next(), wave)
-                + WaveForm(position2.next(), wave)
-                + WaveForm(position3.next(), wave)
-                + WaveForm(position4.next(), wave)
-                + WaveForm(position5.next(), wave)
-            ) / 5
-        }
-        if (wave.voices > 0.5) {
-            return (
-                WaveForm(position.next(), wave)
-                + WaveForm(position2.next(), wave)
-                + WaveForm(position3.next(), wave)
-            ) / 3
-        }
-        if (wave.voices > 0.25) {
-            return (
-                WaveForm(position.next(), wave)
-                + WaveForm(position2.next(), wave)
-            ) / 2
-        }
-        return WaveForm(position.next(), wave);
-    }
-    function next() {
-        let p = position.next();
-        return (
-            eventTimes.next() * multyVoices(p)
-        );
+	const eventTimes = new EventTimes();
+	let count = 0;
+	function multyVoices() {
+		let value = 0;
+		for (let i = 0; i <= count; i++) {
+			value += WaveForm(positions[i].next(), wave);
+		}
+		return value / (count + 1);
+	}
+	function reset(frequency) {
 
-    }
-    function end() {
-        eventTimes.end();
-    }
+		count = wave.voices * (maxVoices - 1);
+		let middle = Math.floor((count + 1) / 2);
 
-    return { position, eventTimes, next, reset, end };
+		for (let i = 0; i <= count; i++) {
+			let value = i - middle;
+			let diff = value * wave.offset * maxOffset;
+			positions[i].set(
+				frequency + diff,
+				wave.fm,
+				wave.fmFreq
+			);
+		}
+		eventTimes.restart();
+	}
 
+	const next = () =>
+		eventTimes.next() * multyVoices();
+
+	return { 
+		eventTimes, 
+		next, 
+		reset, 
+		end: eventTimes.end.bind(eventTimes)
+	};
 }
