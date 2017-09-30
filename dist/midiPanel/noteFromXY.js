@@ -16,22 +16,14 @@ function noteFromXY(_ref) {
 	    y = _ref.y;
 
 	// findNote Name
-	var noteIndex = Math.floor((360 - y) / 10);
-	var id = _noteDetector2.default.idByIndex(noteIndex);
+	var i = Math.floor(1 + (360 - y) / 10);
+	var id = _noteDetector2.default.idByIndex(i);
 	// Note
-	var at = Math.floor(x / 5);
-	var index = Math.floor(at / 8);
-
-	at = at % 8;
+	var position = Math.floor(x / 5);
 
 	return {
-		startedAt: x,
-		index: index,
-		note: {
-			at: at,
-			length: 1,
-			id: id,
-			index: index
-		}
+		length: 1,
+		i: i,
+		position: position
 	};
 }

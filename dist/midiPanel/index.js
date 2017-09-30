@@ -54,6 +54,7 @@ var MidiDesk = function (_React$PureComponent) {
 					}
 				},
 				_react2.default.createElement(_KeyboardSVG2.default, {
+					midi: this.props.midi,
 					currentState: currentState,
 					updateMidi: this.props.updateMidi,
 					setTime: this.props.setTime,

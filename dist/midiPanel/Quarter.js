@@ -45,21 +45,46 @@ var Quarter = function (_React$Component) {
 				"g",
 				{ fill: this.props.color || "#f75927" },
 				quard.map(function (note, noteIndex) {
-					return _react2.default.createElement("rect", {
-						onTouchStart: function onTouchStart(event) {
-							return _this2.props.mouseDown(note, event);
-						},
-						onMouseDown: function onMouseDown(event) {
-							return _this2.props.mouseDown(note, event);
-						},
-						width: 40 * note.length / 8,
-						height: 10,
-						stroke: "#000",
-						strokeWidth: 0.25,
-						key: noteIndex,
-						x: (note.index + note.at / 8) * 40,
-						y: 360 - _noteDetector2.default.indexOf(note) * 10
-					});
+					return _react2.default.createElement(
+						"g",
+						{ key: noteIndex },
+						_react2.default.createElement("rect", {
+							onTouchStart: function onTouchStart(event) {
+								return _this2.props.mouseDown(note, event);
+							},
+							onMouseDown: function onMouseDown(event) {
+								return _this2.props.mouseDown(note, event);
+							},
+							width: 5 * note.length,
+							height: 10,
+							stroke: "#000",
+							strokeWidth: 0.25,
+
+							x: note.position * 5,
+							y: 360 - note.i * 10
+						}),
+						_react2.default.createElement("rect", {
+							width: 5,
+							height: 10,
+							fill: "gray",
+							fillOpacity: 0.1,
+							onTouchStart: function onTouchStart(event) {
+								return _this2.props.resize && _this2.props.resize(note, event);
+							},
+							onMouseDown: function onMouseDown(event) {
+
+								if (_this2.props.resize) {
+									_this2.props.resize(note, event);
+								}
+							},
+							style: {
+								cursor: "e-resize"
+							},
+							key: "s" + noteIndex,
+							x: (note.position + note.length - 1) * 5,
+							y: 360 - note.i * 10
+						})
+					);
 				})
 			);
 		}
