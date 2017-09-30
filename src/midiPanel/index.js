@@ -14,6 +14,7 @@ class MidiDesk extends React.PureComponent {
 				}}
 			>
 				<KeyboardSVG
+					midi={this.props.midi}
 					currentState={currentState}
 					updateMidi={this.props.updateMidi}
 					setTime={this.props.setTime}
@@ -32,7 +33,7 @@ export default class melody extends React.PureComponent {
 		this.state = {
 			actionType: "select"
 		};
-		
+
 		this.modes = {
 			draw: () => {
 				this.setState({ actionType: "draw" })

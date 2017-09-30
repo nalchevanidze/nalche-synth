@@ -2,7 +2,7 @@ import React from "react";
 import KeyboardPattern from "./KeyboardPattern";
 import ReactDOM from "react-dom";
 import svgCordinates from "../panel/svgCordinates";
-import standartMidi from "../standartMidi";
+//import standartMidi from "../standartMidi";
 import TimelinePattern from "./TimelinePattern";
 import Quarter from "./Quarter";
 const count = 8;
@@ -15,10 +15,14 @@ function notePosition(index, at) {
 	return index * 8 + at;
 }
 
+function sortNumbers(n1, n2) {
+	return [n1, n2].sort((a, b) => a > b ? 1 : -1)
+}
+
 function isInArea(
 	//Area
-	{ 
-		x1, x2, y1, y2 
+	{
+		x1, x2, y1, y2
 	},
 	//Note
 	{
@@ -52,10 +56,13 @@ const flatten = arr => arr.reduce(
 
 function deepen(flat) {
 
+	//let midi = standartMidi;
+	let midi = [];
 
-	standartMidi.forEach(
+
+	midi.forEach(
 		(e, i) => {
-			standartMidi[i] = [];
+			midi[i] = [];
 		}
 	);
 
@@ -64,11 +71,12 @@ function deepen(flat) {
 			let index = Math.floor(position / 8);
 			let at = (position % 8);
 			let id = noteDetector.idByIndex(i - 1);
-			standartMidi[index].push({ at, id, length });
+			midi[index] = midi[index] || []
+			midi[index].push({ at, id, length });
 		}
 	)
 
-	return standartMidi;
+	return midi;
 }
 
 export default class KeyboardSVG extends React.PureComponent {
@@ -80,7 +88,7 @@ export default class KeyboardSVG extends React.PureComponent {
 			notes: [],
 			selected: []
 		};
-		this.position = this.position.bind(this);
+
 		this.levelMove = this.levelMove.bind(this);
 		this.clearPoint = this.clearPoint.bind(this);
 		this.mouseDown = this.mouseDown.bind(this);
@@ -91,23 +99,21 @@ export default class KeyboardSVG extends React.PureComponent {
 	componentWillMount() {
 		this.hide = false;
 		this.target = ReactDOM.findDOMNode(this);
-		this.state.notes = flatten(standartMidi);
+		this.state.notes = flatten(this.props.midi);
 		document.addEventListener("keydown", this.deleteEvent);
 
 	}
+	refreshMidi(newNotes) {
+		let notes = deepen(newNotes || this.state.notes);
+		this.props.updateMidi(notes);
+	}
 	deleteEvent(event) {
 		if (event.key === "Delete") {
-
 			this.setState({
 				selected: []
 			});
-
 		}
-		deepen(this.state.notes);
-		this.props.updateMidi();
-	}
-	componentWillReceiveProps(next) {
-		this.state.notes = flatten(standartMidi);
+		this.refreshMidi();
 	}
 	componentDidMount() {
 		this.hide = false;
@@ -118,36 +124,80 @@ export default class KeyboardSVG extends React.PureComponent {
 		this.target = null;
 		document.removeEventListener("keydown", this.deleteEvent);
 	}
-	position(event) {
-		let { x, y } = svgCordinates(this.target, event);
-		let length = x - this.currentNote.startedAt;
-		if (length > 0) {
-			this.currentNote.note.length = Math.max(
-				Math.floor(length / 4.5),
-				1
+
+
+	startCreatingNote(event) {
+
+		this.setState({
+			currentNote: noteFromXY(
+				svgCordinates(this.target, event)
 			)
-		}
-		this.setState({ m: Math.random() })
+		})
+
+	}
+	startMoveSelectedNotes(note, event) {
+		this.setState({
+			moveStart: svgCordinates(this.target, event)
+		})
 	}
 
+	startResizeSelectedNotes(note, event) {
+		this.setState({
+			resizeStart: svgCordinates(this.target, event)
+		})
+	}
+
+	startSelecting(event) {
+		let { x, y } = svgCordinates(this.target, event)
+		this.setState(
+			{
+				selectZone: {
+					startX: x,
+					startY: y,
+					x1: x,
+					y1: y,
+					x2: x,
+					y2: y
+				}
+			}
+		);
+	}
+
+	levelMove(event) {
+		if (this.state.currentNote) {
+			this.editCreatingNote(event);
+		}
+		if (this.state.selectZone) {
+			this.setZone(event);
+		}
+
+		if (this.state.moveStart) {
+			this.moveNotes(event);
+		}
+		if (this.state.resizeStart) {
+			this.resizeNotes(event);
+		}
+	}
+
+	editCreatingNote(event) {
+		let { x } = svgCordinates(this.target, event);
+		let { length, position, i } = this.state.currentNote;
+		length = Math.max(
+			Math.round(x / 5 - position),
+			1
+		);
+
+		this.setState({
+			currentNote: {
+				length, position, i
+			}
+		});
+	}
 	setZone(event) {
 		let { x, y } = svgCordinates(this.target, event);
-		let { x1, y1, startX, startY } = this.state.selectZone;
-		let x2, y2;
-		if (startX > x) {
-			x1 = x;
-			x2 = startX
-		} else {
-			x1 = startX;
-			x2 = x;
-		}
-		if (startY > y) {
-			y1 = y;
-			y2 = startY
-		} else {
-			y1 = startY;
-			y2 = y;
-		}
+		let { startX, startY } = this.state.selectZone;
+		let [x1, x2] = sortNumbers(startX, x);
+		let [y1, y2] = sortNumbers(startY, y);
 		this.setState({
 			selectZone: {
 				startX,
@@ -159,7 +209,6 @@ export default class KeyboardSVG extends React.PureComponent {
 			}
 		})
 	}
-
 	moveNotes(event) {
 		let { x, y } = svgCordinates(this.target, event);
 		let diff = Math.floor((x - this.state.moveStart.x) / 5);
@@ -194,66 +243,6 @@ export default class KeyboardSVG extends React.PureComponent {
 		)
 	}
 
-	levelMove(event) {
-		if (this.currentNote) {
-			this.position(event);
-		}
-		if (this.state.selectZone) {
-			this.setZone(event);
-		}
-
-		if (this.state.moveStart) {
-			this.moveNotes(event);
-		}
-		if (this.state.resizeStart) {
-			this.resizeNotes(event);
-		}
-	}
-
-	clearPoint(event) {
-
-		if (this.currentNote) {
-
-			let { index, note } = this.currentNote;
-			let notes = [...this.state.notes, note];
-			this.currentNote = null;
-			deepen(notes);
-			this.props.updateMidi();
-			this.setState({ notes });
-		}
-		if (this.state.selectZone) {
-			this.setState({ selectZone: null });
-			this.select();
-		}
-
-		if (this.state.moveStart) {
-			this.state.moveStart = null;
-			let notes = this.allNotes().map(e => {
-				e.oldPosition = null;
-				return e;
-			});
-			this.setState({
-				notes,
-				selected: []
-			})
-			deepen(notes);
-			this.props.updateMidi();
-		}
-
-		if (this.state.resizeStart) {
-			this.state.resizeStart = null;
-			let notes = this.allNotes().map(e => {
-				e.oldLength = null;
-				return e;
-			});
-			this.setState({
-				notes,
-				selected: []
-			})
-			deepen(notes);
-			this.props.updateMidi();
-		}
-	}
 
 	allNotes() {
 		return [
@@ -261,6 +250,25 @@ export default class KeyboardSVG extends React.PureComponent {
 			...this.state.notes
 		];
 	}
+
+	getResetNotes() {
+		let notes = this.allNotes().map(
+			({ i, position, length }) =>
+				({ i, position, length })
+		);
+
+		this.setNewResetState(notes)
+
+	}
+
+	setNewResetState(notes) {
+		this.refreshMidi(notes);
+		this.setState({
+			notes,
+			selected: []
+		})
+	}
+
 
 
 	select() {
@@ -282,8 +290,7 @@ export default class KeyboardSVG extends React.PureComponent {
 			.filter(arrayNote =>
 				arrayNote !== note
 			);
-		deepen(notes);
-		this.props.updateMidi(notes);
+		this.refreshMidi(notes);
 		this.setState(
 			{ notes: notes }
 		);
@@ -296,47 +303,40 @@ export default class KeyboardSVG extends React.PureComponent {
 			selected: [note]
 		})
 	}
-
-	startMoveSelectedNotes(note, event) {
-		this.setState({
-			moveStart: svgCordinates(this.target, event)
-		})
-	}
-
-	startResizeSelectedNotes(note, event) {
-		this.setState({
-			resizeStart: svgCordinates(this.target, event)
-		})
-	}
-
 	setTime(event) {
 		let { x } = svgCordinates(this.target, event);
 		let time = Math.floor(x / 5);
 		this.props.setTime(time);
 	}
-	mouseDown(event) {
 
+	clearPoint(event) {
+
+		if (this.state.currentNote) {
+			let notes = [...this.state.notes, this.state.currentNote];
+			this.state.currentNote = null;
+			this.setNewResetState(notes);
+
+		}
+		if (this.state.selectZone) {
+			this.setState({ selectZone: null });
+			this.select();
+		}
+		if (this.state.moveStart) {
+			this.state.moveStart = null;
+			this.getResetNotes();
+		}
+		if (this.state.resizeStart) {
+			this.state.resizeStart = null;
+			this.getResetNotes();
+		}
+	}
+	mouseDown(event) {
 		if (this.props.actionType === "draw") {
-			this.currentNote = noteFromXY(
-				svgCordinates(this.target, event)
-			);
+			this.startCreatingNote(event);
 		}
 		if (this.props.actionType === "select") {
-			let { x, y } = svgCordinates(this.target, event)
-			this.setState(
-				{
-					selectZone: {
-						startX: x,
-						startY: y,
-						x1: x,
-						y1: y,
-						x2: x,
-						y2: y
-					}
-				}
-			);
+			this.startSelecting(event)
 		}
-
 	}
 	render() {
 		let notestep = 10;
@@ -380,28 +380,23 @@ export default class KeyboardSVG extends React.PureComponent {
 				<g>
 					<Quarter
 						quard={this.state.notes}
-						index={0}
 						mouseDown={
 							this.props.actionType === "draw" ?
 								this.deleteNote.bind(this) :
 								this.selectSingleNote.bind(this)
 
 						}
-						updateMidi={this.props.updateMidi}
 					/>
 					<Quarter
 						quard={this.state.selected}
 						color={"#03A9F4"}
 						mouseDown={this.startMoveSelectedNotes.bind(this)}
 						resize={this.startResizeSelectedNotes.bind(this)}
-						updateMidi={this.props.updateMidi}
 					/>
 					{
-						this.currentNote ?
+						this.state.currentNote ?
 							<Quarter
-								quard={[this.currentNote.note]}
-								index={this.currentNote.index}
-								updateMidi={this.props.updateMidi}
+								quard={[this.state.currentNote]}
 							/> : null
 					}
 

@@ -20,15 +20,7 @@ const sequence = [
     [1, 2, 3, 4], []
 ]
 
-
-
-
-const midi = [
-    "F1,G#2,C3",
-    "G#1,G#2,C3",
-    "A#1,A#2,D#2",
-    "C#2,G#2,G#3",
-].map(e => e.split(","));
+import midi from "./standartMidi";
 
 export default class Synth extends React.Component {
     constructor(props) {
