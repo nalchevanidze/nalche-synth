@@ -77,7 +77,7 @@ export default class MidiPlayer {
 		this.setTime = this.setTime.bind(this);
 		this.updateComponent = osc.component;
 		this.setBPM = this.setBPM.bind(this);
-		this.endIndex = standartMidi.length * 8 ;
+		this.endIndex = standartMidi.length * 8;
 	}
 	setBPM(value) {
 		this.BPM = value;
@@ -85,22 +85,22 @@ export default class MidiPlayer {
 		clearInterval(this.loop);
 
 	}
-	setTime(value){
+	setTime(value) {
 		this.currentState = value;
-		this.index = this.currentState;		
+		this.index = this.currentState;
 		this.updateComponent();
 	}
-	updateMidi(seq) {
+	updateMidi(newMelody = standartMidi) {
 		midi = [];
-		melody(standartMidi);
-		this.endIndex = standartMidi.length * 8 ;
-		window.localStorage.midi = JSON.stringify(standartMidi);
+		melody(newMelody);
+		this.endIndex = newMelody.length * 8;
+		window.localStorage.midi = JSON.stringify(newMelody);
 	}
 	stop() {
 		this.pause();
 		this.currentState = 0;
 	}
-	pause(){
+	pause() {
 		clearInterval(this.loop);
 		this.loop = undefined;
 	}
@@ -124,7 +124,7 @@ export default class MidiPlayer {
 		if (this.state) {
 			this.executeState();
 		}
-		
+
 		if (this.index >= this.endIndex) {
 			this.index = 0;
 		} else {

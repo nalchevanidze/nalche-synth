@@ -26,11 +26,13 @@ class MidiDesk extends React.PureComponent {
 export default class melody extends React.PureComponent {
 
 	constructor(props) {
+
 		super(props);
+
 		this.state = {
 			actionType: "select"
 		};
-
+		
 		this.modes = {
 			draw: () => {
 				this.setState({ actionType: "draw" })

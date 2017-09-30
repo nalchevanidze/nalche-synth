@@ -15,6 +15,21 @@ function notePosition(index, at) {
 	return index * 8 + at;
 }
 
+function isInArea(
+	//Area
+	{ 
+		x1, x2, y1, y2 
+	},
+	//Note
+	{
+		position, i
+	}
+) {
+	let y = 360 - 10 * i;
+	let x = position * 5;
+	return (x > x1 && x < x2 && y > y1 && y < y2)
+}
+
 const flatten = arr => arr.reduce(
 	(acc, val, i) =>
 		Array.isArray(val) ? acc.concat(
@@ -65,7 +80,6 @@ export default class KeyboardSVG extends React.PureComponent {
 			notes: [],
 			selected: []
 		};
-
 		this.position = this.position.bind(this);
 		this.levelMove = this.levelMove.bind(this);
 		this.clearPoint = this.clearPoint.bind(this);
@@ -82,7 +96,6 @@ export default class KeyboardSVG extends React.PureComponent {
 
 	}
 	deleteEvent(event) {
-
 		if (event.key === "Delete") {
 
 			this.setState({
@@ -92,7 +105,6 @@ export default class KeyboardSVG extends React.PureComponent {
 		}
 		deepen(this.state.notes);
 		this.props.updateMidi();
-
 	}
 	componentWillReceiveProps(next) {
 		this.state.notes = flatten(standartMidi);
@@ -107,7 +119,6 @@ export default class KeyboardSVG extends React.PureComponent {
 		document.removeEventListener("keydown", this.deleteEvent);
 	}
 	position(event) {
-
 		let { x, y } = svgCordinates(this.target, event);
 		let length = x - this.currentNote.startedAt;
 		if (length > 0) {
@@ -117,15 +128,12 @@ export default class KeyboardSVG extends React.PureComponent {
 			)
 		}
 		this.setState({ m: Math.random() })
-
 	}
 
 	setZone(event) {
-
 		let { x, y } = svgCordinates(this.target, event);
 		let { x1, y1, startX, startY } = this.state.selectZone;
 		let x2, y2;
-
 		if (startX > x) {
 			x1 = x;
 			x2 = startX
@@ -133,7 +141,6 @@ export default class KeyboardSVG extends React.PureComponent {
 			x1 = startX;
 			x2 = x;
 		}
-
 		if (startY > y) {
 			y1 = y;
 			y2 = startY
@@ -141,7 +148,6 @@ export default class KeyboardSVG extends React.PureComponent {
 			y1 = startY;
 			y2 = y;
 		}
-
 		this.setState({
 			selectZone: {
 				startX,
@@ -155,11 +161,9 @@ export default class KeyboardSVG extends React.PureComponent {
 	}
 
 	moveNotes(event) {
-
 		let { x, y } = svgCordinates(this.target, event);
 		let diff = Math.floor((x - this.state.moveStart.x) / 5);
 		let noteDiff = Math.floor((y - this.state.moveStart.y) / 10);
-
 		let selected = this.state.selected.map(
 			e => {
 				let oldI = e.oldI || e.i;
@@ -170,20 +174,17 @@ export default class KeyboardSVG extends React.PureComponent {
 				return { ...e, position, oldPosition, i, oldI };
 			}
 		)
-
 		this.setState(
 			{ selected }
 		)
 	}
 
 	resizeNotes(event) {
-
 		let { x, y } = svgCordinates(this.target, event);
-		let diff = Math.round( (x - this.state.resizeStart.x) / 5);
-
+		let diff = Math.round((x - this.state.resizeStart.x) / 5);
 		let selected = this.state.selected.map(
 			e => {
-				let oldLength = e.oldLength ||  e.length ;
+				let oldLength = e.oldLength || e.length;
 				let length = oldLength + diff;
 				return { ...e, length, oldLength };
 			}
@@ -194,25 +195,18 @@ export default class KeyboardSVG extends React.PureComponent {
 	}
 
 	levelMove(event) {
-
 		if (this.currentNote) {
-
 			this.position(event);
-
 		}
 		if (this.state.selectZone) {
-
 			this.setZone(event);
-
 		}
 
 		if (this.state.moveStart) {
-
 			this.moveNotes(event);
-
 		}
-		if(this.state.resizeStart){
-			 this.resizeNotes(event);
+		if (this.state.resizeStart) {
+			this.resizeNotes(event);
 		}
 	}
 
@@ -270,53 +264,28 @@ export default class KeyboardSVG extends React.PureComponent {
 
 
 	select() {
-
-		let rawNotes = this.allNotes();
-
-		let selected = [],
-			notes = [];
-		let { x1, x2, y1, y2 } = this.state.selectZone;
-
-		let minIndex = Math.floor((360 - y2) / 10);
-		let maxIndex = Math.floor((360 - y1) / 10);
-
-
-		function ff(e) {
-
-			let index = noteDetector.indexOf(e);
-			let x = e.position * 5;
-			return (
-				x > x1
-				&& x < x2
-				&& index > minIndex
-				&& index < maxIndex
-			)
-		}
-
-		rawNotes.forEach(
-			e =>
-				ff(e) ? selected.push(e) : notes.push(e)
+		let selected = [], notes = [];
+		this.allNotes().forEach(
+			note =>
+				isInArea(this.state.selectZone, note) ?
+					selected.push(note) : notes.push(note)
 
 		)
-
 		this.setState({
 			selected,
 			notes
 		})
-
 	}
 
 	deleteNote(note, event) {
-		const array = standartMidi[note.index];
-
-		let arrayIndex = array.findIndex(
-			(arrayNote) => note.at === arrayNote.at && note.id === arrayNote.id
-		);
-
-		array.splice(arrayIndex, 1);
-		this.props.updateMidi();
+		const notes = this.allNotes()
+			.filter(arrayNote =>
+				arrayNote !== note
+			);
+		deepen(notes);
+		this.props.updateMidi(notes);
 		this.setState(
-			{ notes: flatten(standartMidi) }
+			{ notes: notes }
 		);
 	}
 
