@@ -7,15 +7,24 @@ import CirclerangeButton from "./CirclerangeButton";
 export default class ButtonWave extends React.PureComponent {
 	render() {
 		return (
-			<CirclerangeButton {...this.props}>
-				<g fill="none" >
-					<path
-						d={lib[this.props.id]}
-						strokeWidth={2}
-						stroke={this.props.color}
-					/>
-				</g>
-			</CirclerangeButton>
+			<div>
+				<CirclerangeButton {...this.props}>
+					<g fill="none" >
+						<path
+							d={lib[this.props.id]}
+							strokeWidth={2}
+							stroke={this.props.color}
+						/>
+					</g>
+				</CirclerangeButton>
+				<p
+					style={{
+						color: this.props.color,
+						width: "100%",
+						textAlign:"center"
+					}}
+				>{this.props.id}</p>
+			</div>
 		);
 	}
 

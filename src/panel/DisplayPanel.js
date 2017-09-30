@@ -1,4 +1,6 @@
 import React from "react";
+import ButtonWave from "./ButtonWave";
+
 const styles = {
 	panel: {
 		display: "flex",
@@ -20,16 +22,30 @@ const styles = {
 const DisplayPanel = ({
 	children,
 	label,
-	size = 1
+	size = 1,
+	list = [],
+	color = "#2196f3",
+	target,
+	onChange
 }) =>
 	<div style={{
 		...styles.panel,
-		width: (size * 50 + (size - 1) * 20 )+"px"
+		width: (size * 50 + (size - 1) * 20) + "px"
 	}}
 	>
 		<h1 style={styles.panelHeader} > {label} </h1>
 		{
 			children
+		}{
+			list.map(
+				(par, i) => <ButtonWave
+					id={par.id}
+					key={i}
+					color={color}
+					target={target}
+					onChange={(...e) => { if (onChange) { onChange(...e) } }}
+				/>
+			)
 		}
 	</div>
 

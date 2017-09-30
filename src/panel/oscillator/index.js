@@ -24,7 +24,7 @@ const styles = {
 	main: {
 		display: "flex",
 		fontSize: "10px",
-		color:"#2287f4"
+		color: "#2287f4"
 	}
 }
 class PanelOscillator extends React.PureComponent {
@@ -69,51 +69,44 @@ class PanelOscillator extends React.PureComponent {
 					/>
 					<p>pitch</p>
 				</Panel>
-				<Panel label="Oscillator" size={2} >
-					<ButtonWave color={"#ffa929"} id="sine" target={Controller.wave} onChange={this.update} />
-					<ButtonWave color={"#ffa929"} id="square" target={Controller.wave} onChange={this.update} />
-					<ButtonWave color={"#ffa929"} id="saw" target={Controller.wave} onChange={this.update} />
-					<ButtonWave color={"#ffa929"} id="saw2" target={Controller.wave} onChange={this.update} />
-					<ButtonWave color={"#ffa929"} id="tech" target={Controller.wave} onChange={this.update} />
-					<ButtonWave color={"#ffa929"} id="noise" target={Controller.wave} onChange={this.update} />
-					<ButtonWave color={"#ffa929"} id="offset" target={Controller.wave} onChange={this.update} />
-					<ButtonWave color={"#ffa929"} id="voices" target={Controller.wave} onChange={this.update} />
-				</Panel>
-				<Panel label="FM" >
-					<ButtonWave
-						id="fm"
-						color="#2196f3"
-						target={Controller.wave}
-					/>
-					<p>Amount</p>
-					<ButtonWave
-						id="fmFreq"
-						target={Controller.wave}
-						color="#2196f3"
-					/>
-					<p>frequency</p>
-				</Panel>
-				<Panel label="Filter" >
-					<ButtonWave
-						id="cutoff"
-						target={Controller.filter}
-						color="#2196f3"
-					/>
-					<p>cutoff</p>
-					<ButtonWave
-						id="resonance"
-						target={Controller.filter}
-						color="#2196f3"
-					/>
-					<p>resonance</p>
-					<ButtonWave
-						id="envelope"
-						target={Controller.filter}
-						color="#2196f3"
-					/>
-					<p>envelope</p>
-				</Panel>
-			</div>
+				<Panel
+					label="Oscillator"
+					size={2}
+					list={[
+						{ id: "sine" },
+						{ id: "square" },
+						{ id: "saw" },
+						{ id: "saw2" },
+						{ id: "tech" },
+						{ id: "noise" },
+						{ id: "offset" },
+						{ id: "voices" },
+					]}
+					target={Controller.wave}
+					onChange={this.update}
+					color={"#ffa929"}
+
+				/>
+				<Panel
+					label="FM"
+					list={[
+						{ id: "fm" },
+						{ id: "fmFreq" }
+					]}
+					target={Controller.wave}
+					color={"#2196f3"}
+				/>
+				<Panel
+					label="Filter"
+					list={[
+						{ id: "cutoff" },
+						{ id: "resonance" },
+						{ id: "envelope" }
+					]}
+					target={Controller.filter}
+					color={"#2196f3"}
+				/>
+			</div >
 		);
 	}
 };
