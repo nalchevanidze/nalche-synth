@@ -122,7 +122,7 @@ export default class Synth extends React.Component {
 				<section
 					style={{
 						boxShadow: "0px 5px 10px gray",
-						width: "580px",
+						width: "660px",
 						height: "410px",
 						borderRadius: "3px",
 						background: "#333333"

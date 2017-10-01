@@ -62,7 +62,8 @@ class PanelOscillator extends React.PureComponent {
 				</Panel>
 				<Panel
 					label="Oscillator"
-					size={2}
+					size={3}
+
 					list={[
 						{ id: "sine" },
 						{ id: "square" },
@@ -73,6 +74,7 @@ class PanelOscillator extends React.PureComponent {
 						{ id: "offset" },
 						{ id: "voices" },
 					]}
+					
 					target={Controller.wave}
 					onChange={this.update}
 					color={"#ffa929"}

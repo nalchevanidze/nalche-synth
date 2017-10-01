@@ -1,5 +1,5 @@
 import React from "react";
-const gridSize = 40;
+const gridSize = 10 * 4 * 4;
 const KeyboardPattern = () =>
 	<g>
 		<defs>
@@ -31,7 +31,19 @@ const KeyboardPattern = () =>
 				>
 					<line x1={0} x2={200} y1={1} y2={1} />
 					<line x1={0} x2={200} y1={70} y2={70} />
-					<line x1={gridSize} x2={gridSize} y1={0} y2={120} />
+					<line
+						x1={gridSize/2} 
+						x2={gridSize/2} 
+						y1={0} 
+						y2={120} 
+					/>
+					<line
+						x1={gridSize} 
+						x2={gridSize} 
+						y1={0} 
+						y2={120} 
+						strokeWidth={0.75}
+					/>
 				</g>
 				<g
 					fill="black"
@@ -51,7 +63,7 @@ const KeyboardPattern = () =>
 				/>
 			</pattern>
 		</defs>
-		<rect width="100%" height={120*3} fill="url(#key)" className="grids" />
+		<rect width="100%" height={120 * 3} fill="url(#key)" className="grids" />
 	</g>
-				;
+	;
 export default KeyboardPattern;

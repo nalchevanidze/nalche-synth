@@ -5,7 +5,7 @@ import svgCordinates from "../panel/svgCordinates";
 //import standartMidi from "../standartMidi";
 import TimelinePattern from "./TimelinePattern";
 import Quarter from "./Quarter";
-const count = 8;
+
 import noteFromXY from "./noteFromXY";
 import noteDetector from "./noteDetector";
 import KeysPattern from "./KeysPattern";
@@ -339,16 +339,23 @@ export default class KeyboardSVG extends React.PureComponent {
 	}
 	render() {
 		let notestep = 10;
-		let stageWidth = count * 80;
+		const count = 4;
+		let left = 20;
+		let up = 20;
+		let stageWidth = left + 10 * 4 * 4 * count;
 		let state = this.props.currentState * notestep / 2;
-		let stageHeigth = 360;
+		let stageHeigth = up + 360;
 		return (
 			<svg
 				viewBox={
-					[-20, -10, stageWidth, stageHeigth].join(" ")
+					[
+						-left,
+						-up,
+						stageWidth,
+						stageHeigth].join(" ")
 				}
-				width={stageWidth + 20 + "px"}
-				height={stageHeigth + 30 + "px"}
+				width={stageWidth + "px"}
+				height={stageHeigth + 0 + "px"}
 				onMouseMove={this.levelMove}
 				onTouchMove={this.levelMove}
 				onMouseLeave={this.clearPoint}

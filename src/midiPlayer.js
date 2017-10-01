@@ -28,6 +28,7 @@ export default class MidiPlayer {
 	updateMidi(newMelody) {
 		this.midiSet = createMelodySet(newMelody);
 		this.endIndex = newMelody.length * 8;
+		this.endIndex= 128;
 		window.localStorage.midi = JSON.stringify(newMelody);
 	}
 	stop() {
