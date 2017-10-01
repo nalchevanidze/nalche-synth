@@ -6,7 +6,7 @@ import WaveLooper from "./WaveLooper";
 const { wave } = Controller;
 
 export default function SoundEvent() {
-	const maxVoices = 8;
+	const maxVoices = 12;
 	const maxOffset = 2;
 	const positions = Array.from(
 		{ length: maxVoices },

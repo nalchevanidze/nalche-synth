@@ -25,7 +25,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var wave = _Controller2.default.wave;
 function SoundEvent() {
-	var maxVoices = 8;
+	var maxVoices = 12;
 	var maxOffset = 2;
 	var positions = Array.from({ length: maxVoices }, function () {
 		return new _WaveLooper2.default();

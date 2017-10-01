@@ -2,7 +2,6 @@ import React from "react";
 import Controller from "../../Controller";
 import WaveForm from "../../oscillator/WaveForm";
 import GridLine from "../GridLine";
-import PitchButton from "../ButtonWave/PitchButton";
 import Panel from "../DisplayPanel";
 
 const WavePoint = index => (
@@ -42,6 +41,18 @@ class PanelOscillator extends React.PureComponent {
 					label="global"
 					size={2}
 					color={"#CDDC39"}
+					target={{ pitch: this.props.pitch }}
+					onChange={this.props.changePitch}
+					list={[
+						{
+							id: "pitch",
+							range: {
+								min: -4,
+								max: 4
+							},
+							steps: 8
+						},
+					]}
 				>
 					<svg viewBox="-1 0 202 200" width="100px" height="100px" >
 						<path
@@ -52,13 +63,6 @@ class PanelOscillator extends React.PureComponent {
 						/>
 						<GridLine />
 					</svg>
-					<PitchButton
-						id="pitch"
-						target={{ pitch: this.props.pitch }}
-						onChange={this.props.changePitch}
-						color={"#CDDC39"}
-						steps={8}
-					/>
 				</Panel>
 				<Panel
 					label="Oscillator"
@@ -74,10 +78,11 @@ class PanelOscillator extends React.PureComponent {
 						{ id: "offset" },
 						{
 							id: "voices",
-							range: { 
-								min: 1, 
-								max: 8 
-							}
+							range: {
+								min: 1,
+								max: 12
+							},
+							steps: 11
 						},
 					]}
 

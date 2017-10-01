@@ -22,10 +22,6 @@ var _GridLine = require("../GridLine");
 
 var _GridLine2 = _interopRequireDefault(_GridLine);
 
-var _PitchButton = require("../ButtonWave/PitchButton");
-
-var _PitchButton2 = _interopRequireDefault(_PitchButton);
-
 var _DisplayPanel = require("../DisplayPanel");
 
 var _DisplayPanel2 = _interopRequireDefault(_DisplayPanel);
@@ -87,7 +83,17 @@ var PanelOscillator = function (_React$PureComponent) {
 					{
 						label: "global",
 						size: 2,
-						color: "#CDDC39"
+						color: "#CDDC39",
+						target: { pitch: this.props.pitch },
+						onChange: this.props.changePitch,
+						list: [{
+							id: "pitch",
+							range: {
+								min: -4,
+								max: 4
+							},
+							steps: 8
+						}]
 					},
 					_react2.default.createElement(
 						"svg",
@@ -99,14 +105,7 @@ var PanelOscillator = function (_React$PureComponent) {
 							fill: "none"
 						}),
 						_react2.default.createElement(_GridLine2.default, null)
-					),
-					_react2.default.createElement(_PitchButton2.default, {
-						id: "pitch",
-						target: { pitch: this.props.pitch },
-						onChange: this.props.changePitch,
-						color: "#CDDC39",
-						steps: 8
-					})
+					)
 				),
 				_react2.default.createElement(_DisplayPanel2.default, {
 					label: "Oscillator",
@@ -116,8 +115,9 @@ var PanelOscillator = function (_React$PureComponent) {
 						id: "voices",
 						range: {
 							min: 1,
-							max: 8
-						}
+							max: 12
+						},
+						steps: 11
 					}],
 
 					target: _Controller2.default.wave,
