@@ -10,14 +10,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _noteDetector = require("./noteDetector");
-
-var _noteDetector2 = _interopRequireDefault(_noteDetector);
-
-var _standartMidi = require("../standartMidi");
-
-var _standartMidi2 = _interopRequireDefault(_standartMidi);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

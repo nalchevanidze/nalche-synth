@@ -4,22 +4,14 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = sequencer;
-
-var _chordToKeys = require("./chordToKeys");
-
-var _chordToKeys2 = _interopRequireDefault(_chordToKeys);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var sequence = [];
-function sequencer(c, start, end) {
+
+function sequencer(midi, c, start, end) {
 	start *= 32;
 	end = start + end * 32;
 	var i = start;
 	var arpIndex = 0;
-	var direction = 1;
 	while (i <= end) {
-		var note = 0;
 		// makes saquence loop
 		if (arpIndex >= sequence.length) {
 			arpIndex = 0;

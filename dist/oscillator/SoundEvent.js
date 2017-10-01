@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 exports.default = SoundEvent;
 
@@ -25,42 +25,42 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var wave = _Controller2.default.wave;
 function SoundEvent() {
-    var positions = [];
-    var position = new _WaveLooper2.default();
-    var position2 = new _WaveLooper2.default();
-    var position3 = new _WaveLooper2.default();
-    var position4 = new _WaveLooper2.default();
-    var position5 = new _WaveLooper2.default();
-    var eventTimes = new _EventTimes2.default();
-    var oldvalue = 0;
-    function reset(frequency) {
-        position.set(frequency, wave.fm, wave.fmFreq);
-        position2.set(frequency - 1 * wave.offset, wave.fm, wave.fmFreq);
-        position3.set(frequency + 1 * wave.offset, wave.fm, wave.fmFreq);
-        position4.set(frequency - 2 * wave.offset, wave.fm, wave.fmFreq);
-        position5.set(frequency + 2 * wave.offset, wave.fm, wave.fmFreq);
-        eventTimes.restart();
-    }
+	var maxVoices = 8;
+	var maxOffset = 2;
+	var positions = Array.from({ length: maxVoices }, function () {
+		return new _WaveLooper2.default();
+	});
 
-    function multyVoices(p) {
-        if (wave.voices > 0.75) {
-            return ((0, _WaveForm2.default)(position.next(), wave) + (0, _WaveForm2.default)(position2.next(), wave) + (0, _WaveForm2.default)(position3.next(), wave) + (0, _WaveForm2.default)(position4.next(), wave) + (0, _WaveForm2.default)(position5.next(), wave)) / 5;
-        }
-        if (wave.voices > 0.5) {
-            return ((0, _WaveForm2.default)(position.next(), wave) + (0, _WaveForm2.default)(position2.next(), wave) + (0, _WaveForm2.default)(position3.next(), wave)) / 3;
-        }
-        if (wave.voices > 0.25) {
-            return ((0, _WaveForm2.default)(position.next(), wave) + (0, _WaveForm2.default)(position2.next(), wave)) / 2;
-        }
-        return (0, _WaveForm2.default)(position.next(), wave);
-    }
-    function next() {
-        var p = position.next();
-        return eventTimes.next() * multyVoices(p);
-    }
-    function end() {
-        eventTimes.end();
-    }
+	var eventTimes = new _EventTimes2.default();
+	var count = 0;
+	function multyVoices() {
+		var value = 0;
+		for (var i = 0; i <= count; i++) {
+			value += (0, _WaveForm2.default)(positions[i].next(), wave);
+		}
+		return value / (count + 1);
+	}
+	function reset(frequency) {
 
-    return { position: position, eventTimes: eventTimes, next: next, reset: reset, end: end };
+		count = wave.voices * (maxVoices - 1);
+		var middle = Math.floor((count + 1) / 2);
+
+		for (var i = 0; i <= count; i++) {
+			var value = i - middle;
+			var diff = value * wave.offset * maxOffset;
+			positions[i].set(frequency + diff, wave.fm, wave.fmFreq);
+		}
+		eventTimes.restart();
+	}
+
+	var next = function next() {
+		return eventTimes.next() * multyVoices();
+	};
+
+	return {
+		eventTimes: eventTimes,
+		next: next,
+		reset: reset,
+		end: eventTimes.end.bind(eventTimes)
+	};
 }

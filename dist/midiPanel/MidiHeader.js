@@ -35,7 +35,6 @@ var MidiHeader = function (_React$Component) {
 		key: "render",
 		value: function render() {
 			var _props$global = this.props.global,
-			    stop = _props$global.stop,
 			    setBPM = _props$global.setBPM,
 			    BPM = _props$global.BPM,
 			    isPlayng = _props$global.isPlayng;

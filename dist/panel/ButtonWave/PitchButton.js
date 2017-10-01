@@ -18,6 +18,10 @@ var _CirclerangeButton = require("./CirclerangeButton");
 
 var _CirclerangeButton2 = _interopRequireDefault(_CirclerangeButton);
 
+var _TextWrapper = require("./TextWrapper");
+
+var _TextWrapper2 = _interopRequireDefault(_TextWrapper);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39,18 +43,22 @@ var ButtonWave = function (_React$PureComponent) {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
-                _CirclerangeButton2.default,
+                _TextWrapper2.default,
                 this.props,
                 _react2.default.createElement(
-                    "text",
-                    {
-                        x: "50",
-                        y: "65",
-                        fontSize: "40px",
-                        textAnchor: "middle",
-                        fill: this.props.color || "#222"
-                    },
-                    this.props.target.pitch * 8 - 4
+                    _CirclerangeButton2.default,
+                    this.props,
+                    _react2.default.createElement(
+                        "text",
+                        {
+                            x: "50",
+                            y: "65",
+                            fontSize: "40px",
+                            textAnchor: "middle",
+                            fill: this.props.color || "#222"
+                        },
+                        this.props.target.pitch * 8 - 4
+                    )
                 )
             );
         }

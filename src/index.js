@@ -26,7 +26,7 @@ export default class Synth extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			range: 0,
+			range: 1,
 			active: Array.from({ length: 24 }, e => false),
 			time: 0,
 		};

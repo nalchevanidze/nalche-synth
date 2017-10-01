@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -22,118 +22,104 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var keys = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-var list = [].concat(_toConsumableArray(keys.map(function (note) {
-    return note + "1";
-})), _toConsumableArray(keys.map(function (note) {
-    return note + "2";
-})), _toConsumableArray(keys.map(function (note) {
-    return note + "3";
-}))).reverse();
-
 var stepSize = 8;
-
 var Sequence = function Sequence(_ref) {
-    var chord = _ref.chord,
-        active = _ref.active,
-        _onClick = _ref.onClick;
-    return _react2.default.createElement(
-        "li",
-        {
+	var chord = _ref.chord,
+	    _onClick = _ref.onClick;
+	return _react2.default.createElement(
+		"li",
+		{
 
-            style: {
-                width: stepSize + "px",
-                listStyle: "none",
-                border: "1px solid #333"
-            }
+			style: {
+				width: stepSize + "px",
+				listStyle: "none",
+				border: "1px solid #333"
+			}
 
-        },
-        [1, 2, 3, 4].reverse().map(function (index) {
-            return _react2.default.createElement("button", {
-                style: {
-                    width: "100%",
-                    border: "none",
-                    outline: "none",
-                    borderBottom: "1px solid #333",
-                    height: stepSize + "px",
-                    display: "block",
-                    background: chord.indexOf(index) !== -1 ? "#ffa929" : "#555"
+		},
+		[1, 2, 3, 4].reverse().map(function (index) {
+			return _react2.default.createElement("button", {
+				style: {
+					width: "100%",
+					border: "none",
+					outline: "none",
+					borderBottom: "1px solid #333",
+					height: stepSize + "px",
+					display: "block",
+					background: chord.indexOf(index) !== -1 ? "#ffa929" : "#555"
 
-                },
-                key: index,
-                onClick: function onClick() {
-                    return _onClick(index);
-                }
-            });
-        })
-    );
+				},
+				key: index,
+				onClick: function onClick() {
+					return _onClick(index);
+				}
+			});
+		})
+	);
 };
 
 var Sequencer = function (_React$PureComponent) {
-    _inherits(Sequencer, _React$PureComponent);
+	_inherits(Sequencer, _React$PureComponent);
 
-    function Sequencer(props) {
-        _classCallCheck(this, Sequencer);
+	function Sequencer(props) {
+		_classCallCheck(this, Sequencer);
 
-        var _this = _possibleConstructorReturn(this, (Sequencer.__proto__ || Object.getPrototypeOf(Sequencer)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (Sequencer.__proto__ || Object.getPrototypeOf(Sequencer)).call(this, props));
 
-        _this.state = {
-            value: 0
-        };
-        return _this;
-    }
+		_this.state = {
+			value: 0
+		};
+		return _this;
+	}
 
-    _createClass(Sequencer, [{
-        key: "setNew",
-        value: function setNew(i, index) {
+	_createClass(Sequencer, [{
+		key: "setNew",
+		value: function setNew(i, index) {
 
-            var chord = this.props.seq[i];
+			var chord = this.props.seq[i];
 
-            var chordIndex = chord.indexOf(index);
-            if (chordIndex === -1) {
-                chord.push(index);
-            } else {
-                chord.splice(chordIndex, 1);
-            }
-            this.props.updateMidi();
-            this.setState({ value: Math.random() });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
+			var chordIndex = chord.indexOf(index);
+			if (chordIndex === -1) {
+				chord.push(index);
+			} else {
+				chord.splice(chordIndex, 1);
+			}
+			this.props.updateMidi();
+			this.setState({ value: Math.random() });
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var _this2 = this;
 
-            return _react2.default.createElement(
-                _DisplayPanel2.default,
-                { label: "sequencer", size: 3 },
-                _react2.default.createElement(
-                    "ul",
-                    {
-                        style: {
-                            display: "flex",
-                            margin: "0px",
-                            padding: "0px"
-                        }
+			return _react2.default.createElement(
+				_DisplayPanel2.default,
+				{ label: "sequencer", size: 3 },
+				_react2.default.createElement(
+					"ul",
+					{
+						style: {
+							display: "flex",
+							margin: "0px",
+							padding: "0px"
+						}
 
-                    },
-                    this.props.seq.map(function (chord, i) {
-                        return _react2.default.createElement(Sequence, {
-                            key: i,
-                            chord: chord,
-                            onClick: function onClick(index) {
-                                return _this2.setNew(i, index);
-                            }
-                        });
-                    })
-                )
-            );
-        }
-    }]);
+					},
+					this.props.seq.map(function (chord, i) {
+						return _react2.default.createElement(Sequence, {
+							key: i,
+							chord: chord,
+							onClick: function onClick(index) {
+								return _this2.setNew(i, index);
+							}
+						});
+					})
+				)
+			);
+		}
+	}]);
 
-    return Sequencer;
+	return Sequencer;
 }(_react2.default.PureComponent);
 
 exports.default = Sequencer;
-;

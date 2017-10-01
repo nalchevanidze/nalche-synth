@@ -10,13 +10,13 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require("react-dom");
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
 var _icons = require("./icons");
 
 var _icons2 = _interopRequireDefault(_icons);
+
+var _TextWrapper = require("./TextWrapper");
+
+var _TextWrapper2 = _interopRequireDefault(_TextWrapper);
 
 var _CirclerangeButton = require("./CirclerangeButton");
 
@@ -43,16 +43,20 @@ var ButtonWave = function (_React$PureComponent) {
 		key: "render",
 		value: function render() {
 			return _react2.default.createElement(
-				_CirclerangeButton2.default,
+				_TextWrapper2.default,
 				this.props,
 				_react2.default.createElement(
-					"g",
-					{ fill: "none" },
-					_react2.default.createElement("path", {
-						d: _icons2.default[this.props.id],
-						strokeWidth: 2,
-						stroke: this.props.color
-					})
+					_CirclerangeButton2.default,
+					this.props,
+					_react2.default.createElement(
+						"g",
+						{ fill: "none" },
+						_react2.default.createElement("path", {
+							d: _icons2.default[this.props.id],
+							strokeWidth: 2,
+							stroke: this.props.color
+						})
+					)
 				)
 			);
 		}

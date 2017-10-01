@@ -42,14 +42,18 @@ var EventTimes = function () {
 			    value = _ref.value;
 
 			this.volume = value;
-			if (done) this.state = NextState;
+			if (done) {
+				this.state = NextState;
+			}
 			return this.volume;
 		}
 	}, {
 		key: "next",
 		value: function next() {
 			// if Inactive
-			if (!this.live) return 0;
+			if (!this.live) {
+				return 0;
+			}
 			//  Pressed 
 			if (this.active) {
 				if (this.state === null) {
@@ -64,7 +68,9 @@ var EventTimes = function () {
 			}
 
 			// After Press
-			if (this.active) return this.volume;
+			if (this.active) {
+				return this.volume;
+			}
 			this.release = this.release || (0, _EnvelopeParameter2.default)(_Controller2.default.envelope.release, this.volume, 0);
 			var release = this.release.next();
 			this.live = !release.done;
@@ -73,11 +79,7 @@ var EventTimes = function () {
 	}, {
 		key: "restart",
 		value: function restart() {
-			var _Controller$envelope = _Controller2.default.envelope,
-			    attack = _Controller$envelope.attack,
-			    release = _Controller$envelope.release,
-			    decay = _Controller$envelope.decay,
-			    sustain = _Controller$envelope.sustain;
+			var sustain = _Controller2.default.envelope.sustain;
 
 			this.live = true;
 			this.state = null;

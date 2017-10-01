@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20,14 +20,6 @@ var _EnvelopeGraphic = require("./EnvelopeGraphic");
 
 var _EnvelopeGraphic2 = _interopRequireDefault(_EnvelopeGraphic);
 
-var _ButtonWave = require("../ButtonWave");
-
-var _ButtonWave2 = _interopRequireDefault(_ButtonWave);
-
-var _radium = require("radium");
-
-var _radium2 = _interopRequireDefault(_radium);
-
 var _DisplayPanel = require("../DisplayPanel");
 
 var _DisplayPanel2 = _interopRequireDefault(_DisplayPanel);
@@ -41,77 +33,77 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var styles = {
-    button: {
-        outline: "none",
-        background: "none",
-        border: "1px solid #222",
-        width: "50%"
-    },
-    nav: {
-        marginTop: "10px",
-        width: "80%"
-    }
+	button: {
+		outline: "none",
+		background: "none",
+		border: "1px solid #222",
+		width: "50%"
+	},
+	nav: {
+		marginTop: "10px",
+		width: "80%"
+	}
 };
 
 var Button = function Button(_ref) {
-    var id = _ref.id,
-        active = _ref.active,
-        _onClick = _ref.onClick;
-    return _react2.default.createElement(
-        "button",
-        {
-            style: _extends({}, styles.button, {
-                color: id === active ? "#FFA928" : "gray"
-            }),
-            onClick: function onClick() {
-                return _onClick(id);
-            }
-        },
-        id
-    );
+	var id = _ref.id,
+	    active = _ref.active,
+	    _onClick = _ref.onClick;
+	return _react2.default.createElement(
+		"button",
+		{
+			style: _extends({}, styles.button, {
+				color: id === active ? "#FFA928" : "gray"
+			}),
+			onClick: function onClick() {
+				return _onClick(id);
+			}
+		},
+		id
+	);
 };
 
 var PanelEnvelope = function (_React$PureComponent) {
-    _inherits(PanelEnvelope, _React$PureComponent);
+	_inherits(PanelEnvelope, _React$PureComponent);
 
-    function PanelEnvelope(props) {
-        _classCallCheck(this, PanelEnvelope);
+	function PanelEnvelope(props) {
+		_classCallCheck(this, PanelEnvelope);
 
-        var _this = _possibleConstructorReturn(this, (PanelEnvelope.__proto__ || Object.getPrototypeOf(PanelEnvelope)).call(this, props));
+		var _this = _possibleConstructorReturn(this, (PanelEnvelope.__proto__ || Object.getPrototypeOf(PanelEnvelope)).call(this, props));
 
-        _this.state = { active: "volume" };
-        _this.switch = _this.switch.bind(_this);
-        return _this;
-    }
+		_this.state = { active: "volume" };
+		_this.switch = _this.switch.bind(_this);
+		return _this;
+	}
 
-    _createClass(PanelEnvelope, [{
-        key: "switch",
-        value: function _switch(active) {
-            this.setState({ active: active });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var active = this.state.active;
-            var envelope = _Controller2.default.envelope,
-                env = _Controller2.default.env;
+	_createClass(PanelEnvelope, [{
+		key: "switch",
+		value: function _switch(active) {
+			this.setState({ active: active });
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			var active = this.state.active;
+			var envelope = _Controller2.default.envelope,
+			    env = _Controller2.default.env;
 
-            return _react2.default.createElement(
-                _DisplayPanel2.default,
-                { label: "envelope", size: 3 },
-                _react2.default.createElement(
-                    "div",
-                    { style: styles.nav },
-                    _react2.default.createElement(Button, { id: "volume", active: active, onClick: this.switch }),
-                    _react2.default.createElement(Button, { id: "filter", active: active, onClick: this.switch })
-                ),
-                _react2.default.createElement(_EnvelopeGraphic2.default, { state: active == "filter" ? env.filter : envelope
-                })
-            );
-        }
-    }]);
+			return _react2.default.createElement(
+				_DisplayPanel2.default,
+				{ label: "envelope", size: 3 },
+				_react2.default.createElement(
+					"div",
+					{ style: styles.nav },
+					_react2.default.createElement(Button, { id: "volume", active: active, onClick: this.switch }),
+					_react2.default.createElement(Button, { id: "filter", active: active, onClick: this.switch })
+				),
+				_react2.default.createElement(_EnvelopeGraphic2.default, { state: active === "filter" ? env.filter : envelope
+				})
+			);
+		}
+	}]);
 
-    return PanelEnvelope;
+	return PanelEnvelope;
 }(_react2.default.PureComponent);
 
 exports.default = PanelEnvelope;

@@ -315,8 +315,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 		key: "resizeNotes",
 		value: function resizeNotes(event) {
 			var _svgCordinates5 = (0, _svgCordinates8.default)(this.target, event),
-			    x = _svgCordinates5.x,
-			    y = _svgCordinates5.y;
+			    x = _svgCordinates5.x;
 
 			var diff = Math.round((x - this.state.resizeStart.x) / 5);
 			var selected = this.state.selected.map(function (e) {
@@ -369,7 +368,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 		}
 	}, {
 		key: "deleteNote",
-		value: function deleteNote(note, event) {
+		value: function deleteNote(note) {
 			var notes = this.allNotes().filter(function (arrayNote) {
 				return arrayNote !== note;
 			});
@@ -398,7 +397,7 @@ var KeyboardSVG = function (_React$PureComponent) {
 		}
 	}, {
 		key: "clearPoint",
-		value: function clearPoint(event) {
+		value: function clearPoint() {
 
 			if (this.state.currentNote) {
 				var notes = [].concat(_toConsumableArray(this.state.notes), [this.state.currentNote]);
@@ -502,4 +501,3 @@ var KeyboardSVG = function (_React$PureComponent) {
 }(_react2.default.PureComponent);
 
 exports.default = KeyboardSVG;
-;

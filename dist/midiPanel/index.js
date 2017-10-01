@@ -38,13 +38,6 @@ var MidiDesk = function (_React$PureComponent) {
 	_createClass(MidiDesk, [{
 		key: "render",
 		value: function render() {
-			var _props = this.props,
-			    midi = _props.midi,
-			    updateMidi = _props.updateMidi,
-			    global = _props.global,
-			    _props$currentState = _props.currentState,
-			    currentState = _props$currentState === undefined ? 0 : _props$currentState;
-
 			return _react2.default.createElement(
 				"div",
 				{
@@ -53,13 +46,7 @@ var MidiDesk = function (_React$PureComponent) {
 						overflow: "scroll"
 					}
 				},
-				_react2.default.createElement(_KeyboardSVG2.default, {
-					midi: this.props.midi,
-					currentState: currentState,
-					updateMidi: this.props.updateMidi,
-					setTime: this.props.setTime,
-					actionType: this.props.actionType
-				})
+				_react2.default.createElement(_KeyboardSVG2.default, this.props)
 			);
 		}
 	}]);

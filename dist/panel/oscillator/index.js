@@ -22,10 +22,6 @@ var _GridLine = require("../GridLine");
 
 var _GridLine2 = _interopRequireDefault(_GridLine);
 
-var _ButtonWave = require("../ButtonWave");
-
-var _ButtonWave2 = _interopRequireDefault(_ButtonWave);
-
 var _PitchButton = require("../ButtonWave/PitchButton");
 
 var _PitchButton2 = _interopRequireDefault(_PitchButton);
@@ -58,7 +54,7 @@ var styles = {
 	main: {
 		display: "flex",
 		fontSize: "10px",
-		color: "#2287f4"
+		alignItems: "flex-start"
 	}
 };
 
@@ -71,7 +67,6 @@ var PanelOscillator = function (_React$PureComponent) {
 		var _this = _possibleConstructorReturn(this, (PanelOscillator.__proto__ || Object.getPrototypeOf(PanelOscillator)).call(this, props));
 
 		_this.state = _Controller2.default.wave;
-		_this.change = _this.change.bind(_this);
 		_this.update = _this.update.bind(_this);
 		return _this;
 	}
@@ -82,37 +77,18 @@ var PanelOscillator = function (_React$PureComponent) {
 			this.setState(state);
 		}
 	}, {
-		key: "componentWillMount",
-		value: function componentWillMount() {
-			this.live = true;
-		}
-	}, {
-		key: "componentWillUnmount",
-		value: function componentWillUnmount() {
-			this.live = false;
-		}
-	}, {
-		key: "change",
-		value: function change(_ref) {
-			var target = _ref.target;
-
-			_Controller2.default.wave[target.name] = Number(target.value);
-		}
-	}, {
 		key: "render",
 		value: function render() {
-			var _Controller$envelope = _Controller2.default.envelope,
-			    release = _Controller$envelope.release,
-			    attack = _Controller$envelope.attack,
-			    decay = _Controller$envelope.decay,
-			    sustain = _Controller$envelope.sustain;
-
 			return _react2.default.createElement(
 				"div",
 				{ className: "oscillator", style: styles.main },
 				_react2.default.createElement(
 					_DisplayPanel2.default,
-					{ label: "global", size: 2 },
+					{
+						label: "global",
+						size: 2,
+						color: "#CDDC39"
+					},
 					_react2.default.createElement(
 						"svg",
 						{ viewBox: "-1 0 202 200", width: "100px", height: "100px" },
@@ -130,90 +106,34 @@ var PanelOscillator = function (_React$PureComponent) {
 						onChange: this.props.changePitch,
 						color: "#CDDC39",
 						steps: 8
-					}),
-					_react2.default.createElement(
-						"p",
-						null,
-						"pitch"
-					)
+					})
 				),
-				_react2.default.createElement(
-					_DisplayPanel2.default,
-					{ label: "Oscillator", size: 2 },
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "sine", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "square", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "saw", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "saw2", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "tech", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "noise", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "offset", target: _Controller2.default.wave, onChange: this.update }),
-					_react2.default.createElement(_ButtonWave2.default, { color: "#ffa929", id: "voices", target: _Controller2.default.wave, onChange: this.update })
-				),
-				_react2.default.createElement(
-					_DisplayPanel2.default,
-					{ label: "FM" },
-					_react2.default.createElement(_ButtonWave2.default, {
-						id: "fm",
-						color: "#2196f3",
-						target: _Controller2.default.wave
-					}),
-					_react2.default.createElement(
-						"p",
-						null,
-						"Amount"
-					),
-					_react2.default.createElement(_ButtonWave2.default, {
-						id: "fmFreq",
-						target: _Controller2.default.wave,
-						color: "#2196f3"
-					}),
-					_react2.default.createElement(
-						"p",
-						null,
-						"frequency"
-					)
-				),
-				_react2.default.createElement(
-					_DisplayPanel2.default,
-					{ label: "Filter" },
-					_react2.default.createElement(_ButtonWave2.default, {
-						id: "cutoff",
-						target: _Controller2.default.filter,
-						color: "#2196f3"
-					}),
-					_react2.default.createElement(
-						"p",
-						null,
-						"cutoff"
-					),
-					_react2.default.createElement(_ButtonWave2.default, {
-						id: "resonance",
-						target: _Controller2.default.filter,
-						color: "#2196f3"
-					}),
-					_react2.default.createElement(
-						"p",
-						null,
-						"resonance"
-					),
-					_react2.default.createElement(_ButtonWave2.default, {
-						id: "envelope",
-						target: _Controller2.default.filter,
-						color: "#2196f3"
-					}),
-					_react2.default.createElement(
-						"p",
-						null,
-						"envelope"
-					)
-				)
+				_react2.default.createElement(_DisplayPanel2.default, {
+					label: "Oscillator",
+					size: 2,
+					list: [{ id: "sine" }, { id: "square" }, { id: "saw" }, { id: "saw2" }, { id: "tech" }, { id: "noise" }, { id: "offset" }, { id: "voices" }],
+					target: _Controller2.default.wave,
+					onChange: this.update,
+					color: "#ffa929"
+
+				}),
+				_react2.default.createElement(_DisplayPanel2.default, {
+					label: "FM",
+					list: [{ id: "fm" }, { id: "fmFreq" }],
+					target: _Controller2.default.wave,
+					color: "#FF5722"
+				}),
+				_react2.default.createElement(_DisplayPanel2.default, {
+					label: "Filter",
+					list: [{ id: "cutoff" }, { id: "resonance" }, { id: "envelope" }],
+					target: _Controller2.default.filter,
+					color: "#2196f3"
+				})
 			);
 		}
 	}]);
 
 	return PanelOscillator;
 }(_react2.default.PureComponent);
-
-;
 
 exports.default = PanelOscillator;

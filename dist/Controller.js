@@ -10,16 +10,16 @@ var parameters = {
 		saw: 1,
 		saw2: 1,
 		tech: 1,
-		noise: 0.25,
-		fm: 0.0,
+		noise: 0.5,
+		fm: 0.25,
 		fmFreq: 0,
-		offset: 0.9,
+		offset: 0.75,
 		voices: 1
 	},
 	envelope: {
 		attack: 0,
 		decay: 0.27,
-		sustain: 0.15,
+		sustain: 0.5,
 		release: 0.3
 	},
 	env: {
@@ -33,7 +33,7 @@ var parameters = {
 	filter: {
 		cutoff: 1,
 		resonance: 0.25,
-		envelope: 0.25
+		envelope: 0
 	}
 };
 exports.default = parameters;
