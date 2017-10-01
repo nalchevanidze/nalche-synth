@@ -8,7 +8,7 @@ const parameters = {
 		noise: 0.5,
 		fm: 0.25,
 		fmFreq: 0,
-		offset: 0.75,
+		offset: 0.675,
 		voices: 1
 	},
 	envelope: {
