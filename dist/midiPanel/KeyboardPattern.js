@@ -10,7 +10,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var gridSize = 40;
+var gridSize = 10 * 4 * 4;
 var KeyboardPattern = function KeyboardPattern() {
 	return _react2.default.createElement(
 		"g",
@@ -52,7 +52,19 @@ var KeyboardPattern = function KeyboardPattern() {
 					},
 					_react2.default.createElement("line", { x1: 0, x2: 200, y1: 1, y2: 1 }),
 					_react2.default.createElement("line", { x1: 0, x2: 200, y1: 70, y2: 70 }),
-					_react2.default.createElement("line", { x1: gridSize, x2: gridSize, y1: 0, y2: 120 })
+					_react2.default.createElement("line", {
+						x1: gridSize / 2,
+						x2: gridSize / 2,
+						y1: 0,
+						y2: 120
+					}),
+					_react2.default.createElement("line", {
+						x1: gridSize,
+						x2: gridSize,
+						y1: 0,
+						y2: 120,
+						strokeWidth: 0.75
+					})
 				),
 				_react2.default.createElement(
 					"g",

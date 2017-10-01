@@ -51,6 +51,7 @@ var MidiPlayer = function () {
 		value: function updateMidi(newMelody) {
 			this.midiSet = (0, _createMelodySet2.default)(newMelody);
 			this.endIndex = newMelody.length * 8;
+			this.endIndex = 128;
 			window.localStorage.midi = JSON.stringify(newMelody);
 		}
 	}, {

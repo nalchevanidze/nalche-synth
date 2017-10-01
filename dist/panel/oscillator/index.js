@@ -110,8 +110,10 @@ var PanelOscillator = function (_React$PureComponent) {
 				),
 				_react2.default.createElement(_DisplayPanel2.default, {
 					label: "Oscillator",
-					size: 2,
+					size: 3,
+
 					list: [{ id: "sine" }, { id: "square" }, { id: "saw" }, { id: "saw2" }, { id: "tech" }, { id: "noise" }, { id: "offset" }, { id: "voices" }],
+
 					target: _Controller2.default.wave,
 					onChange: this.update,
 					color: "#ffa929"

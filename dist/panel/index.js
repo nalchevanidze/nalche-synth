@@ -46,13 +46,21 @@ var Panel = function (_React$PureComponent) {
 
 			return _react2.default.createElement(
 				"div",
-				{ style: { display: "flex", padding: "5px" } },
+				{
+					style: {
+						display: "flex",
+						padding: "5px"
+					}
+				},
 				_react2.default.createElement(_oscillator2.default, props),
 				_react2.default.createElement(
 					"div",
 					null,
 					_react2.default.createElement(_envelope2.default, null),
-					_react2.default.createElement(_Sequencer2.default, { seq: props.seq || [], updateMidi: props.updateMidi })
+					_react2.default.createElement(_Sequencer2.default, {
+						seq: props.seq || [],
+						updateMidi: props.updateMidi
+					})
 				)
 			);
 		}

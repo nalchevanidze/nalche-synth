@@ -58,9 +58,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var count = 8;
-
-
 function notePosition(index, at) {
 	return index * 8 + at;
 }
@@ -431,15 +428,18 @@ var KeyboardSVG = function (_React$PureComponent) {
 		key: "render",
 		value: function render() {
 			var notestep = 10;
-			var stageWidth = count * 80;
+			var count = 4;
+			var left = 20;
+			var up = 20;
+			var stageWidth = left + 10 * 4 * 4 * count;
 			var state = this.props.currentState * notestep / 2;
-			var stageHeigth = 360;
+			var stageHeigth = up + 360;
 			return _react2.default.createElement(
 				"svg",
 				{
-					viewBox: [-20, -10, stageWidth, stageHeigth].join(" "),
-					width: stageWidth + 20 + "px",
-					height: stageHeigth + 30 + "px",
+					viewBox: [-left, -up, stageWidth, stageHeigth].join(" "),
+					width: stageWidth + "px",
+					height: stageHeigth + 0 + "px",
 					onMouseMove: this.levelMove,
 					onTouchMove: this.levelMove,
 					onMouseLeave: this.clearPoint,
