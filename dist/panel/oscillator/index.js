@@ -112,7 +112,13 @@ var PanelOscillator = function (_React$PureComponent) {
 					label: "Oscillator",
 					size: 3,
 
-					list: [{ id: "sine" }, { id: "square" }, { id: "saw" }, { id: "saw2" }, { id: "tech" }, { id: "noise" }, { id: "offset" }, { id: "voices" }],
+					list: [{ id: "sine" }, { id: "square" }, { id: "saw" }, { id: "saw2" }, { id: "tech" }, { id: "noise" }, { id: "offset" }, {
+						id: "voices",
+						range: {
+							min: 1,
+							max: 8
+						}
+					}],
 
 					target: _Controller2.default.wave,
 					onChange: this.update,

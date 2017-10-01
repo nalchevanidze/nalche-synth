@@ -67,8 +67,7 @@ var DisplayPanel = function DisplayPanel(_ref) {
 		),
 		children,
 		list.map(function (par, i) {
-			return _react2.default.createElement(_ButtonWave2.default, {
-				id: par.id,
+			return _react2.default.createElement(_ButtonWave2.default, _extends({}, par, {
 				key: i,
 				color: color,
 				target: target,
@@ -77,7 +76,7 @@ var DisplayPanel = function DisplayPanel(_ref) {
 						_onChange.apply(undefined, arguments);
 					}
 				}
-			});
+			}));
 		})
 	);
 };

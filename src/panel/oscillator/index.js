@@ -72,9 +72,15 @@ class PanelOscillator extends React.PureComponent {
 						{ id: "tech" },
 						{ id: "noise" },
 						{ id: "offset" },
-						{ id: "voices" },
+						{
+							id: "voices",
+							range: { 
+								min: 1, 
+								max: 8 
+							}
+						},
 					]}
-					
+
 					target={Controller.wave}
 					onChange={this.update}
 					color={"#ffa929"}

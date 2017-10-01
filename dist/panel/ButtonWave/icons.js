@@ -35,6 +35,8 @@ var lib = {
 	fmFreq: "M22 49.8h6.5v20C39 71.3 37.5 30 44.3 30 51 30 50 70 56.7 70c6.7 0 2.6-39.7 6.5-40C67 30 63.8 70 70 70V50h8"
 };
 
+lib.offset = "M30 50 l0 10 m10-20 l0 20 m10-30 l0 30 m10-20 l0 20 m10-10 l0 10";
+
 lib.fm = lib.sine;
 
 exports.default = lib;

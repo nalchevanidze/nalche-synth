@@ -41,7 +41,8 @@ var TextWrapper = function (_React$PureComponent) {
 							color: this.props.color,
 							width: "100%",
 							textAlign: "center",
-							margin: "0px"
+							margin: "0px",
+							userSelect: "none"
 						}
 					},
 					this.props.id

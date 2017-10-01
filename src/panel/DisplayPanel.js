@@ -52,7 +52,7 @@ const DisplayPanel = ({
 		}{
 			list.map(
 				(par, i) => <ButtonWave
-					id={par.id}
+					{...par}
 					key={i}
 					color={color}
 					target={target}
