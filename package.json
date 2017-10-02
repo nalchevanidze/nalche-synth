@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "radium": "^0.19.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   }
