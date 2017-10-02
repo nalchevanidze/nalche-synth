@@ -21,9 +21,9 @@ var _SoundEvent = require("./SoundEvent");
 
 var _SoundEvent2 = _interopRequireDefault(_SoundEvent);
 
-var _MoogFilter = require("./MoogFilter");
+var _filterBuilder = require("./filterBuilder");
 
-var _MoogFilter2 = _interopRequireDefault(_MoogFilter);
+var _filterBuilder2 = _interopRequireDefault(_filterBuilder);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33,27 +33,27 @@ var bufferSize = 2048; //4096;
 function Oscillator() {
 
 	var event = (0, _SoundEvent2.default)();
-	var filter = (0, _MoogFilter2.default)();
+	var filter = (0, _filterBuilder2.default)();
+
 	function onProcess(_ref) {
 		var outputBuffer = _ref.outputBuffer;
 
 		var audio = outputBuffer.getChannelData(0);
 		if (event.eventTimes.live) {
-			(0, _FillAudioChenel2.default)(audio, event);
+			(0, _FillAudioChenel2.default)(audio, event, filter);
 		} else {
 			audio.fill(0);
 		}
 	}
 	var node = _Context2.default.createScriptProcessor(bufferSize, 1, 1);
-	node.connect(filter);
-	filter.connect(destination);
+	node.connect(destination);
 	node.onaudioprocess = onProcess;
 
 	return {
 		start: function start(param) {
 			var frequency = (0, _NoteToFrequency2.default)(param.note);
 			event.reset(frequency);
-			filter.start();
+			filter.set();
 		},
 		end: function end() {
 			event.end();

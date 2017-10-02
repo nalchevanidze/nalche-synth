@@ -11,10 +11,10 @@ var _SafeWaveValue2 = _interopRequireDefault(_SafeWaveValue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function FillAudioChenel(out, Sound) {
+function FillAudioChenel(out, Sound, filter) {
 	var i = void 0,
 	    length = out.length;
 	for (i = 0; i < length; ++i) {
-		out[i] = (0, _SafeWaveValue2.default)(Sound.next());
+		out[i] = filter.next((0, _SafeWaveValue2.default)(Sound.next()));
 	}
 }
