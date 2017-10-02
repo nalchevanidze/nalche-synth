@@ -2,12 +2,17 @@ import Controller from "../Controller";
 import WaveForm from "./WaveForm";
 import EventTimes from "./EventTimes";
 import WaveLooper from "./WaveLooper";
+import filterBuilder from "./filterBuilder";
+import NoteToFrequency from "./NoteToFrequency";
 
 const { wave } = Controller;
 
 export default function SoundEvent() {
 	const maxVoices = 12;
 	const maxOffset = 2;
+
+	const filter = filterBuilder();
+
 	const positions = Array.from(
 		{ length: maxVoices },
 		() => new WaveLooper()
@@ -37,15 +42,22 @@ export default function SoundEvent() {
 			);
 		}
 		eventTimes.restart();
+
+		filter.set();
 	}
 
 	const next = () =>
-		eventTimes.next() * multyVoices();
+		filter.next(eventTimes.next() * multyVoices());
 
-	return { 
-		eventTimes, 
-		next, 
-		reset, 
+	return {
+		eventTimes,
+		next,
+		reset,
+		setNote(note) {
+			reset(
+				NoteToFrequency(note)
+			);
+		},
 		end: eventTimes.end.bind(eventTimes)
 	};
 }
