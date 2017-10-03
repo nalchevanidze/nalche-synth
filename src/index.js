@@ -14,14 +14,8 @@ import midi from "./standartMidi";
 
 export default class Synth extends React.Component {
 	constructor(props) {
-		super(props);
-		this.state = {
-			active: Array.from({ length: 24 }, e => false),
-			time: 0,
-		};
-		this.keyPress = this.keyPress.bind(this);
-		this.keyUp = this.keyUp.bind(this);
 
+		super(props);
 		this.osc = NalcheOscillator(
 			(time, active) => {
 				this.setState(
@@ -32,6 +26,16 @@ export default class Synth extends React.Component {
 				);
 			}
 		);
+
+		this.state = {
+			active: this.osc.notes,
+			time: 0,
+		};
+		
+		this.keyPress = this.keyPress.bind(this);
+		this.keyUp = this.keyUp.bind(this);
+
+
 		this.global = {
 			setBPM: () => { },
 			BPM: () => 128,
@@ -45,7 +49,7 @@ export default class Synth extends React.Component {
 	}
 	keyPress(e) {
 		if (typeof e !== "number") {
-			e = keymap.indexOf(e.key);
+			e = keymap.indexOf(e.key)+12;
 			if (e === -1) {
 				return;
 			}
@@ -55,7 +59,7 @@ export default class Synth extends React.Component {
 	}
 	keyUp(e) {
 		if (typeof e !== "number") {
-			e = keymap.indexOf(e.key);
+			e = keymap.indexOf(e.key)+12;
 			if (e === -1) {
 				return;
 			}
@@ -112,9 +116,9 @@ export default class Synth extends React.Component {
 							margin: "0px"
 						}}
 					>
-						<Octave index={0} press={this.keyPress} up={this.keyUp} active={this.state.active} />
 						<Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />
 						<Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active} />
+						<Octave index={3} press={this.keyPress} up={this.keyUp} active={this.state.active} />
 					</ul>
 				</section>
 				<MidiPanel
