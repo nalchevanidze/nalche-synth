@@ -13,17 +13,19 @@ let myMidi = createMelodySet(melody);
 const midi = myMidi;
 let endIndex = 128 || midi.length;
 
+
+
 function PlayTask(task, main) {
 
 	task.start.forEach(
 		e =>
-			main.newNote(e + 12)
+			main.setNote(e + 12)
 
 
 	);
 	task.end.forEach(
 		e =>
-			main.endNote(e + 12)
+			main.unsetNote(e + 12)
 
 	);
 
@@ -47,6 +49,10 @@ export default function timeLine(main) {
 
 		index++;
 		counter = 0;
+		const update = () => {
+			main.update(index);
+		};
+		requestAnimationFrame(update);
 	}
-    
+
 }

@@ -1,10 +1,10 @@
 import React from "react";
-import SynthesizerController from "./SynthesizerController";
 import Octave from "./panel/Octave";
 import Panel from "./panel";
 import midiPlayer from "./midiPlayer";
 import MidiPanel from "./midiPanel";
 import keymap from "./keymap";
+import NalcheOscillator from "./oscillator";
 
 function keyEvent(target, type) {
 	const name = (type ? "add" : "remove") + "EventListener";
@@ -32,7 +32,13 @@ export default class Synth extends React.Component {
 		};
 		this.keyPress = this.keyPress.bind(this);
 		this.keyUp = this.keyUp.bind(this);
-		this.osc = SynthesizerController();
+
+		this.osc = NalcheOscillator(
+			(time) => {
+				this.setState({ time });
+			}
+		);
+
 		this.changePitch = this.changePitch.bind(this);
 
 
@@ -42,7 +48,10 @@ export default class Synth extends React.Component {
 			sequence,
 			midi,
 			component: (time) => {
+				this.midi.currentState = time;
+				this.mid.index = time;
 				this.setState({ time });
+
 			}
 		});
 
@@ -56,8 +65,8 @@ export default class Synth extends React.Component {
 			},
 			BPM: () => this.midi.BPM,
 			play: () => {
-				this.midi.play();
-				this.osc.playMidi();
+				//this.midi.play();
+				this.osc.play();
 			},
 			stop: () => this.stop(),
 			pause: () => this.pause(),
@@ -78,8 +87,8 @@ export default class Synth extends React.Component {
 	keyPress(e) {
 		if (typeof e !== "number") {
 			e = keymap.indexOf(e.key);
-			if (e === -1) { 
-				return; 
+			if (e === -1) {
+				return;
 			}
 		}
 		this.osc.play(e + this.state.range * 12);
@@ -88,8 +97,8 @@ export default class Synth extends React.Component {
 	keyUp(e) {
 		if (typeof e !== "number") {
 			e = keymap.indexOf(e.key);
-			if (e === -1) { 
-				return; 
+			if (e === -1) {
+				return;
 			}
 		}
 		this.osc.stop(e + this.state.range * 12);
@@ -104,8 +113,8 @@ export default class Synth extends React.Component {
 		this.osc.stopAll();
 	}
 	stop() {
-		this.midi.stop();
-		this.pause();
+		this.osc.stop();
+		//this.pause();
 
 	}
 	componentDidMount() {
@@ -161,7 +170,9 @@ export default class Synth extends React.Component {
 					</ul>
 				</section>
 
-				<MidiPanel {...this.midi} global={this.global}
+				<MidiPanel
+					{...this.midi} global={this.global}
+					currentState={this.state.time}
 				/>
 			</div >
 		);

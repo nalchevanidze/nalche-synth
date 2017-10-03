@@ -4,7 +4,7 @@ const { destination } = Context;
 import SoundEvent from "./SoundEvent";
 const bufferSize = 2048; //4096;
 
-export default function Oscillator() {
+export default function Oscillator(target) {
 
 
 	const notes = {};
@@ -15,13 +15,14 @@ export default function Oscillator() {
 	const event = {
 		dead: true,
 		notes,
-		endNote(value) {
+		update: target,
+		unsetNote(value) {
 			if (notes[value]) {
 				notes[value].end();
 				notes[value] = null;
 			}
 		},
-		newNote(value) {
+		setNote(value) {
 			if (!notes[value]) {
 				let current = oscList.filter(
 					osc => !osc.eventTimes.live
@@ -35,11 +36,9 @@ export default function Oscillator() {
 			}
 		},
 		start(param) {
-
 			oscList.forEach(e => {
 				e.setNote(param.note);
 			});
-
 		}
 	};
 
@@ -55,7 +54,11 @@ export default function Oscillator() {
 	const node = Context.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
-	event.endAll = () => {
+
+
+
+	//Main Functions
+	event.stop = () => {
 		oscList.forEach(
 			e => e.end()
 		);
@@ -65,5 +68,6 @@ export default function Oscillator() {
 	event.play = () => {
 		event.dead = false;
 	};
+	
 	return event;
 }

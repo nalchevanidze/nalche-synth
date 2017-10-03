@@ -40,9 +40,9 @@ export default class MidiPlayer {
 		this.loop = undefined;
 	}
 	play() {
-		if (this.loop) return;
-		this.index = this.currentState;
-		this.loop = setInterval(this.next, 60 * 1000 / (this.BPM * 8));
+	//	if (this.loop) return;
+	//	this.index = this.currentState;
+	//	this.loop = setInterval(this.next, 60 * 1000 / (this.BPM * 8));
 	}
 	executeState() {
 		const { end, start } = this.state;
@@ -52,13 +52,13 @@ export default class MidiPlayer {
 	}
 	next() {
 		this.currentState = this.index;
-		if (this.updateComponent) {
-			this.updateComponent(this.currentState);
-		}
-		this.state = this.midiSet[this.index];
-		if (this.state) {
-			this.executeState();
-		}
+		// if (this.updateComponent) {
+		// 	this.updateComponent(this.currentState);
+		// }
+		// this.state = this.midiSet[this.index];
+		// if (this.state) {
+		// 	this.executeState();
+		// }
 
 		if (this.index >= this.endIndex) {
 			this.index = 0;
