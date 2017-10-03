@@ -1,6 +1,6 @@
 import React from "react";
 import Controller from "../../Controller";
-import WaveForm from "../../oscillator/WaveForm";
+import WaveForm from "../../audio/oscillator/WaveForm";
 import GridLine from "../GridLine";
 import Panel from "../DisplayPanel";
 

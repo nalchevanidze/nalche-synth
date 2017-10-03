@@ -10,13 +10,9 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _oscillator = require("./oscillator");
+var _HeaderButton = require("./HeaderButton");
 
-var _oscillator2 = _interopRequireDefault(_oscillator);
-
-var _envelope = require("./envelope");
-
-var _envelope2 = _interopRequireDefault(_envelope);
+var _HeaderButton2 = _interopRequireDefault(_HeaderButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26,39 +22,78 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Panel = function (_React$PureComponent) {
-	_inherits(Panel, _React$PureComponent);
+var MidiHeader = function (_React$Component) {
+	_inherits(MidiHeader, _React$Component);
 
-	function Panel() {
-		_classCallCheck(this, Panel);
+	function MidiHeader() {
+		_classCallCheck(this, MidiHeader);
 
-		return _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (MidiHeader.__proto__ || Object.getPrototypeOf(MidiHeader)).apply(this, arguments));
 	}
 
-	_createClass(Panel, [{
+	_createClass(MidiHeader, [{
 		key: "render",
 		value: function render() {
-			var props = this.props;
+			var _props$global = this.props.global,
+			    setBPM = _props$global.setBPM,
+			    BPM = _props$global.BPM;
 
+			console.log(this.props.isPlayng);
+			var id = this.props.isPlayng ? "pause" : "play";
 			return _react2.default.createElement(
-				"div",
+				"section",
 				{
 					style: {
-						display: "flex",
-						padding: "5px"
+						background: "#444",
+						color: "#ffa929",
+						padding: "5px",
+						border: "1px solid #333",
+						display: "flex"
 					}
 				},
-				_react2.default.createElement(_oscillator2.default, props),
+				_react2.default.createElement(_HeaderButton2.default, { id: id, actions: this.props.global }),
+				_react2.default.createElement(_HeaderButton2.default, { id: "stop", actions: this.props.global }),
 				_react2.default.createElement(
 					"div",
-					null,
-					_react2.default.createElement(_envelope2.default, null)
-				)
+					{
+						style: {
+							padding: "5px",
+							fontSize: "12px"
+						}
+					},
+					_react2.default.createElement(
+						"label",
+						null,
+						"BPM"
+					),
+					_react2.default.createElement("input", {
+						style: {
+							background: "#444",
+							border: "none",
+							color: "#ffa929",
+							borderBottom: "1px solid"
+						},
+						className: "bpm-value",
+						onChange: setBPM,
+						defaultValue: BPM()
+
+					})
+				),
+				_react2.default.createElement(_HeaderButton2.default, {
+					id: "draw",
+					color: this.props.actionType === "draw" ? "#ffa929" : "#777",
+					actions: this.props.setMode
+				}),
+				_react2.default.createElement(_HeaderButton2.default, {
+					id: "select",
+					color: this.props.actionType === "select" ? "#ffa929" : "#777",
+					actions: this.props.setMode
+				})
 			);
 		}
 	}]);
 
-	return Panel;
-}(_react2.default.PureComponent);
+	return MidiHeader;
+}(_react2.default.Component);
 
-exports.default = Panel;
+exports.default = MidiHeader;

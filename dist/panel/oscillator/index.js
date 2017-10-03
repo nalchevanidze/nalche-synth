@@ -14,7 +14,7 @@ var _Controller = require("../../Controller");
 
 var _Controller2 = _interopRequireDefault(_Controller);
 
-var _WaveForm = require("../../oscillator/WaveForm");
+var _WaveForm = require("../../audio/oscillator/WaveForm");
 
 var _WaveForm2 = _interopRequireDefault(_WaveForm);
 

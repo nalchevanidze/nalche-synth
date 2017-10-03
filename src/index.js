@@ -1,9 +1,9 @@
 import React from "react";
 import Octave from "./panel/Octave";
 import Panel from "./panel";
-import MidiPanel from "./midiPanel";
+import MidiPanel from "./panel/midi";
 import keymap from "./keymap";
-import NalcheOscillator from "./oscillator";
+import NalcheOscillator from "./audio/oscillator";
 
 function keyEvent(target, type) {
 	const name = (type ? "add" : "remove") + "EventListener";

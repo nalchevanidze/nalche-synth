@@ -1,9 +1,8 @@
 import EnvelopeParameter from "./EnvelopeParameter";
-import Controller from "../Controller";
-
 
 export default class EventTimes {
-	constructor() {
+	constructor(env) {
+		this.env = env;
 		this.atack = null;
 		this.release = null;
 		this.live = false;
@@ -31,12 +30,12 @@ export default class EventTimes {
 		//  Pressed 
 		if (this.active) {
 			if (this.state === null) {
-				this.attack = this.attack || EnvelopeParameter(Controller.envelope.attack, 0, 1);
+				this.attack = this.attack || EnvelopeParameter(this.env.attack, 0, 1);
 				let attack = this.attack.next();
 				return this.StepUpdate(attack, "decay");
 			}
 			else if (this.state === "decay") {
-				this.decay = this.decay || EnvelopeParameter(Controller.envelope.decay, this.volume, this.sustain);
+				this.decay = this.decay || EnvelopeParameter(this.env.decay, this.volume, this.sustain);
 				let decay = this.decay.next();
 				return this.StepUpdate(decay, "release");
 			}
@@ -46,17 +45,16 @@ export default class EventTimes {
 		if (this.active) {
 			return this.volume;
 		}
-		this.release = this.release || EnvelopeParameter(Controller.envelope.release, this.volume, 0);
+		this.release = this.release || EnvelopeParameter(this.env.release, this.volume, 0);
 		let release = this.release.next();
 		this.live = !release.done;
 		return release.value;
 	}
 	restart() {
-		let { sustain } = Controller.envelope;
 		this.live = true;
 		this.state = null;
 		this.active = true;
-		this.sustain = sustain;
+		this.sustain = this.env.sustain;
 		this.volume = 1;
 		this.attack = null;
 		this.release = null;

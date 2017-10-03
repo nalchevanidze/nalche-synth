@@ -6,8 +6,8 @@ let qartel = 1 / (60 * sampleRate / (bpm * 8));
 let counter = 0;
 let index = 0;
 
-import createMelodySet from "../midi/createMelodySet";
-import melody from "../standartMidi";
+import createMelodySet from "../../midi/createMelodySet";
+import melody from "../../standartMidi";
 
 let midi = createMelodySet(melody);
 let endIndex = 128 || midi.length;

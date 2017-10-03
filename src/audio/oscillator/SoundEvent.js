@@ -1,4 +1,4 @@
-import Controller from "../Controller";
+import Controller from "../../Controller";
 import WaveForm from "./WaveForm";
 import EventTimes from "./EventTimes";
 import WaveLooper from "./WaveLooper";
@@ -24,12 +24,12 @@ const { wave } = Controller;
 export default function SoundEvent() {
 	const maxVoices = 12;
 	const maxOffset = 2;
-	const filter = filterBuilder();
+	const filter = filterBuilder(Controller);
 	const positions = Array.from(
 		{ length: maxVoices },
 		() => new WaveLooper()
 	);
-	const eventTimes = new EventTimes();
+	const eventTimes = new EventTimes(Controller.envelope);
 	let count = 0;
 	function multyVoices() {
 		let value = 0;

@@ -10,14 +10,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _oscillator = require("./oscillator");
-
-var _oscillator2 = _interopRequireDefault(_oscillator);
-
-var _envelope = require("./envelope");
-
-var _envelope2 = _interopRequireDefault(_envelope);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,39 +18,71 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Panel = function (_React$PureComponent) {
-	_inherits(Panel, _React$PureComponent);
+var Quarter = function (_React$Component) {
+	_inherits(Quarter, _React$Component);
 
-	function Panel() {
-		_classCallCheck(this, Panel);
+	function Quarter() {
+		_classCallCheck(this, Quarter);
 
-		return _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (Quarter.__proto__ || Object.getPrototypeOf(Quarter)).apply(this, arguments));
 	}
 
-	_createClass(Panel, [{
+	_createClass(Quarter, [{
 		key: "render",
 		value: function render() {
-			var props = this.props;
+			var _this2 = this;
 
+			var quard = this.props.quard;
 			return _react2.default.createElement(
-				"div",
-				{
-					style: {
-						display: "flex",
-						padding: "5px"
-					}
-				},
-				_react2.default.createElement(_oscillator2.default, props),
-				_react2.default.createElement(
-					"div",
-					null,
-					_react2.default.createElement(_envelope2.default, null)
-				)
+				"g",
+				{ fill: this.props.color || "#f75927" },
+				quard.map(function (note, noteIndex) {
+					return _react2.default.createElement(
+						"g",
+						{ key: noteIndex },
+						_react2.default.createElement("rect", {
+							onTouchStart: function onTouchStart(event) {
+								return _this2.props.mouseDown(note, event);
+							},
+							onMouseDown: function onMouseDown(event) {
+								return _this2.props.mouseDown(note, event);
+							},
+							width: 5 * note.length,
+							height: 10,
+							stroke: "#000",
+							strokeWidth: 0.25,
+
+							x: note.position * 5,
+							y: 360 - note.i * 10
+						}),
+						_react2.default.createElement("rect", {
+							width: 5,
+							height: 10,
+							fill: "gray",
+							fillOpacity: 0.1,
+							onTouchStart: function onTouchStart(event) {
+								return _this2.props.resize && _this2.props.resize(note, event);
+							},
+							onMouseDown: function onMouseDown(event) {
+
+								if (_this2.props.resize) {
+									_this2.props.resize(note, event);
+								}
+							},
+							style: {
+								cursor: "e-resize"
+							},
+							key: "s" + noteIndex,
+							x: (note.position + note.length - 1) * 5,
+							y: 360 - note.i * 10
+						})
+					);
+				})
 			);
 		}
 	}]);
 
-	return Panel;
-}(_react2.default.PureComponent);
+	return Quarter;
+}(_react2.default.Component);
 
-exports.default = Panel;
+exports.default = Quarter;

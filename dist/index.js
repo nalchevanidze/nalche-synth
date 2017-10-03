@@ -18,15 +18,15 @@ var _panel = require("./panel");
 
 var _panel2 = _interopRequireDefault(_panel);
 
-var _midiPanel = require("./midiPanel");
+var _midi = require("./panel/midi");
 
-var _midiPanel2 = _interopRequireDefault(_midiPanel);
+var _midi2 = _interopRequireDefault(_midi);
 
 var _keymap = require("./keymap");
 
 var _keymap2 = _interopRequireDefault(_keymap);
 
-var _oscillator = require("./oscillator");
+var _oscillator = require("./audio/oscillator");
 
 var _oscillator2 = _interopRequireDefault(_oscillator);
 
@@ -181,7 +181,7 @@ var Synth = function (_React$Component) {
 						_react2.default.createElement(_Octave2.default, { index: 3, press: this.keyPress, up: this.keyUp, active: this.state.active })
 					)
 				),
-				_react2.default.createElement(_midiPanel2.default, {
+				_react2.default.createElement(_midi2.default, {
 					midi: _standartMidi2.default,
 					updateMidi: this.osc.setMidi,
 					setTime: this.osc.setTime,
