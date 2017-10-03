@@ -1,4 +1,10 @@
-let sequence = [];
+const sequence = [
+	[1], [2], [3], [4], [], [],
+	[1, 2, 3, 4], [], [],
+	[1, 2, 3, 4], [], [],
+	[1, 2, 3, 4], [],
+	[1, 2, 3, 4], []
+];
 
 export default function sequencer(midi, c, start, end) {
 	start *= 32;

@@ -16,13 +16,13 @@ function PlayTask(task, main) {
 
 	task.start.forEach(
 		e =>
-			main.setNote(e + 12)
+			main.setNote(e)
 
 
 	);
 	task.end.forEach(
 		e =>
-			main.unsetNote(e + 12)
+			main.unsetNote(e)
 
 	);
 

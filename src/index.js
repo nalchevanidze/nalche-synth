@@ -1,7 +1,6 @@
 import React from "react";
 import Octave from "./panel/Octave";
 import Panel from "./panel";
-import midiPlayer from "./midiPlayer";
 import MidiPanel from "./midiPanel";
 import keymap from "./keymap";
 import NalcheOscillator from "./oscillator";
@@ -11,22 +10,12 @@ function keyEvent(target, type) {
 	document[name]("keydown", target.keyPress);
 	document[name]("keyup", target.keyUp);
 }
-
-const sequence = [
-	[1], [2], [3], [4], [], [],
-	[1, 2, 3, 4], [], [],
-	[1, 2, 3, 4], [], [],
-	[1, 2, 3, 4], [],
-	[1, 2, 3, 4], []
-];
-
 import midi from "./standartMidi";
 
 export default class Synth extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			range: 1,
 			active: Array.from({ length: 24 }, e => false),
 			time: 0,
 		};
@@ -43,46 +32,16 @@ export default class Synth extends React.Component {
 				);
 			}
 		);
-
-		this.changePitch = this.changePitch.bind(this);
-
-
-		this.midi = new midiPlayer({
-			play: this.keyboardSet.bind(this),
-			stop: this.keyboardUnset.bind(this),
-			sequence,
-			midi,
-			component: (time) => {
-				this.midi.currentState = time;
-				this.mid.index = time;
-				this.setState({ time });
-
-			}
-		});
-
 		this.global = {
-			setBPM: (event) => {
-				this.midi.setBPM(event.target.value);
-			},
-			BPM: () => this.midi.BPM,
+			setBPM: () => { },
+			BPM: () => 128,
 			stop: () => this.stop(),
-			pause: () => this.pause()
+			pause: () => this.pause(),
+			play: () => {
+				this.setState({ isPlayng: true });
+				this.osc.play();
+			}
 		};
-
-		this.global.play = () => {
-			this.setState({ isPlayng: true });
-			this.osc.play();
-		};
-
-	}
-	keyboardSet(e) {
-		//	this.state.active = this.osc.active; = true;
-		this.setState({});
-	}
-	keyboardUnset(e) {
-		//	this.state.active[e] = false;
-		console.log(this.state);
-		this.setState({});
 	}
 	keyPress(e) {
 		if (typeof e !== "number") {
@@ -92,7 +51,7 @@ export default class Synth extends React.Component {
 			}
 		}
 		this.osc.setNote(e);
-		this.keyboardSet(e);
+		this.setState({});
 	}
 	keyUp(e) {
 		if (typeof e !== "number") {
@@ -102,29 +61,27 @@ export default class Synth extends React.Component {
 			}
 		}
 		this.osc.unsetNote(e);
-		this.keyboardUnset(e);
+		this.setState({});
 	}
 	pause() {
-		//this.midi.pause();
-		this.osc.stop();
+		this.osc.pause();
 		this.setState({ isPlayng: false });
 	}
 	stop() {
-		this.global.isPlayng = false;
 		this.osc.stop();
+		this.setState(
+			{
+				isPlayng: false,
+				time: 0
+			}
+		);
 	}
 	componentDidMount() {
-		this.midi.melody = this.props.midi || this.midi.melody;
 		keyEvent(this, true);
 	}
 	componentWillUnmount() {
-		this.midi.stop();
+		this.stop();
 		keyEvent(this, false);
-	}
-	changePitch(value) {
-		this.setState({
-			range: Math.floor(value.pitch * 8 - 4)
-		});
 	}
 	render() {
 		return (
@@ -146,12 +103,7 @@ export default class Synth extends React.Component {
 						background: "#333333"
 					}}
 				>
-					<Panel
-						pitch={(this.state.range + 4) / 8}
-						changePitch={this.changePitch}
-						seq={this.midi.seq}
-						updateMidi={this.midi.updateMidi}
-					/>
+					<Panel />
 					<ul
 
 						style={{
@@ -165,10 +117,8 @@ export default class Synth extends React.Component {
 						<Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active} />
 					</ul>
 				</section>
-
 				<MidiPanel
-					{...this.midi}
-					
+					midi={midi}
 					updateMidi={this.osc.setMidi}
 					setTime={this.osc.setTime}
 					global={this.global}

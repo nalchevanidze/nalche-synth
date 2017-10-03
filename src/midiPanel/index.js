@@ -54,7 +54,7 @@ export default class melody extends React.PureComponent {
 				/>
 				<MidiDesk
 					currentState={this.props.currentState}
-					midi={this.props.melody}
+					midi={this.props.midi}
 					updateMidi={this.props.updateMidi}
 					setTime={this.props.setTime}
 					global={this.props.global}

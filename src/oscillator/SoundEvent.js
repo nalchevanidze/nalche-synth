@@ -65,8 +65,12 @@ export default function SoundEvent() {
 		next,
 		reset,
 		setNote(note) {
+			let range = Math.max(
+				note + (Math.floor(wave.pitch * 8) - 4) * 12 , 
+				0 
+			);
 			reset(
-				NoteToFrequency(note)
+				NoteToFrequency(range)
 			);
 		},
 		end: eventTimes.end.bind(eventTimes)

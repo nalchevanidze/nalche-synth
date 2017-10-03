@@ -31,7 +31,6 @@ export default function Oscillator(target) {
 				if (!current) {
 					current = SoundEvent();
 					oscList.push(current);
-					console.log(oscList.length);
 				}
 				notes[value] = current;
 				current.setNote(value);
@@ -57,15 +56,24 @@ export default function Oscillator(target) {
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
 
-
-	event.pause = () => {
+	function clean() {
 		oscList.forEach(
 			e => e.end()
 		);
 		Object.keys(notes).forEach(i => {
 			notes[i] = null;
 		});
+	}
+
+	event.pause = () => {
+		clean();
 		event.isPlayng = false;
+	};
+
+	event.setTime = (time) => {
+		clean();
+		timeLine.setTime(time);
+		target(time);
 	};
 
 	//Main Functions
@@ -75,7 +83,7 @@ export default function Oscillator(target) {
 	};
 
 	event.setMidi = timeLine.setMidi;
-	event.setTime = timeLine.setTime;
+	//event.setTime = timeLine.setTime;
 
 	event.play = () => {
 		event.isPlayng = true;

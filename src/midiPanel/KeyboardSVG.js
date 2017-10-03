@@ -307,7 +307,6 @@ export default class KeyboardSVG extends React.PureComponent {
 		let time = Math.floor(x / 5);
 		this.props.setTime(time);
 	}
-
 	clearPoint() {
 
 		if (this.state.currentNote) {
