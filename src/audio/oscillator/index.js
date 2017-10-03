@@ -4,6 +4,7 @@ const { destination } = Context;
 import SoundEvent from "./SoundEvent";
 const bufferSize = 2048; //4096;
 import timeLine from "./timeLine";
+import Controller from "../../Controller";
 
 export default function Oscillator(target) {
 
@@ -11,7 +12,7 @@ export default function Oscillator(target) {
 	const notes = {};
 	const oscList = Array.from(
 		{ length: 6 },
-		() => SoundEvent()
+		() => SoundEvent(Controller)
 	);
 	const event = {
 		dead: true,
@@ -29,7 +30,7 @@ export default function Oscillator(target) {
 					osc => !osc.eventTimes.live
 				)[0];
 				if (!current) {
-					current = SoundEvent();
+					current = SoundEvent(Controller);
 					oscList.push(current);
 				}
 				notes[value] = current;

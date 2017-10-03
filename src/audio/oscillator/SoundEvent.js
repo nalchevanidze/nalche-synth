@@ -1,27 +1,11 @@
-import Controller from "../../Controller";
 import WaveForm from "./WaveForm";
 import EventTimes from "./EventTimes";
 import WaveLooper from "./WaveLooper";
 import filterBuilder from "./filterBuilder";
 import NoteToFrequency from "./NoteToFrequency";
 
-const { wave } = Controller;
-
-// function test() {
-// 	let i = 10000000;
-
-// 	let t0 = performance.now();
-// 	while (i) {
-// 		i--;
-// 		WaveForm(Math.random(), wave);
-// 	}
-// 	let t1 = performance.now();
-
-// 	//console.log("took " + (t1 - t0) + " milliseconds.");
-// }
-
-
-export default function SoundEvent() {
+export default function SoundEvent(Controller) {
+	const { wave } = Controller;
 	const maxVoices = 12;
 	const maxOffset = 2;
 	const filter = filterBuilder(Controller);

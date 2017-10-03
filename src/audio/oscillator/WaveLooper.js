@@ -32,11 +32,8 @@ export default class WaveLooper {
 
 		this.freq = freq;
 		this.state = 0;
-
 		//unision
 		this.state = Math.random();
-		// this.state = Controller.wave.offset;
-
 
 		//this
 		this.stepSize = freq / sampleRate;

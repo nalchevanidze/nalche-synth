@@ -21,6 +21,10 @@ var _timeLine = require("./timeLine");
 
 var _timeLine2 = _interopRequireDefault(_timeLine);
 
+var _Controller = require("../../Controller");
+
+var _Controller2 = _interopRequireDefault(_Controller);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var destination = _Context2.default.destination;
@@ -30,7 +34,7 @@ function Oscillator(target) {
 
 	var notes = {};
 	var oscList = Array.from({ length: 6 }, function () {
-		return (0, _SoundEvent2.default)();
+		return (0, _SoundEvent2.default)(_Controller2.default);
 	});
 	var event = {
 		dead: true,
@@ -48,7 +52,7 @@ function Oscillator(target) {
 					return !osc.eventTimes.live;
 				})[0];
 				if (!current) {
-					current = (0, _SoundEvent2.default)();
+					current = (0, _SoundEvent2.default)(_Controller2.default);
 					oscList.push(current);
 				}
 				notes[value] = current;
