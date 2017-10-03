@@ -13,8 +13,6 @@ let myMidi = createMelodySet(melody);
 const midi = myMidi;
 let endIndex = 128 || midi.length;
 
-
-
 function PlayTask(task, main) {
 
 	task.start.forEach(
@@ -33,7 +31,7 @@ function PlayTask(task, main) {
 
 export default function timeLine(main) {
 
-	if (main.dead) {
+	if (!main.isPlayng) {
 		return null;
 	}
 	counter += qartel;
@@ -50,7 +48,10 @@ export default function timeLine(main) {
 		index++;
 		counter = 0;
 		const update = () => {
-			main.update(index);
+			main.update(
+				index,
+				main.notes
+			);
 		};
 		requestAnimationFrame(update);
 	}

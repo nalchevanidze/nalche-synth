@@ -55,18 +55,16 @@ export default function Oscillator(target) {
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
 
-
-
 	//Main Functions
 	event.stop = () => {
 		oscList.forEach(
 			e => e.end()
 		);
-		event.dead = true;
+		event.isPlayng = false;
 	};
 
 	event.play = () => {
-		event.dead = false;
+		event.isPlayng = true;
 	};
 	
 	return event;

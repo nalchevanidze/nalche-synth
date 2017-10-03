@@ -34,8 +34,13 @@ export default class Synth extends React.Component {
 		this.keyUp = this.keyUp.bind(this);
 
 		this.osc = NalcheOscillator(
-			(time) => {
-				this.setState({ time });
+			(time, active) => {
+				this.setState(
+					{
+						time,
+						active
+					}
+				);
 			}
 		);
 
@@ -55,34 +60,28 @@ export default class Synth extends React.Component {
 			}
 		});
 
-		const midiplayer = this.midi;
-
 		this.global = {
 			setBPM: (event) => {
-
 				this.midi.setBPM(event.target.value);
-
 			},
 			BPM: () => this.midi.BPM,
-			play: () => {
-				//this.midi.play();
-				this.osc.play();
-			},
 			stop: () => this.stop(),
-			pause: () => this.pause(),
-			get isPlayng() {
-				return (midiplayer.loop !== undefined);
-			}
+			pause: () => this.pause()
+		};
+
+		this.global.play = () => {
+			this.setState({ isPlayng: true });
+			this.osc.play();
 		};
 
 	}
 	keyboardSet(e) {
 		this.state.active[e] = true;
-		this.setState({ time: this.midi.currentState });
+		this.setState({});
 	}
 	keyboardUnset(e) {
 		this.state.active[e] = false;
-		this.setState({ time: this.midi.currentState });
+		this.setState({});
 	}
 	keyPress(e) {
 		if (typeof e !== "number") {
@@ -91,7 +90,7 @@ export default class Synth extends React.Component {
 				return;
 			}
 		}
-		this.osc.play(e + this.state.range * 12);
+		this.osc.setNote(e);
 		this.keyboardSet(e);
 	}
 	keyUp(e) {
@@ -101,21 +100,17 @@ export default class Synth extends React.Component {
 				return;
 			}
 		}
-		this.osc.stop(e + this.state.range * 12);
+		this.osc.unsetNote(e);
 		this.keyboardUnset(e);
 	}
 	pause() {
-		this.midi.pause();
-		this.setState({
-			active:
-			this.state.active.map(() => false)
-		});
-		this.osc.stopAll();
+		//this.midi.pause();
+		this.osc.stop();
+		this.setState({ isPlayng: false });
 	}
 	stop() {
+		this.global.isPlayng = false;
 		this.osc.stop();
-		//this.pause();
-
 	}
 	componentDidMount() {
 		this.midi.melody = this.props.midi || this.midi.melody;
@@ -171,7 +166,9 @@ export default class Synth extends React.Component {
 				</section>
 
 				<MidiPanel
-					{...this.midi} global={this.global}
+					{...this.midi} 
+					global={this.global}
+					isPlayng={this.state.isPlayng}
 					currentState={this.state.time}
 				/>
 			</div >

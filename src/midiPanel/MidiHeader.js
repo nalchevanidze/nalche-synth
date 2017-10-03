@@ -2,8 +2,9 @@ import React from "react";
 import HeaderButton from "./HeaderButton";
 export default class MidiHeader extends React.Component {
 	render() {
-		let { setBPM, BPM, isPlayng } = this.props.global;
-		let id = isPlayng ? "pause" : "play";
+		let { setBPM, BPM} = this.props.global;
+		console.log(this.props.isPlayng);
+		let id = this.props.isPlayng ? "pause" : "play";
 		return (
 			<section
 				style={{

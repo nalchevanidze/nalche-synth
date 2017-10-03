@@ -50,6 +50,7 @@ export default class melody extends React.PureComponent {
 					global={global}
 					setMode={this.modes}
 					actionType={this.state.actionType}
+					isPlayng={this.props.isPlayng}
 				/>
 				<MidiDesk
 					currentState={this.props.currentState}
