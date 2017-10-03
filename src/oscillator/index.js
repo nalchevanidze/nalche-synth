@@ -3,6 +3,7 @@ import FillAudioChenel from "./FillAudioChenel";
 const { destination } = Context;
 import SoundEvent from "./SoundEvent";
 const bufferSize = 2048; //4096;
+import timeLine from "./timeLine";
 
 export default function Oscillator(target) {
 
@@ -30,6 +31,7 @@ export default function Oscillator(target) {
 				if (!current) {
 					current = SoundEvent();
 					oscList.push(current);
+					console.log(oscList.length);
 				}
 				notes[value] = current;
 				current.setNote(value);
@@ -55,17 +57,29 @@ export default function Oscillator(target) {
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
 
-	//Main Functions
-	event.stop = () => {
+
+	event.pause = () => {
 		oscList.forEach(
 			e => e.end()
 		);
+		Object.keys(notes).forEach(i => {
+			notes[i] = null;
+		});
 		event.isPlayng = false;
 	};
+
+	//Main Functions
+	event.stop = () => {
+		event.pause();
+		timeLine.setTime(0);
+	};
+
+	event.setMidi = timeLine.setMidi;
+	event.setTime = timeLine.setTime;
 
 	event.play = () => {
 		event.isPlayng = true;
 	};
-	
+
 	return event;
 }

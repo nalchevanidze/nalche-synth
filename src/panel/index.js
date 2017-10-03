@@ -16,10 +16,6 @@ export default class Panel extends React.PureComponent {
 				<PanelOscillator {...props} />
 				<div>
 					<PanelEnvelope />
-					<Sequencer
-						seq={props.seq || []}
-						updateMidi={props.updateMidi}
-					/>
 				</div>
 			</div>
 		);

@@ -76,11 +76,12 @@ export default class Synth extends React.Component {
 
 	}
 	keyboardSet(e) {
-		this.state.active[e] = true;
+		//	this.state.active = this.osc.active; = true;
 		this.setState({});
 	}
 	keyboardUnset(e) {
-		this.state.active[e] = false;
+		//	this.state.active[e] = false;
+		console.log(this.state);
 		this.setState({});
 	}
 	keyPress(e) {
@@ -166,7 +167,10 @@ export default class Synth extends React.Component {
 				</section>
 
 				<MidiPanel
-					{...this.midi} 
+					{...this.midi}
+					
+					updateMidi={this.osc.setMidi}
+					setTime={this.osc.setTime}
 					global={this.global}
 					isPlayng={this.state.isPlayng}
 					currentState={this.state.time}

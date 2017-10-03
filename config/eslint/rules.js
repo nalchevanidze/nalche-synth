@@ -84,7 +84,7 @@ module.exports = {
     "react/void-dom-elements-no-children": "error",
 
     // Complexity linter
-    "max-statements": [2, 20 ],
+    "max-statements": [2, 30 ],
     "max-statements-per-line": ["error", { "max": 1 }],
     "max-depth": [1, 5],
     "complexity": [ "error", { "max": 10 } ],

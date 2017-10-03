@@ -1,37 +1,48 @@
-export default function WaveForm(WaveIndex, wave) {
+const Sine = i => Math.sin(i * Math.PI * 2);
+const Square = i => Number(i > 0.5) * 2 - 1;
+const Saw = i => 1 - i * 2;
+const Saw2 = i => 1 - ((i * 2) % 1) * 2;
+const Noise = () => 1 - Math.random() * 2;
+const Tech = (i) => {
+
+	if (i > 0.15) {
+		return 0;
+	}
+	return Math.min((0.05 - i % 0.05) * 50 - 0.7, 1);
+	
+};
+
+export default function WaveForm(waveIndex, wave) {
 
 	let { sine, square, saw, saw2, noise, tech } = wave;
-
 	let mixin = 0;
 	let i = 0;
 
 	if (sine) {
-		mixin += sine * Math.sin(WaveIndex * Math.PI * 2);
+		mixin += sine * Sine(waveIndex);
 		i += sine;
 	}
 	if (square) {
-		mixin += square * (Number(WaveIndex > 0.7) * 2 - 1);
+		mixin += square * Square(waveIndex);
 		i += square;
 	}
 	if (saw) {
-		mixin += saw * (1 - WaveIndex * 2);
+		mixin += saw * Saw(waveIndex);
 		i += saw;
 	}
+
 	if (saw2) {
-		mixin += saw2 * (1 - ((WaveIndex * 2) % 1) * 2);
+		mixin += saw2 * Saw2(waveIndex);
 		i += saw2;
 	}
+
 	if (noise) {
-		mixin += noise * (1 - Math.random() * 2);
+		mixin += noise * Noise();
 		i += noise;
 	}
 
 	if (tech) {
-		let wave = 0;
-		if (WaveIndex < 0.15) {
-			wave = Math.min((0.05 - WaveIndex % 0.05) * 50 - 0.7, 1);
-		}
-		mixin += wave * tech;
+		mixin += Tech(waveIndex) * tech;
 		i += tech;
 	}
 
@@ -40,4 +51,5 @@ export default function WaveForm(WaveIndex, wave) {
 	}
 	// mix
 	return (mixin / (i + 1));
+
 }

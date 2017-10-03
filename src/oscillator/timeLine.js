@@ -9,8 +9,7 @@ let index = 0;
 import createMelodySet from "../midi/createMelodySet";
 import melody from "../standartMidi";
 
-let myMidi = createMelodySet(melody);
-const midi = myMidi;
+let midi = createMelodySet(melody);
 let endIndex = 128 || midi.length;
 
 function PlayTask(task, main) {
@@ -29,7 +28,7 @@ function PlayTask(task, main) {
 
 }
 
-export default function timeLine(main) {
+function next(main) {
 
 	if (!main.isPlayng) {
 		return null;
@@ -57,3 +56,16 @@ export default function timeLine(main) {
 	}
 
 }
+
+export default {
+	next,
+	setMidi(melody) {
+		if (melody.length) {
+			midi = createMelodySet(melody);
+		}
+	},
+	setTime(time) {
+		index = time;
+	}
+};
+
