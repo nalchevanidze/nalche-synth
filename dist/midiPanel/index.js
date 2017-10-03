@@ -94,11 +94,12 @@ var melody = function (_React$PureComponent2) {
 				_react2.default.createElement(_MidiHeader2.default, {
 					global: global,
 					setMode: this.modes,
-					actionType: this.state.actionType
+					actionType: this.state.actionType,
+					isPlayng: this.props.isPlayng
 				}),
 				_react2.default.createElement(MidiDesk, {
 					currentState: this.props.currentState,
-					midi: this.props.melody,
+					midi: this.props.midi,
 					updateMidi: this.props.updateMidi,
 					setTime: this.props.setTime,
 					global: this.props.global,

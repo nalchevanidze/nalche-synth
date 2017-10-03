@@ -83,17 +83,7 @@ var PanelOscillator = function (_React$PureComponent) {
 					{
 						label: "global",
 						size: 2,
-						color: "#CDDC39",
-						target: { pitch: this.props.pitch },
-						onChange: this.props.changePitch,
-						list: [{
-							id: "pitch",
-							range: {
-								min: -4,
-								max: 4
-							},
-							steps: 8
-						}]
+						color: "#CDDC39"
 					},
 					_react2.default.createElement(
 						"svg",
@@ -118,6 +108,13 @@ var PanelOscillator = function (_React$PureComponent) {
 							max: 12
 						},
 						steps: 11
+					}, {
+						id: "pitch",
+						range: {
+							min: -4,
+							max: 4
+						},
+						steps: 8
 					}],
 
 					target: _Controller2.default.wave,

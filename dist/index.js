@@ -4,17 +4,11 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
-
-var _SynthesizerController = require("./SynthesizerController");
-
-var _SynthesizerController2 = _interopRequireDefault(_SynthesizerController);
 
 var _Octave = require("./panel/Octave");
 
@@ -24,10 +18,6 @@ var _panel = require("./panel");
 
 var _panel2 = _interopRequireDefault(_panel);
 
-var _midiPlayer = require("./midiPlayer");
-
-var _midiPlayer2 = _interopRequireDefault(_midiPlayer);
-
 var _midiPanel = require("./midiPanel");
 
 var _midiPanel2 = _interopRequireDefault(_midiPanel);
@@ -35,6 +25,10 @@ var _midiPanel2 = _interopRequireDefault(_midiPanel);
 var _keymap = require("./keymap");
 
 var _keymap2 = _interopRequireDefault(_keymap);
+
+var _oscillator = require("./oscillator");
+
+var _oscillator2 = _interopRequireDefault(_oscillator);
 
 var _standartMidi = require("./standartMidi");
 
@@ -54,8 +48,6 @@ function keyEvent(target, type) {
 	document[name]("keyup", target.keyUp);
 }
 
-var sequence = [[1], [2], [3], [4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [1, 2, 3, 4], []];
-
 var Synth = function (_React$Component) {
 	_inherits(Synth, _React$Component);
 
@@ -64,40 +56,25 @@ var Synth = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
-		_this.state = {
-			range: 1,
-			active: Array.from({ length: 24 }, function (e) {
-				return false;
-			}),
-			time: 0
-		};
-		_this.keyPress = _this.keyPress.bind(_this);
-		_this.keyUp = _this.keyUp.bind(_this);
-		_this.osc = (0, _SynthesizerController2.default)();
-		_this.changePitch = _this.changePitch.bind(_this);
-
-		_this.midi = new _midiPlayer2.default({
-			play: _this.keyPress,
-			stop: _this.keyUp,
-			sequence: sequence,
-			midi: _standartMidi2.default,
-			component: function component(time) {
-				_this.setState({ time: time });
-			}
+		_this.osc = (0, _oscillator2.default)(function (time, active) {
+			_this.setState({
+				time: time,
+				active: active
+			});
 		});
 
-		var midiplayer = _this.midi;
+		_this.state = {
+			active: _this.osc.notes,
+			time: 0
+		};
+
+		_this.keyPress = _this.keyPress.bind(_this);
+		_this.keyUp = _this.keyUp.bind(_this);
 
 		_this.global = {
-			setBPM: function setBPM(event) {
-
-				_this.midi.setBPM(event.target.value);
-			},
+			setBPM: function setBPM() {},
 			BPM: function BPM() {
-				return _this.midi.BPM;
-			},
-			play: function play() {
-				_this.midi.play();
+				return 128;
 			},
 			stop: function stop() {
 				return _this.stop();
@@ -105,11 +82,11 @@ var Synth = function (_React$Component) {
 			pause: function pause() {
 				return _this.pause();
 			},
-			get isPlayng() {
-				return midiplayer.loop !== undefined;
+			play: function play() {
+				_this.setState({ isPlayng: true });
+				_this.osc.play();
 			}
 		};
-
 		return _this;
 	}
 
@@ -117,63 +94,51 @@ var Synth = function (_React$Component) {
 		key: "keyPress",
 		value: function keyPress(e) {
 			if (typeof e !== "number") {
-				e = _keymap2.default.indexOf(e.key);
+				e = _keymap2.default.indexOf(e.key) + 12;
 				if (e === -1) {
 					return;
 				}
 			}
-			this.state.active[e] = true;
-			this.osc.play(e + this.state.range * 12);
-			this.setState({ time: this.midi.currentState });
+			this.osc.setNote(e);
+			this.setState({});
 		}
 	}, {
 		key: "keyUp",
 		value: function keyUp(e) {
 			if (typeof e !== "number") {
-				e = _keymap2.default.indexOf(e.key);
+				e = _keymap2.default.indexOf(e.key) + 12;
 				if (e === -1) {
 					return;
 				}
 			}
-			this.state.active[e] = false;
-			this.osc.stop(e + this.state.range * 12);
-			this.setState({ time: this.midi.currentState });
+			this.osc.unsetNote(e);
+			this.setState({});
 		}
 	}, {
 		key: "pause",
 		value: function pause() {
-			this.midi.pause();
-			this.setState({
-				active: this.state.active.map(function () {
-					return false;
-				})
-			});
-			this.osc.stopAll();
+			this.osc.pause();
+			this.setState({ isPlayng: false });
 		}
 	}, {
 		key: "stop",
 		value: function stop() {
-			this.midi.stop();
-			this.pause();
+			this.osc.stop();
+			this.setState({
+				isPlayng: false,
+				time: 0
+			});
 		}
 	}, {
 		key: "componentDidMount",
 		value: function componentDidMount() {
-			this.midi.melody = this.props.midi || this.midi.melody;
 			keyEvent(this, true);
 		}
 	}, {
 		key: "componentWillUnmount",
 		value: function componentWillUnmount() {
-			this.midi.stop();
+			this.stop();
 			keyEvent(this, false);
-		}
-	}, {
-		key: "changePitch",
-		value: function changePitch(value) {
-			this.setState({
-				range: Math.floor(value.pitch * 8 - 4)
-			});
 		}
 	}, {
 		key: "render",
@@ -200,12 +165,7 @@ var Synth = function (_React$Component) {
 							background: "#333333"
 						}
 					},
-					_react2.default.createElement(_panel2.default, {
-						pitch: (this.state.range + 4) / 8,
-						changePitch: this.changePitch,
-						seq: this.midi.seq,
-						updateMidi: this.midi.updateMidi
-					}),
+					_react2.default.createElement(_panel2.default, null),
 					_react2.default.createElement(
 						"ul",
 						{
@@ -216,13 +176,19 @@ var Synth = function (_React$Component) {
 								margin: "0px"
 							}
 						},
-						_react2.default.createElement(_Octave2.default, { index: 0, press: this.keyPress, up: this.keyUp, active: this.state.active }),
 						_react2.default.createElement(_Octave2.default, { index: 1, press: this.keyPress, up: this.keyUp, active: this.state.active }),
-						_react2.default.createElement(_Octave2.default, { index: 2, press: this.keyPress, up: this.keyUp, active: this.state.active })
+						_react2.default.createElement(_Octave2.default, { index: 2, press: this.keyPress, up: this.keyUp, active: this.state.active }),
+						_react2.default.createElement(_Octave2.default, { index: 3, press: this.keyPress, up: this.keyUp, active: this.state.active })
 					)
 				),
-				_react2.default.createElement(_midiPanel2.default, _extends({}, this.midi, { global: this.global
-				}))
+				_react2.default.createElement(_midiPanel2.default, {
+					midi: _standartMidi2.default,
+					updateMidi: this.osc.setMidi,
+					setTime: this.osc.setTime,
+					global: this.global,
+					isPlayng: this.state.isPlayng,
+					currentState: this.state.time
+				})
 			);
 		}
 	}]);

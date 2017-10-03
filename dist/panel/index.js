@@ -56,11 +56,7 @@ var Panel = function (_React$PureComponent) {
 				_react2.default.createElement(
 					"div",
 					null,
-					_react2.default.createElement(_envelope2.default, null),
-					_react2.default.createElement(_Sequencer2.default, {
-						seq: props.seq || [],
-						updateMidi: props.updateMidi
-					})
+					_react2.default.createElement(_envelope2.default, null)
 				)
 			);
 		}

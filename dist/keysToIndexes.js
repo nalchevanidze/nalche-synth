@@ -11,10 +11,8 @@ function keysToIndexes(note) {
 	var noteNumber = Number(note.charAt(indexPosition));
 	note = note.slice(0, indexPosition);
 	var index = keys.indexOf(note.toUpperCase()) + noteNumber * 12;
-
 	if (index === -1) {
 		throw new Error("invalid Note");
 	}
-
 	return index;
 }

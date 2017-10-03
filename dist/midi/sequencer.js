@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = sequencer;
-var sequence = [];
+var sequence = [[1], [2], [3], [4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [], [1, 2, 3, 4], [], [1, 2, 3, 4], []];
 
 function sequencer(midi, c, start, end) {
 	start *= 32;
