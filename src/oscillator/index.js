@@ -6,28 +6,22 @@ const bufferSize = 2048; //4096;
 
 export default function Oscillator() {
 	const event = SoundEvent();
-
 	const notes = {};
 	const oscList = Array.from(
-		{ length: 4 },
+		{ length: 6 },
 		() => SoundEvent()
 	);
-
-	let actives = [];
-
+	console.log(oscList);
 	function onProcess(input) {
-		//actives = oscList.filter( osc => osc.eventTimes.live );
+		let active = oscList.filter(
+			e => e.eventTimes.live
+		);
 		let audio = input.outputBuffer.getChannelData(0);
-		//if (event.eventTimes.live) {
-		FillAudioChenel(audio, event, oscList);
-		//	} else {
-		//	audio.fill(0);
-		//	}
+		FillAudioChenel(audio, active, event);
 	}
 	const node = Context.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
-
 	event.newNote = (value) => {
 		if (!notes[value]) {
 
@@ -44,23 +38,20 @@ export default function Oscillator() {
 			current.setNote(value);
 		}
 	};
-
 	event.endNote = (value) => {
 		if (notes[value]) {
 			notes[value].end();
 			notes[value] = null;
 		}
 	};
-
 	event.endAll = () => {
 		oscList.forEach(
 			e => e.end()
-		)
-	}
+		);
+	};
 
 	event.start = param => {
 
-		event.setNote(param.note);
 		oscList.forEach(e => {
 			e.setNote(param.note);
 		});
