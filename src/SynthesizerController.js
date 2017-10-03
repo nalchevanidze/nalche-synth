@@ -1,6 +1,5 @@
 import NalcheOscillator from "./oscillator";
-import Context from "./Context";
-const Main = NalcheOscillator(Context);
+const Main = NalcheOscillator();
 export default function SynthPad() {
 
 	function play(value) {
@@ -16,8 +15,12 @@ export default function SynthPad() {
 	}
 
 	return {
+		playMidi(){
+			Main.play();
+		},
 		play,
 		stop,
-		stopAll
+		stopAll,
+		notes: Main.notes
 	};
 }

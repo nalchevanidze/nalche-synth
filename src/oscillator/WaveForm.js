@@ -39,5 +39,5 @@ export default function WaveForm(WaveIndex, wave) {
 		return 0;
 	}
 	// mix
-	return (mixin / i);
+	return (mixin / (i + 1));
 }

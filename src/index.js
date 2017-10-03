@@ -37,8 +37,8 @@ export default class Synth extends React.Component {
 
 
 		this.midi = new midiPlayer({
-			play: this.keyPress,
-			stop: this.keyUp,
+			play: this.keyboardSet.bind(this),
+			stop: this.keyboardUnset.bind(this),
 			sequence,
 			midi,
 			component: (time) => {
@@ -55,7 +55,10 @@ export default class Synth extends React.Component {
 
 			},
 			BPM: () => this.midi.BPM,
-			play: () => { this.midi.play(); },
+			play: () => {
+				this.midi.play();
+				this.osc.playMidi();
+			},
 			stop: () => this.stop(),
 			pause: () => this.pause(),
 			get isPlayng() {
@@ -64,29 +67,39 @@ export default class Synth extends React.Component {
 		};
 
 	}
+	keyboardSet(e) {
+		this.state.active[e] = true;
+		this.setState({ time: this.midi.currentState });
+	}
+	keyboardUnset(e) {
+		this.state.active[e] = false;
+		this.setState({ time: this.midi.currentState });
+	}
 	keyPress(e) {
 		if (typeof e !== "number") {
 			e = keymap.indexOf(e.key);
-			if (e === -1) {return;}
+			if (e === -1) { 
+				return; 
+			}
 		}
-		this.state.active[e] = true;
 		this.osc.play(e + this.state.range * 12);
-		this.setState({ time: this.midi.currentState });
+		this.keyboardSet(e);
 	}
 	keyUp(e) {
 		if (typeof e !== "number") {
 			e = keymap.indexOf(e.key);
-			if (e === -1) {return;}
+			if (e === -1) { 
+				return; 
+			}
 		}
-		this.state.active[e] = false;
 		this.osc.stop(e + this.state.range * 12);
-		this.setState({ time: this.midi.currentState });
+		this.keyboardUnset(e);
 	}
 	pause() {
 		this.midi.pause();
 		this.setState({
 			active:
-												this.state.active.map(() => false)
+			this.state.active.map(() => false)
 		});
 		this.osc.stopAll();
 	}

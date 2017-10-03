@@ -13,14 +13,14 @@ export default function Oscillator() {
 		() => SoundEvent()
 	);
 	const event = {
-
+		dead: true,
+		notes,
 		endNote(value) {
 			if (notes[value]) {
 				notes[value].end();
 				notes[value] = null;
 			}
 		},
-
 		newNote(value) {
 			if (!notes[value]) {
 				let current = oscList.filter(
@@ -34,7 +34,6 @@ export default function Oscillator() {
 				current.setNote(value);
 			}
 		},
-
 		start(param) {
 
 			oscList.forEach(e => {
@@ -42,7 +41,6 @@ export default function Oscillator() {
 			});
 
 		}
-		
 	};
 
 	//main node;
@@ -57,8 +55,6 @@ export default function Oscillator() {
 	const node = Context.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
-
-
 	event.endAll = () => {
 		oscList.forEach(
 			e => e.end()
@@ -69,6 +65,5 @@ export default function Oscillator() {
 	event.play = () => {
 		event.dead = false;
 	};
-
 	return event;
 }
