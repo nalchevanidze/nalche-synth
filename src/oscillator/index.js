@@ -9,17 +9,17 @@ export default function Oscillator() {
 
 	const notes = {};
 	const oscList = Array.from(
-		{ length: 5 },
+		{ length: 4 },
 		() => SoundEvent()
 	);
 
 	let actives = [];
 
 	function onProcess(input) {
-		actives = oscList.filter( osc => osc.eventTimes.live );
+		//actives = oscList.filter( osc => osc.eventTimes.live );
 		let audio = input.outputBuffer.getChannelData(0);
 		//if (event.eventTimes.live) {
-		FillAudioChenel(audio, event, actives);
+		FillAudioChenel(audio, event, oscList);
 		//	} else {
 		//	audio.fill(0);
 		//	}
