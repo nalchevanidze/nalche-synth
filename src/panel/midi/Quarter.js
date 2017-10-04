@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Quarter extends React.Component {
+export default class Quarter extends React.PureComponent {
 	render() {
 		const quard = this.props.quard;
 		return (

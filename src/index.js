@@ -1,10 +1,10 @@
 import React from "react";
-import Octave from "./panel/Octave";
 import Panel from "./panel";
 import MidiPanel from "./panel/midi";
 import keymap from "./keymap";
 import NalcheOscillator from "./audio/oscillator";
 import Controller from "./Controller";
+import Keyboard from "./panel/Keyboard";
 
 function keyEvent(target, type) {
 	const name = (type ? "add" : "remove") + "EventListener";
@@ -21,7 +21,7 @@ const sequence = [
 	[1], [2], [3], [2], [], []
 ];
 
-export default class Synth extends React.Component {
+export default class Synth extends React.PureComponent {
 	constructor(props) {
 
 		super(props);
@@ -31,15 +31,15 @@ export default class Synth extends React.Component {
 				this.setState(
 					{
 						time,
-						active
+						active: active
 					}
 				);
 			}
 		);
 
 		this.state = {
-			active: this.osc.notes,
-			time: 0,
+			active: this.osc.active,
+			time: 0
 		};
 
 		this.keyPress = this.keyPress.bind(this);
@@ -119,22 +119,15 @@ export default class Synth extends React.Component {
 				>
 					<Panel
 						seq={sequence}
-						setSequence={(seq)=>{
+						setSequence={(seq) => {
 							this.osc.seq = seq;
 						}}
 					/>
-					<ul
-
-						style={{
-							display: "flex",
-							padding: "0px",
-							margin: "0px"
-						}}
-					>
-						<Octave index={1} press={this.keyPress} up={this.keyUp} active={this.state.active} />
-						<Octave index={2} press={this.keyPress} up={this.keyUp} active={this.state.active} />
-						<Octave index={3} press={this.keyPress} up={this.keyUp} active={this.state.active} />
-					</ul>
+					<Keyboard
+						keyPress={this.keyPress}
+						keyUp={this.keyUp} 
+						active={this.state.active}
+					/>
 				</section>
 				<MidiPanel
 					midi={midi}

@@ -1,6 +1,6 @@
 import React from "react";
 import HeaderButton from "./HeaderButton";
-export default class MidiHeader extends React.Component {
+export default class MidiHeader extends React.PureComponent {
 	render() {
 		let { setBPM, BPM} = this.props.global;
 		let id = this.props.isPlayng ? "pause" : "play";

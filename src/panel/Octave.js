@@ -68,7 +68,7 @@ const Key = ({ index, active = [], press, up, style, left }) =>
 	<button
 		style={
 			{
-				...(active[index] ? style.active : style.default),
+				...(active.has(index) ? style.active : style.default),
 				left
 
 			}

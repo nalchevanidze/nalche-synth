@@ -49,7 +49,7 @@ function PlayMidi(main) {
 	const update = () => {
 		main.update(
 			index,
-			main.notes
+			main.active
 		);
 	};
 	requestAnimationFrame(update);

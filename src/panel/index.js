@@ -5,7 +5,6 @@ import Sequencer from "./Sequencer";
 
 export default class Panel extends React.PureComponent {
 	render() {
-		let { props } = this;
 		return (
 			<div
 				style={{
@@ -13,7 +12,7 @@ export default class Panel extends React.PureComponent {
 					padding: "5px"
 				}}
 			>
-				<PanelOscillator {...props} />
+				<PanelOscillator />
 				<div>
 					<PanelEnvelope />
 					<Sequencer
