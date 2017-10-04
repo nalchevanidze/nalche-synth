@@ -17,13 +17,13 @@ function PlayTask(task, main) {
 
 	task.start.forEach(
 		e => {
-			main.simpleSet(e);
+			main.setNote(e);
 
 		}
 	);
 	task.end.forEach(
 		e => {
-			main.simpleUnset(e);
+			main.unsetNote(e);
 		}
 
 	);

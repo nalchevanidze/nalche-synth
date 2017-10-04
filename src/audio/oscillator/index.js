@@ -1,33 +1,24 @@
 import Context from "../Context";
 import FillAudioChenel from "./FillAudioChenel";
 const { destination } = Context;
-import SoundEvent from "./SoundEvent";
 const bufferSize = 2048; //4096;
 import timeLine from "./timeLine";
 import Controller from "../../Controller";
+import oscManager from "./oscManager";
 
 export default function Oscillator(target) {
 
 
 	const notes = {};
-	let active = new Set([]);
+	const active = new Set([]);
+	//const noteList = new Map([]);
 
-	const oscList = Array.from(
-		{ length: 6 },
-		() => SoundEvent(Controller)
-	);
+	const osc = oscManager(Controller);
 
 	function simpleSet(value) {
 		if (!notes[value]) {
-			let current = oscList.filter(
-				osc => !osc.eventTimes.live
-			)[0];
-			if (!current) {
-				current = SoundEvent(Controller);
-				oscList.push(current);
-			}
-			notes[value] = current;
-			current.setNote(value);
+			notes[value] = osc.getOsc();
+			notes[value].setNote(value);
 		}
 	}
 
@@ -40,47 +31,44 @@ export default function Oscillator(target) {
 
 
 	const event = {
-		dead: true,
+		isPlayng: false,
 		notes,
 		active,
 		update: target,
 		simpleSet,
-		simpleUnset,
-		unsetNote(value) {
-			//simpleUnset(value);
-			active.delete(value);
+		simpleUnset
+	};
 
-		},
-		setNote(value) {
-			//simpleSet(value);
-			active.add(value);
-		},
-		start(param) {
-			oscList.forEach(e => {
-				e.setNote(param.note);
-			});
+	event.setNote = note => {
+		if (event.isPlayng) {
+			simpleSet(note);
 		}
+		active.add(note);
+	};
+
+	event.unsetNote = note => {
+		if (event.isPlayng) {
+			simpleUnset(note);
+		}
+		active.delete(note);
 	};
 
 	//main node;
 	function onProcess(input) {
-
-		let active = oscList.filter(
-			e => e.eventTimes.live
-		);
-
 		let audio = input.outputBuffer.getChannelData(0);
-		FillAudioChenel(audio, active, event);
+		FillAudioChenel(
+			audio,
+			osc.active(),
+			event
+		);
 	}
 
 	const node = Context.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
 
-	function clean() {
-		oscList.forEach(
-			e => e.end()
-		);
+	function clear() {
+		osc.clear();
 		active.clear();
 		Object.keys(notes).forEach(i => {
 			notes[i] = null;
@@ -88,12 +76,12 @@ export default function Oscillator(target) {
 	}
 
 	event.pause = () => {
-		clean();
+		clear();
 		event.isPlayng = false;
 	};
 
 	event.setTime = (time) => {
-		clean();
+		clear();
 		timeLine.setTime(time);
 		target(time);
 	};
