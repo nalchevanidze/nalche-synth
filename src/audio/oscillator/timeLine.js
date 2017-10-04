@@ -12,27 +12,54 @@ import melody from "../../standartMidi";
 let midi = createMelodySet(melody);
 let endIndex = 128 || midi.length;
 
+
 function PlayTask(task, main) {
 
 	task.start.forEach(
-		e =>
-			main.setNote(e)
+		e => {
+			main.setNote(e);
 
-
+		}
 	);
 	task.end.forEach(
-		e =>
-			main.unsetNote(e)
+		e => {
+			main.unsetNote(e);
+		}
 
 	);
 
 }
 
-function next(main) {
+let seqtimer = 0;
+let seqIndex = 0;
+let seqEnd = 8;
+let oldChord = [];
+import sequencer from "../sequencer";
+const seq = sequencer();
 
+function sequnecing(main) {
+
+	seqtimer += qartel;
+	if (seqtimer > 2) {
+		seqtimer = 0;
+		let chord = seq.next(main.active);
+		oldChord.forEach(
+			(v) => main.simpleUnset(v)
+		);
+		chord.forEach(
+			(v) => main.simpleSet(v)
+		);
+		oldChord = chord;
+	}
+
+}
+
+function next(main) {
 	if (!main.isPlayng) {
+		sequnecing(main);
 		return null;
 	}
+
 	counter += qartel;
 	if (counter > 1) {
 

@@ -10,32 +10,50 @@ export default function Oscillator(target) {
 
 
 	const notes = {};
+	let active = new Set([]);
+
 	const oscList = Array.from(
 		{ length: 6 },
 		() => SoundEvent(Controller)
 	);
+
+	function simpleSet(value) {
+		if (!notes[value]) {
+			let current = oscList.filter(
+				osc => !osc.eventTimes.live
+			)[0];
+			if (!current) {
+				current = SoundEvent(Controller);
+				oscList.push(current);
+			}
+			notes[value] = current;
+			current.setNote(value);
+		}
+	}
+
+	function simpleUnset(value) {
+		if (notes[value]) {
+			notes[value].end();
+			notes[value] = null;
+		}
+	}
+
+
 	const event = {
 		dead: true,
 		notes,
+		active,
 		update: target,
+		simpleSet,
+		simpleUnset,
 		unsetNote(value) {
-			if (notes[value]) {
-				notes[value].end();
-				notes[value] = null;
-			}
+			simpleUnset(value);
+			active.delete(value);
+
 		},
 		setNote(value) {
-			if (!notes[value]) {
-				let current = oscList.filter(
-					osc => !osc.eventTimes.live
-				)[0];
-				if (!current) {
-					current = SoundEvent(Controller);
-					oscList.push(current);
-				}
-				notes[value] = current;
-				current.setNote(value);
-			}
+			simpleSet(value);
+			active.add(value);
 		},
 		start(param) {
 			oscList.forEach(e => {
