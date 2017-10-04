@@ -64,9 +64,11 @@ export default function Oscillator(target) {
 
 	//main node;
 	function onProcess(input) {
+
 		let active = oscList.filter(
 			e => e.eventTimes.live
 		);
+
 		let audio = input.outputBuffer.getChannelData(0);
 		FillAudioChenel(audio, active, event);
 	}
@@ -79,6 +81,7 @@ export default function Oscillator(target) {
 		oscList.forEach(
 			e => e.end()
 		);
+		active.clear();
 		Object.keys(notes).forEach(i => {
 			notes[i] = null;
 		});

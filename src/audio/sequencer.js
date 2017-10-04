@@ -6,11 +6,9 @@ const sequence = [
 	[1, 2, 3], []
 ];
 
-export default function sequencer() {
-
+function sequencer() {
 	let arpIndex = 0;
 	let endIndex = sequence.length;
-
 	return {
 		next(notes) {
 			let chord = [];
@@ -31,4 +29,23 @@ export default function sequencer() {
 			return chord;
 		}
 	};
+}
+
+let oldChord = [];
+const seq = sequencer();
+let steps = 2;
+let state = 0;
+export default function sequnecing(main) {
+	state++;
+	if (state >= steps) {
+		let chord = seq.next(main.active);
+		oldChord.forEach(
+			(v) => main.simpleUnset(v)
+		);
+		chord.forEach(
+			(v) => main.simpleSet(v)
+		);
+		oldChord = chord;
+		state = 0;
+	}
 }

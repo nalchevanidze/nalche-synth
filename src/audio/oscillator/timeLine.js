@@ -17,71 +17,56 @@ function PlayTask(task, main) {
 
 	task.start.forEach(
 		e => {
-			main.setNote(e);
+			main.simpleSet(e);
 
 		}
 	);
 	task.end.forEach(
 		e => {
-			main.unsetNote(e);
+			main.simpleUnset(e);
 		}
 
 	);
 
 }
 
-let seqtimer = 0;
-let oldChord = [];
+
 import sequencer from "../sequencer";
-const seq = sequencer();
 
-function sequnecing(main) {
 
-	seqtimer += qartel;
-	if (seqtimer > 2) {
-		seqtimer = 0;
-		let chord = seq.next(main.active);
-		oldChord.forEach(
-			(v) => main.simpleUnset(v)
-		);
-		chord.forEach(
-			(v) => main.simpleSet(v)
-		);
-		oldChord = chord;
+function PlayMidi(main) {
+
+	if (index >= endIndex) {
+		index = 0;
 	}
+
+	if (midi[index]) {
+		PlayTask(midi[index], main);
+	}
+
+	index++;
+
+	const update = () => {
+		main.update(
+			index,
+			main.notes
+		);
+	};
+	requestAnimationFrame(update);
 
 }
 
 function next(main) {
-	if (!main.isPlayng) {
-		sequnecing(main);
-		return null;
-	}
-
 	counter += qartel;
 	if (counter > 1) {
+		if (!main.isPlayng) {
+			sequencer(main);
 
-		if (index >= endIndex) {
-			index = 0;
+		} else {
+			PlayMidi(main);
 		}
-
-		if (midi[index]) {
-			PlayTask(midi[index], main);
-		}
-
-		index++;
 		counter = 0;
-		const update = () => {
-			main.update(
-				index,
-				main.notes
-			);
-		};
-		requestAnimationFrame(update);
 	}
-
-	sequnecing(main);
-
 }
 
 export default {
