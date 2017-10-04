@@ -13,6 +13,14 @@ function keyEvent(target, type) {
 }
 import midi from "./standartMidi";
 
+const sequence = [
+	[1, 2, 3], [], [],
+	[1, 2, 3], [], [],
+	[1, 2, 3], [],
+	[1, 2, 3], [],
+	[1], [2], [3], [2], [], []
+];
+
 export default class Synth extends React.Component {
 	constructor(props) {
 
@@ -109,7 +117,10 @@ export default class Synth extends React.Component {
 						background: "#333333"
 					}}
 				>
-					<Panel />
+					<Panel
+						seq={sequence}
+						setSequence={()=>{}}
+					/>
 					<ul
 
 						style={{

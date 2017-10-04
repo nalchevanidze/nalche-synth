@@ -1,9 +1,9 @@
-const sequence = [
-	[1], [2], [3], [], [], [],
+let sequence = [
 	[1, 2, 3], [], [],
 	[1, 2, 3], [], [],
 	[1, 2, 3], [],
-	[1, 2, 3], []
+	[1, 2, 3], [],
+	[1], [2], [3], [2], [], []
 ];
 
 function sequencer() {
@@ -13,7 +13,11 @@ function sequencer() {
 		next(notes) {
 			let chord = [];
 			let maxNotes = notes.size;
-			let values = Array.from(notes);
+			
+			let values = Array.from(notes).sort(
+				(a, b) => a > b ? 1 : -1
+			);
+
 			if (maxNotes) {
 				chord = sequence[arpIndex].map((i) => {
 					i--;
@@ -36,6 +40,7 @@ const seq = sequencer();
 let steps = 2;
 let state = 0;
 export default function sequnecing(main) {
+	sequence = main.seq || sequence;
 	state++;
 	if (state >= steps) {
 		let chord = seq.next(main.active);

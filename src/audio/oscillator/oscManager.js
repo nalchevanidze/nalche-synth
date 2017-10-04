@@ -18,12 +18,13 @@ export default function OSCManager(Controller) {
 		clear() {
 			stack.forEach(osc => osc.end());
 		},
-		getOsc() {
+		getOsc(note) {
 			let osc = getFreeOsc();
 			if (!osc) {
 				osc = SoundEvent(Controller);
 				stack.push(osc);
 			}
+			osc.setNote(note);
 			return osc;
 		}
 	};

@@ -1,4 +1,4 @@
-import keysToIndexes from "../keysToIndexes";
+import keysToIndexes from "../../keysToIndexes";
 
 function setValue(
 	midi,
