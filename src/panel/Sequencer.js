@@ -63,7 +63,6 @@ export default class Sequencer extends React.PureComponent {
 						margin: "0px",
 						padding: "0px"
 					}}
-
 				>
 					{
 						this.props.seq.map((chord, i) =>
