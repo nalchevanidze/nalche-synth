@@ -31,8 +31,6 @@ function PlayTask(task, main) {
 }
 
 let seqtimer = 0;
-let seqIndex = 0;
-let seqEnd = 8;
 let oldChord = [];
 import sequencer from "../sequencer";
 const seq = sequencer();
@@ -81,6 +79,8 @@ function next(main) {
 		};
 		requestAnimationFrame(update);
 	}
+
+	sequnecing(main);
 
 }
 

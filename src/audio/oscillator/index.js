@@ -47,12 +47,12 @@ export default function Oscillator(target) {
 		simpleSet,
 		simpleUnset,
 		unsetNote(value) {
-			simpleUnset(value);
+			//simpleUnset(value);
 			active.delete(value);
 
 		},
 		setNote(value) {
-			simpleSet(value);
+			//simpleSet(value);
 			active.add(value);
 		},
 		start(param) {
