@@ -30,6 +30,10 @@ var _oscillator = require("./audio/oscillator");
 
 var _oscillator2 = _interopRequireDefault(_oscillator);
 
+var _Controller = require("./Controller");
+
+var _Controller2 = _interopRequireDefault(_Controller);
+
 var _standartMidi = require("./standartMidi");
 
 var _standartMidi2 = _interopRequireDefault(_standartMidi);
@@ -56,7 +60,7 @@ var Synth = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
-		_this.osc = (0, _oscillator2.default)(function (time, active) {
+		_this.osc = (0, _oscillator2.default)(_Controller2.default, function (time, active) {
 			_this.setState({
 				time: time,
 				active: active

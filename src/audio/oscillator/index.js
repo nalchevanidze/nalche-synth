@@ -3,10 +3,9 @@ import FillAudioChenel from "./FillAudioChenel";
 const { destination } = Context;
 const bufferSize = 2048; //4096;
 import timeLine from "./timeLine";
-import Controller from "../../Controller";
 import oscManager from "./oscManager";
 
-export default function Oscillator(target) {
+export default function Oscillator(Controller, target) {
 
 
 	const notes = {};

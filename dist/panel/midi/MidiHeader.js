@@ -38,7 +38,6 @@ var MidiHeader = function (_React$Component) {
 			    setBPM = _props$global.setBPM,
 			    BPM = _props$global.BPM;
 
-			console.log(this.props.isPlayng);
 			var id = this.props.isPlayng ? "pause" : "play";
 			return _react2.default.createElement(
 				"section",

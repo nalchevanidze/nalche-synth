@@ -16,6 +16,10 @@ var _standartMidi = require("../../standartMidi");
 
 var _standartMidi2 = _interopRequireDefault(_standartMidi);
 
+var _sequencer = require("../sequencer");
+
+var _sequencer2 = _interopRequireDefault(_sequencer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var sampleRate = _Context2.default.sampleRate;
@@ -32,35 +36,40 @@ var endIndex = 128 || midi.length;
 function PlayTask(task, main) {
 
 	task.start.forEach(function (e) {
-		return main.setNote(e);
+		main.setNote(e);
 	});
 	task.end.forEach(function (e) {
-		return main.unsetNote(e);
+		main.unsetNote(e);
 	});
 }
 
-function next(main) {
+function PlayMidi(main) {
 
-	if (!main.isPlayng) {
-		return null;
+	if (index >= endIndex) {
+		index = 0;
 	}
+
+	if (midi[index]) {
+		PlayTask(midi[index], main);
+	}
+
+	index++;
+
+	var update = function update() {
+		main.update(index, main.notes);
+	};
+	requestAnimationFrame(update);
+}
+
+function next(main) {
 	counter += qartel;
 	if (counter > 1) {
-
-		if (index >= endIndex) {
-			index = 0;
+		if (!main.isPlayng) {
+			(0, _sequencer2.default)(main);
+		} else {
+			PlayMidi(main);
 		}
-
-		if (midi[index]) {
-			PlayTask(midi[index], main);
-		}
-
-		index++;
 		counter = 0;
-		var update = function update() {
-			main.update(index, main.notes);
-		};
-		requestAnimationFrame(update);
 	}
 }
 

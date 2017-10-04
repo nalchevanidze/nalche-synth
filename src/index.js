@@ -4,6 +4,7 @@ import Panel from "./panel";
 import MidiPanel from "./panel/midi";
 import keymap from "./keymap";
 import NalcheOscillator from "./audio/oscillator";
+import Controller from "./Controller";
 
 function keyEvent(target, type) {
 	const name = (type ? "add" : "remove") + "EventListener";
@@ -17,6 +18,7 @@ export default class Synth extends React.Component {
 
 		super(props);
 		this.osc = NalcheOscillator(
+			Controller,
 			(time, active) => {
 				this.setState(
 					{
@@ -31,7 +33,7 @@ export default class Synth extends React.Component {
 			active: this.osc.notes,
 			time: 0,
 		};
-		
+
 		this.keyPress = this.keyPress.bind(this);
 		this.keyUp = this.keyUp.bind(this);
 
@@ -49,7 +51,7 @@ export default class Synth extends React.Component {
 	}
 	keyPress(e) {
 		if (typeof e !== "number") {
-			e = keymap.indexOf(e.key)+12;
+			e = keymap.indexOf(e.key) + 12;
 			if (e === -1) {
 				return;
 			}
@@ -59,7 +61,7 @@ export default class Synth extends React.Component {
 	}
 	keyUp(e) {
 		if (typeof e !== "number") {
-			e = keymap.indexOf(e.key)+12;
+			e = keymap.indexOf(e.key) + 12;
 			if (e === -1) {
 				return;
 			}

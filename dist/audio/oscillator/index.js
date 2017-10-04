@@ -13,88 +13,89 @@ var _FillAudioChenel = require("./FillAudioChenel");
 
 var _FillAudioChenel2 = _interopRequireDefault(_FillAudioChenel);
 
-var _SoundEvent = require("./SoundEvent");
-
-var _SoundEvent2 = _interopRequireDefault(_SoundEvent);
-
 var _timeLine = require("./timeLine");
 
 var _timeLine2 = _interopRequireDefault(_timeLine);
 
-var _Controller = require("../../Controller");
+var _oscManager = require("./oscManager");
 
-var _Controller2 = _interopRequireDefault(_Controller);
+var _oscManager2 = _interopRequireDefault(_oscManager);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var destination = _Context2.default.destination;
 
 var bufferSize = 2048; //4096;
-function Oscillator(target) {
+function Oscillator(Controller, target) {
 
 	var notes = {};
-	var oscList = Array.from({ length: 6 }, function () {
-		return (0, _SoundEvent2.default)(_Controller2.default);
-	});
-	var event = {
-		dead: true,
-		notes: notes,
-		update: target,
-		unsetNote: function unsetNote(value) {
-			if (notes[value]) {
-				notes[value].end();
-				notes[value] = null;
-			}
-		},
-		setNote: function setNote(value) {
-			if (!notes[value]) {
-				var current = oscList.filter(function (osc) {
-					return !osc.eventTimes.live;
-				})[0];
-				if (!current) {
-					current = (0, _SoundEvent2.default)(_Controller2.default);
-					oscList.push(current);
-				}
-				notes[value] = current;
-				current.setNote(value);
-			}
-		},
-		start: function start(param) {
-			oscList.forEach(function (e) {
-				e.setNote(param.note);
-			});
+	var active = new Set([]);
+	//const noteList = new Map([]);
+
+	var osc = (0, _oscManager2.default)(Controller);
+
+	function simpleSet(value) {
+		if (!notes[value]) {
+			notes[value] = osc.getOsc();
+			notes[value].setNote(value);
 		}
+	}
+
+	function simpleUnset(value) {
+		if (notes[value]) {
+			notes[value].end();
+			notes[value] = null;
+		}
+	}
+
+	var event = {
+		isPlayng: false,
+		notes: notes,
+		active: active,
+		update: target,
+		simpleSet: simpleSet,
+		simpleUnset: simpleUnset
+	};
+
+	event.setNote = function (note) {
+		if (event.isPlayng) {
+			simpleSet(note);
+		}
+		active.add(note);
+	};
+
+	event.unsetNote = function (note) {
+		if (event.isPlayng) {
+			simpleUnset(note);
+		}
+		active.delete(note);
 	};
 
 	//main node;
 	function onProcess(input) {
-		var active = oscList.filter(function (e) {
-			return e.eventTimes.live;
-		});
 		var audio = input.outputBuffer.getChannelData(0);
-		(0, _FillAudioChenel2.default)(audio, active, event);
+		(0, _FillAudioChenel2.default)(audio, osc.active(), event);
 	}
 
 	var node = _Context2.default.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
 
-	function clean() {
-		oscList.forEach(function (e) {
-			return e.end();
-		});
+	function clear() {
+		osc.clear();
+		active.clear();
 		Object.keys(notes).forEach(function (i) {
 			notes[i] = null;
 		});
 	}
 
 	event.pause = function () {
-		clean();
+		clear();
 		event.isPlayng = false;
 	};
 
 	event.setTime = function (time) {
-		clean();
+		clear();
 		_timeLine2.default.setTime(time);
 		target(time);
 	};
