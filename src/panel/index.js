@@ -18,6 +18,7 @@ export default class Panel extends React.PureComponent {
 					<PanelEnvelope />
 					<Sequencer
 						seq={this.props.seq} 
+						setSequence={this.props.setSequence}
 					/>
 				</div>
 			</div>

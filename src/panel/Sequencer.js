@@ -51,7 +51,7 @@ export default class Sequencer extends React.PureComponent {
 		} else {
 			chord.splice(chordIndex, 1);
 		}
-		this.props.updateMidi();
+		this.props.setSequence(this.props.seq);
 		this.setState({ value: Math.random() });
 	}
 	render() {

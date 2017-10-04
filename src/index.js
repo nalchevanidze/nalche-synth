@@ -119,7 +119,9 @@ export default class Synth extends React.Component {
 				>
 					<Panel
 						seq={sequence}
-						setSequence={()=>{}}
+						setSequence={(seq)=>{
+							this.osc.seq = seq;
+						}}
 					/>
 					<ul
 
