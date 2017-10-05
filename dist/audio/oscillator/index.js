@@ -51,19 +51,29 @@ function Oscillator(Controller, target) {
 		active: active,
 		update: target,
 		simpleSet: simpleSet,
-		simpleUnset: simpleUnset
+		simpleUnset: simpleUnset,
+		setSequence: _timeLine2.default.sequencer.setSequence
 	};
 	event.setNote = function (note) {
+
+		if (!active.has(note)) {
+			_timeLine2.default.sequencer.restart();
+		}
+
+		active.add(note);
 		if (event.isPlayng) {
 			simpleSet(note);
+		} else {
+			target(0, active);
 		}
-		active.add(note);
 	};
 	event.unsetNote = function (note) {
+		active.delete(note);
 		if (event.isPlayng) {
 			simpleUnset(note);
+		} else {
+			target(0, active);
 		}
-		active.delete(note);
 	};
 	//main node;
 	function onProcess(input) {

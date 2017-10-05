@@ -31,7 +31,7 @@ function PlayTask(task, main) {
 }
 
 
-import sequencer from "../sequencer";
+import Sequencer from "../sequencer";
 
 
 function PlayMidi(main) {
@@ -56,12 +56,13 @@ function PlayMidi(main) {
 
 }
 
+const sequencer = new Sequencer();
+
 function next(main) {
 	counter += qartel;
 	if (counter > 1) {
 		if (!main.isPlayng) {
-			sequencer(main);
-
+			sequencer.next(main);
 		} else {
 			PlayMidi(main);
 		}
@@ -70,6 +71,7 @@ function next(main) {
 }
 
 export default {
+	sequencer,
 	next,
 	setMidi(melody) {
 		if (melody.length) {

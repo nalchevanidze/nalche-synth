@@ -21,6 +21,7 @@ const sequence = [
 	[1], [2], [3], [2], [], []
 ];
 
+
 export default class Synth extends React.Component {
 	constructor(props) {
 
@@ -42,9 +43,7 @@ export default class Synth extends React.Component {
 			time: 0
 		};
 
-		this.setSequence = (seq) => {
-			this.osc.seq = seq;
-		};
+		this.setSequence = this.osc.setSequence;
 
 		this.keyPress = this.keyPress.bind(this);
 		this.keyUp = this.keyUp.bind(this);

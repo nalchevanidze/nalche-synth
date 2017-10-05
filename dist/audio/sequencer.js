@@ -3,11 +3,16 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.default = sequnecing;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var sequence = [[1, 2, 3], [], [], [1, 2, 3], [], [], [1, 2, 3], [], [1, 2, 3], [], [1], [2], [3], [2], [], []];
+var arpIndex = 0;
 
 function sequencer() {
-	var arpIndex = 0;
+	arpIndex = 0;
 	var endIndex = sequence.length;
 	return {
 		next: function next(notes) {
@@ -38,19 +43,58 @@ function sequencer() {
 var oldChord = [];
 var seq = sequencer();
 var steps = 2;
-var state = 0;
-function sequnecing(main) {
-	sequence = main.seq || sequence;
-	state++;
-	if (state >= steps) {
-		var chord = seq.next(main.active);
-		oldChord.forEach(function (v) {
-			return main.simpleUnset(v);
-		});
-		chord.forEach(function (v) {
-			return main.simpleSet(v);
-		});
-		oldChord = chord;
-		state = 0;
+
+var Sequencer = function () {
+	function Sequencer() {
+		_classCallCheck(this, Sequencer);
+
+		this.state = 0;
+		this.setSequence = this.setSequence.bind(this);
+		this.restart = this.restart.bind(this);
 	}
-}
+
+	_createClass(Sequencer, [{
+		key: "setSequence",
+		value: function setSequence(seq) {
+			this.sequence = seq;
+			sequence = seq;
+		}
+	}, {
+		key: "next",
+		value: function next(main) {
+			if (this.state >= steps) {
+
+				var chord = seq.next(main.active);
+
+				oldChord.forEach(function (v) {
+					return main.simpleUnset(v);
+				});
+
+				chord.forEach(function (v) {
+					return main.simpleSet(v);
+				});
+
+				oldChord = chord;
+				this.state = 0;
+			}
+			this.state++;
+		}
+	}, {
+		key: "setSequence",
+		value: function setSequence(seq) {
+			this.sequence = seq;
+			sequence = seq;
+		}
+	}, {
+		key: "restart",
+		value: function restart() {
+			//	this.state = 0;
+			//	oldChord = [];
+			arpIndex = 0;
+		}
+	}]);
+
+	return Sequencer;
+}();
+
+exports.default = Sequencer;

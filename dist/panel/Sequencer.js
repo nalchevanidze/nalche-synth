@@ -16,6 +16,8 @@ var _DisplayPanel2 = _interopRequireDefault(_DisplayPanel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -66,18 +68,20 @@ var Sequencer = function (_React$PureComponent) {
 
 		var _this = _possibleConstructorReturn(this, (Sequencer.__proto__ || Object.getPrototypeOf(Sequencer)).call(this, props));
 
-		_this.state = {
-			value: 0
-		};
+		_this.state = { seq: [] };
 		return _this;
 	}
 
 	_createClass(Sequencer, [{
+		key: "componentWillMount",
+		value: function componentWillMount() {
+			this.state.seq = this.props.seq;
+		}
+	}, {
 		key: "setNew",
 		value: function setNew(i, index) {
 
-			var chord = this.props.seq[i];
-
+			var chord = this.state.seq[i];
 			var chordIndex = chord.indexOf(index);
 			if (chordIndex === -1) {
 				chord.push(index);
@@ -85,7 +89,7 @@ var Sequencer = function (_React$PureComponent) {
 				chord.splice(chordIndex, 1);
 			}
 			this.props.setSequence(this.props.seq);
-			this.setState({ value: Math.random() });
+			this.setState({ seq: [].concat(_toConsumableArray(this.state.seq)) });
 		}
 	}, {
 		key: "render",

@@ -5,6 +5,7 @@ const bufferSize = 2048; //4096;
 import timeLine from "./timeLine";
 import oscManager from "./oscManager";
 
+
 export default function Oscillator(Controller, target) {
 
 
@@ -31,9 +32,15 @@ export default function Oscillator(Controller, target) {
 		active,
 		update: target,
 		simpleSet,
-		simpleUnset
+		simpleUnset,
+		setSequence: timeLine.sequencer.setSequence
 	};
 	event.setNote = note => {
+
+		if (!active.has(note)) {
+			timeLine.sequencer.restart();
+		}
+
 		active.add(note);
 		if (event.isPlayng) {
 			simpleSet(note);

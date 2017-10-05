@@ -25,13 +25,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Keyboard = function (_React$Component) {
 	_inherits(Keyboard, _React$Component);
 
-	function Keyboard() {
+	function Keyboard(props) {
 		_classCallCheck(this, Keyboard);
 
-		return _possibleConstructorReturn(this, (Keyboard.__proto__ || Object.getPrototypeOf(Keyboard)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (Keyboard.__proto__ || Object.getPrototypeOf(Keyboard)).call(this, props));
+
+		_this.state = {
+			active: []
+		};
+		return _this;
 	}
 
 	_createClass(Keyboard, [{
+		key: "shouldComponentUpdate",
+		value: function shouldComponentUpdate(nextProps) {
+			var oldState = this.state.active.toString();
+			var state = Array.from(nextProps.active);
+			if (oldState !== state.toString()) {
+				this.state.active = state;
+				return true;
+			}
+			return false;
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			var _props = this.props,

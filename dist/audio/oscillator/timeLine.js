@@ -61,11 +61,13 @@ function PlayMidi(main) {
 	requestAnimationFrame(update);
 }
 
+var sequencer = new _sequencer2.default();
+
 function next(main) {
 	counter += qartel;
 	if (counter > 1) {
 		if (!main.isPlayng) {
-			(0, _sequencer2.default)(main);
+			sequencer.next(main);
 		} else {
 			PlayMidi(main);
 		}
@@ -74,6 +76,7 @@ function next(main) {
 }
 
 exports.default = {
+	sequencer: sequencer,
 	next: next,
 	setMidi: function setMidi(melody) {
 		if (melody.length) {

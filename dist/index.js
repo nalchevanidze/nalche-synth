@@ -55,8 +55,8 @@ function keyEvent(target, type) {
 
 var sequence = [[1, 2, 3], [], [], [1, 2, 3], [], [], [1, 2, 3], [], [1, 2, 3], [], [1], [2], [3], [2], [], []];
 
-var Synth = function (_React$PureComponent) {
-	_inherits(Synth, _React$PureComponent);
+var Synth = function (_React$Component) {
+	_inherits(Synth, _React$Component);
 
 	function Synth(props) {
 		_classCallCheck(this, Synth);
@@ -74,6 +74,8 @@ var Synth = function (_React$PureComponent) {
 			active: _this.osc.active,
 			time: 0
 		};
+
+		_this.setSequence = _this.osc.setSequence;
 
 		_this.keyPress = _this.keyPress.bind(_this);
 		_this.keyUp = _this.keyUp.bind(_this);
@@ -107,7 +109,7 @@ var Synth = function (_React$PureComponent) {
 				}
 			}
 			this.osc.setNote(e);
-			this.setState({});
+			//this.setState({});
 		}
 	}, {
 		key: "keyUp",
@@ -119,7 +121,7 @@ var Synth = function (_React$PureComponent) {
 				}
 			}
 			this.osc.unsetNote(e);
-			this.setState({});
+			//this.setState({});
 		}
 	}, {
 		key: "pause",
@@ -150,8 +152,6 @@ var Synth = function (_React$PureComponent) {
 	}, {
 		key: "render",
 		value: function render() {
-			var _this2 = this;
-
 			return _react2.default.createElement(
 				"div",
 				{
@@ -176,9 +176,7 @@ var Synth = function (_React$PureComponent) {
 					},
 					_react2.default.createElement(_panel2.default, {
 						seq: sequence,
-						setSequence: function setSequence(seq) {
-							_this2.osc.seq = seq;
-						}
+						setSequence: this.setSequence
 					}),
 					_react2.default.createElement(_Keyboard2.default, {
 						keyPress: this.keyPress,
@@ -199,6 +197,6 @@ var Synth = function (_React$PureComponent) {
 	}]);
 
 	return Synth;
-}(_react2.default.PureComponent);
+}(_react2.default.Component);
 
 exports.default = Synth;
