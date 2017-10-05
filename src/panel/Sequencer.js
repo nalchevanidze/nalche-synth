@@ -29,7 +29,7 @@ const Sequence = ({ chord, onClick }) =>
 			)
 		}
 	</li>
-				;
+	;
 
 import Panel from "./DisplayPanel";
 
@@ -37,14 +37,14 @@ import Panel from "./DisplayPanel";
 export default class Sequencer extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		this.state = {
-			value: 0
-		};
+		this.state = { seq: [] };
+	}
+	componentWillMount() {
+		this.state.seq = this.props.seq;
 	}
 	setNew(i, index) {
 
-		const chord = this.props.seq[i];
-
+		const chord = this.state.seq[i];
 		const chordIndex = chord.indexOf(index);
 		if (chordIndex === -1) {
 			chord.push(index);
@@ -52,7 +52,7 @@ export default class Sequencer extends React.PureComponent {
 			chord.splice(chordIndex, 1);
 		}
 		this.props.setSequence(this.props.seq);
-		this.setState({ value: Math.random() });
+		this.setState({ seq: [...this.state.seq] });
 	}
 	render() {
 		return (

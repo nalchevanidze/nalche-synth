@@ -21,7 +21,7 @@ const sequence = [
 	[1], [2], [3], [2], [], []
 ];
 
-export default class Synth extends React.PureComponent {
+export default class Synth extends React.Component {
 	constructor(props) {
 
 		super(props);
@@ -31,7 +31,7 @@ export default class Synth extends React.PureComponent {
 				this.setState(
 					{
 						time,
-						active: active
+						active
 					}
 				);
 			}
@@ -40,6 +40,10 @@ export default class Synth extends React.PureComponent {
 		this.state = {
 			active: this.osc.active,
 			time: 0
+		};
+
+		this.setSequence = (seq) => {
+			this.osc.seq = seq;
 		};
 
 		this.keyPress = this.keyPress.bind(this);
@@ -65,7 +69,7 @@ export default class Synth extends React.PureComponent {
 			}
 		}
 		this.osc.setNote(e);
-		this.setState({});
+		//this.setState({});
 	}
 	keyUp(e) {
 		if (typeof e !== "number") {
@@ -75,7 +79,7 @@ export default class Synth extends React.PureComponent {
 			}
 		}
 		this.osc.unsetNote(e);
-		this.setState({});
+		//this.setState({});
 	}
 	pause() {
 		this.osc.pause();
@@ -119,13 +123,11 @@ export default class Synth extends React.PureComponent {
 				>
 					<Panel
 						seq={sequence}
-						setSequence={(seq) => {
-							this.osc.seq = seq;
-						}}
+						setSequence={this.setSequence}
 					/>
 					<Keyboard
 						keyPress={this.keyPress}
-						keyUp={this.keyUp} 
+						keyUp={this.keyUp}
 						active={this.state.active}
 					/>
 				</section>

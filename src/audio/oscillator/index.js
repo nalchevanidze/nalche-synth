@@ -34,16 +34,20 @@ export default function Oscillator(Controller, target) {
 		simpleUnset
 	};
 	event.setNote = note => {
+		active.add(note);
 		if (event.isPlayng) {
 			simpleSet(note);
+		}else{
+			target(0,active);
 		}
-		active.add(note);
 	};
 	event.unsetNote = note => {
+		active.delete(note);
 		if (event.isPlayng) {
 			simpleUnset(note);
+		}else{
+			target(0,active);
 		}
-		active.delete(note);
 	};
 	//main node;
 	function onProcess(input) {
