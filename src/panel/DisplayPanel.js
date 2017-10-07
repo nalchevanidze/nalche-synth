@@ -26,44 +26,64 @@ const DisplayPanel = ({
 	list = [],
 	color = "#2196f3",
 	target,
-	onChange
+	onChange,
+	onOff,
+	isActive
 }) =>
 	<div style={{
 		...styles.panel,
-		width: (size * 50 + (size - 1) * 20) + "px"
+		width: (size * 50 + (size - 1) * 20) + "px",
+		opacity: (onOff && !isActive) ? 0.3 : 1
 	}}
 	>
-		<h1
+		<div style={{
+			display: "flex",
+			height: 10
+		}}>{
+
+				onOff ? <input type="checkbox" name="zutat" value="salami" /> : null
+
+			}
+
+			<h1
+				style={{
+					color: color,
+					fontSize: "12px",
+					margin: "0px",
+					width: "100%",
+					textAlign: "center",
+					textTransform: "uppercase",
+				}}
+			>
+				{
+					label
+				}
+			</h1>
+		</div>
+		<div
 			style={{
-				color: color,
-				fontSize: "12px",
-				margin: "0px",
-				width: "100%",
-				textAlign: "center",
-				textTransform: "uppercase",
+				...styles.panel,
+				width: (size * 50 + (size - 1) * 20) + "px"
 			}}
 		>
 			{
-				label
+				children
+			}{
+				list.map(
+					(par, i) => <ButtonWave
+						{...par}
+						key={i}
+						color={color}
+						target={target}
+						onChange={(...e) => {
+							if (onChange) {
+								onChange(...e);
+							}
+						}}
+					/>
+				)
 			}
-		</h1>
-		{
-			children
-		}{
-			list.map(
-				(par, i) => <ButtonWave
-					{...par}
-					key={i}
-					color={color}
-					target={target}
-					onChange={(...e) => {
-						if (onChange) {
-							onChange(...e);
-						}
-					}}
-				/>
-			)
-		}
+		</div>
 	</div>;
 
 export default DisplayPanel;

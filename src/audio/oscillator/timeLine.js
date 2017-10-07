@@ -65,6 +65,7 @@ function next(main) {
 			sequencer.next(main);
 		} else {
 			PlayMidi(main);
+			sequencer.next(main);
 		}
 		counter = 0;
 	}

@@ -56,7 +56,12 @@ export default class Sequencer extends React.PureComponent {
 	}
 	render() {
 		return (
-			<Panel label="sequencer" size={3} >
+			<Panel
+				label="sequencer"
+				size={3}
+				isActive={false}
+				onOff={() => { }}
+			>
 				<ul
 					style={{
 						display: "flex",

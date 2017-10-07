@@ -43,7 +43,7 @@ export default function Oscillator(Controller, target) {
 
 		active.add(note);
 		if (event.isPlayng) {
-			simpleSet(note);
+		//	simpleSet(note);
 		}else{
 			target(0,active);
 		}
@@ -51,7 +51,7 @@ export default function Oscillator(Controller, target) {
 	event.unsetNote = note => {
 		active.delete(note);
 		if (event.isPlayng) {
-			simpleUnset(note);
+		//	simpleUnset(note);
 		}else{
 			target(0,active);
 		}

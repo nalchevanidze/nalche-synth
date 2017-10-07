@@ -3,6 +3,7 @@ import PanelOscillator from "./oscillator";
 import PanelEnvelope from "./envelope";
 import Sequencer from "./Sequencer";
 
+
 export default class Panel extends React.PureComponent {
 	render() {
 		return (

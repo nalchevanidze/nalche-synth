@@ -4,7 +4,18 @@ import WaveLooper from "./WaveLooper";
 import filterBuilder from "./filterBuilder";
 import NoteToFrequency from "./NoteToFrequency";
 
+const Noise = (volume) => 1 - Math.random() * 2;
+
+
+
+
+// if (noise) {
+// 	mixin += noise * Noise();
+// 	i += noise;
+// }
+
 export default function SoundEvent(Controller) {
+
 	const { wave } = Controller;
 	const maxVoices = 12;
 	const maxOffset = 2;
@@ -15,13 +26,18 @@ export default function SoundEvent(Controller) {
 	);
 	const eventTimes = new EventTimes(Controller.envelope);
 	let count = 0;
+
 	function multyVoices() {
 		let value = 0;
 		for (let i = 0; i <= count; i++) {
 			value += WaveForm(positions[i].next(), wave);
 		}
+		if (wave.noise > 0) {
+			return (value + wave.noise * Noise()) / (count + 1 + wave.noise);
+		}
 		return value / (count + 1);
 	}
+
 	function reset(frequency) {
 
 		count = wave.voices * (maxVoices - 1);
@@ -50,8 +66,8 @@ export default function SoundEvent(Controller) {
 		reset,
 		setNote(note) {
 			let range = Math.max(
-				note + (Math.floor(wave.pitch * 8) - 4) * 12 , 
-				0 
+				note + (Math.floor(wave.pitch * 8) - 4) * 12,
+				0
 			);
 			reset(
 				NoteToFrequency(range)
