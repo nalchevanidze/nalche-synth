@@ -25,15 +25,21 @@ export default function filterBuilder({ env, filter }) {
 
 	function next(input) {
 
-		if (filter.envelope === 0) {
-			return input;
+		if(!filter.on){
+           return input;
 		}
 
+		
 		envelope();
+
 		let ff = Math.max(
 			(maxCutoff - (maxCutoff - f) * filter.envelope) ** 2,
 			0.02
 		);
+
+		if (filter.envelope === 0) {
+			ff = filter.cutoff;
+		}
 
 		return filterSample(
 			input,

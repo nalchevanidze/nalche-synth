@@ -27,6 +27,15 @@ var _NoteToFrequency2 = _interopRequireDefault(_NoteToFrequency);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var Noise = function Noise(volume) {
+	return 1 - Math.random() * 2;
+};
+
+// if (noise) {
+// 	mixin += noise * Noise();
+// 	i += noise;
+// }
+
 function SoundEvent(Controller) {
 	var wave = Controller.wave;
 
@@ -38,13 +47,18 @@ function SoundEvent(Controller) {
 	});
 	var eventTimes = new _EventTimes2.default(Controller.envelope);
 	var count = 0;
+
 	function multyVoices() {
 		var value = 0;
 		for (var i = 0; i <= count; i++) {
 			value += (0, _WaveForm2.default)(positions[i].next(), wave);
 		}
+		if (wave.noise > 0) {
+			return (value + wave.noise * Noise()) / (count + 1 + wave.noise);
+		}
 		return value / (count + 1);
 	}
+
 	function reset(frequency) {
 
 		count = wave.voices * (maxVoices - 1);

@@ -105,6 +105,11 @@ class PanelOscillator extends React.PureComponent {
 					]}
 					target={Controller.filter}
 					color={"#2196f3"}
+					isActive={Controller.filter.on}
+					onOff={() => {
+						Controller.filter.on = !Controller.filter.on;
+						this.setState({ i: Math.random() });
+					}}
 				/>
 			</div >
 		);

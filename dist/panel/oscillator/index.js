@@ -75,6 +75,8 @@ var PanelOscillator = function (_React$PureComponent) {
 	}, {
 		key: "render",
 		value: function render() {
+			var _this2 = this;
+
 			return _react2.default.createElement(
 				"div",
 				{ className: "oscillator", style: styles.main },
@@ -132,7 +134,12 @@ var PanelOscillator = function (_React$PureComponent) {
 					label: "Filter",
 					list: [{ id: "cutoff" }, { id: "resonance" }, { id: "envelope" }],
 					target: _Controller2.default.filter,
-					color: "#2196f3"
+					color: "#2196f3",
+					isActive: _Controller2.default.filter.on,
+					onOff: function onOff() {
+						_Controller2.default.filter.on = !_Controller2.default.filter.on;
+						_this2.setState({ i: Math.random() });
+					}
 				})
 			);
 		}

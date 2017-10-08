@@ -10,6 +10,10 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Controller = require("../Controller");
+
+var _Controller2 = _interopRequireDefault(_Controller);
+
 var _DisplayPanel = require("./DisplayPanel");
 
 var _DisplayPanel2 = _interopRequireDefault(_DisplayPanel);
@@ -25,6 +29,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var stepSize = 8;
+
+
 var Sequence = function Sequence(_ref) {
 	var chord = _ref.chord,
 	    _onClick = _ref.onClick;
@@ -98,7 +104,16 @@ var Sequencer = function (_React$PureComponent) {
 
 			return _react2.default.createElement(
 				_DisplayPanel2.default,
-				{ label: "sequencer", size: 3 },
+				{
+					label: "sequencer",
+					size: 3,
+					isActive: _Controller2.default.seq.on,
+					onOff: function onOff() {
+						_Controller2.default.seq.on = !_Controller2.default.seq.on;
+						console.log(_Controller2.default.seq);
+						_this2.setState({ i: Math.random() });
+					}
+				},
 				_react2.default.createElement(
 					"ul",
 					{

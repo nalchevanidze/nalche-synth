@@ -64,12 +64,18 @@ function PlayMidi(main) {
 var sequencer = new _sequencer2.default();
 
 function next(main) {
+
 	counter += qartel;
 	if (counter > 1) {
 		if (!main.isPlayng) {
-			sequencer.next(main);
+			if (main.seq.on) {
+				sequencer.next(main);
+			}
 		} else {
 			PlayMidi(main);
+			if (main.seq.on) {
+				sequencer.next(main);
+			}
 		}
 		counter = 0;
 	}

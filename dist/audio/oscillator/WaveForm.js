@@ -16,9 +16,6 @@ var Saw = function Saw(i) {
 var Saw2 = function Saw2(i) {
 	return 1 - i * 2 % 1 * 2;
 };
-var Noise = function Noise() {
-	return 1 - Math.random() * 2;
-};
 var Tech = function Tech(i) {
 
 	if (i > 0.15) {
@@ -32,7 +29,6 @@ function WaveForm(waveIndex, wave) {
 	    square = wave.square,
 	    saw = wave.saw,
 	    saw2 = wave.saw2,
-	    noise = wave.noise,
 	    tech = wave.tech;
 
 	var mixin = 0;
@@ -54,11 +50,6 @@ function WaveForm(waveIndex, wave) {
 	if (saw2) {
 		mixin += saw2 * Saw2(waveIndex);
 		i += saw2;
-	}
-
-	if (noise) {
-		mixin += noise * Noise();
-		i += noise;
 	}
 
 	if (tech) {

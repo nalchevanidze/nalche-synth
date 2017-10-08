@@ -47,12 +47,17 @@ function filterBuilder(_ref) {
 
 	function next(input) {
 
-		if (filter.envelope === 0) {
+		if (!filter.on) {
 			return input;
 		}
 
 		envelope();
+
 		var ff = Math.max(Math.pow(maxCutoff - (maxCutoff - f) * filter.envelope, 2), 0.02);
+
+		if (filter.envelope === 0) {
+			ff = filter.cutoff;
+		}
 
 		return filterSample(input, ff, res);
 	}

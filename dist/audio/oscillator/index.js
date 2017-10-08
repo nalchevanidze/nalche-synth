@@ -49,6 +49,7 @@ function Oscillator(Controller, target) {
 		isPlayng: false,
 		notes: notes,
 		active: active,
+		seq: Controller.seq,
 		update: target,
 		simpleSet: simpleSet,
 		simpleUnset: simpleUnset,
@@ -61,19 +62,18 @@ function Oscillator(Controller, target) {
 		}
 
 		active.add(note);
-		if (event.isPlayng) {
+		if (!event.seq.on) {
 			simpleSet(note);
-		} else {
-			target(0, active);
 		}
+
+		target(0, active);
 	};
 	event.unsetNote = function (note) {
 		active.delete(note);
-		if (event.isPlayng) {
+		if (!event.seq.on) {
 			simpleUnset(note);
-		} else {
-			target(0, active);
 		}
+		target(0, active);
 	};
 	//main node;
 	function onProcess(input) {
