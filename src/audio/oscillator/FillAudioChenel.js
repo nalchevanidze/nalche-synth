@@ -1,6 +1,5 @@
 import SafeWaveValue from "./SafeWaveValue";
 import timeLine from "./timeLine";
-const sequence = timeLine.next;
 
 export default function FillAudioChenel(out, osclist, main) {
 
@@ -15,7 +14,9 @@ export default function FillAudioChenel(out, osclist, main) {
 			value += osclist[n].next();
 		}
 
-		sequence(main);
+		
+		timeLine.next(main);
+		
 
 		out[i] = SafeWaveValue(value);
 	}

@@ -41,7 +41,12 @@ const DisplayPanel = ({
 			height: 10
 		}}>{
 
-				onOff ? <input type="checkbox" name="zutat" value="salami" /> : null
+				onOff ? <input
+					type="checkbox" 
+					name="zutat" 
+					value="salami" 
+					onChange={onOff}
+				/> : null
 
 			}
 

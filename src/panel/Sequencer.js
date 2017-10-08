@@ -1,5 +1,7 @@
 import React from "react";
 let stepSize = 8;
+import Controller from "../Controller";
+
 const Sequence = ({ chord, onClick }) =>
 	<li
 
@@ -59,8 +61,12 @@ export default class Sequencer extends React.PureComponent {
 			<Panel
 				label="sequencer"
 				size={3}
-				isActive={false}
-				onOff={() => { }}
+				isActive={Controller.seq.on}
+				onOff={() => {
+					Controller.seq.on = !Controller.seq.on;
+					console.log(Controller.seq);
+					this.setState({ i: Math.random() });
+				}}
 			>
 				<ul
 					style={{

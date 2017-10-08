@@ -12,6 +12,9 @@ const parameters = {
 		voices: 1,
 		pitch: 0.625
 	},
+	seq:{
+		on:false
+	},
 	envelope: {
 		attack: 0,
 		decay: 0.27,
