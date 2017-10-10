@@ -30,6 +30,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Noise = function Noise(volume) {
 	return 1 - Math.random() * 2;
 };
+var Sine = function Sine(i) {
+	return Math.sin(i * Math.PI * 2);
+};
 
 // if (noise) {
 // 	mixin += noise * Noise();
@@ -42,21 +45,30 @@ function SoundEvent(Controller) {
 	var maxVoices = 12;
 	var maxOffset = 2;
 	var filter = (0, _filterBuilder2.default)(Controller);
+
+	var sinePosition = new _WaveLooper2.default();
+
 	var positions = Array.from({ length: maxVoices }, function () {
 		return new _WaveLooper2.default();
 	});
+
 	var eventTimes = new _EventTimes2.default(Controller.envelope);
 	var count = 0;
 
 	function multyVoices() {
 		var value = 0;
+		var size = count;
 		for (var i = 0; i <= count; i++) {
 			value += (0, _WaveForm2.default)(positions[i].next(), wave);
 		}
-		if (wave.noise > 0) {
-			return (value + wave.noise * Noise()) / (count + 1 + wave.noise);
+		if (wave.sine) {
+			value += Sine(sinePosition.next()) * wave.sine;
+			size++;
 		}
-		return value / (count + 1);
+		if (wave.noise > 0) {
+			return (value + wave.noise * Noise()) / (size + 1 + wave.noise);
+		}
+		return value / (size + 1);
 	}
 
 	function reset(frequency) {
@@ -69,6 +81,8 @@ function SoundEvent(Controller) {
 			var diff = value * wave.offset * maxOffset;
 			positions[i].set(frequency + diff, wave.fm, wave.fmFreq);
 		}
+		sinePosition.set(frequency, wave.fm, wave.fmFreq);
+
 		eventTimes.restart();
 
 		filter.set();

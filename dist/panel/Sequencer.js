@@ -110,7 +110,6 @@ var Sequencer = function (_React$PureComponent) {
 					isActive: _Controller2.default.seq.on,
 					onOff: function onOff() {
 						_Controller2.default.seq.on = !_Controller2.default.seq.on;
-						console.log(_Controller2.default.seq);
 						_this2.setState({ i: Math.random() });
 					}
 				},

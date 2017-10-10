@@ -4,9 +4,6 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.default = WaveForm;
-var Sine = function Sine(i) {
-	return Math.sin(i * Math.PI * 2);
-};
 var Square = function Square(i) {
 	return Number(i > 0.5) * 2 - 1;
 };
@@ -25,8 +22,7 @@ var Tech = function Tech(i) {
 };
 
 function WaveForm(waveIndex, wave) {
-	var sine = wave.sine,
-	    square = wave.square,
+	var square = wave.square,
 	    saw = wave.saw,
 	    saw2 = wave.saw2,
 	    tech = wave.tech;
@@ -34,10 +30,6 @@ function WaveForm(waveIndex, wave) {
 	var mixin = 0;
 	var i = 0;
 
-	if (sine) {
-		mixin += sine * Sine(waveIndex);
-		i += sine;
-	}
 	if (square) {
 		mixin += square * Square(waveIndex);
 		i += square;
@@ -56,7 +48,6 @@ function WaveForm(waveIndex, wave) {
 		mixin += Tech(waveIndex) * tech;
 		i += tech;
 	}
-
 	if (i === 0) {
 		return 0;
 	}
