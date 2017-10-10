@@ -5,9 +5,7 @@ import filterBuilder from "./filterBuilder";
 import NoteToFrequency from "./NoteToFrequency";
 
 const Noise = (volume) => 1 - Math.random() * 2;
-
-
-
+const Sine = i => Math.sin(i * Math.PI * 2);
 
 // if (noise) {
 // 	mixin += noise * Noise();
@@ -20,22 +18,31 @@ export default function SoundEvent(Controller) {
 	const maxVoices = 12;
 	const maxOffset = 2;
 	const filter = filterBuilder(Controller);
+
+	const sinePosition = new WaveLooper();
+
 	const positions = Array.from(
 		{ length: maxVoices },
 		() => new WaveLooper()
 	);
+
 	const eventTimes = new EventTimes(Controller.envelope);
 	let count = 0;
 
 	function multyVoices() {
 		let value = 0;
+		let size = count;
 		for (let i = 0; i <= count; i++) {
 			value += WaveForm(positions[i].next(), wave);
 		}
+		if (wave.sine) {
+			value += (Sine(sinePosition.next()) * wave.sine);
+			size++;
+		} 
 		if (wave.noise > 0) {
-			return (value + wave.noise * Noise()) / (count + 1 + wave.noise);
+			return (value + wave.noise * Noise()) / (size + 1 + wave.noise);
 		}
-		return value / (count + 1);
+		return value / (size + 1);
 	}
 
 	function reset(frequency) {
@@ -52,6 +59,12 @@ export default function SoundEvent(Controller) {
 				wave.fmFreq
 			);
 		}
+		sinePosition.set(
+			frequency,
+			wave.fm,
+			wave.fmFreq
+		);
+
 		eventTimes.restart();
 
 		filter.set();
