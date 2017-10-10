@@ -64,7 +64,6 @@ export default class Sequencer extends React.PureComponent {
 				isActive={Controller.seq.on}
 				onOff={() => {
 					Controller.seq.on = !Controller.seq.on;
-					console.log(Controller.seq);
 					this.setState({ i: Math.random() });
 				}}
 			>
