@@ -1,3 +1,9 @@
+/* 
+acourding:
+	http://www.musicdsp.org/showArchiveComment.php?ArchiveID=26
+	https://noisehack.com/custom-audio-effects-javascript-web-audio-api/
+*/
+
 export default function MoogSampler() {
 	let in1, in2, in3, in4, out1, out2, out3, out4;
 	in1 = in2 = in3 = in4 = out1 = out2 = out3 = out4 = 0;
