@@ -17,6 +17,9 @@ export default function MoogSampler() {
 	let fb = 0;
 	let diff = 0;
 
+	//const inputs = new Int16Array();
+	//const outputs = new Int16Array();
+
 	const pole = (input, output) => (
 		0.3 * input +
 		diff * output
@@ -27,7 +30,7 @@ export default function MoogSampler() {
 
 		let fpower = f ** 2;
 		diff = 1 - f;
-		
+
 		fb = (resonance * 4) * (1.0 - 0.15 * fpower);
 		inputSample -= out4 * fb;
 		inputSample *= 0.35013 * (fpower ** 2);

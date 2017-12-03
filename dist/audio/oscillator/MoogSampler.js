@@ -23,6 +23,9 @@ function MoogSampler() {
 	var fb = 0;
 	var diff = 0;
 
+	//const inputs = new Int16Array();
+	//const outputs = new Int16Array();
+
 	var pole = function pole(input, output) {
 		return 0.3 * input + diff * output;
 	};
