@@ -6,13 +6,13 @@ export interface Note {
 	at: number;
 }
 
-export interface MidiPoint {
+export interface MidiTask {
 	start: number[],
 	end: number[]
 }
 
 export type DeepMidi = Note[][];
-export type FlatMidi = MidiPoint[];
+export type FlatMidi = MidiTask[];
 
 
 

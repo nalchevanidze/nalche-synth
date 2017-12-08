@@ -16,6 +16,7 @@ var _timeLine2 = _interopRequireDefault(_timeLine);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function FillAudioChenel(out, osclist, main) {
+
 	var i = void 0,
 	    length = out.length;
 	var n = void 0,
