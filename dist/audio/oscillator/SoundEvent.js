@@ -27,17 +27,12 @@ var _NoteToFrequency2 = _interopRequireDefault(_NoteToFrequency);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Noise = function Noise(volume) {
+var Noise = function Noise() {
 	return 1 - Math.random() * 2;
 };
 var Sine = function Sine(i) {
 	return Math.sin(i * Math.PI * 2);
 };
-
-// if (noise) {
-// 	mixin += noise * Noise();
-// 	i += noise;
-// }
 
 function SoundEvent(Controller) {
 	var wave = Controller.wave;
@@ -56,11 +51,15 @@ function SoundEvent(Controller) {
 	var count = 0;
 
 	function multyVoices() {
+
 		var value = 0;
 		var size = count;
+
 		for (var i = 0; i <= count; i++) {
+
 			value += (0, _WaveForm2.default)(positions[i].next(), wave);
 		}
+
 		if (wave.sine) {
 			value += Sine(sinePosition.next()) * wave.sine;
 			size++;

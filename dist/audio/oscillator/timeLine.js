@@ -24,12 +24,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var sampleRate = _Context2.default.sampleRate;
 
+
 var bpm = 130;
 var qartel = 1 / (60 * sampleRate / (bpm * 8));
-
 var counter = 0;
 var index = 0;
-
 var midi = (0, _createMelodySet2.default)(_standartMidi2.default);
 var endIndex = 128 || midi.length;
 

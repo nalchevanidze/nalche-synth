@@ -1,16 +1,18 @@
 import Context from "../Context";
-const { sampleRate } = Context;
-let bpm = 130;
-let qartel = 1 / (60 * sampleRate / (bpm * 8));
-
-let counter = 0;
-let index = 0;
-
 import createMelodySet from "../midi/createMelodySet";
 import melody from "../../standartMidi";
+import Sequencer from "../sequencer";
 
+const {
+	sampleRate
+} = Context;
+
+let bpm = 130;
+let qartel = 1 / (60 * sampleRate / (bpm * 8));
+let counter: number = 0;
+let index: number = 0;
 let midi = createMelodySet(melody);
-let endIndex = 128 || midi.length;
+let endIndex: number = 128 || midi.length;
 
 
 function PlayTask(task, main) {
@@ -29,10 +31,6 @@ function PlayTask(task, main) {
 	);
 
 }
-
-
-import Sequencer from "../sequencer";
-
 
 function PlayMidi(main) {
 
@@ -63,18 +61,18 @@ function next(main) {
 	counter += qartel;
 	if (counter > 1) {
 		if (!main.isPlayng) {
-			if(main.seq.on){
+			if (main.seq.on) {
 				sequencer.next(main);
 			}
 		} else {
 			PlayMidi(main);
-			if(main.seq.on){
+			if (main.seq.on) {
 				sequencer.next(main);
 			}
 		}
 		counter = 0;
 	}
-	
+
 }
 
 export default {
@@ -89,4 +87,3 @@ export default {
 		index = time;
 	}
 };
-

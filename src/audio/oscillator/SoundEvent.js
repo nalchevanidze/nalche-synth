@@ -4,37 +4,37 @@ import WaveLooper from "./WaveLooper";
 import filterBuilder from "./filterBuilder";
 import NoteToFrequency from "./NoteToFrequency";
 
-const Noise = (volume) => 1 - Math.random() * 2;
+const Noise = ():number => 1 - Math.random() * 2;
 const Sine = i => Math.sin(i * Math.PI * 2);
-
-// if (noise) {
-// 	mixin += noise * Noise();
-// 	i += noise;
-// }
 
 export default function SoundEvent(Controller) {
 
 	const { wave } = Controller;
-	const maxVoices = 12;
-	const maxOffset = 2;
+	const maxVoices:number = 12;
+	const maxOffset:number = 2;
 	const filter = filterBuilder(Controller);
 
-	const sinePosition = new WaveLooper();
+	const sinePosition:WaveLooper = new WaveLooper();
 
 	const positions = Array.from(
 		{ length: maxVoices },
 		() => new WaveLooper()
 	);
 
-	const eventTimes = new EventTimes(Controller.envelope);
-	let count = 0;
+	const eventTimes:EventTimes = new EventTimes(Controller.envelope);
+	let count:number = 0;
 
-	function multyVoices() {
-		let value = 0;
-		let size = count;
-		for (let i = 0; i <= count; i++) {
+	function multyVoices():number {
+
+		let value:number = 0;
+		let size:number = count;
+
+		for (let i:number = 0; i <= count; i++) {
+
 			value += WaveForm(positions[i].next(), wave);
+
 		}
+
 		if (wave.sine) {
 			value += (Sine(sinePosition.next()) * wave.sine);
 			size++;
@@ -43,16 +43,17 @@ export default function SoundEvent(Controller) {
 			return (value + wave.noise * Noise()) / (size + 1 + wave.noise);
 		}
 		return value / (size + 1);
+
 	}
 
-	function reset(frequency) {
+	function reset(frequency:number):void {
 
 		count = wave.voices * (maxVoices - 1);
 		let middle = Math.floor((count + 1) / 2);
 
 		for (let i = 0; i <= count; i++) {
-			let value = i - middle;
-			let diff = value * wave.offset * maxOffset;
+			let value:number = i - middle;
+			let diff:number = value * wave.offset * maxOffset;
 			positions[i].set(
 				frequency + diff,
 				wave.fm,

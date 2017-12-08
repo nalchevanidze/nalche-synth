@@ -1,4 +1,4 @@
-export default function NoteToFrequency(index) {
+export default function NoteToFrequency(index: number): number {
 
 	index = Number(index);
 
@@ -6,7 +6,7 @@ export default function NoteToFrequency(index) {
 		throw new Error("Invalid Note");
 	}
 
-	let pow = (index - 49) / 12;
+	let pow: number = (index - 49) / 12;
 
 	return (2 ** pow) * 440;
 

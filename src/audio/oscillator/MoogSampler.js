@@ -4,19 +4,25 @@ acourding:
 	https://noisehack.com/custom-audio-effects-javascript-web-audio-api/
 */
 export default function MoogSampler() {
-	let frequency = 0;
-	let diff = 0;
-	const input = new Float32Array(5);
-	const output = new Float32Array(5);
+
+	let frequency: number = 0;
+	let diff: number = 0;
+	const input: Float32Array = new Float32Array(5);
+	const output: Float32Array = new Float32Array(5);
 	output.fill(0);
 	input.fill(0);
-	const pole = (index) => (
+	const pole = (index: number): number => (
 		0.3 * input[index] +
 		diff * output[index]
 	);
-	return function sampleGenerate(inputSample, f, resonance) {
-		let fpower = f ** 2;
-		diff = 1 - f;
+
+	return function sampleGenerate(
+		inputSample: number,
+		inputFrequency: number,
+		resonance: number
+	): number {
+		let fpower = inputFrequency ** 2;
+		diff = 1 - inputFrequency;
 		frequency = (resonance * 4) * (1.0 - 0.15 * fpower);
 		inputSample -= output[4] * frequency;
 		output[0] = inputSample * (0.35013 * (fpower ** 2));

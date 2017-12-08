@@ -2,11 +2,11 @@ import context from "../Context";
 let { sampleRate } = context;
 
 export default function* EnvelopeParameter(
-	SampleLifeTime = 0.5,
-	start_value = 1,
-	end_value = 0
+	SampleLifeTime: number = 0.5,
+	start_value: number = 1,
+	end_value:number = 0
 
-) {
+):number {
 
 	if (SampleLifeTime === 0) {
 		return end_value;

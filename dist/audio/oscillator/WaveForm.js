@@ -14,11 +14,7 @@ var Saw2 = function Saw2(i) {
 	return 1 - i * 2 % 1 * 2;
 };
 var Tech = function Tech(i) {
-
-	if (i > 0.15) {
-		return 0;
-	}
-	return Math.min((0.05 - i % 0.05) * 50 - 0.7, 1);
+	return i > 0.15 ? 0 : Math.min((0.05 - i % 0.05) * 50 - 0.7, 1);
 };
 
 function WaveForm(waveIndex, wave) {
