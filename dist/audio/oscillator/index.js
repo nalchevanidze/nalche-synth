@@ -30,21 +30,21 @@ function Oscillator(Controller, target) {
 
 	var notes = {};
 	var active = new Set([]);
-
-	//const noteList = new Map([]);
-
 	var osc = (0, _oscManager2.default)(Controller);
+
 	function simpleSet(note) {
 		if (!notes[note]) {
 			notes[note] = osc.getOsc(note);
 		}
 	}
+
 	function simpleUnset(value) {
 		if (notes[value]) {
 			notes[value].end();
 			notes[value] = null;
 		}
 	}
+
 	var event = {
 		isPlayng: false,
 		notes: notes,
@@ -55,19 +55,18 @@ function Oscillator(Controller, target) {
 		simpleUnset: simpleUnset,
 		setSequence: _timeLine2.default.sequencer.setSequence
 	};
-	event.setNote = function (note) {
 
+	event.setNote = function (note) {
 		if (!active.has(note)) {
 			_timeLine2.default.sequencer.restart();
 		}
-
 		active.add(note);
 		if (!event.seq.on) {
 			simpleSet(note);
 		}
-
 		target(0, active);
 	};
+
 	event.unsetNote = function (note) {
 		active.delete(note);
 		if (!event.seq.on) {
@@ -75,14 +74,17 @@ function Oscillator(Controller, target) {
 		}
 		target(0, active);
 	};
+
 	//main node;
 	function onProcess(input) {
 		var audio = input.outputBuffer.getChannelData(0);
 		(0, _FillAudioChenel2.default)(audio, osc.active(), event);
 	}
+
 	var node = _Context2.default.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
+
 	function clear() {
 		osc.clear();
 		active.clear();

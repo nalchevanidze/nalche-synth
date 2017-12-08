@@ -1,15 +1,26 @@
-let sequence = [
-	[1, 2, 3], [], [],
-	[1, 2, 3], [], [],
-	[1, 2, 3], [],
-	[1, 2, 3], [],
-	[1], [2], [3], [2], [], []
+let sequence: number[][] = [
+	[1, 2, 3],
+	[],
+	[],
+	[1, 2, 3],
+	[],
+	[],
+	[1, 2, 3],
+	[],
+	[1, 2, 3],
+	[],
+	[1],
+	[2],
+	[3],
+	[2],
+	[],
+	[]
 ];
-let arpIndex = 0;
+let arpIndex: number = 0;
 
 function sequencer() {
 	arpIndex = 0;
-	let endIndex = sequence.length;
+	let endIndex:number = sequence.length;
 	return {
 		next(notes) {
 			let chord = [];
@@ -28,9 +39,11 @@ function sequencer() {
 				});
 			}
 			arpIndex++;
+
 			if (arpIndex >= endIndex) {
 				arpIndex = 0;
 			}
+
 			return chord;
 		}
 	};
@@ -38,7 +51,7 @@ function sequencer() {
 
 let oldChord = [];
 const seq = sequencer();
-let steps = 2;
+let steps:number = 2;
 
 export default class Sequencer {
 
@@ -46,11 +59,6 @@ export default class Sequencer {
 		this.state = 0;
 		this.setSequence = this.setSequence.bind(this);
 		this.restart = this.restart.bind(this);
-	}
-
-	setSequence(seq) {
-		this.sequence = seq;
-		sequence = seq;
 	}
 
 	next(main) {
@@ -71,15 +79,12 @@ export default class Sequencer {
 		}
 		this.state++;
 	}
-
-	setSequence(seq){
+	setSequence(seq) {
 		this.sequence = seq;
 		sequence = seq;
 	}
 
 	restart() {
-	//	this.state = 0;
-	//	oldChord = [];
 		arpIndex = 0;
 	}
 }

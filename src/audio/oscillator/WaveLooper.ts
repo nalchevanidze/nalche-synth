@@ -1,12 +1,24 @@
 import Context from "../Context";
-const { sampleRate } = Context;
+const {
+	sampleRate
+} = Context;
 
-function Rescale(value, deep) {
+function Rescale(value: number, deep: number) {
 	deep = 2 / (deep ** 2);
 	return (value + deep) / deep;
 }
 
 export default class WaveLooper {
+
+	private freq: number;
+	private state: number;
+	private stepSize: number;
+	private FM: {
+		state: number;
+		level: number;
+		freq: number;
+		stepSize: number;
+	}
 
 	constructor() {
 		this.freq = 0;
@@ -16,11 +28,12 @@ export default class WaveLooper {
 		this.FM = {
 			state: 0,
 			level: 0,
-			freq: 0.25
+			freq: 0.25,
+			stepSize: 0.1
 		};
 	}
 
-	set(freq = 440, FMLevel = 1, FMFreq) {
+	set(freq: number = 440, FMLevel: number = 1, FMFreq: number) {
 
 
 		this.FM.freq = (FMFreq !== undefined) ?
@@ -44,7 +57,11 @@ export default class WaveLooper {
 
 	next() {
 
-		let { state, stepSize, FM } = this;
+		let {
+			state,
+			stepSize,
+			FM
+		} = this;
 
 		// generate new wavePosition
 		state += stepSize;

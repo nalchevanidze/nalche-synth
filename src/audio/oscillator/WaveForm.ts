@@ -4,7 +4,14 @@ const Saw2 = (i: number) => 1 - ((i * 2) % 1) * 2;
 const Tech = (i: number) => (i > 0.15) ? 0 :
 	Math.min((0.05 - i % 0.05) * 50 - 0.7, 1);
 
-export default function WaveForm(waveIndex: number, wave) {
+export interface WaveConfig {
+	square: number;
+	saw: number;
+	saw2: number;
+	tech: number;
+}
+
+export default function WaveForm(waveIndex: number, wave: WaveConfig) {
 
 	let {
 		square,
@@ -12,8 +19,9 @@ export default function WaveForm(waveIndex: number, wave) {
 		saw2,
 		tech
 	} = wave;
-	let mixin = 0;
-	let i = 0;
+	
+	let mixin: number = 0;
+	let i: number = 0;
 
 	if (square) {
 		mixin += square * Square(waveIndex);

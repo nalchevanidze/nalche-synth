@@ -13,7 +13,7 @@ function keyEvent(target, type) {
 }
 import midi from "./standartMidi";
 
-const sequence = [
+const sequence: number[][] = [
 	[1, 2, 3], [], [],
 	[1, 2, 3], [], [],
 	[1, 2, 3], [],

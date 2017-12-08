@@ -16,9 +16,9 @@ var _marked = [EnvelopeParameter].map(regeneratorRuntime.mark);
 var sampleRate = _Context2.default.sampleRate;
 function EnvelopeParameter() {
 	var SampleLifeTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0.5;
-	var start_value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-	var end_value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-	var difference, curve, left, level;
+	var startValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+	var endValue = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+	var curve, left, difference, level;
 	return regeneratorRuntime.wrap(function EnvelopeParameter$(_context) {
 		while (1) {
 			switch (_context.prev = _context.next) {
@@ -28,16 +28,16 @@ function EnvelopeParameter() {
 						break;
 					}
 
-					return _context.abrupt("return", end_value);
+					return _context.abrupt("return", endValue);
 
 				case 2:
-					difference = end_value - start_value;
 					curve = 1;
-
+					left = 0;
+					difference = endValue - startValue;
 
 					SampleLifeTime = SampleLifeTime * sampleRate;
 
-					left = 0;
+					//main loop
 
 				case 6:
 					if (!(++left < SampleLifeTime)) {
@@ -48,14 +48,14 @@ function EnvelopeParameter() {
 					// Level Modyfied by Curve
 					level = Math.pow(left / SampleLifeTime, curve);
 					_context.next = 10;
-					return start_value + difference * level;
+					return startValue + difference * level;
 
 				case 10:
 					_context.next = 6;
 					break;
 
 				case 12:
-					return _context.abrupt("return", end_value);
+					return _context.abrupt("return", endValue);
 
 				case 13:
 				case "end":

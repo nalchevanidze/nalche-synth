@@ -32,9 +32,11 @@ function sequencer() {
 				});
 			}
 			arpIndex++;
+
 			if (arpIndex >= endIndex) {
 				arpIndex = 0;
 			}
+
 			return chord;
 		}
 	};
@@ -54,12 +56,6 @@ var Sequencer = function () {
 	}
 
 	_createClass(Sequencer, [{
-		key: "setSequence",
-		value: function setSequence(seq) {
-			this.sequence = seq;
-			sequence = seq;
-		}
-	}, {
 		key: "next",
 		value: function next(main) {
 			if (this.state >= steps) {
@@ -88,8 +84,6 @@ var Sequencer = function () {
 	}, {
 		key: "restart",
 		value: function restart() {
-			//	this.state = 0;
-			//	oldChord = [];
 			arpIndex = 0;
 		}
 	}]);

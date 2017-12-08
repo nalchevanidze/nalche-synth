@@ -5,6 +5,7 @@ const { sampleRate } = Context;
 // cutoff between 0.0 and 1.0
 //resonance between 0.0 and 4.0
 export default function filterBuilder({ env, filter }) {
+
 	let maxCutoff = 1.16;
 	let f, res, type;
 	let decayStep, attackStep, threshhold;
@@ -24,12 +25,9 @@ export default function filterBuilder({ env, filter }) {
 
 
 	function next(input) {
-
 		if(!filter.on){
-           return input;
+        	return input;
 		}
-
-		
 		envelope();
 
 		let ff = Math.max(

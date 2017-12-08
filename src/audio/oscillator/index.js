@@ -1,6 +1,8 @@
 import Context from "../Context";
 import FillAudioChenel from "./FillAudioChenel";
-const { destination } = Context;
+const {
+	destination
+} = Context;
 const bufferSize = 2048; //4096;
 import timeLine from "./timeLine";
 import oscManager from "./oscManager";
@@ -8,24 +10,23 @@ import oscManager from "./oscManager";
 
 export default function Oscillator(Controller, target) {
 
-
 	const notes = {};
-	const active = new Set([]);
-
-	//const noteList = new Map([]);
-
+	const active: Set = new Set([]);
 	const osc = oscManager(Controller);
+
 	function simpleSet(note) {
 		if (!notes[note]) {
 			notes[note] = osc.getOsc(note);
 		}
 	}
+
 	function simpleUnset(value) {
 		if (notes[value]) {
 			notes[value].end();
 			notes[value] = null;
 		}
 	}
+
 	const event = {
 		isPlayng: false,
 		notes,
@@ -36,20 +37,18 @@ export default function Oscillator(Controller, target) {
 		simpleUnset,
 		setSequence: timeLine.sequencer.setSequence
 	};
-	event.setNote = note => {
 
+	event.setNote = note => {
 		if (!active.has(note)) {
 			timeLine.sequencer.restart();
 		}
-
 		active.add(note);
 		if (!event.seq.on) {
 			simpleSet(note);
 		}
-
 		target(0, active);
-
 	};
+
 	event.unsetNote = note => {
 		active.delete(note);
 		if (!event.seq.on) {
@@ -58,6 +57,7 @@ export default function Oscillator(Controller, target) {
 		target(0, active);
 
 	};
+
 	//main node;
 	function onProcess(input) {
 		let audio = input.outputBuffer.getChannelData(0);
@@ -67,9 +67,11 @@ export default function Oscillator(Controller, target) {
 			event
 		);
 	}
+	
 	const node = Context.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
 	node.onaudioprocess = onProcess;
+
 	function clear() {
 		osc.clear();
 		active.clear();

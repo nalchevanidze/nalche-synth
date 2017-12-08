@@ -1,4 +1,4 @@
-export default [
+const keymap : string[] = [
 	"z", 
 	"s", 
 	"x", 
@@ -24,3 +24,5 @@ export default [
 	"7", 
 	"u"
 ];
+
+export default keymap;

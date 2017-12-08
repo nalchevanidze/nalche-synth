@@ -24,6 +24,7 @@ function filterBuilder(_ref) {
 	var env = _ref.env,
 	    filter = _ref.filter;
 
+
 	var maxCutoff = 1.16;
 	var f = void 0,
 	    res = void 0,
@@ -46,11 +47,9 @@ function filterBuilder(_ref) {
 	}
 
 	function next(input) {
-
 		if (!filter.on) {
 			return input;
 		}
-
 		envelope();
 
 		var ff = Math.max(Math.pow(maxCutoff - (maxCutoff - f) * filter.envelope, 2), 0.02);

@@ -1,4 +1,4 @@
-export default function SafeWaveValue(value: number) {
+export default function SafeWaveValue(value: number):number {
 
 	return Math.min(
 		Math.max(
