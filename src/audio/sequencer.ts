@@ -49,7 +49,7 @@ function sequencer() {
 	};
 }
 
-let oldChord = [];
+let oldChord: number[] = [];
 const seq = sequencer();
 let steps: number = 2;
 
@@ -64,7 +64,13 @@ export default class Sequencer {
 		this.restart = this.restart.bind(this);
 	}
 
-	next(main): void {
+	next(
+		main: {
+			active: Set<number>,
+			simpleUnset(v:number):void;
+			simpleSet(v:number):void;
+		}
+	): void {
 		if (this.state >= steps) {
 			let chord = seq.next(main.active);
 			oldChord.forEach(
@@ -79,7 +85,7 @@ export default class Sequencer {
 		this.state++;
 	}
 
-	setSequence(seq): void {
+	setSequence(seq: number[][]): void {
 		this.sequence = seq;
 		sequence = seq;
 	}

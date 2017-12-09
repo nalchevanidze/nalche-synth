@@ -6,15 +6,15 @@ export default function* EnvelopeParameter(
 	startValue: number = 1,
 	endValue: number = 0
 
-){
+): IterableIterator<number> {
 
 	if (SampleLifeTime === 0) {
 		return endValue;
 	}
 
-	let curve = 1;
-	let left = 0;
-	let difference = endValue - startValue;
+	let curve: number = 1;
+	let left: number = 0;
+	let difference: number = endValue - startValue;
 	SampleLifeTime = SampleLifeTime * sampleRate;
 
 	//main loop
