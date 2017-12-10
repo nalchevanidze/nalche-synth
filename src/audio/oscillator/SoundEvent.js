@@ -1,7 +1,7 @@
 import WaveForm from "./WaveForm";
-import EventTimes from "./EventTimes";
+import Envelope from "./Envelope";
 import WaveLooper from "./WaveLooper";
-import filterBuilder from "./filterBuilder";
+import MoogFilter from "./MoogFilter";
 import NoteToFrequency from "./NoteToFrequency";
 
 const Noise = ():number => 1 - Math.random() * 2;
@@ -12,7 +12,7 @@ export default function SoundEvent(Controller) {
 	const { wave } = Controller;
 	const maxVoices:number = 12;
 	const maxOffset:number = 2;
-	const filter = filterBuilder(Controller);
+	const filter = MoogFilter(Controller);
 
 	const sinePosition:WaveLooper = new WaveLooper();
 
@@ -21,7 +21,7 @@ export default function SoundEvent(Controller) {
 		() => new WaveLooper()
 	);
 
-	const eventTimes:EventTimes = new EventTimes(Controller.envelope);
+	const envelope:Envelope = new Envelope(Controller.envelope);
 	let count:number = 0;
 
 	function multyVoices():number {
@@ -66,16 +66,16 @@ export default function SoundEvent(Controller) {
 			wave.fmFreq
 		);
 
-		eventTimes.restart();
+		envelope.restart();
 
 		filter.set();
 	}
 
 	const next = () =>
-		filter.next(eventTimes.next() * multyVoices());
+		filter.next(envelope.next() * multyVoices());
 
 	return {
-		eventTimes,
+		envelope,
 		next,
 		reset,
 		setNote(note) {
@@ -87,6 +87,6 @@ export default function SoundEvent(Controller) {
 				NoteToFrequency(range)
 			);
 		},
-		end: eventTimes.end.bind(eventTimes)
+		end: envelope.end.bind(envelope)
 	};
 }

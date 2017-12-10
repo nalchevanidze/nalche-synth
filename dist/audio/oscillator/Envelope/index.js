@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const EnvelopeParameter_1 = require("./EnvelopeParameter");
-//stateStypes
+const countdownIterator_1 = require("./countdownIterator");
 const ATTACK = 0;
 const DEACY = 1;
 const SUSTAIN = 2;
 const RELEASE = 3;
-class EventTimes {
+class Envelope {
     constructor(env) {
         this.env = env;
         this.live = false;
@@ -21,14 +20,13 @@ class EventTimes {
         this.volume = value;
         if (done) {
             if (this.state == ATTACK) {
-                this.getValue = EnvelopeParameter_1.default(this.env.decay * 2, this.volume, this.env.sustain);
+                this.getValue = countdownIterator_1.default(this.env.decay * 2, this.volume, this.env.sustain);
             }
             this.state++;
         }
         return this.volume;
     }
     next() {
-        // if Inactive
         if (!this.live) {
             return 0;
         }
@@ -48,11 +46,11 @@ class EventTimes {
         this.live = true;
         this.state = ATTACK;
         this.volume = 1;
-        this.getValue = EnvelopeParameter_1.default(this.env.attack * 2, 0, 1);
+        this.getValue = countdownIterator_1.default(this.env.attack * 2, 0, 1);
     }
     end() {
-        this.getValue = EnvelopeParameter_1.default(this.env.release * 2, this.volume, 0);
+        this.getValue = countdownIterator_1.default(this.env.release * 2, this.volume, 0);
         this.state = RELEASE;
     }
 }
-exports.default = EventTimes;
+exports.default = Envelope;

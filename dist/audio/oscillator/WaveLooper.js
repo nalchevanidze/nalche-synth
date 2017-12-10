@@ -27,9 +27,7 @@ class WaveLooper {
         }
         this.freq = freq;
         this.state = 0;
-        //unision
         this.state = Math.random();
-        //this
         this.stepSize = freq / sampleRate;
         this.FM.stepSize = this.stepSize * this.FM.freq;
         this.FM.state = 0;
@@ -37,10 +35,8 @@ class WaveLooper {
     }
     next() {
         let { state, stepSize, FM } = this;
-        // generate new wavePosition
         state += stepSize;
         this.state = state % 1;
-        // new Fm Position
         if (FM.level === 0) {
             return state;
         }

@@ -26,6 +26,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var destination = _Context2.default.destination;
 
 var bufferSize = 2048; //4096;
+
+
+// class SoundEvent {
+
+// 	isPlayng: boolean,
+// 	notes: {},
+// 	active: Set < number > ,
+
+// }
+
+
 function Oscillator(Controller, target) {
 
 	var notes = {};
@@ -75,15 +86,11 @@ function Oscillator(Controller, target) {
 		target(0, active);
 	};
 
-	//main node;
-	function onProcess(input) {
-		var audio = input.outputBuffer.getChannelData(0);
-		(0, _FillAudioChenel2.default)(audio, osc.active(), event);
-	}
-
 	var node = _Context2.default.createScriptProcessor(bufferSize, 1, 1);
 	node.connect(destination);
-	node.onaudioprocess = onProcess;
+	node.onaudioprocess = function onProcess(input) {
+		(0, _FillAudioChenel2.default)(input.outputBuffer.getChannelData(0), osc.active(), event);
+	};
 
 	function clear() {
 		osc.clear();

@@ -9,17 +9,17 @@ var _WaveForm = require("./WaveForm");
 
 var _WaveForm2 = _interopRequireDefault(_WaveForm);
 
-var _EventTimes = require("./EventTimes");
+var _Envelope = require("./Envelope");
 
-var _EventTimes2 = _interopRequireDefault(_EventTimes);
+var _Envelope2 = _interopRequireDefault(_Envelope);
 
 var _WaveLooper = require("./WaveLooper");
 
 var _WaveLooper2 = _interopRequireDefault(_WaveLooper);
 
-var _filterBuilder = require("./filterBuilder");
+var _MoogFilter = require("./MoogFilter");
 
-var _filterBuilder2 = _interopRequireDefault(_filterBuilder);
+var _MoogFilter2 = _interopRequireDefault(_MoogFilter);
 
 var _NoteToFrequency = require("./NoteToFrequency");
 
@@ -39,7 +39,7 @@ function SoundEvent(Controller) {
 
 	var maxVoices = 12;
 	var maxOffset = 2;
-	var filter = (0, _filterBuilder2.default)(Controller);
+	var filter = (0, _MoogFilter2.default)(Controller);
 
 	var sinePosition = new _WaveLooper2.default();
 
@@ -47,7 +47,7 @@ function SoundEvent(Controller) {
 		return new _WaveLooper2.default();
 	});
 
-	var eventTimes = new _EventTimes2.default(Controller.envelope);
+	var envelope = new _Envelope2.default(Controller.envelope);
 	var count = 0;
 
 	function multyVoices() {
@@ -82,17 +82,17 @@ function SoundEvent(Controller) {
 		}
 		sinePosition.set(frequency, wave.fm, wave.fmFreq);
 
-		eventTimes.restart();
+		envelope.restart();
 
 		filter.set();
 	}
 
 	var next = function next() {
-		return filter.next(eventTimes.next() * multyVoices());
+		return filter.next(envelope.next() * multyVoices());
 	};
 
 	return {
-		eventTimes: eventTimes,
+		envelope: envelope,
 		next: next,
 		reset: reset,
 		setNote: function setNote(note) {
@@ -100,6 +100,6 @@ function SoundEvent(Controller) {
 			reset((0, _NoteToFrequency2.default)(range));
 		},
 
-		end: eventTimes.end.bind(eventTimes)
+		end: envelope.end.bind(envelope)
 	};
 }

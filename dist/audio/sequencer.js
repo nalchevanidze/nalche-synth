@@ -48,26 +48,24 @@ const seq = sequencer();
 let steps = 2;
 class Sequencer {
     constructor() {
+        this.next = (main) => {
+            if (this.state >= steps) {
+                let chord = seq.next(main.active);
+                oldChord.forEach(v => main.simpleUnset(v));
+                chord.forEach(v => main.simpleSet(v));
+                oldChord = chord;
+                this.state = 0;
+            }
+            this.state++;
+        };
+        this.setSequence = (seq) => {
+            this.sequence = seq;
+            sequence = seq;
+        };
+        this.restart = () => {
+            arpIndex = 0;
+        };
         this.state = 0;
-        this.setSequence = this.setSequence.bind(this);
-        this.restart = this.restart.bind(this);
-    }
-    next(main) {
-        if (this.state >= steps) {
-            let chord = seq.next(main.active);
-            oldChord.forEach(v => main.simpleUnset(v));
-            chord.forEach(v => main.simpleSet(v));
-            oldChord = chord;
-            this.state = 0;
-        }
-        this.state++;
-    }
-    setSequence(seq) {
-        this.sequence = seq;
-        sequence = seq;
-    }
-    restart() {
-        arpIndex = 0;
     }
 }
 exports.default = Sequencer;

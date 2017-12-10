@@ -9,7 +9,7 @@ var _MoogSampler = require("./MoogSampler");
 
 var _MoogSampler2 = _interopRequireDefault(_MoogSampler);
 
-var _Context = require("../Context");
+var _Context = require("../../Context");
 
 var _Context2 = _interopRequireDefault(_Context);
 
@@ -19,6 +19,9 @@ var sampleRate = _Context2.default.sampleRate;
 //const bufferSize = 2048;
 // cutoff between 0.0 and 1.0
 //resonance between 0.0 and 4.0
+
+var ATTACK = 0;
+var DEACY = 1;
 
 function filterBuilder(_ref) {
 	var env = _ref.env,
@@ -35,10 +38,10 @@ function filterBuilder(_ref) {
 	var filterSample = (0, _MoogSampler2.default)();
 
 	function envelope() {
-		if (type === "attack") {
+		if (type === ATTACK) {
 			f += attackStep;
 			if (f >= maxCutoff) {
-				type = "decay";
+				type = DEACY;
 				f = maxCutoff;
 			}
 		} else if (f > threshhold) {
@@ -71,7 +74,7 @@ function filterBuilder(_ref) {
 			f = 0.1;
 			maxCutoff = filter.cutoff * 1.16;
 			res = filter.resonance;
-			type = "attack";
+			type = ATTACK;
 			decayStep = Math.min(1, 1 / (sampleRate * decay));
 			attackStep = Math.min(1, 1 / (sampleRate * attack));
 			threshhold = Math.max(sustain * maxCutoff, 0.001);

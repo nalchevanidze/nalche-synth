@@ -1,5 +1,7 @@
 import Context from "../Context";
-import createMelodySet from "../midi/createMelodySet";
+import createMelodySet, {
+	MidiTask
+} from "../midi/createMelodySet";
 import melody from "../../standartMidi";
 import Sequencer from "../sequencer";
 
@@ -15,25 +17,21 @@ let midi = createMelodySet(melody);
 let endIndex: number = 128 || midi.length;
 
 
-function PlayTask(task, main) {
+function PlayTask(task: MidiTask, main) {
 
 	task.start.forEach(
-		e => {
-			main.setNote(e);
-
-		}
+		e => main.setNote(e)
 	);
+
 	task.end.forEach(
-		e => {
-			main.unsetNote(e);
-		}
-
+		e => main.unsetNote(e)
 	);
-
+	
 }
 
 function PlayMidi(main) {
 
+	//return at start position at the end
 	if (index >= endIndex) {
 		index = 0;
 	}

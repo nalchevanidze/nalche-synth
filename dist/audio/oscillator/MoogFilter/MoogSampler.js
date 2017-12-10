@@ -1,10 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/*
-acourding:
-    http://www.musicdsp.org/showArchiveComment.php?ArchiveID=26
-    https://noisehack.com/custom-audio-effects-javascript-web-audio-api/
-*/
 function MoogSampler() {
     let frequency = 0;
     let diff = 0;

@@ -27,6 +27,7 @@ export default function WaveForm(waveIndex: number, wave: WaveConfig) {
 		mixin += square * Square(waveIndex);
 		i += square;
 	}
+
 	if (saw) {
 		mixin += saw * Saw(waveIndex);
 		i += saw;
@@ -41,9 +42,11 @@ export default function WaveForm(waveIndex: number, wave: WaveConfig) {
 		mixin += Tech(waveIndex) * tech;
 		i += tech;
 	}
+	
 	if (i === 0) {
 		return 0;
 	}
+
 	// mix
 	return (mixin / (i + 1));
 }

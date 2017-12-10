@@ -28,7 +28,6 @@ function WaveForm(waveIndex, wave) {
     if (i === 0) {
         return 0;
     }
-    // mix
     return (mixin / (i + 1));
 }
 exports.default = WaveForm;

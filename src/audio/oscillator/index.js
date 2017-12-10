@@ -8,19 +8,28 @@ import timeLine from "./timeLine";
 import oscManager from "./oscManager";
 
 
+// class SoundEvent {
+
+// 	isPlayng: boolean,
+// 	notes: {},
+// 	active: Set < number > ,
+
+// }
+
+
 export default function Oscillator(Controller, target) {
 
 	const notes = {};
-	const active: Set = new Set([]);
+	const active: Set < number > = new Set([]);
 	const osc = oscManager(Controller);
 
-	function simpleSet(note) {
+	function simpleSet(note): void {
 		if (!notes[note]) {
 			notes[note] = osc.getOsc(note);
 		}
 	}
 
-	function simpleUnset(value) {
+	function simpleUnset(value) :void {
 		if (notes[value]) {
 			notes[value].end();
 			notes[value] = null;
@@ -35,7 +44,7 @@ export default function Oscillator(Controller, target) {
 		update: target,
 		simpleSet,
 		simpleUnset,
-		setSequence: timeLine.sequencer.setSequence
+		setSequence: timeLine.sequencer.setSequence,
 	};
 
 	event.setNote = note => {
@@ -58,19 +67,15 @@ export default function Oscillator(Controller, target) {
 
 	};
 
-	//main node;
-	function onProcess(input) {
-		let audio = input.outputBuffer.getChannelData(0);
+	const node = Context.createScriptProcessor(bufferSize, 1, 1);
+	node.connect(destination);
+	node.onaudioprocess = function onProcess(input: Float32Array): void {
 		FillAudioChenel(
-			audio,
+			input.outputBuffer.getChannelData(0),
 			osc.active(),
 			event
 		);
-	}
-	
-	const node = Context.createScriptProcessor(bufferSize, 1, 1);
-	node.connect(destination);
-	node.onaudioprocess = onProcess;
+	};
 
 	function clear() {
 		osc.clear();

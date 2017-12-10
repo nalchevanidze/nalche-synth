@@ -35,15 +35,17 @@ var endIndex = 128 || midi.length;
 function PlayTask(task, main) {
 
 	task.start.forEach(function (e) {
-		main.setNote(e);
+		return main.setNote(e);
 	});
+
 	task.end.forEach(function (e) {
-		main.unsetNote(e);
+		return main.unsetNote(e);
 	});
 }
 
 function PlayMidi(main) {
 
+	//return at start position at the end
 	if (index >= endIndex) {
 		index = 0;
 	}

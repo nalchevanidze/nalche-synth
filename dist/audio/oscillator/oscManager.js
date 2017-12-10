@@ -19,14 +19,14 @@ function OSCManager(Controller) {
 
 	var getFreeOsc = function getFreeOsc() {
 		return stack.filter(function (osc) {
-			return !osc.eventTimes.live;
+			return !osc.envelope.live;
 		})[0];
 	};
 
 	return {
 		active: function active() {
 			return stack.filter(function (osc) {
-				return osc.eventTimes.live;
+				return osc.envelope.live;
 			});
 		},
 		clear: function clear() {

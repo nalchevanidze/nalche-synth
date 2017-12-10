@@ -8,12 +8,12 @@ export default function OSCManager(Controller) {
 	);
 
 	const getFreeOsc = () => stack.filter(
-		osc => !osc.eventTimes.live
+		osc => !osc.envelope.live
 	)[0];
 
 	return {
 		active: () => stack.filter(
-			osc => osc.eventTimes.live
+			osc => osc.envelope.live
 		),
 		clear() {
 			stack.forEach(osc => osc.end());
