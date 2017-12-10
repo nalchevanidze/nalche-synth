@@ -48,6 +48,7 @@ function PlayMidi(main) {
 			main.active
 		);
 	};
+	
 	requestAnimationFrame(update);
 
 }

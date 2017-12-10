@@ -59,6 +59,7 @@ function PlayMidi(main) {
 	var update = function update() {
 		main.update(index, main.active);
 	};
+
 	requestAnimationFrame(update);
 }
 
