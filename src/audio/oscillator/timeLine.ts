@@ -26,7 +26,7 @@ function PlayTask(task: MidiTask, main) {
 	task.end.forEach(
 		e => main.unsetNote(e)
 	);
-	
+
 }
 
 function PlayMidi(main) {
@@ -48,35 +48,34 @@ function PlayMidi(main) {
 			main.active
 		);
 	};
-	
+
 	requestAnimationFrame(update);
 
 }
 
 const sequencer = new Sequencer();
 
-function next(main) {
-
-	counter += qartel;
-	if (counter > 1) {
-		if (!main.isPlayng) {
-			if (main.seq.on) {
-				sequencer.next(main);
-			}
-		} else {
-			PlayMidi(main);
-			if (main.seq.on) {
-				sequencer.next(main);
-			}
-		}
-		counter = 0;
-	}
-
-}
-
 export default {
 	sequencer,
-	next,
+	next(main) {
+
+		counter += qartel;
+
+		if (counter > 1) {
+			if (!main.isPlayng) {
+				if (main.seq.on) {
+					sequencer.next(main);
+				}
+			} else {
+				PlayMidi(main);
+				if (main.seq.on) {
+					sequencer.next(main);
+				}
+			}
+			counter = 0;
+		}
+
+	},
 	setMidi(melody) {
 		if (melody.length) {
 			midi = createMelodySet(melody);

@@ -29,26 +29,25 @@ function PlayMidi(main) {
     requestAnimationFrame(update);
 }
 const sequencer = new sequencer_1.default();
-function next(main) {
-    counter += qartel;
-    if (counter > 1) {
-        if (!main.isPlayng) {
-            if (main.seq.on) {
-                sequencer.next(main);
-            }
-        }
-        else {
-            PlayMidi(main);
-            if (main.seq.on) {
-                sequencer.next(main);
-            }
-        }
-        counter = 0;
-    }
-}
 exports.default = {
     sequencer,
-    next,
+    next(main) {
+        counter += qartel;
+        if (counter > 1) {
+            if (!main.isPlayng) {
+                if (main.seq.on) {
+                    sequencer.next(main);
+                }
+            }
+            else {
+                PlayMidi(main);
+                if (main.seq.on) {
+                    sequencer.next(main);
+                }
+            }
+            counter = 0;
+        }
+    },
     setMidi(melody) {
         if (melody.length) {
             midi = createMelodySet_1.default(melody);

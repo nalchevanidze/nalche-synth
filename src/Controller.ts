@@ -25,6 +25,7 @@ export interface FilterParameters {
 	cutoff:number;
 	resonance:number;
 	envelope:number;
+	on:boolean;
 }
 
 export interface Controller {
@@ -73,7 +74,8 @@ const parameters: Controller = {
 	filter: {
 		cutoff: 1,
 		resonance: 0.25,
-		envelope: 0
+		envelope: 0,
+		on:false
 	}
 };
 export default parameters;

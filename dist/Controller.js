@@ -34,7 +34,8 @@ const parameters = {
     filter: {
         cutoff: 1,
         resonance: 0.25,
-        envelope: 0
+        envelope: 0,
+        on: false
     }
 };
 exports.default = parameters;

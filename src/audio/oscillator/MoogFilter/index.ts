@@ -8,10 +8,14 @@ const { sampleRate } = Context;
 const ATTACK = 0;
 const DEACY = 1;
 
-export default function filterBuilder({ env, filter }) {
+import {
+	Controller
+} from "../../../Controller";
+
+export default function filterBuilder({ env, filter }: Controller) {
 
 	let maxCutoff = 1.16;
-	let f, res, type;
+	let f, resonance, type;
 	let decayStep, attackStep, threshhold;
 	let filterSample = MoogSampler();
 
@@ -27,35 +31,32 @@ export default function filterBuilder({ env, filter }) {
 		}
 	}
 
-
-	function next(input) {
-		if(!filter.on){
-        	return input;
-		}
-		envelope();
-
-		let ff = Math.max(
-			(maxCutoff - (maxCutoff - f) * filter.envelope) ** 2,
-			0.02
-		);
-
-		if (filter.envelope === 0) {
-			ff = filter.cutoff;
-		}
-
-		return filterSample(
-			input,
-			ff,
-			res
-		);
-	}
 	return {
-		next,
+		next(input) {
+			if (!filter.on) {
+				return input;
+			}
+			envelope();
+
+			let frequency = filter.envelope === 0 ?
+				filter.cutoff
+				: Math.max(
+					(maxCutoff - (maxCutoff - f) * filter.envelope) ** 2,
+					0.02
+				);
+
+
+			return filterSample(
+				input,
+				frequency,
+				resonance
+			);
+		},
 		set() {
 			let { decay, sustain, attack } = env.filter;
 			f = 0.1;
 			maxCutoff = filter.cutoff * 1.16;
-			res = filter.resonance;
+			resonance = filter.resonance;
 			type = ATTACK;
 			decayStep = Math.min(1, 1 / (sampleRate * decay));
 			attackStep = Math.min(1, 1 / (sampleRate * attack));
