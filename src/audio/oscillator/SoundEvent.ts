@@ -3,33 +3,44 @@ import Envelope from "./Envelope";
 import WaveLooper from "./WaveLooper";
 import MoogFilter from "./MoogFilter";
 import NoteToFrequency from "./NoteToFrequency";
+import {
+	Controller
+} from "../../Controller";
 
-const Noise = ():number => 1 - Math.random() * 2;
-const Sine = i => Math.sin(i * Math.PI * 2);
+const Noise = (): number => 1 - Math.random() * 2;
+const Sine = (i: number) => Math.sin(i * Math.PI * 2);
 
-export default function SoundEvent(Controller) {
+export interface SoundEventInstance {
+	envelope: Envelope;
+	next(): number;
+	reset(frequency: number): void;
+	setNote(note: number): void;
+	end(): void;
+}
 
-	const { wave } = Controller;
-	const maxVoices:number = 12;
-	const maxOffset:number = 2;
-	const filter = MoogFilter(Controller);
+export default function SoundEvent(controller: Controller): SoundEventInstance {
 
-	const sinePosition:WaveLooper = new WaveLooper();
+	const { wave } = controller;
+	const maxVoices: number = 12;
+	const maxOffset: number = 2;
+	const filter = MoogFilter(controller);
+
+	const sinePosition: WaveLooper = new WaveLooper();
 
 	const positions = Array.from(
 		{ length: maxVoices },
 		() => new WaveLooper()
 	);
 
-	const envelope:Envelope = new Envelope(Controller.envelope);
-	let count:number = 0;
+	const envelope: Envelope = new Envelope(controller.envelope);
+	let count: number = 0;
 
-	function multyVoices():number {
+	function multyVoices(): number {
 
-		let value:number = 0;
-		let size:number = count;
+		let value: number = 0;
+		let size: number = count;
 
-		for (let i:number = 0; i <= count; i++) {
+		for (let i: number = 0; i <= count; i++) {
 
 			value += WaveForm(positions[i].next(), wave);
 
@@ -38,7 +49,7 @@ export default function SoundEvent(Controller) {
 		if (wave.sine) {
 			value += (Sine(sinePosition.next()) * wave.sine);
 			size++;
-		} 
+		}
 		if (wave.noise > 0) {
 			return (value + wave.noise * Noise()) / (size + 1 + wave.noise);
 		}
@@ -46,14 +57,14 @@ export default function SoundEvent(Controller) {
 
 	}
 
-	function reset(frequency:number):void {
+	function reset(frequency: number): void {
 
 		count = wave.voices * (maxVoices - 1);
 		let middle = Math.floor((count + 1) / 2);
 
 		for (let i = 0; i <= count; i++) {
-			let value:number = i - middle;
-			let diff:number = value * wave.offset * maxOffset;
+			let value: number = i - middle;
+			let diff: number = value * wave.offset * maxOffset;
 			positions[i].set(
 				frequency + diff,
 				wave.fm,
@@ -71,8 +82,7 @@ export default function SoundEvent(Controller) {
 		filter.set();
 	}
 
-	const next = () =>
-		filter.next(envelope.next() * multyVoices());
+	const next = () => envelope.next() * filter.next(multyVoices());
 
 	return {
 		envelope,

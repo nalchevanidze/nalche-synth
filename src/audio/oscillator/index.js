@@ -5,7 +5,9 @@ const {
 } = Context;
 const bufferSize = 2048; //4096;
 import timeLine from "./timeLine";
-import oscManager from "./oscManager";
+import oscManager, {
+	OscManagerInstance
+} from "./oscManager";
 
 
 // class SoundEvent {
@@ -21,7 +23,7 @@ export default function Oscillator(Controller, target) {
 
 	const notes = {};
 	const active: Set < number > = new Set([]);
-	const osc = oscManager(Controller);
+	const osc: OscManagerInstance = oscManager(Controller);
 
 	function simpleSet(note): void {
 		if (!notes[note]) {
@@ -29,7 +31,7 @@ export default function Oscillator(Controller, target) {
 		}
 	}
 
-	function simpleUnset(value) :void {
+	function simpleUnset(value): void {
 		if (notes[value]) {
 			notes[value].end();
 			notes[value] = null;

@@ -1,47 +1,23 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = OSCManager;
-
-var _SoundEvent = require("./SoundEvent");
-
-var _SoundEvent2 = _interopRequireDefault(_SoundEvent);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function OSCManager(Controller) {
-
-	var stack = Array.from({ length: 6 }, function () {
-		return (0, _SoundEvent2.default)(Controller);
-	});
-
-	var getFreeOsc = function getFreeOsc() {
-		return stack.filter(function (osc) {
-			return !osc.envelope.live;
-		})[0];
-	};
-
-	return {
-		active: function active() {
-			return stack.filter(function (osc) {
-				return osc.envelope.live;
-			});
-		},
-		clear: function clear() {
-			stack.forEach(function (osc) {
-				return osc.end();
-			});
-		},
-		getOsc: function getOsc(note) {
-			var osc = getFreeOsc();
-			if (!osc) {
-				osc = (0, _SoundEvent2.default)(Controller);
-				stack.push(osc);
-			}
-			osc.setNote(note);
-			return osc;
-		}
-	};
+Object.defineProperty(exports, "__esModule", { value: true });
+const SoundEvent_1 = require("./SoundEvent");
+function OSCManager(controller) {
+    const stack = Array.from({ length: 6 }, () => SoundEvent_1.default(controller));
+    const getOsc = (isActive) => stack.filter(osc => isActive === osc.envelope.live);
+    return {
+        active: () => getOsc(true),
+        clear() {
+            stack.forEach(osc => osc.end());
+        },
+        getOsc(note) {
+            let osc = getOsc(false)[0];
+            if (!osc) {
+                osc = SoundEvent_1.default(controller);
+                stack.push(osc);
+            }
+            osc.setNote(note);
+            return osc;
+        }
+    };
 }
+exports.default = OSCManager;

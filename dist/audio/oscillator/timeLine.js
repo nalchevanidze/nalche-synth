@@ -1,97 +1,60 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _Context = require("../Context");
-
-var _Context2 = _interopRequireDefault(_Context);
-
-var _createMelodySet = require("../midi/createMelodySet");
-
-var _createMelodySet2 = _interopRequireDefault(_createMelodySet);
-
-var _standartMidi = require("../../standartMidi");
-
-var _standartMidi2 = _interopRequireDefault(_standartMidi);
-
-var _sequencer = require("../sequencer");
-
-var _sequencer2 = _interopRequireDefault(_sequencer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var sampleRate = _Context2.default.sampleRate;
-
-
-var bpm = 130;
-var qartel = 1 / (60 * sampleRate / (bpm * 8));
-var counter = 0;
-var index = 0;
-var midi = (0, _createMelodySet2.default)(_standartMidi2.default);
-var endIndex = 128 || midi.length;
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const Context_1 = require("../Context");
+const createMelodySet_1 = require("../midi/createMelodySet");
+const standartMidi_1 = require("../../standartMidi");
+const sequencer_1 = require("../sequencer");
+const { sampleRate } = Context_1.default;
+let bpm = 130;
+let qartel = 1 / (60 * sampleRate / (bpm * 8));
+let counter = 0;
+let index = 0;
+let midi = createMelodySet_1.default(standartMidi_1.default);
+let endIndex = 128 || midi.length;
 function PlayTask(task, main) {
-
-	task.start.forEach(function (e) {
-		return main.setNote(e);
-	});
-
-	task.end.forEach(function (e) {
-		return main.unsetNote(e);
-	});
+    task.start.forEach(e => main.setNote(e));
+    task.end.forEach(e => main.unsetNote(e));
 }
-
 function PlayMidi(main) {
-
-	//return at start position at the end
-	if (index >= endIndex) {
-		index = 0;
-	}
-
-	if (midi[index]) {
-		PlayTask(midi[index], main);
-	}
-
-	index++;
-
-	var update = function update() {
-		main.update(index, main.active);
-	};
-
-	requestAnimationFrame(update);
+    if (index >= endIndex) {
+        index = 0;
+    }
+    if (midi[index]) {
+        PlayTask(midi[index], main);
+    }
+    index++;
+    const update = () => {
+        main.update(index, main.active);
+    };
+    requestAnimationFrame(update);
 }
-
-var sequencer = new _sequencer2.default();
-
+const sequencer = new sequencer_1.default();
 function next(main) {
-
-	counter += qartel;
-	if (counter > 1) {
-		if (!main.isPlayng) {
-			if (main.seq.on) {
-				sequencer.next(main);
-			}
-		} else {
-			PlayMidi(main);
-			if (main.seq.on) {
-				sequencer.next(main);
-			}
-		}
-		counter = 0;
-	}
+    counter += qartel;
+    if (counter > 1) {
+        if (!main.isPlayng) {
+            if (main.seq.on) {
+                sequencer.next(main);
+            }
+        }
+        else {
+            PlayMidi(main);
+            if (main.seq.on) {
+                sequencer.next(main);
+            }
+        }
+        counter = 0;
+    }
 }
-
 exports.default = {
-	sequencer: sequencer,
-	next: next,
-	setMidi: function setMidi(melody) {
-		if (melody.length) {
-			midi = (0, _createMelodySet2.default)(melody);
-		}
-	},
-	setTime: function setTime(time) {
-		index = time;
-	}
+    sequencer,
+    next,
+    setMidi(melody) {
+        if (melody.length) {
+            midi = createMelodySet_1.default(melody);
+        }
+    },
+    setTime(time) {
+        index = time;
+    }
 };
