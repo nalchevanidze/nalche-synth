@@ -1,4 +1,6 @@
-export default [
+import { DeepMidi } from "./audio/midi/setNote";
+
+const midi : DeepMidi = [
 	[
 		{
 			"at": 0,
@@ -113,7 +115,7 @@ export default [
 			"length": 12
 		}
 	],
-	null,
+	[],
 	[
 		{
 			"at": 4,
@@ -238,5 +240,7 @@ export default [
 			"length": 12
 		}
 	],
-	null,
+	[],
 ];
+
+export default midi;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const parameters = {
+var parameters = {
     wave: {
         sine: 0,
         square: 0.5,

@@ -10,7 +10,9 @@ import oscManager, {
 } from "./oscManager";
 import { SoundEventInstance } from "./SoundEvent";
 import { Controller } from "../../Controller";
-
+import {
+	DeepMidi
+} from "../midi/setNote";
 export interface NotesRegister {
 	[key: number]: SoundEventInstance;
 }
@@ -27,7 +29,7 @@ export default class Oscillator {
 	update: Target;
 	timeLine: Time;
 	setSequence: (seq: number[][]) => void;
-	setMidi: (midi: number[][]) => void;
+	setMidi: (midi: DeepMidi) => void;
 
 	constructor(controller: Controller, target: Target) {
 		this.notes = {};

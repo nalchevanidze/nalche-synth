@@ -2,6 +2,9 @@ import Context from "../../Context";
 import createMelodySet, {
 	MidiTask
 } from "../../midi/createMelodySet";
+import {
+	DeepMidi
+} from "../../midi/setNote";
 import melody from "../../../standartMidi";
 import Oscillator from "../index";
 
@@ -40,7 +43,7 @@ export default class TaskQueue {
 		requestAnimationFrame(this.update);
 	}
 
-	setMidi(melody): void {
+	setMidi(melody: DeepMidi): void {
 		if (melody.length) {
 			midi = createMelodySet(melody);
 		}

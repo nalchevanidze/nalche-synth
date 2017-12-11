@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-let sequence = [
+var sequence = [
     [1, 2, 3],
     [],
     [],
@@ -18,20 +18,20 @@ let sequence = [
     [],
     []
 ];
-let arpIndex = 0;
+var arpIndex = 0;
 function sequencer() {
     arpIndex = 0;
-    let endIndex = sequence.length;
+    var endIndex = sequence.length;
     return {
-        next(notes) {
-            let chord = [];
-            let maxNotes = notes.size;
-            let values = Array.from(notes).sort((a, b) => a > b ? 1 : -1);
+        next: function (notes) {
+            var chord = [];
+            var maxNotes = notes.size;
+            var values = Array.from(notes).sort(function (a, b) { return a > b ? 1 : -1; });
             if (maxNotes) {
-                chord = sequence[arpIndex].map((i) => {
+                chord = sequence[arpIndex].map(function (i) {
                     i--;
-                    const octave = 12 * Math.floor(i / maxNotes);
-                    const selectIndex = i % maxNotes;
+                    var octave = 12 * Math.floor(i / maxNotes);
+                    var selectIndex = i % maxNotes;
                     return values[selectIndex] + octave;
                 });
             }
@@ -43,29 +43,31 @@ function sequencer() {
         }
     };
 }
-let oldChord = [];
-const seq = sequencer();
-let steps = 2;
-class Sequencer {
-    constructor() {
-        this.next = (main) => {
-            if (this.state >= steps) {
-                let chord = seq.next(main.active);
-                oldChord.forEach(v => main.simpleUnset(v));
-                chord.forEach(v => main.simpleSet(v));
+var oldChord = [];
+var seq = sequencer();
+var steps = 2;
+var Sequencer = (function () {
+    function Sequencer() {
+        var _this = this;
+        this.next = function (main) {
+            if (_this.state >= steps) {
+                var chord = seq.next(main.active);
+                oldChord.forEach(function (v) { return main.simpleUnset(v); });
+                chord.forEach(function (v) { return main.simpleSet(v); });
                 oldChord = chord;
-                this.state = 0;
+                _this.state = 0;
             }
-            this.state++;
+            _this.state++;
         };
-        this.setSequence = (seq) => {
-            this.sequence = seq;
+        this.setSequence = function (seq) {
+            _this.sequence = seq;
             sequence = seq;
         };
-        this.restart = () => {
+        this.restart = function () {
             arpIndex = 0;
         };
         this.state = 0;
     }
-}
+    return Sequencer;
+}());
 exports.default = Sequencer;
