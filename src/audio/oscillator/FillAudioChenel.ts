@@ -1,14 +1,14 @@
 import SafeWaveValue from "./SafeWaveValue";
-import timeLine from "./timeLine";
 import {
 	SoundEventInstance
 } from "./SoundEvent";
+import Time from "./Time";
 
 
 export default function FillAudioChenel(
 	out: Float32Array,
 	osclist: SoundEventInstance[],
-	main
+	timeLine: Time
 ) {
 
 	let i: number, length = out.length;
@@ -18,11 +18,14 @@ export default function FillAudioChenel(
 
 		let value: number = 0;
 
+		//generates and summs alll active notes
 		for (n = 0; n < oscCount; ++n) {
 			value += osclist[n].next();
 		}
 
-		timeLine.next(main);
+		//increases time index up to the next step
+		timeLine.next();
+
 
 		out[i] = SafeWaveValue(value);
 	}

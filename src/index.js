@@ -26,7 +26,7 @@ export default class Synth extends React.Component {
 	constructor(props) {
 
 		super(props);
-		this.osc = NalcheOscillator(
+		this.osc = new NalcheOscillator(
 			Controller,
 			(time, active) => {
 				this.setState(

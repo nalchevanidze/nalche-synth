@@ -14,7 +14,8 @@
     "noFallthroughCasesInSwitch": true,
     "alwaysStrict": true,
     "strict": true ,
-    "module": "commonjs"
+    "module": "commonjs",
+    "lib":["es2015","dom"]
     /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'. */
     
     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */

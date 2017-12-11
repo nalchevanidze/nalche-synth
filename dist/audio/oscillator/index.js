@@ -4,79 +4,75 @@ const Context_1 = require("../Context");
 const FillAudioChenel_1 = require("./FillAudioChenel");
 const { destination } = Context_1.default;
 const bufferSize = 2048;
-const timeLine_1 = require("./timeLine");
+const Time_1 = require("./Time");
 const oscManager_1 = require("./oscManager");
-function Oscillator(Controller, target) {
-    const notes = {};
-    const active = new Set([]);
-    const osc = oscManager_1.default(Controller);
-    function simpleSet(note) {
-        if (!notes[note]) {
-            notes[note] = osc.getOsc(note);
-        }
+class Oscillator {
+    constructor(controller, target) {
+        this.isPlayng = false;
+        this.simpleSet = (note) => {
+            if (!this.notes[note]) {
+                this.notes[note] = this.osc.getOsc(note);
+            }
+        };
+        this.simpleUnset = (value) => {
+            let { notes } = this;
+            if (notes[value]) {
+                notes[value].end();
+                delete notes[value];
+            }
+        };
+        this.unsetNote = (note) => {
+            this.active.delete(note);
+            if (!this.seq.on) {
+                this.simpleUnset(note);
+            }
+            this.update(0, this.active);
+        };
+        this.setNote = (note) => {
+            let { active } = this;
+            if (!active.has(note)) {
+                this.timeLine.sequencer.restart();
+            }
+            active.add(note);
+            if (!this.seq.on) {
+                this.simpleSet(note);
+            }
+            this.update(0, active);
+        };
+        this.clear = () => {
+            this.osc.clear();
+            this.active.clear();
+            this.notes = {};
+        };
+        this.pause = () => {
+            this.clear();
+            this.isPlayng = false;
+        };
+        this.setTime = (time) => {
+            this.clear();
+            this.timeLine.setTime(time);
+            this.update(time, this.active);
+        };
+        this.stop = () => {
+            this.pause();
+            this.timeLine.setTime(0);
+        };
+        this.play = () => {
+            this.isPlayng = true;
+        };
+        this.notes = {};
+        this.active = new Set([]);
+        this.osc = oscManager_1.default(controller);
+        this.seq = controller.seq;
+        this.update = target;
+        this.timeLine = new Time_1.default(this);
+        this.setSequence = this.timeLine.sequencer.setSequence;
+        this.setMidi = this.timeLine.setMidi;
+        const node = Context_1.default.createScriptProcessor(bufferSize, 1, 1);
+        node.connect(destination);
+        node.onaudioprocess = (input) => {
+            FillAudioChenel_1.default(input.outputBuffer.getChannelData(0), this.osc.active(), this.timeLine);
+        };
     }
-    function simpleUnset(value) {
-        if (notes[value]) {
-            notes[value].end();
-            notes[value] = null;
-        }
-    }
-    const event = {
-        isPlayng: false,
-        notes,
-        active,
-        seq: Controller.seq,
-        update: target,
-        simpleSet,
-        simpleUnset,
-        setSequence: timeLine_1.default.sequencer.setSequence,
-    };
-    event.setNote = note => {
-        if (!active.has(note)) {
-            timeLine_1.default.sequencer.restart();
-        }
-        active.add(note);
-        if (!event.seq.on) {
-            simpleSet(note);
-        }
-        target(0, active);
-    };
-    event.unsetNote = note => {
-        active.delete(note);
-        if (!event.seq.on) {
-            simpleUnset(note);
-        }
-        target(0, active);
-    };
-    const node = Context_1.default.createScriptProcessor(bufferSize, 1, 1);
-    node.connect(destination);
-    node.onaudioprocess = function onProcess(input) {
-        FillAudioChenel_1.default(input.outputBuffer.getChannelData(0), osc.active(), event);
-    };
-    function clear() {
-        osc.clear();
-        active.clear();
-        Object.keys(notes).forEach(i => {
-            notes[i] = null;
-        });
-    }
-    event.pause = () => {
-        clear();
-        event.isPlayng = false;
-    };
-    event.setTime = (time) => {
-        clear();
-        timeLine_1.default.setTime(time);
-        target(time);
-    };
-    event.stop = () => {
-        event.pause();
-        timeLine_1.default.setTime(0);
-    };
-    event.setMidi = timeLine_1.default.setMidi;
-    event.play = () => {
-        event.isPlayng = true;
-    };
-    return event;
 }
 exports.default = Oscillator;

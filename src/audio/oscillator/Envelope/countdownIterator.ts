@@ -24,7 +24,7 @@ export default function* countdownIterator(
 	let curve: number = 2;
 	let left: number = 0;
 	let difference: number = endValue - startValue;
-	SampleLifeTime = SampleLifeTime * sampleRate;
+	SampleLifeTime = SampleLifeTime * context.sampleRate;
 
 	//main loop
 	while (++left < SampleLifeTime) {

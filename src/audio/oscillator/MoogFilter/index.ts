@@ -14,9 +14,11 @@ import {
 
 export default function filterBuilder({ env, filter }: Controller) {
 
-	let maxCutoff = 1.16;
-	let f, resonance, type;
-	let decayStep, attackStep, threshhold;
+	let maxCutoff: number = 1.16;
+	let f: number,
+		resonance: number,
+		type: number;
+	let decayStep: number, attackStep: number, threshhold: number;
 	let filterSample = MoogSampler();
 
 	function envelope() {
@@ -32,7 +34,7 @@ export default function filterBuilder({ env, filter }: Controller) {
 	}
 
 	return {
-		next(input) {
+		next(input: number) {
 			if (!filter.on) {
 				return input;
 			}

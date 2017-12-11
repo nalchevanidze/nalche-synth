@@ -20,7 +20,7 @@ class Envelope {
         this.volume = value;
         if (done) {
             if (this.state == ATTACK) {
-                this.getValue = countdownIterator_1.default(this.env.decay * 2, this.volume, this.env.sustain);
+                this.getValue = countdownIterator_1.default(this.env.decay, this.volume, this.env.sustain);
             }
             this.state++;
         }
@@ -46,10 +46,10 @@ class Envelope {
         this.live = true;
         this.state = ATTACK;
         this.volume = 1;
-        this.getValue = countdownIterator_1.default(this.env.attack * 2, 0, 1);
+        this.getValue = countdownIterator_1.default(this.env.attack, 0, 1);
     }
     end() {
-        this.getValue = countdownIterator_1.default(this.env.release * 2, this.volume, 0);
+        this.getValue = countdownIterator_1.default(this.env.release, this.volume, 0);
         this.state = RELEASE;
     }
 }

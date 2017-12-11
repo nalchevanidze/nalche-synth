@@ -4,107 +4,117 @@ const {
 	destination
 } = Context;
 const bufferSize = 2048; //4096;
-import timeLine from "./timeLine";
+import Time from "./Time";
 import oscManager, {
 	OscManagerInstance
 } from "./oscManager";
+import { SoundEventInstance } from "./SoundEvent";
+import { Controller } from "../../Controller";
+
+export interface NotesRegister {
+	[key: number]: SoundEventInstance;
+}
+
+export type Target = (time: number, activeNotes: Set<number>) => void;
+
+export default class Oscillator {
+
+	notes: NotesRegister;
+	active: Set<number>;
+	osc: OscManagerInstance;
+	isPlayng: boolean = false;
+	seq: { on: boolean };
+	update: Target;
+	timeLine: Time;
+	setSequence: (seq: number[][]) => void;
+	setMidi: (midi: number[][]) => void;
+
+	constructor(controller: Controller, target: Target) {
+		this.notes = {};
+		this.active = new Set([]);
+		this.osc = oscManager(controller);
+		this.seq = controller.seq;
+		this.update = target;
+		this.timeLine = new Time(this);
+		this.setSequence = this.timeLine.sequencer.setSequence;
+		this.setMidi = this.timeLine.setMidi;
+
+		const node = Context.createScriptProcessor(bufferSize, 1, 1);
+		node.connect(destination);
+
+		node.onaudioprocess = (input: AudioProcessingEvent): void => {
+			FillAudioChenel(
+				input.outputBuffer.getChannelData(0),
+				this.osc.active(),
+				this.timeLine
+			);
+		};
+
+	}
 
 
-// class SoundEvent {
-
-// 	isPlayng: boolean,
-// 	notes: {},
-// 	active: Set < number > ,
-
-// }
-
-
-export default function Oscillator(Controller, target) {
-
-	const notes = {};
-	const active: Set < number > = new Set([]);
-	const osc: OscManagerInstance = oscManager(Controller);
-
-	function simpleSet(note): void {
-		if (!notes[note]) {
-			notes[note] = osc.getOsc(note);
+	simpleSet = (note: number): void => {
+		if (!this.notes[note]) {
+			this.notes[note] = this.osc.getOsc(note);
 		}
 	}
 
-	function simpleUnset(value): void {
+	simpleUnset = (value: number): void => {
+		let { notes } = this;
 		if (notes[value]) {
 			notes[value].end();
-			notes[value] = null;
+			delete notes[value];
 		}
 	}
 
-	const event = {
-		isPlayng: false,
-		notes,
-		active,
-		seq: Controller.seq,
-		update: target,
-		simpleSet,
-		simpleUnset,
-		setSequence: timeLine.sequencer.setSequence,
+	unsetNote = (note: number) => {
+		this.active.delete(note);
+		if (!this.seq.on) {
+			this.simpleUnset(note);
+		}
+		this.update(0, this.active);
 	};
 
-	event.setNote = note => {
+	setNote = (note: number) => {
+
+		let { active } = this;
+
 		if (!active.has(note)) {
-			timeLine.sequencer.restart();
+			this.timeLine.sequencer.restart();
 		}
+
 		active.add(note);
-		if (!event.seq.on) {
-			simpleSet(note);
+
+		if (!this.seq.on) {
+			this.simpleSet(note);
 		}
-		target(0, active);
+
+		this.update(0, active);
 	};
-
-	event.unsetNote = note => {
-		active.delete(note);
-		if (!event.seq.on) {
-			simpleUnset(note);
-		}
-		target(0, active);
-
-	};
-
-	const node = Context.createScriptProcessor(bufferSize, 1, 1);
-	node.connect(destination);
-	node.onaudioprocess = function onProcess(input: Float32Array): void {
-		FillAudioChenel(
-			input.outputBuffer.getChannelData(0),
-			osc.active(),
-			event
-		);
-	};
-
-	function clear() {
-		osc.clear();
-		active.clear();
-		Object.keys(notes).forEach(i => {
-			notes[i] = null;
-		});
+	clear = (): void => {
+		this.osc.clear();
+		this.active.clear();
+		this.notes = {};
 	}
-	event.pause = () => {
-		clear();
-		event.isPlayng = false;
-	};
-	event.setTime = (time) => {
-		clear();
-		timeLine.setTime(time);
-		target(time);
-	};
-	//Main Functions
-	event.stop = () => {
-		event.pause();
-		timeLine.setTime(0);
-	};
-	event.setMidi = timeLine.setMidi;
 
-	event.play = () => {
-		event.isPlayng = true;
+	// main methods
+	pause = (): void => {
+		this.clear();
+		this.isPlayng = false;
+	}
+
+	setTime = (time: number): void => {
+		this.clear();
+		this.timeLine.setTime(time);
+		this.update(time, this.active);
 	};
 
-	return event;
+	stop = (): void => {
+		this.pause();
+		this.timeLine.setTime(0);
+	};
+
+	play = (): void => {
+		this.isPlayng = true;
+	};
 }

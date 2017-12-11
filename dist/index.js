@@ -63,7 +63,7 @@ var Synth = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
-		_this.osc = (0, _oscillator2.default)(_Controller2.default, function (time, active) {
+		_this.osc = new _oscillator2.default(_Controller2.default, function (time, active) {
 			_this.setState({
 				time: time,
 				active: active

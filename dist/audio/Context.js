@@ -1,7 +1,4 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var Context = new (window.AudioContext || window.webkitAudioContext)();
+Object.defineProperty(exports, "__esModule", { value: true });
+const Context = new AudioContext();
 exports.default = Context;

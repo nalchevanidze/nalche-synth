@@ -9,7 +9,7 @@ function* countdownIterator(SampleLifeTime = 0.5, startValue = 1, endValue = 0) 
     let curve = 2;
     let left = 0;
     let difference = endValue - startValue;
-    SampleLifeTime = SampleLifeTime * sampleRate;
+    SampleLifeTime = SampleLifeTime * Context_1.default.sampleRate;
     while (++left < SampleLifeTime) {
         let level = Math.pow((left / SampleLifeTime), curve);
         yield startValue + difference * level;
