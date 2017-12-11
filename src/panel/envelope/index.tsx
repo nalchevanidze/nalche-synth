@@ -15,7 +15,24 @@ const styles = {
 	}
 };
 
-const Button = ({ id, active, onClick }) =>
+export type Options = "gain" | "filter";
+
+export interface ButtonProps {
+	id: Options;
+	active: Options;
+	onClick: (input: Options) => void;
+}
+
+export interface PanelEnvelopeProps {
+	env: EnvelopeStates
+}
+
+export interface PanelEnvelopeState {
+	active: Options;
+}
+
+
+const Button = ({ id, active, onClick }: ButtonProps) =>
 	<button
 		style={{
 			...styles.button,
@@ -29,21 +46,15 @@ const Button = ({ id, active, onClick }) =>
 
 import Panel from "../DisplayPanel";
 
-export interface PanelEnvelopeProps {
-	env: EnvelopeStates
-}
 
-export interface PanelEnvelopeState {
-	active: "gain" | "filter";
-}
 
 class PanelEnvelope extends React.PureComponent<PanelEnvelopeProps, PanelEnvelopeState> {
-	constructor(props) {
+	constructor(props: PanelEnvelopeProps) {
 		super(props);
 		this.state = { active: "gain" };
 		this.switch = this.switch.bind(this);
 	}
-	switch(active) {
+	switch(active: Options) {
 		this.setState({ active });
 	}
 	render() {
@@ -53,7 +64,7 @@ class PanelEnvelope extends React.PureComponent<PanelEnvelopeProps, PanelEnvelop
 		return (
 			<Panel label="envelope" size={3} >
 				<div style={styles.nav} >
-					<Button id="volume" active={active} onClick={this.switch} />
+					<Button id="gain" active={active} onClick={this.switch} />
 					<Button id="filter" active={active} onClick={this.switch} />
 				</div>
 				<EnvelopeGraphic state={selectedEnvelope} />

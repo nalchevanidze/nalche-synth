@@ -23,7 +23,16 @@ class EnvelopeGraphic extends React.Component {
             }
         };
         this.clearPoint = (event) => {
-            this.point.current = null;
+            this.point.current = () => { };
+        };
+        this.setAttack = ({ x }) => {
+            this.updateValues({ attack: x });
+        };
+        this.setDecay = ({ x, y }) => {
+            this.updateValues({
+                decay: Math.max(x - this.state.attack, 0),
+                sustain: y
+            });
         };
         this.state = {
             attack: 0,
@@ -33,7 +42,7 @@ class EnvelopeGraphic extends React.Component {
         };
         this.hide = false;
         this.position = this.position.bind(this);
-        this.point = { current: null };
+        this.point = { current: () => { } };
     }
     updateTagret() {
         this.hide = false;
@@ -57,7 +66,7 @@ class EnvelopeGraphic extends React.Component {
     }
     updateValues(state) {
         Object.assign(this.original, state);
-        this.setState(state);
+        this.setState(this.original);
     }
     render() {
         let { attack, release, sustain, decay } = this.state;
@@ -67,6 +76,11 @@ class EnvelopeGraphic extends React.Component {
         sustain = (1 - sustain) * 100;
         release = (sustainX + release * 100);
         let PointStart = [0, 100], pointAttack = [attack, 0], pointSustain = [sustainX, sustain], pointDecay = [decay, sustain], pointRelease = [release, 100];
+        const setRelease = ({ x }) => {
+            this.updateValues({
+                release: Math.max(x - sustainX / 100, 0)
+            });
+        };
         return (React.createElement("svg", { viewBox: "-5 -5 210 110", width: "180px", height: "100px", onMouseMove: this.levelMove, onTouchMove: this.levelMove, onMouseLeave: this.clearPoint, onTouchEnd: this.clearPoint, onMouseUp: this.clearPoint },
             React.createElement(GridLine_1.default, null),
             React.createElement("path", { stroke: "#fd9a06", fill: "#fd9a06", fillOpacity: "0.40", d: "M" + [PointStart, pointAttack, pointDecay, pointSustain, pointRelease] + "Z" }),
@@ -76,20 +90,11 @@ class EnvelopeGraphic extends React.Component {
                 React.createElement("path", { d: "M" + [sustainX, 100, ...pointSustain] })),
             React.createElement("g", { className: "controllers", fillOpacity: 0.8, fill: "gray", stroke: "#333" },
                 "/* attack */",
-                React.createElement(ControlPoint_1.default, { point: this.point, position: this.position, onChange: ({ x }) => { this.updateValues({ attack: x }); }, cx: attack, cy: 0 }),
+                React.createElement(ControlPoint_1.default, { point: this.point, position: this.position, onChange: this.setAttack, cx: attack, cy: 0 }),
                 "/* decay */",
-                React.createElement(ControlPoint_1.default, { position: this.position, point: this.point, onChange: ({ x, y }) => {
-                        this.updateValues({
-                            decay: Math.max(x - attack / 100, 0),
-                            sustain: y
-                        });
-                    }, cx: decay, cy: sustain }),
+                React.createElement(ControlPoint_1.default, { position: this.position, point: this.point, onChange: this.setDecay, cx: decay, cy: sustain }),
                 "/* release */",
-                React.createElement(ControlPoint_1.default, { position: this.position, point: this.point, onChange: ({ x }) => {
-                        this.updateValues({
-                            release: Math.max(x - sustainX / 100, 0)
-                        });
-                    }, cx: release, cy: 100 }))));
+                React.createElement(ControlPoint_1.default, { position: this.position, point: this.point, onChange: setRelease, cx: release, cy: 100 }))));
     }
 }
 exports.default = EnvelopeGraphic;

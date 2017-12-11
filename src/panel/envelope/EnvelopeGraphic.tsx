@@ -10,6 +10,12 @@ export interface EnvelopeGraphicProps {
 	state: EnvelopeState;
 }
 
+export interface UpdateState {
+	attack?: number;
+	release?: number;
+	sustain?: number;
+	decay?: number;
+}
 
 export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProps, EnvelopeState> {
 
@@ -18,9 +24,9 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 		current: (event: SelectEvent) => void
 	};
 	original: EnvelopeState;
-	target: Element;
+	target: Element | null;
 
-	constructor(props) {
+	constructor(props: EnvelopeGraphicProps) {
 		super(props);
 		this.state = {
 			attack: 0,
@@ -30,7 +36,7 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 		};
 		this.hide = false;
 		this.position = this.position.bind(this);
-		this.point = { current: null };
+		this.point = { current: ()=>{} };
 	}
 
 
@@ -73,13 +79,24 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 		}
 	}
 	clearPoint = (event: SelectEvent): void => {
-		this.point.current = null;
+		this.point.current = () => { };
 
 	}
-	updateValues(state) {
+	updateValues(state: UpdateState) {
 		Object.assign(this.original, state);
-		this.setState(state);
+		this.setState(this.original);
 	}
+
+	private setAttack = ({ x }: Point): void => {
+		this.updateValues({ attack: x });
+	}
+	private setDecay = ({ x, y }: Point): void => {
+		this.updateValues({
+			decay: Math.max(x - this.state.attack, 0),
+			sustain: y
+		});
+	}
+
 	render() {
 		let { attack, release, sustain, decay } = this.state;
 		attack = attack * 100;
@@ -93,6 +110,13 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 			pointSustain = [sustainX, sustain],
 			pointDecay = [decay, sustain],
 			pointRelease = [release, 100];
+
+		const setRelease = ({ x }: Point): void => {
+			this.updateValues({
+				release: Math.max(x - sustainX / 100, 0)
+			});
+		}
+
 		return (
 			<svg
 				viewBox="-5 -5 210 110"
@@ -129,7 +153,7 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 					<ControlPoint
 						point={this.point}
 						position={this.position}
-						onChange={({ x }: Point): void => { this.updateValues({ attack: x }); }}
+						onChange={this.setAttack}
 						cx={attack}
 						cy={0}
 					/>
@@ -137,13 +161,7 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 					<ControlPoint
 						position={this.position}
 						point={this.point}
-						onChange={
-							({ x, y }) => {
-								this.updateValues({
-									decay: Math.max(x - attack / 100, 0),
-									sustain: y
-								});
-							}}
+						onChange={this.setDecay}
 						cx={decay}
 						cy={sustain}
 					/>
@@ -151,12 +169,7 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 					<ControlPoint
 						position={this.position}
 						point={this.point}
-						onChange={
-							({ x }) => {
-								this.updateValues({
-									release: Math.max(x - sustainX / 100, 0)
-								});
-							}}
+						onChange={setRelease}
 						cx={release}
 						cy={100}
 					/>

@@ -31,7 +31,7 @@ class PanelEnvelope extends React.PureComponent {
         let selectedEnvelope = (active === "filter") ? filter : gain;
         return (React.createElement(DisplayPanel_1.default, { label: "envelope", size: 3 },
             React.createElement("div", { style: styles.nav },
-                React.createElement(Button, { id: "volume", active: active, onClick: this.switch }),
+                React.createElement(Button, { id: "gain", active: active, onClick: this.switch }),
                 React.createElement(Button, { id: "filter", active: active, onClick: this.switch })),
             React.createElement(EnvelopeGraphic_1.default, { state: selectedEnvelope })));
     }
