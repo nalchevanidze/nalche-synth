@@ -92,7 +92,9 @@ var Synth = function (_React$Component) {
 				return _this.pause();
 			},
 			play: function play() {
-				_this.setState({ isPlayng: true });
+				_this.setState({
+					isPlayng: true
+				});
 				_this.osc.play();
 			}
 		};
@@ -127,7 +129,9 @@ var Synth = function (_React$Component) {
 		key: "pause",
 		value: function pause() {
 			this.osc.pause();
-			this.setState({ isPlayng: false });
+			this.setState({
+				isPlayng: false
+			});
 		}
 	}, {
 		key: "stop",
@@ -154,44 +158,41 @@ var Synth = function (_React$Component) {
 		value: function render() {
 			return _react2.default.createElement(
 				"div",
-				{
-					className: "nalche-synth",
+				{ className: "nalche-synth",
 					style: {
 						display: "flex",
 						position: "relative",
 						justifyContent: "center",
 						fontFamily: "sans-serif"
-					}
-				},
+					} },
 				_react2.default.createElement(
 					"section",
-					{
-						style: {
+					{ style: {
 							boxShadow: "0px 5px 10px gray",
 							width: "660px",
 							height: "410px",
 							borderRadius: "3px",
 							background: "#333333"
-						}
-					},
-					_react2.default.createElement(_panel2.default, {
-						seq: sequence,
+						} },
+					_react2.default.createElement(_panel2.default, { seq: sequence,
 						setSequence: this.setSequence
 					}),
-					_react2.default.createElement(_Keyboard2.default, {
-						keyPress: this.keyPress,
+					" ",
+					_react2.default.createElement(_Keyboard2.default, { keyPress: this.keyPress,
 						keyUp: this.keyUp,
 						active: this.state.active
-					})
+					}),
+					" "
 				),
-				_react2.default.createElement(_midi2.default, {
-					midi: _standartMidi2.default,
+				" ",
+				_react2.default.createElement(_midi2.default, { midi: _standartMidi2.default,
 					updateMidi: this.osc.setMidi,
 					setTime: this.osc.setTime,
 					global: this.global,
 					isPlayng: this.state.isPlayng,
 					currentState: this.state.time
-				})
+				}),
+				" "
 			);
 		}
 	}]);

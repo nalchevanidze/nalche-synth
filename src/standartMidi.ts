@@ -1,4 +1,4 @@
-import { DeepMidi } from "./audio/midi/setNote";
+import { DeepMidi } from "./audio/types";
 
 const midi : DeepMidi = [
 	[

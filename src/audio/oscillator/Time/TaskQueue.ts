@@ -1,10 +1,6 @@
 import Context from "../../Context";
-import createMelodySet, {
-	MidiTask
-} from "../../midi/createMelodySet";
-import {
-	DeepMidi
-} from "../../midi/setNote";
+import createMelodySet from "../../midi/createMelodySet";
+import { DeepMidi , MidiTask} from "../../types";
 import melody from "../../../standartMidi";
 import Oscillator from "../index";
 

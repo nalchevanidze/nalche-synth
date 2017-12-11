@@ -10,9 +10,7 @@ import oscManager, {
 } from "./oscManager";
 import { SoundEventInstance } from "./SoundEvent";
 import { Controller } from "../../Controller";
-import {
-	DeepMidi
-} from "../midi/setNote";
+import { DeepMidi } from "../types";
 export interface NotesRegister {
 	[key: number]: SoundEventInstance;
 }

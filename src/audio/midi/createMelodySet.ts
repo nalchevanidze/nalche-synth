@@ -1,5 +1,5 @@
-import setNote, { Note, DeepMidi, FlatMidi, MidiTask } from "./setNote";
-export { MidiTask } from "./setNote";
+import setNote from "./setNote";
+import { Note, DeepMidi, FlatMidi, MidiTask } from "../types";
 
 export default function createMelodySet(rowArray: DeepMidi): MidiTask[] {
 	let midi: FlatMidi = [];
