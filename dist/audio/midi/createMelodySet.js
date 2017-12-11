@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var setNote_1 = require("./setNote");
+const setNote_1 = require("./setNote");
 function createMelodySet(rowArray) {
-    var midi = [];
-    rowArray.forEach(function (quarter, i) {
+    let midi = [];
+    rowArray.forEach((quarter, i) => {
         if (quarter) {
-            quarter.forEach(function (note) {
+            quarter.forEach((note) => {
                 setNote_1.default(midi, i * 8, note);
             });
         }

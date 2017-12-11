@@ -23,3 +23,4 @@ gulp.task("ts", function () {
 gulp.task("default", ["babel", "ts"]);
 gulp.watch("src/**/*.js", ["babel"]);
 gulp.watch("src/**/*.ts", ["ts"]);
+gulp.watch("src/**/*.tsx", ["ts"]);

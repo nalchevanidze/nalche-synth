@@ -1,5 +1,5 @@
-import React from "react";
-import Controller from "../../Controller";
+import * as React from "react";
+import { EnvelopeStates, EnvelopeState } from "../../Controller";
 import EnvelopeGraphic from "./EnvelopeGraphic";
 
 const styles = {
@@ -29,10 +29,18 @@ const Button = ({ id, active, onClick }) =>
 
 import Panel from "../DisplayPanel";
 
-class PanelEnvelope extends React.PureComponent {
+export interface PanelEnvelopeProps {
+	env: EnvelopeStates
+}
+
+export interface PanelEnvelopeState {
+	active: "gain" | "filter";
+}
+
+class PanelEnvelope extends React.PureComponent<PanelEnvelopeProps, PanelEnvelopeState> {
 	constructor(props) {
 		super(props);
-		this.state = { active: "volume" };
+		this.state = { active: "gain" };
 		this.switch = this.switch.bind(this);
 	}
 	switch(active) {
@@ -40,18 +48,15 @@ class PanelEnvelope extends React.PureComponent {
 	}
 	render() {
 		let { active } = this.state;
-		let { filter , gain } = Controller.env;
+		let { filter, gain } = this.props.env;
+		let selectedEnvelope: EnvelopeState = (active === "filter") ? filter : gain;
 		return (
 			<Panel label="envelope" size={3} >
 				<div style={styles.nav} >
 					<Button id="volume" active={active} onClick={this.switch} />
 					<Button id="filter" active={active} onClick={this.switch} />
 				</div>
-				<EnvelopeGraphic 
-					state={
-						(active === "filter") ? filter : gain
-					}
-				/>
+				<EnvelopeGraphic state={selectedEnvelope} />
 			</Panel>
 		);
 	}

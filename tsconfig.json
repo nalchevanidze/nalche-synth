@@ -1,33 +1,38 @@
 {
   "files": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "compilerOptions": {
     "noImplicitAny": true,
     "outDir": "./dist/",
     "rootDir": "./src/",
-    "target": "es5",
+    "target": "es6",
     "noImplicitThis": true,
     "removeComments": true,
-    "declaration":true,
+    "declaration": true,
     "downlevelIteration": true,
     //"noFallthroughCasesInSwitch": true,
     "alwaysStrict": true,
-    "strict": true ,
+    "strict": true,
     "module": "commonjs",
-    "sourceMap": true  , 
-    "lib":["es2015","dom"],
+    "sourceMap": true,
+    "lib": ["es2015", "dom"],
+    "jsx": "react",
+    "typeRoots": [
+      "node_modules/@types"
+    ]
     //"importHelpers": true  
     /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'. */
-    
-                          /* Specify library files to be included in the compilation:  */
+
+    /* Specify library files to be included in the compilation:  */
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
-                     /* Generates corresponding '.map' file. */
+    /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
     // "noEmit": true,                        /* Do not emit outputs. */
-                   /* Import emit helpers from 'tslib'. */
+    /* Import emit helpers from 'tslib'. */
     // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
 
     /* Strict Type-Checking Options */

@@ -12,6 +12,8 @@
     "gulp": "gulp"
   },
   "devDependencies": {
+    "@types/react": "^16.0.28",
+    "@types/react-dom": "^16.0.3",
     "autoprefixer-loader": "^3.2.0",
     "babel-core": "^6.13.2",
     "babel-eslint": "^8.0.0",

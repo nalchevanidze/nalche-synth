@@ -1,65 +1,64 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Context_1 = require("../Context");
-var FillAudioChenel_1 = require("./FillAudioChenel");
-var destination = Context_1.default.destination;
-var bufferSize = 2048;
-var Time_1 = require("./Time");
-var oscManager_1 = require("./oscManager");
-var Oscillator = (function () {
-    function Oscillator(controller, target) {
-        var _this = this;
+const Context_1 = require("../Context");
+const FillAudioChenel_1 = require("./FillAudioChenel");
+const { destination } = Context_1.default;
+const bufferSize = 2048;
+const Time_1 = require("./Time");
+const oscManager_1 = require("./oscManager");
+class Oscillator {
+    constructor(controller, target) {
         this.isPlayng = false;
-        this.simpleSet = function (note) {
-            if (!_this.notes[note]) {
-                _this.notes[note] = _this.osc.getOsc(note);
+        this.simpleSet = (note) => {
+            if (!this.notes[note]) {
+                this.notes[note] = this.osc.getOsc(note);
             }
         };
-        this.simpleUnset = function (value) {
-            var notes = _this.notes;
+        this.simpleUnset = (value) => {
+            let { notes } = this;
             if (notes[value]) {
                 notes[value].end();
                 delete notes[value];
             }
         };
-        this.unsetNote = function (note) {
-            _this.active.delete(note);
-            if (!_this.seq.on) {
-                _this.simpleUnset(note);
+        this.unsetNote = (note) => {
+            this.active.delete(note);
+            if (!this.seq.on) {
+                this.simpleUnset(note);
             }
-            _this.update(0, _this.active);
+            this.update(0, this.active);
         };
-        this.setNote = function (note) {
-            var active = _this.active;
+        this.setNote = (note) => {
+            let { active } = this;
             if (!active.has(note)) {
-                _this.timeLine.sequencer.restart();
+                this.timeLine.sequencer.restart();
             }
             active.add(note);
-            if (!_this.seq.on) {
-                _this.simpleSet(note);
+            if (!this.seq.on) {
+                this.simpleSet(note);
             }
-            _this.update(0, active);
+            this.update(0, active);
         };
-        this.clear = function () {
-            _this.osc.clear();
-            _this.active.clear();
-            _this.notes = {};
+        this.clear = () => {
+            this.osc.clear();
+            this.active.clear();
+            this.notes = {};
         };
-        this.pause = function () {
-            _this.clear();
-            _this.isPlayng = false;
+        this.pause = () => {
+            this.clear();
+            this.isPlayng = false;
         };
-        this.setTime = function (time) {
-            _this.clear();
-            _this.timeLine.setTime(time);
-            _this.update(time, _this.active);
+        this.setTime = (time) => {
+            this.clear();
+            this.timeLine.setTime(time);
+            this.update(time, this.active);
         };
-        this.stop = function () {
-            _this.pause();
-            _this.timeLine.setTime(0);
+        this.stop = () => {
+            this.pause();
+            this.timeLine.setTime(0);
         };
-        this.play = function () {
-            _this.isPlayng = true;
+        this.play = () => {
+            this.isPlayng = true;
         };
         this.notes = {};
         this.active = new Set([]);
@@ -69,12 +68,11 @@ var Oscillator = (function () {
         this.timeLine = new Time_1.default(this);
         this.setSequence = this.timeLine.sequencer.setSequence;
         this.setMidi = this.timeLine.setMidi;
-        var node = Context_1.default.createScriptProcessor(bufferSize, 1, 1);
+        const node = Context_1.default.createScriptProcessor(bufferSize, 1, 1);
         node.connect(destination);
-        node.onaudioprocess = function (input) {
-            FillAudioChenel_1.default(input.outputBuffer.getChannelData(0), _this.osc.active(), _this.timeLine);
+        node.onaudioprocess = (input) => {
+            FillAudioChenel_1.default(input.outputBuffer.getChannelData(0), this.osc.active(), this.timeLine);
         };
     }
-    return Oscillator;
-}());
+}
 exports.default = Oscillator;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var keymap = [
+const keymap = [
     "z",
     "s",
     "x",

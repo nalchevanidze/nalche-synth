@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var countdownIterator_1 = require("./countdownIterator");
-var ATTACK = 0;
-var DEACY = 1;
-var SUSTAIN = 2;
-var RELEASE = 3;
-var Envelope = (function () {
-    function Envelope(env) {
+const countdownIterator_1 = require("./countdownIterator");
+const ATTACK = 0;
+const DEACY = 1;
+const SUSTAIN = 2;
+const RELEASE = 3;
+class Envelope {
+    constructor(env) {
         this.env = env;
         this.live = false;
         this.volume = 0;
@@ -16,8 +16,7 @@ var Envelope = (function () {
         this.updateStep = this.updateStep.bind(this);
         this.state = ATTACK;
     }
-    Envelope.prototype.updateStep = function (_a) {
-        var done = _a.done, value = _a.value;
+    updateStep({ done, value }) {
         this.volume = value;
         if (done) {
             if (this.state == ATTACK) {
@@ -26,8 +25,8 @@ var Envelope = (function () {
             this.state++;
         }
         return this.volume;
-    };
-    Envelope.prototype.next = function () {
+    }
+    next() {
         if (!this.live) {
             return 0;
         }
@@ -38,21 +37,20 @@ var Envelope = (function () {
             case SUSTAIN:
                 return this.volume;
             default:
-                var release = this.getValue.next();
+                let release = this.getValue.next();
                 this.live = !release.done;
                 return release.value;
         }
-    };
-    Envelope.prototype.restart = function () {
+    }
+    restart() {
         this.live = true;
         this.state = ATTACK;
         this.volume = 1;
         this.getValue = countdownIterator_1.default(this.env.attack, 0, 1);
-    };
-    Envelope.prototype.end = function () {
+    }
+    end() {
         this.getValue = countdownIterator_1.default(this.env.release, this.volume, 0);
         this.state = RELEASE;
-    };
-    return Envelope;
-}());
+    }
+}
 exports.default = Envelope;

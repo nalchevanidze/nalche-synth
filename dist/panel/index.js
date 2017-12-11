@@ -22,6 +22,10 @@ var _Sequencer = require("./Sequencer");
 
 var _Sequencer2 = _interopRequireDefault(_Sequencer);
 
+var _Controller = require("../Controller");
+
+var _Controller2 = _interopRequireDefault(_Controller);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -54,7 +58,7 @@ var Panel = function (_React$PureComponent) {
 				_react2.default.createElement(
 					"div",
 					null,
-					_react2.default.createElement(_envelope2.default, null),
+					_react2.default.createElement(_envelope2.default, { env: _Controller2.default.env }),
 					_react2.default.createElement(_Sequencer2.default, {
 						seq: this.props.seq,
 						setSequence: this.props.setSequence

@@ -1,41 +1,25 @@
-import React from "react";
+import * as React from "react";
 import GridLine from "../GridLine";
-import ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom";
 import svgCordinates from "../svgCordinates";
+import ControlPoint, { Point, SelectEvent } from "./ControlPoint";
+import { EnvelopeState } from "../../Controller";
+import { MouseEvent } from "react";
 
-class PointCircle extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-		this.levelMove = this.levelMove.bind(this);
-		this.mouseDown = this.mouseDown.bind(this);
-	}
-	levelMove(event) {
-		let { onChange, position } = this.props;
-		if (onChange) {
-			onChange(
-				position(event)
-			);
-		}
-	}
-	mouseDown() {
-		this.props.point.current = this.levelMove;
-	}
-	render() {
-		let { cx, cy } = this.props;
-		return (
-			<circle
-				cx={cx}
-				cy={cy}
-				draggable={false}
-				onTouchStart={this.mouseDown}
-				onMouseDown={this.mouseDown}
-				r={5}
-			/>
-		);
-	}
+export interface EnvelopeGraphicProps {
+	state: EnvelopeState;
 }
-export default class EnvelopeGraphic extends React.PureComponent {
+
+
+export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProps, EnvelopeState> {
+
+	hide: boolean;
+	point: {
+		current: (event: SelectEvent) => void
+	};
+	original: EnvelopeState;
+	target: Element;
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -47,44 +31,48 @@ export default class EnvelopeGraphic extends React.PureComponent {
 		this.hide = false;
 		this.position = this.position.bind(this);
 		this.point = { current: null };
-		this.levelMove = this.levelMove.bind(this);
-		this.clearPoint = this.clearPoint.bind(this);
+	}
+
+
+	private updateTagret(): void {
+		this.hide = false;
+		this.target = ReactDOM.findDOMNode(this);
 	}
 
 	componentWillMount() {
 		this.state = this.props.state;
 		this.original = this.props.state;
-		this.hide = false;
-		this.target = ReactDOM.findDOMNode(this);
-	}
-	componentWillReceiveProps(next) {
-		this.state = next.state;
-		this.original = next.state;
+		this.updateTagret()
 	}
 	componentDidMount() {
-		this.hide = false;
-		this.target = ReactDOM.findDOMNode(this);
+		this.updateTagret();
+	}
+	componentWillReceiveProps(next: EnvelopeGraphicProps) {
+		this.state = next.state;
+		this.original = next.state;
 	}
 	componentWillUnmount() {
 		this.hide = true;
 		this.target = null;
 	}
-	position(event) {
+	position = (event: SelectEvent): Point => {
+
 		if (event.type === "touchmove") {
 			event = event.touches[0];
 		}
+
 		let { x, y } = svgCordinates(this.target, event);
 		x = Math.min((Math.max(x, 0) / 100), 1);
 		y = 1 - Math.min((Math.max(y, 0) / 100), 1);
 
 		return { x, y };
 	}
-	levelMove(event) {
+	levelMove = (event: SelectEvent): void => {
 		if (this.point.current) {
 			this.point.current(event);
 		}
 	}
-	clearPoint() {
+	clearPoint = (event: SelectEvent): void => {
 		this.point.current = null;
 
 	}
@@ -107,7 +95,8 @@ export default class EnvelopeGraphic extends React.PureComponent {
 			pointRelease = [release, 100];
 		return (
 			<svg
-				viewBox="-5 -5 210 110" width="180px" height="100px"
+				viewBox="-5 -5 210 110"
+				width="180px" height="100px"
 				onMouseMove={this.levelMove}
 				onTouchMove={this.levelMove}
 				onMouseLeave={this.clearPoint}
@@ -136,16 +125,16 @@ export default class EnvelopeGraphic extends React.PureComponent {
 					fill="gray"
 					stroke="#333"
 				>
-					<PointCircle
-						name="attack"
+					/* attack */
+					<ControlPoint
 						point={this.point}
 						position={this.position}
-						onChange={({ x }) => { this.updateValues({ attack: x }); }}
+						onChange={({ x }: Point): void => { this.updateValues({ attack: x }); }}
 						cx={attack}
 						cy={0}
 					/>
-					<PointCircle
-						name="decay"
+					/* decay */
+					<ControlPoint
 						position={this.position}
 						point={this.point}
 						onChange={
@@ -158,8 +147,8 @@ export default class EnvelopeGraphic extends React.PureComponent {
 						cx={decay}
 						cy={sustain}
 					/>
-					<PointCircle
-						name="release"
+					/* release */
+					<ControlPoint
 						position={this.position}
 						point={this.point}
 						onChange={

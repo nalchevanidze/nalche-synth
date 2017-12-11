@@ -15,7 +15,7 @@ export interface WavePatameters {
 }
 
 
-interface EnvelopeState {
+export interface EnvelopeState {
 	attack: number,
 	decay: number,
 	sustain: number,
