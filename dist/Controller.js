@@ -17,12 +17,6 @@ var parameters = {
     seq: {
         on: false
     },
-    envelope: {
-        attack: 0,
-        decay: 0.27,
-        sustain: 0.5,
-        release: 0.3
-    },
     env: {
         filter: {
             attack: 0,
@@ -30,6 +24,12 @@ var parameters = {
             sustain: 0.08,
             release: 0.1
         },
+        gain: {
+            attack: 0,
+            decay: 0.27,
+            sustain: 0.5,
+            release: 0.3
+        }
     },
     filter: {
         cutoff: 1,

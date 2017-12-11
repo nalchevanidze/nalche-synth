@@ -85,8 +85,9 @@ var PanelEnvelope = function (_React$PureComponent) {
 		key: "render",
 		value: function render() {
 			var active = this.state.active;
-			var envelope = _Controller2.default.envelope,
-			    env = _Controller2.default.env;
+			var _Controller$env = _Controller2.default.env,
+			    filter = _Controller$env.filter,
+			    gain = _Controller$env.gain;
 
 			return _react2.default.createElement(
 				_DisplayPanel2.default,
@@ -97,7 +98,8 @@ var PanelEnvelope = function (_React$PureComponent) {
 					_react2.default.createElement(Button, { id: "volume", active: active, onClick: this.switch }),
 					_react2.default.createElement(Button, { id: "filter", active: active, onClick: this.switch })
 				),
-				_react2.default.createElement(_EnvelopeGraphic2.default, { state: active === "filter" ? env.filter : envelope
+				_react2.default.createElement(_EnvelopeGraphic2.default, {
+					state: active === "filter" ? filter : gain
 				})
 			);
 		}

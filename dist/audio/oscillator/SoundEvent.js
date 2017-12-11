@@ -14,7 +14,7 @@ function SoundEvent(controller) {
     var filter = MoogFilter_1.default(controller);
     var sinePosition = new WaveLooper_1.default();
     var positions = Array.from({ length: maxVoices }, function () { return new WaveLooper_1.default(); });
-    var envelope = new Envelope_1.default(controller.envelope);
+    var envelope = new Envelope_1.default(controller.env.gain);
     var count = 0;
     function multyVoices() {
         var value = 0;

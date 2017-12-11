@@ -32,7 +32,7 @@ export default function SoundEvent(controller: Controller): SoundEventInstance {
 		() => new WaveLooper()
 	);
 
-	const envelope: Envelope = new Envelope(controller.envelope);
+	const envelope: Envelope = new Envelope(controller.env.gain);
 	let count: number = 0;
 
 	function multyVoices(): number {

@@ -14,29 +14,30 @@ export interface WavePatameters {
 	pitch: number
 }
 
-export interface EnvelopeParameters {
+
+interface EnvelopeState {
 	attack: number,
 	decay: number,
-	sustain:number,
+	sustain: number,
 	release: number
 }
 
 export interface FilterParameters {
-	cutoff:number;
-	resonance:number;
-	envelope:number;
-	on:boolean;
+	cutoff: number;
+	resonance: number;
+	envelope: number;
+	on: boolean;
 }
-
+export interface EnvelopeStates {
+	filter: EnvelopeState;
+	gain: EnvelopeState
+}
 export interface Controller {
 	wave: WavePatameters;
-	seq:{
-		on:boolean;
+	seq: {
+		on: boolean;
 	},
-	envelope:EnvelopeParameters;
-	env:{
-		filter:EnvelopeParameters;
-	}
+	env: EnvelopeStates
 	filter: FilterParameters;
 }
 
@@ -57,12 +58,6 @@ const parameters: Controller = {
 	seq: {
 		on: false
 	},
-	envelope: {
-		attack: 0,
-		decay: 0.27,
-		sustain: 0.5,
-		release: 0.3
-	},
 	env: {
 		filter: {
 			attack: 0,
@@ -70,12 +65,18 @@ const parameters: Controller = {
 			sustain: 0.08,
 			release: 0.1
 		},
+		gain: {
+			attack: 0,
+			decay: 0.27,
+			sustain: 0.5,
+			release: 0.3
+		}
 	},
 	filter: {
 		cutoff: 1,
 		resonance: 0.25,
 		envelope: 0,
-		on:false
+		on: false
 	}
 };
 export default parameters;

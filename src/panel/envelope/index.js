@@ -30,7 +30,6 @@ const Button = ({ id, active, onClick }) =>
 import Panel from "../DisplayPanel";
 
 class PanelEnvelope extends React.PureComponent {
-
 	constructor(props) {
 		super(props);
 		this.state = { active: "volume" };
@@ -41,18 +40,17 @@ class PanelEnvelope extends React.PureComponent {
 	}
 	render() {
 		let { active } = this.state;
-		let { envelope, env } = Controller;
+		let { filter , gain } = Controller.env;
 		return (
 			<Panel label="envelope" size={3} >
 				<div style={styles.nav} >
 					<Button id="volume" active={active} onClick={this.switch} />
 					<Button id="filter" active={active} onClick={this.switch} />
 				</div>
-				<EnvelopeGraphic state={
-					(
-						active === "filter") ?
-						env.filter : envelope
-				}
+				<EnvelopeGraphic 
+					state={
+						(active === "filter") ? filter : gain
+					}
 				/>
 			</Panel>
 		);
