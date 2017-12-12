@@ -24,7 +24,7 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 		current: (event: SelectEvent) => void
 	};
 	original: EnvelopeState;
-	target: Element | null;
+	target: SVGSVGElement | null;
 
 	constructor(props: EnvelopeGraphicProps) {
 		super(props);
