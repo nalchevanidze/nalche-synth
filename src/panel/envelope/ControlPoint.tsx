@@ -2,14 +2,14 @@ import * as React from 'react';
 export type SelectEvent = React.MouseEvent<SVGSVGElement> | React.TouchEvent<SVGSVGElement>;
 
 export interface Point {
-	x:number;
-	y?:number;
+	x: number;
+	y?: number;
 }
 
 export interface ControlPointProps {
 	cx: number;
 	cy: number;
-	position(event: SelectEvent ): Point;
+	position(event: SelectEvent): Point;
 	onChange(point: Point): void;
 	point: {
 		current: (event: SelectEvent) => void
@@ -18,17 +18,20 @@ export interface ControlPointProps {
 
 export default class ControlPoint extends React.Component<ControlPointProps> {
 
-	// point moves
+	/**
+	 * on mouse move updates props.onChange with new position of point
+	 * @event - Mouse Move event
+	 */ 
 	levelMove = (event: SelectEvent): void => {
-		let { onChange, position } = this.props;
-		if (onChange) {
-			onChange(
-				position(event)
-			);
-		}
+		this.props.onChange(
+			this.props.position(event)
+		);
 	}
 
-	//point is selected
+	/**
+	 * sets LevelMove as main function on 
+	 * MouseMove event on envelope display
+	 */ 
 	mouseDown = (): void => {
 		this.props.point.current = this.levelMove;
 	}

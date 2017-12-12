@@ -1,7 +1,8 @@
-import React from "react";
-const color = "#FFEB3B";
+import * as React from "react";
+
+const color: string = "#FFEB3B";
 const GridLine = () =>
-	<g className="grid-line">
+	<g>
 		<defs>
 			<pattern width="100" height="100" patternUnits="userSpaceOnUse" id="grid">
 				<g stroke={color} fill="none" strokeWidth={0.3} strokeOpacity={0.3} >
@@ -9,15 +10,19 @@ const GridLine = () =>
 						<path strokeWidth={0.3} d="M 10 0 L 0 0 0 10 0 0" />
 					</pattern>
 					<path d="M 100 0 L 0 0 0 100 0 0" />
-					<rect width="100" height="100" fill="url(#s-grid)" />
+					<rect
+						width="100"
+						height="100"
+						fill="url(#s-grid)"
+					/>
 				</g>
 			</pattern>
 		</defs>
-		<rect 
-			width="100%" 
-			height="100%" 
-			fill="url(#grid)" 
-			className="grids" 
+		<rect
+			width="100%"
+			height="100%"
+			fill="url(#grid)"
+			className="grids"
 		/>
 	</g>;
 

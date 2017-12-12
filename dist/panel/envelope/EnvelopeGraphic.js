@@ -9,9 +9,6 @@ class EnvelopeGraphic extends React.Component {
     constructor(props) {
         super(props);
         this.position = (event) => {
-            if (event.type === "touchmove") {
-                event = event.touches[0];
-            }
             let { x, y } = svgCordinates_1.default(this.target, event);
             x = Math.min((Math.max(x, 0) / 100), 1);
             y = 1 - Math.min((Math.max(y, 0) / 100), 1);

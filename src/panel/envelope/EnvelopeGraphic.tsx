@@ -63,12 +63,10 @@ export default class EnvelopeGraphic extends React.Component<EnvelopeGraphicProp
 	}
 	position = (event: SelectEvent): Point => {
 
-		if (event.type === "touchmove") {
-			event = event.touches[0];
-		}
-
 		let { x, y } = svgCordinates(this.target, event);
+
 		x = Math.min((Math.max(x, 0) / 100), 1);
+		
 		y = 1 - Math.min((Math.max(y, 0) / 100), 1);
 
 		return { x, y };

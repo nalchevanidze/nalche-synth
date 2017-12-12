@@ -5,10 +5,7 @@ class ControlPoint extends React.Component {
     constructor() {
         super(...arguments);
         this.levelMove = (event) => {
-            let { onChange, position } = this.props;
-            if (onChange) {
-                onChange(position(event));
-            }
+            this.props.onChange(this.props.position(event));
         };
         this.mouseDown = () => {
             this.props.point.current = this.levelMove;
