@@ -45,6 +45,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "styled-components": "^2.2.4"
   }
 }
