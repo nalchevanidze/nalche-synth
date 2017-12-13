@@ -32,24 +32,27 @@ export interface DisplayPanelProps {
 	children: any[];
 	label: string;
 	size: number;
-	list: any[];
-	color: string;
-	target: object;
-	onChange: (any) => void;
-	onOff: (any) => void;
-	isActive: boolean;
+	//additional propertis
+	onOff?: (any) => void;
+	isActive?: boolean;
+	onChange?: ({ }) => void;
+	list?: any[];
+	color?: string;
+	target?: object;
 }
 
 const DisplayPanel = ({
 	children,
 	label,
 	size = 1,
-	list = [],
-	color = "#2196f3",
 	target,
 	onChange,
 	onOff,
-	isActive
+	isActive,
+	//additional propertis
+	color = "#2196f3",
+	list = [],
+
 }: DisplayPanelProps) =>
 	<Container
 		style={{
@@ -70,7 +73,7 @@ const DisplayPanel = ({
 				/> : null
 
 			}
-			<Label style={{color}}>{label}</Label>
+			<Label style={{ color }}>{label}</Label>
 		</div>
 		<Container
 			style={{
@@ -86,9 +89,9 @@ const DisplayPanel = ({
 						key={i}
 						color={color}
 						target={target}
-						onChange={(...e) => {
+						onChange={(stateChanges: {}) => {
 							if (onChange) {
-								onChange(...e);
+								onChange(stateChanges);
 							}
 						}}
 					/>

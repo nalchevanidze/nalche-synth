@@ -53,7 +53,7 @@ function keyEvent(target, type) {
 }
 
 
-var sequence = [[1, 2, 3], [], [], [1, 2, 3], [], [], [1, 2, 3], [], [1, 2, 3], [], [1], [2], [3], [2], [], []];
+var sequence = [[1, 2, 3], [], [], [1, 2, 3], [], [], [1, 2, 3], [], [], [1, 2, 3], [], [], [1, 2, 3], [], [1, 2, 3], [], []];
 
 var Synth = function (_React$Component) {
 	_inherits(Synth, _React$Component);

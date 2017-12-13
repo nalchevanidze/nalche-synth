@@ -242,4 +242,90 @@ const midi = [
     ],
     [],
 ];
-exports.default = midi;
+const midi2 = [
+    [
+        {
+            "at": 0,
+            "id": "G#2",
+            "length": 32
+        },
+        {
+            "at": 0,
+            "id": "F1",
+            "length": 32
+        }
+    ],
+    [],
+    [],
+    [
+        {
+            "at": 4,
+            "id": "D#3",
+            "length": 4
+        }
+    ],
+    [
+        {
+            "at": 0,
+            "id": "C3",
+            "length": 31
+        },
+        {
+            "at": 0,
+            "id": "G#1",
+            "length": 31
+        }
+    ],
+    [],
+    [],
+    [
+        {
+            "at": 4,
+            "id": "D#3",
+            "length": 4
+        }
+    ],
+    [
+        {
+            "at": 0,
+            "id": "C3",
+            "length": 31
+        },
+        {
+            "at": 0,
+            "id": "C2",
+            "length": 31
+        }
+    ],
+    [],
+    [],
+    [
+        {
+            "at": 4,
+            "id": "D#3",
+            "length": 4
+        }
+    ],
+    [
+        {
+            "at": 0,
+            "id": "C3",
+            "length": 31
+        },
+        {
+            "at": 0,
+            "id": "C2",
+            "length": 31
+        }
+    ],
+    [],
+    [],
+    [
+        {
+            "at": 4,
+            "id": "D#3",
+            "length": 4
+        }
+    ],
+];
+exports.default = midi2;

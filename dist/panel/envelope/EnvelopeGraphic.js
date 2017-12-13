@@ -9,6 +9,9 @@ class EnvelopeGraphic extends React.Component {
     constructor(props) {
         super(props);
         this.position = (event) => {
+            if (!this.target) {
+                return { x: 0, y: 0 };
+            }
             let { x, y } = svgCordinates_1.default(this.target, event);
             x = Math.min((Math.max(x, 0) / 100), 1);
             y = 1 - Math.min((Math.max(y, 0) / 100), 1);

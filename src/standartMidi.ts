@@ -1,6 +1,6 @@
 import { DeepMidi } from "./audio/types";
 
-const midi : DeepMidi = [
+const midi: DeepMidi = [
 	[
 		{
 			"at": 0,
@@ -243,4 +243,92 @@ const midi : DeepMidi = [
 	[],
 ];
 
-export default midi;
+const midi2: DeepMidi = [
+	[
+		{
+			"at": 0,
+			"id": "G#2",
+			"length": 32
+		},
+		{
+			"at": 0,
+			"id": "F1",
+			"length": 32
+		}
+	],
+	[],
+	[],
+	[
+		{
+			"at": 4,
+			"id": "D#3",
+			"length": 4
+		}
+	],
+	//second
+	[
+		{
+			"at": 0,
+			"id": "C3",
+			"length": 31
+		},
+		{
+			"at": 0,
+			"id": "G#1",
+			"length": 31
+		}
+	],
+	[],
+	[],
+	[
+		{
+			"at": 4,
+			"id": "D#3",
+			"length": 4
+		}
+	],
+	[
+		{
+			"at": 0,
+			"id": "C3",
+			"length": 31
+		},
+		{
+			"at": 0,
+			"id": "C2",
+			"length": 31
+		}
+	],
+	[],
+	[],
+	[
+		{
+			"at": 4,
+			"id": "D#3",
+			"length": 4
+		}
+	],
+	[
+		{
+			"at": 0,
+			"id": "C3",
+			"length": 31
+		},
+		{
+			"at": 0,
+			"id": "C2",
+			"length": 31
+		}
+	],
+	[],
+	[],
+	[
+		{
+			"at": 4,
+			"id": "D#3",
+			"length": 4
+		}
+	],
+]
+
+export default midi2;

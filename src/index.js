@@ -13,7 +13,7 @@ function keyEvent(target, type) {
 }
 import midi from "./standartMidi";
 
-const sequence: number[][] = [
+let sequence: number[][] = [
 	[1, 2, 3],
 	[],
 	[],
@@ -22,14 +22,15 @@ const sequence: number[][] = [
 	[],
 	[1, 2, 3],
 	[],
+	[],
 	[1, 2, 3],
 	[],
-	[1],
-	[2],
-	[3],
-	[2],
 	[],
-	[]
+	[1, 2, 3],
+	[],
+	[1, 2, 3],
+	[],
+	[],
 ];
 
 
@@ -123,52 +124,52 @@ export default class Synth extends React.Component {
 				}
 			} >
 			<
-				section style = {
-					{
-						boxShadow: "0px 5px 10px gray",
-						width: "660px",
-						height: "410px",
-						borderRadius: "3px",
-						background: "#333333"
-					}
-				} >
-				<
-					Panel seq = {
-						sequence
-					}
-					setSequence = {
-						this.setSequence
-					}
-				/> <
-					Keyboard keyPress = {
-						this.keyPress
-					}
-					keyUp = {
-						this.keyUp
-					}
-					active = {
-						this.state.active
-					}
-				/> < /
-				section > <
-				MidiPanel midi = {
-					midi
+			section style = {
+				{
+					boxShadow: "0px 5px 10px gray",
+					width: "660px",
+					height: "410px",
+					borderRadius: "3px",
+					background: "#333333"
 				}
-				updateMidi = {
-					this.osc.setMidi
-				}
-				setTime = {
-					this.osc.setTime
-				}
-				global = {
-					this.global
-				}
-				isPlayng = {
-					this.state.isPlayng
-				}
-				currentState = {
-					this.state.time
-				}
+			} >
+			<
+			Panel seq = {
+				sequence
+			}
+			setSequence = {
+				this.setSequence
+			}
+			/> <
+			Keyboard keyPress = {
+				this.keyPress
+			}
+			keyUp = {
+				this.keyUp
+			}
+			active = {
+				this.state.active
+			}
+			/> < /
+			section > <
+			MidiPanel midi = {
+				midi
+			}
+			updateMidi = {
+				this.osc.setMidi
+			}
+			setTime = {
+				this.osc.setTime
+			}
+			global = {
+				this.global
+			}
+			isPlayng = {
+				this.state.isPlayng
+			}
+			currentState = {
+				this.state.time
+			}
 			/> < /
 			div >
 		);

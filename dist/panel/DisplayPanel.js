@@ -27,7 +27,7 @@ const Label = styled_components_1.default.h3 `
 	text-align: center;
 	text-transform: uppercase;
 `;
-const DisplayPanel = ({ children, label, size = 1, list = [], color = "#2196f3", target, onChange, onOff, isActive }) => React.createElement(Container, { style: {
+const DisplayPanel = ({ children, label, size = 1, target, onChange, onOff, isActive, color = "#2196f3", list = [], }) => React.createElement(Container, { style: {
         width: (size * 50 + (size - 1) * 20) + "px",
         opacity: (onOff && !isActive) ? 0.3 : 1
     } },
@@ -41,9 +41,9 @@ const DisplayPanel = ({ children, label, size = 1, list = [], color = "#2196f3",
             width: (size * 50 + (size - 1) * 20) + "px"
         } },
         children,
-        list.map((par, i) => React.createElement(ButtonWave_1.default, Object.assign({}, par, { key: i, color: color, target: target, onChange: (...e) => {
+        list.map((par, i) => React.createElement(ButtonWave_1.default, Object.assign({}, par, { key: i, color: color, target: target, onChange: (stateChanges) => {
                 if (onChange) {
-                    onChange(...e);
+                    onChange(stateChanges);
                 }
             } })))));
 exports.default = DisplayPanel;
