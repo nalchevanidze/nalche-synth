@@ -75,5 +75,9 @@ class Oscillator {
             FillAudioChenel_1.default(input.outputBuffer.getChannelData(0), this.osc.active(), this.timeLine);
         };
     }
+    setSetting(oscSetting) {
+        this.osc = oscManager_1.default(oscSetting);
+        this.seq = oscSetting.seq;
+    }
 }
 exports.default = Oscillator;

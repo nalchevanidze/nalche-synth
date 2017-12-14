@@ -10,10 +10,6 @@ var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Controller = require("../../Controller");
-
-var _Controller2 = _interopRequireDefault(_Controller);
-
 var _WaveForm = require("../../audio/oscillator/WaveForm");
 
 var _WaveForm2 = _interopRequireDefault(_WaveForm);
@@ -33,19 +29,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import Controller from "../../Controller";
 
-var WavePoint = function WavePoint(index) {
-	return (1 - (0, _WaveForm2.default)((index + _Controller2.default.wave.offset) % 1, _Controller2.default.wave)) * 100;
-};
-function GenerateWave() {
-	var end = WavePoint(0);
-	var start = WavePoint(1);
-	var p = (start + end) / 2;
-	var wave = Array.from({ length: 200 }, function (e, i) {
-		return i + " " + WavePoint(i / 200);
-	});
-	return "M 0 " + p + " " + wave + " 200 " + p;
-}
+
 var styles = {
 	main: {
 		display: "flex",
@@ -62,7 +48,7 @@ var PanelOscillator = function (_React$PureComponent) {
 
 		var _this = _possibleConstructorReturn(this, (PanelOscillator.__proto__ || Object.getPrototypeOf(PanelOscillator)).call(this, props));
 
-		_this.state = _Controller2.default.wave;
+		_this.state = props;
 		_this.update = _this.update.bind(_this);
 		return _this;
 	}
@@ -76,6 +62,25 @@ var PanelOscillator = function (_React$PureComponent) {
 		key: "render",
 		value: function render() {
 			var _this2 = this;
+
+			var _props = this.props,
+			    wave = _props.wave,
+			    filter = _props.filter;
+
+
+			var WavePoint = function WavePoint(index) {
+				return (1 - (0, _WaveForm2.default)((index + wave.offset) % 1, wave)) * 100;
+			};
+
+			function GenerateWave() {
+				var end = WavePoint(0);
+				var start = WavePoint(1);
+				var p = (start + end) / 2;
+				var wave = Array.from({ length: 200 }, function (e, i) {
+					return i + " " + WavePoint(i / 200);
+				});
+				return "M 0 " + p + " " + wave + " 200 " + p;
+			}
 
 			return _react2.default.createElement(
 				"div",
@@ -119,7 +124,7 @@ var PanelOscillator = function (_React$PureComponent) {
 						steps: 8
 					}],
 
-					target: _Controller2.default.wave,
+					target: wave,
 					onChange: this.update,
 					color: "#ffa929"
 
@@ -127,17 +132,17 @@ var PanelOscillator = function (_React$PureComponent) {
 				_react2.default.createElement(_DisplayPanel2.default, {
 					label: "FM",
 					list: [{ id: "fm" }, { id: "fmFreq" }],
-					target: _Controller2.default.wave,
+					target: wave,
 					color: "#FF5722"
 				}),
 				_react2.default.createElement(_DisplayPanel2.default, {
 					label: "Filter",
 					list: [{ id: "cutoff" }, { id: "resonance" }, { id: "envelope" }],
-					target: _Controller2.default.filter,
+					target: filter,
 					color: "#2196f3",
-					isActive: _Controller2.default.filter.on,
+					isActive: filter.on,
 					onOff: function onOff() {
-						_Controller2.default.filter.on = !_Controller2.default.filter.on;
+						filter.on = !filter.on;
 						_this2.setState({ i: Math.random() });
 					}
 				})

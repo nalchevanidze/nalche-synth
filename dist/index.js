@@ -63,7 +63,7 @@ var Synth = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Synth.__proto__ || Object.getPrototypeOf(Synth)).call(this, props));
 
-		_this.osc = new _oscillator2.default(_Controller2.default, function (time, active) {
+		_this.osc = new _oscillator2.default(_Controller2.default.default, function (time, active) {
 			_this.setState({
 				time: time,
 				active: active
@@ -71,8 +71,10 @@ var Synth = function (_React$Component) {
 		}, sequence);
 
 		_this.state = {
+			name: "default",
 			active: _this.osc.active,
-			time: 0
+			time: 0,
+			oscSettings: _Controller2.default.default
 		};
 
 		_this.setSequence = _this.osc.setSequence;
@@ -154,6 +156,17 @@ var Synth = function (_React$Component) {
 			keyEvent(this, false);
 		}
 	}, {
+		key: "setPreset",
+		value: function setPreset() {
+			var name = this.state.name === "default" ? "pluck" : "default";
+			var oscSettings = _Controller2.default[name];
+			this.setState({
+				name: name,
+				oscSettings: oscSettings
+			});
+			this.osc.setSetting(oscSettings);
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			return _react2.default.createElement(
@@ -166,26 +179,33 @@ var Synth = function (_React$Component) {
 						fontFamily: "sans-serif"
 					} },
 				_react2.default.createElement(
+					"button",
+					{ onClick: this.setPreset.bind(this) },
+					" change Preset "
+				),
+				_react2.default.createElement(
 					"section",
-					{ style: {
+					{
+						style: {
 							boxShadow: "0px 5px 10px gray",
 							width: "660px",
 							height: "410px",
 							borderRadius: "3px",
 							background: "#333333"
 						} },
-					_react2.default.createElement(_panel2.default, { seq: sequence,
-						setSequence: this.setSequence
+					_react2.default.createElement(_panel2.default, {
+						seq: sequence,
+						setSequence: this.setSequence,
+						oscSettings: this.state.oscSettings
 					}),
-					" ",
-					_react2.default.createElement(_Keyboard2.default, { keyPress: this.keyPress,
+					_react2.default.createElement(_Keyboard2.default, {
+						keyPress: this.keyPress,
 						keyUp: this.keyUp,
 						active: this.state.active
-					}),
-					" "
+					})
 				),
-				" ",
-				_react2.default.createElement(_midi2.default, { midi: _standartMidi2.default,
+				_react2.default.createElement(_midi2.default, {
+					midi: _standartMidi2.default,
 					updateMidi: this.osc.setMidi,
 					setTime: this.osc.setTime,
 					global: this.global,

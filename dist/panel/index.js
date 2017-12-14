@@ -54,11 +54,11 @@ var Panel = function (_React$PureComponent) {
 						padding: "5px"
 					}
 				},
-				_react2.default.createElement(_oscillator2.default, null),
+				_react2.default.createElement(_oscillator2.default, this.props.oscSettings),
 				_react2.default.createElement(
 					"div",
 					null,
-					_react2.default.createElement(_envelope2.default, { env: _Controller2.default.env }),
+					_react2.default.createElement(_envelope2.default, { env: this.props.oscSettings.env }),
 					_react2.default.createElement(_Sequencer2.default, {
 						seq: this.props.seq,
 						setSequence: this.props.setSequence

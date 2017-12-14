@@ -14,9 +14,9 @@ export default class Panel extends React.PureComponent {
 					padding: "5px"
 				}}
 			>
-				<PanelOscillator />
+				<PanelOscillator {...this.props.oscSettings} />
 				<div>
-					<PanelEnvelope env={Controller.env} />
+					<PanelEnvelope env={this.props.oscSettings.env} />
 					<Sequencer
 						seq={this.props.seq} 
 						setSequence={this.props.setSequence}

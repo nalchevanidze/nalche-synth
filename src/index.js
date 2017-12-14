@@ -39,8 +39,8 @@ export default class Synth extends React.Component {
 
 		super(props);
 		this.osc = new NalcheOscillator(
-			Controller,
-			(time: number, active: Set < number > ) => {
+			Controller.default,
+			(time: number, active: Set<number>) => {
 				this.setState({
 					time,
 					active
@@ -50,8 +50,10 @@ export default class Synth extends React.Component {
 		);
 
 		this.state = {
+			name:"default",
 			active: this.osc.active,
-			time: 0
+			time: 0,
+			oscSettings: Controller.default
 		};
 
 		this.setSequence = this.osc.setSequence;
@@ -61,7 +63,7 @@ export default class Synth extends React.Component {
 
 
 		this.global = {
-			setBPM: () => {},
+			setBPM: () => { },
 			BPM: () => 128,
 			stop: () => this.stop(),
 			pause: () => this.pause(),
@@ -113,10 +115,19 @@ export default class Synth extends React.Component {
 		this.stop();
 		keyEvent(this, false);
 	}
+	setPreset(){
+		let name = this.state.name === "default"? "pluck":"default";
+		let oscSettings = Controller[name];
+		this.setState({
+			name,
+			oscSettings
+		});
+		this.osc.setSetting(oscSettings);
+	}
 	render() {
-		return ( <
-			div className = "nalche-synth"
-			style = {
+		return (<
+			div className="nalche-synth"
+			style={
 				{
 					display: "flex",
 					position: "relative",
@@ -124,53 +135,37 @@ export default class Synth extends React.Component {
 					fontFamily: "sans-serif"
 				}
 			} >
-			<
-			section style = {
-				{
-					boxShadow: "0px 5px 10px gray",
-					width: "660px",
-					height: "410px",
-					borderRadius: "3px",
-					background: "#333333"
-				}
-			} >
-			<
-			Panel seq = {
-				sequence
-			}
-			setSequence = {
-				this.setSequence
-			}
-			/> <
-			Keyboard keyPress = {
-				this.keyPress
-			}
-			keyUp = {
-				this.keyUp
-			}
-			active = {
-				this.state.active
-			}
-			/> < /
-			section > <
-			MidiPanel midi = {
-				midi
-			}
-			updateMidi = {
-				this.osc.setMidi
-			}
-			setTime = {
-				this.osc.setTime
-			}
-			global = {
-				this.global
-			}
-			isPlayng = {
-				this.state.isPlayng
-			}
-			currentState = {
-				this.state.time
-			}
+			<button onClick={this.setPreset.bind(this)}> change Preset </button>
+			<section
+				style={
+					{
+						boxShadow: "0px 5px 10px gray",
+						width: "660px",
+						height: "410px",
+						borderRadius: "3px",
+						background: "#333333"
+					}
+				} >
+				<Panel
+					seq={sequence}
+					setSequence={
+						this.setSequence
+					}
+					oscSettings={this.state.oscSettings}
+				/>
+				<Keyboard 
+					keyPress={this.keyPress}
+					keyUp={this.keyUp}
+					active={this.state.active}
+				/>
+			</section >
+			<MidiPanel
+				midi={midi}
+				updateMidi={this.osc.setMidi}
+				setTime={this.osc.setTime}
+				global={this.global}
+				isPlayng={this.state.isPlayng}
+				currentState={this.state.time}
 			/> < /
 			div >
 		);

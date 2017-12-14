@@ -57,11 +57,16 @@ export default class Oscillator {
 
 	}
 
+	setSetting(oscSetting: Controller): void {
+		this.osc = oscManager(oscSetting);
+		this.seq = oscSetting.seq;
+	}
+
 
 	simpleSet = (note: number): void => {
 		if (this.notes[note]) {
 			this.simpleUnset(note);
-		}	
+		}
 		this.notes[note] = this.osc.getOsc(note);
 	}
 

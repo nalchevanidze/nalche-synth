@@ -1,23 +1,9 @@
 import React from "react";
-import Controller from "../../Controller";
+//import Controller from "../../Controller";
 import WaveForm from "../../audio/oscillator/WaveForm";
 import GridLine from "../GridLine";
 import Panel from "../DisplayPanel";
 
-const WavePoint = index => (
-	1 - WaveForm(
-		(index + Controller.wave.offset) % 1
-		,
-		Controller.wave
-	)
-) * 100;
-function GenerateWave() {
-	let end = WavePoint(0);
-	let start = WavePoint(1);
-	let p = (start + end) / 2;
-	let wave = Array.from({ length: 200 }, (e, i) => (i + " " + WavePoint(i / 200)));
-	return "M 0 " + p + " " + wave + " 200 " + p;
-}
 const styles = {
 	main: {
 		display: "flex",
@@ -28,13 +14,32 @@ const styles = {
 class PanelOscillator extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		this.state = Controller.wave;
+		this.state = props;
 		this.update = this.update.bind(this);
 	}
 	update(state) {
 		this.setState(state);
 	}
 	render() {
+
+		let {wave,filter,} = this.props ;
+
+		const WavePoint = index => (
+			1 - WaveForm(
+				(index + wave.offset) % 1
+				,
+				wave
+			)
+		) * 100;
+		
+		function GenerateWave() {
+			let end = WavePoint(0);
+			let start = WavePoint(1);
+			let p = (start + end) / 2;
+			let wave = Array.from({ length: 200 }, (e, i) => (i + " " + WavePoint(i / 200)));
+			return "M 0 " + p + " " + wave + " 200 " + p;
+		}
+
 		return (
 			<div className="oscillator" style={styles.main} >
 				<Panel
@@ -82,7 +87,7 @@ class PanelOscillator extends React.PureComponent {
 						},
 					]}
 
-					target={Controller.wave}
+					target={wave}
 					onChange={this.update}
 					color={"#ffa929"}
 
@@ -93,7 +98,7 @@ class PanelOscillator extends React.PureComponent {
 						{ id: "fm" },
 						{ id: "fmFreq" }
 					]}
-					target={Controller.wave}
+					target={wave}
 					color={"#FF5722"}
 				/>
 				<Panel
@@ -103,11 +108,11 @@ class PanelOscillator extends React.PureComponent {
 						{ id: "resonance" },
 						{ id: "envelope" }
 					]}
-					target={Controller.filter}
+					target={filter}
 					color={"#2196f3"}
-					isActive={Controller.filter.on}
+					isActive={filter.on}
 					onOff={() => {
-						Controller.filter.on = !Controller.filter.on;
+						filter.on = !filter.on;
 						this.setState({ i: Math.random() });
 					}}
 				/>
