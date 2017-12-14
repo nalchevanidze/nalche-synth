@@ -29,7 +29,11 @@ export default class Oscillator {
 	setSequence: (seq: number[][]) => void;
 	setMidi: (midi: DeepMidi) => void;
 
-	constructor(controller: Controller, target: Target) {
+	constructor(
+		controller: Controller,
+		target: Target,
+		sequence: number[][]
+	) {
 		this.notes = {};
 		this.active = new Set([]);
 		this.osc = oscManager(controller);
@@ -37,6 +41,7 @@ export default class Oscillator {
 		this.update = target;
 		this.timeLine = new Time(this);
 		this.setSequence = this.timeLine.sequencer.setSequence;
+		this.setSequence(sequence);
 		this.setMidi = this.timeLine.setMidi;
 
 		const node = Context.createScriptProcessor(bufferSize, 1, 1);

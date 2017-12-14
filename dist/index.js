@@ -68,7 +68,7 @@ var Synth = function (_React$Component) {
 				time: time,
 				active: active
 			});
-		});
+		}, sequence);
 
 		_this.state = {
 			active: _this.osc.active,

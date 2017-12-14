@@ -7,7 +7,7 @@ const bufferSize = 2048;
 const Time_1 = require("./Time");
 const oscManager_1 = require("./oscManager");
 class Oscillator {
-    constructor(controller, target) {
+    constructor(controller, target, sequence) {
         this.isPlayng = false;
         this.simpleSet = (note) => {
             if (!this.notes[note]) {
@@ -67,6 +67,7 @@ class Oscillator {
         this.update = target;
         this.timeLine = new Time_1.default(this);
         this.setSequence = this.timeLine.sequencer.setSequence;
+        this.setSequence(sequence);
         this.setMidi = this.timeLine.setMidi;
         const node = Context_1.default.createScriptProcessor(bufferSize, 1, 1);
         node.connect(destination);

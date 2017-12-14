@@ -1,32 +1,14 @@
-let sequence: number[][] = [
-	[1, 2, 3],
-	[],
-	[],
-	[1, 2, 3],
-	[],
-	[],
-	[1, 2, 3],
-	[],
-	[],
-	[1, 2, 3],
-	[],
-	[],
-	[1, 2, 3],
-	[],
-	[1, 2, 3],
-	[],
-	[],
-];
-
+let sequence: number[][] = [[]];
+let endIndex: number = sequence.length;
 let arpIndex: number = 0;
 
 function sequencer() {
 	arpIndex = 0;
-	let endIndex: number = sequence.length;
 	return {
 		next(notes: Set<number>) {
 			let chord: number[] = [];
 			let maxNotes: number = notes.size;
+			
 
 			let values = Array.from(notes).sort(
 				(a, b) => a > b ? 1 : -1
@@ -51,9 +33,6 @@ function sequencer() {
 	};
 }
 
-let oldChord: number[] = [];
-const seq = sequencer();
-let steps: number = 2;
 
 export interface Main {
 	active: Set<number>,
@@ -64,23 +43,32 @@ export interface Main {
 export default class Sequencer {
 
 	private state: number;
+	private _sequenceTaskRunner: {next(notes: Set<number>):any}
+	private _oldChord:number[];
+	private readonly _steps:number = 2;
 	sequence: number[][];
+	
 
-	constructor() {
+	constructor(initialSequence: number[][] = [[]]) {
 		this.state = 0;
+		this.sequence = initialSequence;
+		this._sequenceTaskRunner = sequencer();
+		this._oldChord = [];
+		sequence = initialSequence;
+
 	}
 
 	next = (main: Main): void => {
 
-		if (this.state >= steps) {
-			let chord = seq.next(main.active);
-			oldChord.forEach(
+		if (this.state >= this._steps) {
+			let chord = this._sequenceTaskRunner.next(main.active);
+			this._oldChord.forEach(
 				v => main.simpleUnset(v)
 			);
 			chord.forEach(
 				v => main.simpleSet(v)
 			);
-			oldChord = chord;
+			this._oldChord = chord;
 			this.state = 0;
 		}
 		this.state++;
@@ -90,6 +78,7 @@ export default class Sequencer {
 	setSequence = (seq: number[][]): void => {
 		this.sequence = seq;
 		sequence = seq;
+		endIndex = sequence.length;
 	}
 
 	restart = (): void => {

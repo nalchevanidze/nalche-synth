@@ -45,7 +45,8 @@ export default class Synth extends React.Component {
 					time,
 					active
 				});
-			}
+			},
+			sequence
 		);
 
 		this.state = {

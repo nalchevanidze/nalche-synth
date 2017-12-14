@@ -43,17 +43,17 @@ export interface Controller {
 
 const parameters: Controller = {
 	wave: {
-		sine: 1,
-		square: 0,
-		saw: 1,
-		saw2: 0.5,
-		tech: 0.4,
+		sine: 0.2,
+		square: 1,
+		saw: 0,
+		saw2: 0,
+		tech: 0,
 		noise: 0,
-		fm: 0.25,
+		fm: 0,
 		fmFreq: 0,
-		offset: 0.3,
-		voices: 0.5,
-		pitch: 0.625
+		offset: 0.125,
+		voices: 0.6,
+		pitch: 0.5
 	},
 	seq: {
 		on: true
@@ -66,14 +66,14 @@ const parameters: Controller = {
 			release: 0.1
 		},
 		gain: {
-			attack: 0.,
-			decay: 0.4,
+			attack: 0,
+			decay: 0.05,
 			sustain: 0.5,
 			release: 0.3
 		}
 	},
 	filter: {
-		cutoff: 0.4,
+		cutoff: 0.35,
 		resonance: 0.2,
 		envelope: 0.6,
 		on: true
