@@ -34,6 +34,10 @@ var _Keyboard = require("./panel/Keyboard");
 
 var _Keyboard2 = _interopRequireDefault(_Keyboard);
 
+var _PanelPresets = require("./panel/PanelPresets");
+
+var _PanelPresets2 = _interopRequireDefault(_PanelPresets);
+
 var _standartMidi = require("./standartMidi");
 
 var _standartMidi2 = _interopRequireDefault(_standartMidi);
@@ -157,8 +161,7 @@ var Synth = function (_React$Component) {
 		}
 	}, {
 		key: "setPreset",
-		value: function setPreset() {
-			var name = this.state.name === "default" ? "pluck" : "default";
+		value: function setPreset(name) {
 			var oscSettings = _Controller2.default[name];
 			this.setState({
 				name: name,
@@ -178,11 +181,11 @@ var Synth = function (_React$Component) {
 						justifyContent: "center",
 						fontFamily: "sans-serif"
 					} },
-				_react2.default.createElement(
-					"button",
-					{ onClick: this.setPreset.bind(this) },
-					" change Preset "
-				),
+				_react2.default.createElement(_PanelPresets2.default, {
+					data: _Controller2.default,
+					active: this.state.name,
+					setPreset: this.setPreset.bind(this)
+				}),
 				_react2.default.createElement(
 					"section",
 					{

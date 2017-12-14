@@ -5,7 +5,7 @@ import keymap from "./keymap";
 import NalcheOscillator from "./audio/oscillator";
 import Controller from "./Controller";
 import Keyboard from "./panel/Keyboard";
-
+import PanelPresets from "./panel/PanelPresets";
 function keyEvent(target, type) {
 	const name = (type ? "add" : "remove") + "EventListener";
 	document[name]("keydown", target.keyPress);
@@ -115,8 +115,7 @@ export default class Synth extends React.Component {
 		this.stop();
 		keyEvent(this, false);
 	}
-	setPreset(){
-		let name = this.state.name === "default"? "pluck":"default";
+	setPreset(name){
 		let oscSettings = Controller[name];
 		this.setState({
 			name,
@@ -135,7 +134,11 @@ export default class Synth extends React.Component {
 					fontFamily: "sans-serif"
 				}
 			} >
-			<button onClick={this.setPreset.bind(this)}> change Preset </button>
+			<PanelPresets 
+				data={Controller} 
+				active={this.state.name}
+				setPreset={this.setPreset.bind(this)}
+			/>
 			<section
 				style={
 					{
