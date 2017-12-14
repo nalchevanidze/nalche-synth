@@ -14,6 +14,6 @@ function setNote(midi, startIndex, note) {
     let start = startIndex + note.at;
     let end = start + note.length;
     setValue(midi, start, "start", note.id);
-    setValue(midi, end, "end", note.id);
+    setValue(midi, end - 1, "end", note.id);
 }
 exports.default = setNote;

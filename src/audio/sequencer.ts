@@ -8,7 +8,7 @@ function sequencer() {
 		next(notes: Set<number>) {
 			let chord: number[] = [];
 			let maxNotes: number = notes.size;
-			
+
 
 			let values = Array.from(notes).sort(
 				(a, b) => a > b ? 1 : -1
@@ -43,36 +43,40 @@ export interface Main {
 export default class Sequencer {
 
 	private state: number;
-	private _sequenceTaskRunner: {next(notes: Set<number>):any}
-	private _oldChord:number[];
-	private readonly _steps:number = 2;
+	private _sequenceTaskRunner: { next(notes: Set<number>): any }
+	private _chord: number[];
+	private readonly _steps: number = 2;
 	sequence: number[][];
-	
+
 
 	constructor(initialSequence: number[][] = [[]]) {
 		this.state = 0;
 		this.sequence = initialSequence;
 		this._sequenceTaskRunner = sequencer();
-		this._oldChord = [];
+		this._chord = [];
 		sequence = initialSequence;
 
 	}
 
-	next = (main: Main): void => {
+	nextState = (main: Main): void => {
+		//unset old notes
+		this._chord.forEach(
+			note => main.simpleUnset(note)
+		);
+		//update  notes
+		this._chord = this._sequenceTaskRunner.next(main.active);
+		console.log(main.active);
+		this._chord.forEach(
+			v => main.simpleSet(v)
+		);
+	}
 
+	next = (main: Main): void => {
 		if (this.state >= this._steps) {
-			let chord = this._sequenceTaskRunner.next(main.active);
-			this._oldChord.forEach(
-				v => main.simpleUnset(v)
-			);
-			chord.forEach(
-				v => main.simpleSet(v)
-			);
-			this._oldChord = chord;
+			this.nextState(main);
 			this.state = 0;
 		}
 		this.state++;
-
 	}
 
 	setSequence = (seq: number[][]): void => {

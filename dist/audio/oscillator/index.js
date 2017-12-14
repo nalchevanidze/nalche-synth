@@ -10,15 +10,15 @@ class Oscillator {
     constructor(controller, target, sequence) {
         this.isPlayng = false;
         this.simpleSet = (note) => {
-            if (!this.notes[note]) {
-                this.notes[note] = this.osc.getOsc(note);
+            if (this.notes[note]) {
+                this.simpleUnset(note);
             }
+            this.notes[note] = this.osc.getOsc(note);
         };
         this.simpleUnset = (value) => {
-            let { notes } = this;
-            if (notes[value]) {
-                notes[value].end();
-                delete notes[value];
+            if (this.notes[value]) {
+                this.notes[value].end();
+                delete this.notes[value];
             }
         };
         this.unsetNote = (note) => {

@@ -18,5 +18,7 @@ export default function createMelodySet(rowArray: DeepMidi): MidiTask[] {
 
 	);
 
+	console.log(midi);
+
 	return midi;
 }

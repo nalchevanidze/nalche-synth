@@ -29,12 +29,15 @@ function sequencer() {
 class Sequencer {
     constructor(initialSequence = [[]]) {
         this._steps = 2;
+        this.nextState = (main) => {
+            this._chord.forEach(note => main.simpleUnset(note));
+            this._chord = this._sequenceTaskRunner.next(main.active);
+            console.log(main.active);
+            this._chord.forEach(v => main.simpleSet(v));
+        };
         this.next = (main) => {
             if (this.state >= this._steps) {
-                let chord = this._sequenceTaskRunner.next(main.active);
-                this._oldChord.forEach(v => main.simpleUnset(v));
-                chord.forEach(v => main.simpleSet(v));
-                this._oldChord = chord;
+                this.nextState(main);
                 this.state = 0;
             }
             this.state++;
@@ -50,7 +53,7 @@ class Sequencer {
         this.state = 0;
         this.sequence = initialSequence;
         this._sequenceTaskRunner = sequencer();
-        this._oldChord = [];
+        this._chord = [];
         sequence = initialSequence;
     }
 }

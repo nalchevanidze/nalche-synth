@@ -23,20 +23,28 @@ export default class TaskQueue {
 	}
 
 	runTask = ({ end, start }: MidiTask): void => {
+
+		//add new notes
 		start.forEach(this.setNote);
+		
+		//terminate all notes that was before
 		end.forEach(this.unsetNote);
+		
+		
 	}
 
 	nextTask = (): void => {
+
 		if (index >= endIndex) {
 			index = 0;
 		}
-
 		if (midi[index]) {
 			this.runTask(midi[index]);
 		}
+
 		index++;
 		requestAnimationFrame(this.update);
+
 	}
 
 	setMidi(melody: DeepMidi): void {

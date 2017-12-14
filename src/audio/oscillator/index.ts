@@ -59,16 +59,16 @@ export default class Oscillator {
 
 
 	simpleSet = (note: number): void => {
-		if (!this.notes[note]) {
-			this.notes[note] = this.osc.getOsc(note);
-		}
+		if (this.notes[note]) {
+			this.simpleUnset(note);
+		}	
+		this.notes[note] = this.osc.getOsc(note);
 	}
 
 	simpleUnset = (value: number): void => {
-		let { notes } = this;
-		if (notes[value]) {
-			notes[value].end();
-			delete notes[value];
+		if (this.notes[value]) {
+			this.notes[value].end();
+			delete this.notes[value];
 		}
 	}
 

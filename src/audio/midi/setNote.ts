@@ -25,6 +25,6 @@ export default function setNote(midi: FlatMidi, startIndex: number, note: Note):
 	let end: number = start + note.length;
 
 	setValue(midi, start, "start", note.id);
-	setValue(midi, end, "end", note.id);
+	setValue(midi, end-1, "end", note.id);
 
 }
