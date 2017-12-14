@@ -97,7 +97,7 @@ var Sequencer = function (_React$PureComponent) {
 		value: function render() {
 			var _this2 = this;
 
-			var seq = this.props.seq;
+			var seq = this.props.settings.seq;
 
 			return _react2.default.createElement(
 				_DisplayPanel2.default,

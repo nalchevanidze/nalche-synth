@@ -32,7 +32,6 @@ class Sequencer {
         this.nextState = (main) => {
             this._chord.forEach(note => main.simpleUnset(note));
             this._chord = this._sequenceTaskRunner.next(main.active);
-            console.log(main.active);
             this._chord.forEach(v => main.simpleSet(v));
         };
         this.next = (main) => {

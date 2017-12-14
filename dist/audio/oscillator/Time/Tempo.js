@@ -8,12 +8,10 @@ class Tempo {
     set BMP(beatsPerMinute) {
         this.BMP = beatsPerMinute;
         subStep = 1 / (60 * sampleRate / (beatsPerMinute * 8));
-        console.log(subStep);
     }
     constructor() {
         this.BPM = 130;
         subStep = 1 / (60 * sampleRate / (this.BPM * 8));
-        console.log(subStep);
     }
     next() {
         counter += subStep;

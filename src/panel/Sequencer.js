@@ -56,7 +56,7 @@ export default class Sequencer extends React.PureComponent {
 		this.setState({ seq: [...this.state.seq] });
 	}
 	render() {
-		let {seq} = this.props;
+		let {seq} = this.props.settings;
 		return (
 			<Panel
 				label="sequencer"

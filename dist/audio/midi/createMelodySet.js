@@ -10,7 +10,6 @@ function createMelodySet(rowArray) {
             });
         }
     });
-    console.log(midi);
     return midi;
 }
 exports.default = createMelodySet;

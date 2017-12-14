@@ -61,7 +61,8 @@ var Panel = function (_React$PureComponent) {
 					_react2.default.createElement(_envelope2.default, { env: this.props.oscSettings.env }),
 					_react2.default.createElement(_Sequencer2.default, {
 						seq: this.props.seq,
-						setSequence: this.props.setSequence
+						setSequence: this.props.setSequence,
+						settings: this.props.oscSettings
 					})
 				)
 			);

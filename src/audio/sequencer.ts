@@ -65,7 +65,6 @@ export default class Sequencer {
 		);
 		//update  notes
 		this._chord = this._sequenceTaskRunner.next(main.active);
-		console.log(main.active);
 		this._chord.forEach(
 			v => main.simpleSet(v)
 		);

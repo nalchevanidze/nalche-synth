@@ -20,6 +20,7 @@ export default class Panel extends React.PureComponent {
 					<Sequencer
 						seq={this.props.seq} 
 						setSequence={this.props.setSequence}
+						settings={this.props.oscSettings}
 					/>
 				</div>
 			</div>
