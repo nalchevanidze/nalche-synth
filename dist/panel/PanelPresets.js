@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(["\n\tmargin: 5px;\n\tjustify-content: space-around;\n\tflex-wrap: wrap;\n\tflex-shrink: 0;\n\tbackground:#333333;\n\tpadding:10px;\n"], ["\n\tmargin: 5px;\n\tjustify-content: space-around;\n\tflex-wrap: wrap;\n\tflex-shrink: 0;\n\tbackground:#333333;\n\tpadding:10px;\n"]),
-    _templateObject2 = _taggedTemplateLiteral(["\n\tfont-size: 12px;\n\tmargin: 0px;\n\twidth: 100%;\n\ttext-align: center;\n\ttext-transform: uppercase;\n\tcolor: rgb(205, 220, 57);\n\tpadding:10px 0px;\n"], ["\n\tfont-size: 12px;\n\tmargin: 0px;\n\twidth: 100%;\n\ttext-align: center;\n\ttext-transform: uppercase;\n\tcolor: rgb(205, 220, 57);\n\tpadding:10px 0px;\n"]),
-    _templateObject3 = _taggedTemplateLiteral(["\n\tdisplay:block;\n\tcolor: white;\n\tbackground:none;\n\toutline: none;\n\tborder: none;\n\tpadding:5px;\n\twidth:100%;\n\ttext-align:center;\n\t&:hover{\n\t\tbackground: #444;\n\t}\n"], ["\n\tdisplay:block;\n\tcolor: white;\n\tbackground:none;\n\toutline: none;\n\tborder: none;\n\tpadding:5px;\n\twidth:100%;\n\ttext-align:center;\n\t&:hover{\n\t\tbackground: #444;\n\t}\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n\tmargin: 5px;\n\tjustify-content: space-around;\n\tflex-wrap: wrap;\n\tflex-shrink: 0;\n\tbackground:#333333;\n\tpadding:5px;\n"], ["\n\tmargin: 5px;\n\tjustify-content: space-around;\n\tflex-wrap: wrap;\n\tflex-shrink: 0;\n\tbackground:#333333;\n\tpadding:5px;\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n\tfont-size: 12px;\n\tmargin: 0px;\n\twidth: 100%;\n\ttext-align: center;\n\ttext-transform: uppercase;\n\tcolor: rgb(205, 220, 57);\n\tpadding: 5px 0px;\n"], ["\n\tfont-size: 12px;\n\tmargin: 0px;\n\twidth: 100%;\n\ttext-align: center;\n\ttext-transform: uppercase;\n\tcolor: rgb(205, 220, 57);\n\tpadding: 5px 0px;\n"]),
+    _templateObject3 = _taggedTemplateLiteral(["\n\tdisplay:block;\n\tcolor: white;\n\tbackground:none;\n\toutline: none;\n\tborder: none;\n\tpadding:2px;\n\twidth:100%;\n\ttext-align:center;\n\t&:hover{\n\t\tbackground: #444;\n\t}\n"], ["\n\tdisplay:block;\n\tcolor: white;\n\tbackground:none;\n\toutline: none;\n\tborder: none;\n\tpadding:2px;\n\twidth:100%;\n\ttext-align:center;\n\t&:hover{\n\t\tbackground: #444;\n\t}\n"]);
 
 var _react = require("react");
 

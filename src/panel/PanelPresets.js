@@ -7,7 +7,7 @@ const Container = styled.div`
 	flex-wrap: wrap;
 	flex-shrink: 0;
 	background:#333333;
-	padding:10px;
+	padding:5px;
 `;
 
 const Label = styled.h3`
@@ -17,7 +17,7 @@ const Label = styled.h3`
 	text-align: center;
 	text-transform: uppercase;
 	color: rgb(205, 220, 57);
-	padding:10px 0px;
+	padding: 5px 0px;
 `;
 
 export interface PanelPresetsProps {
@@ -33,7 +33,7 @@ const Button = styled.button`
 	background:none;
 	outline: none;
 	border: none;
-	padding:5px;
+	padding:2px;
 	width:100%;
 	text-align:center;
 	&:hover{

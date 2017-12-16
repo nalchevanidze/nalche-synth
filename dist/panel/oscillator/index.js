@@ -22,6 +22,10 @@ var _DisplayPanel = require("../DisplayPanel");
 
 var _DisplayPanel2 = _interopRequireDefault(_DisplayPanel);
 
+var _PanelPresets = require("../PanelPresets");
+
+var _PanelPresets2 = _interopRequireDefault(_PanelPresets);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -94,7 +98,7 @@ var PanelOscillator = function (_React$PureComponent) {
 					},
 					_react2.default.createElement(
 						"svg",
-						{ viewBox: "-1 0 202 200", width: "100px", height: "100px" },
+						{ viewBox: "-1 0 202 200", width: "90px", height: "90px" },
 						_react2.default.createElement("path", {
 							d: GenerateWave(),
 							stroke: "#CDDC39",
@@ -102,7 +106,8 @@ var PanelOscillator = function (_React$PureComponent) {
 							fill: "none"
 						}),
 						_react2.default.createElement(_GridLine2.default, null)
-					)
+					),
+					_react2.default.createElement(_PanelPresets2.default, this.props.preset)
 				),
 				_react2.default.createElement(_DisplayPanel2.default, {
 					label: "Oscillator",
@@ -116,7 +121,7 @@ var PanelOscillator = function (_React$PureComponent) {
 						},
 						steps: 11
 					}, {
-						id: "pitch",
+						id: "octave",
 						range: {
 							min: -4,
 							max: 4

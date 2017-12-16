@@ -4,7 +4,6 @@ import PanelEnvelope from "./envelope";
 import Sequencer from "./Sequencer";
 import Controller from "../Controller";
 
-
 export default class Panel extends React.PureComponent {
 	render() {
 		return (
@@ -14,7 +13,10 @@ export default class Panel extends React.PureComponent {
 					padding: "5px"
 				}}
 			>
-				<PanelOscillator {...this.props.oscSettings} />
+				<PanelOscillator 
+					{...this.props.oscSettings} 
+					preset={this.props.preset}
+				/>
 				<div>
 					<PanelEnvelope env={this.props.oscSettings.env} />
 					<Sequencer

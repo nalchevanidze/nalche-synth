@@ -181,11 +181,6 @@ var Synth = function (_React$Component) {
 						justifyContent: "center",
 						fontFamily: "sans-serif"
 					} },
-				_react2.default.createElement(_PanelPresets2.default, {
-					data: _Controller2.default,
-					active: this.state.name,
-					setPreset: this.setPreset.bind(this)
-				}),
 				_react2.default.createElement(
 					"section",
 					{
@@ -197,9 +192,15 @@ var Synth = function (_React$Component) {
 							background: "#333333"
 						} },
 					_react2.default.createElement(_panel2.default, {
+
 						seq: sequence,
 						setSequence: this.setSequence,
-						oscSettings: this.state.oscSettings
+						oscSettings: this.state.oscSettings,
+						preset: {
+							data: _Controller2.default,
+							active: this.state.name,
+							setPreset: this.setPreset.bind(this)
+						}
 					}),
 					_react2.default.createElement(_Keyboard2.default, {
 						keyPress: this.keyPress,

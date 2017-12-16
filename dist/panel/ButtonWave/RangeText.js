@@ -10,18 +10,9 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var rangeFunc = function rangeFunc(_ref, x) {
-	var min = _ref.min,
-	    max = _ref.max;
-
-	var size = max - min;
-	return Math.floor(min + x * size);
-};
-
-var RangeText = function RangeText(_ref2) {
-	var color = _ref2.color,
-	    range = _ref2.range,
-	    value = _ref2.value;
+var RangeText = function RangeText(_ref) {
+	var color = _ref.color,
+	    value = _ref.value;
 	return _react2.default.createElement(
 		"text",
 		{
@@ -32,7 +23,7 @@ var RangeText = function RangeText(_ref2) {
 			fill: color,
 			style: { userSelect: "none" }
 		},
-		rangeFunc(range, value)
+		value
 	);
 };
 exports.default = RangeText;

@@ -1,12 +1,6 @@
 import React from "react";
 
-
-const rangeFunc = ({ min, max }, x) => {
-	let size = (max - min);
-	return Math.floor(min + x * size);
-};
-
-const RangeText = ({ color, range, value }) =>
+const RangeText = ({ color, value }) =>
 	<text
 		x="50"
 		y="65"
@@ -15,9 +9,7 @@ const RangeText = ({ color, range, value }) =>
 		fill={color}
 		style={{userSelect: "none"}}
 	>
-		{
-			rangeFunc(range, value)
-		}
+		{value}
 	</text>
 	;
 export default RangeText;

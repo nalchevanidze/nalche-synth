@@ -41,6 +41,22 @@ export interface DisplayPanelProps {
 	target?: object;
 }
 
+
+const Button = styled.button`
+	display: block;
+	width:12px;
+	height:12px;
+	border-radius: 6px;
+	margin: 2px;
+	border: 3px solid #894a36;
+	padding: 0px;
+	background: ${(props) => props.isActive ? "#FF5722" : "none"};
+	&:focus{
+		outline: none;
+	}
+`;
+const TurnOnButton = () => <Button></Button>
+
 const DisplayPanel = ({
 	children,
 	label,
@@ -57,7 +73,6 @@ const DisplayPanel = ({
 	<Container
 		style={{
 			width: (size * 50 + (size - 1) * 20) + "px",
-			opacity: (onOff && !isActive) ? 0.3 : 1
 		}}
 	>
 		<div style={{
@@ -65,11 +80,10 @@ const DisplayPanel = ({
 			height: 10
 		}}>{
 
-				onOff ? <input
-					type="checkbox"
-					name="zutat"
-					value="salami"
-					onChange={onOff}
+				onOff ? <Button
+					onClick={onOff}
+					color={color}
+					isActive={isActive}
 				/> : null
 
 			}
@@ -77,7 +91,8 @@ const DisplayPanel = ({
 		</div>
 		<Container
 			style={{
-				width: (size * 50 + (size - 1) * 20) + "px"
+				width: (size * 50 + (size - 1) * 20) + "px",
+				opacity: (onOff && !isActive) ? 0.3 : 1
 			}}
 		>
 			{

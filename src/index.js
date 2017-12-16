@@ -134,11 +134,6 @@ export default class Synth extends React.Component {
 					fontFamily: "sans-serif"
 				}
 			} >
-			<PanelPresets 
-				data={Controller} 
-				active={this.state.name}
-				setPreset={this.setPreset.bind(this)}
-			/>
 			<section
 				style={
 					{
@@ -150,11 +145,17 @@ export default class Synth extends React.Component {
 					}
 				} >
 				<Panel
+
 					seq={sequence}
 					setSequence={
 						this.setSequence
 					}
 					oscSettings={this.state.oscSettings}
+					preset={{
+						data:Controller,
+						active: this.state.name,
+						setPreset:this.setPreset.bind(this)
+					}}
 				/>
 				<Keyboard 
 					keyPress={this.keyPress}

@@ -3,6 +3,7 @@ import React from "react";
 import WaveForm from "../../audio/oscillator/WaveForm";
 import GridLine from "../GridLine";
 import Panel from "../DisplayPanel";
+import PanelPresets from "../PanelPresets";
 
 const styles = {
 	main: {
@@ -47,7 +48,7 @@ class PanelOscillator extends React.PureComponent {
 					size={2}
 					color={"#CDDC39"}
 				>
-					<svg viewBox="-1 0 202 200" width="100px" height="100px" >
+					<svg viewBox="-1 0 202 200" width="90px" height="90px" >
 						<path
 							d={GenerateWave()}
 							stroke="#CDDC39"
@@ -56,6 +57,7 @@ class PanelOscillator extends React.PureComponent {
 						/>
 						<GridLine />
 					</svg>
+					<PanelPresets {...this.props.preset} />
 				</Panel>
 				<Panel
 					label="Oscillator"
@@ -78,7 +80,7 @@ class PanelOscillator extends React.PureComponent {
 							steps: 11
 						},
 						{
-							id: "pitch",
+							id: "octave",
 							range: {
 								min: -4,
 								max: 4

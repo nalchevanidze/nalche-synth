@@ -28,6 +28,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var rangeFunc = function rangeFunc(_ref, x) {
+	var min = _ref.min,
+	    max = _ref.max;
+
+	var size = max - min;
+	return Math.floor(min + x * size);
+};
+
 var CirclerangeButton = function (_React$PureComponent) {
 	_inherits(CirclerangeButton, _React$PureComponent);
 
@@ -64,7 +72,8 @@ var CirclerangeButton = function (_React$PureComponent) {
 			    target = _props.target,
 			    id = _props.id,
 			    _props$steps = _props.steps,
-			    steps = _props$steps === undefined ? 32 : _props$steps;
+			    steps = _props$steps === undefined ? 32 : _props$steps,
+			    range = _props.range;
 
 
 			var stepSize = steps;
@@ -80,11 +89,18 @@ var CirclerangeButton = function (_React$PureComponent) {
 					    y = _svgCordinates.y;
 
 					this.setState({ x: x, y: y });
+
 					var value = 1 - Math.min(Math.max(y - 5, 0) / 80, 1);
+
 					value = Math.round(value * stepSize) / stepSize;
+					if (range) {
+						value = rangeFunc(range, value);
+					}
+
 					if (target) {
 						target[id] = value;
 					}
+
 					if (onChange) {
 						onChange(_defineProperty({}, id, value));
 					}
@@ -110,9 +126,14 @@ var CirclerangeButton = function (_React$PureComponent) {
 			    steps = _props2$steps === undefined ? 16 : _props2$steps,
 			    children = _props2.children,
 			    _props2$color = _props2.color,
-			    color = _props2$color === undefined ? "#222" : _props2$color;
+			    color = _props2$color === undefined ? "#222" : _props2$color,
+			    range = _props2.range;
 
 			var level = target[id];
+
+			if (range) {
+				level = (level - range.min) / (range.max - range.min);
+			}
 
 			var fullLength = 45 * 2 * Math.PI;
 			var step = fullLength / steps;

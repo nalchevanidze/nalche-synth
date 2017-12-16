@@ -2,6 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import svgCordinates from "../svgCordinates";
 
+const rangeFunc = ({ min, max }, x) => {
+	let size = (max - min);
+	return Math.floor(min + x * size);
+};
+
 export default class CirclerangeButton extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -25,7 +30,8 @@ export default class CirclerangeButton extends React.PureComponent {
 			onChange,
 			target,
 			id,
-			steps = 32
+			steps = 32,
+			range
 		} = this.props;
 
 		const stepSize = steps;
@@ -38,11 +44,20 @@ export default class CirclerangeButton extends React.PureComponent {
 				// updates state
 				let { x, y } = svgCordinates(this.target, event);
 				this.setState({ x, y });
+
 				let value = 1 - Math.min((Math.max(y - 5, 0) / 80), 1);
+
+				
+
 				value = Math.round(value * stepSize) / stepSize;
+				if(range){
+					value = rangeFunc(range, value);
+				}
+				
 				if (target) {
 					target[id] = value;
 				}
+
 				if (onChange) {
 					onChange({ [id]: value });
 				}
@@ -64,9 +79,14 @@ export default class CirclerangeButton extends React.PureComponent {
 			target,
 			steps = 16,
 			children,
-			color = "#222"
+			color = "#222",
+			range
 		} = this.props;
 		let level = target[id];
+		
+		if(range){
+			level = (level - range.min)/(range.max - range.min);
+		}
 
 
 		const fullLength = 45 * 2 * Math.PI;

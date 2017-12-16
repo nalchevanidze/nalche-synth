@@ -59,7 +59,8 @@ export default function SoundEvent(controller: Controller): SoundEventInstance {
 
 	function reset(frequency: number): void {
 
-		count = wave.voices * (maxVoices - 1);
+		count = Math.min(maxVoices - 1, Math.max(1, wave.voices));
+		console.log(count);
 		let middle = Math.floor((count + 1) / 2);
 
 		for (let i = 0; i <= count; i++) {
@@ -90,7 +91,7 @@ export default function SoundEvent(controller: Controller): SoundEventInstance {
 		reset,
 		setNote(note) {
 			let range = Math.max(
-				note + (Math.floor(wave.pitch * 8) - 4) * 12,
+				note + Math.floor(wave.octave) * 12,
 				0
 			);
 			reset(

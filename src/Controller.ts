@@ -9,7 +9,7 @@ export interface WavePatameters {
 	fmFreq: number,
 	offset: number,
 	voices: number,
-	pitch: number
+	octave: number
 }
 
 export interface EnvelopeState {
@@ -49,8 +49,8 @@ const defaultPreset: Controller = {
 		fm: 0,
 		fmFreq: 0,
 		offset: 0.75,
-		voices: 1,
-		pitch: 0.625
+		voices: 12,
+		octave: 1
 	},
 	seq: {
 		on: true
@@ -88,8 +88,8 @@ const pluck : Controller = {
 		fm: 0,
 		fmFreq: 0,
 		offset: 0,
-		voices: 0,
-		pitch: 0.5
+		voices: 1,
+		octave: 0
 	},
 	seq: {
 		on: true
@@ -109,7 +109,7 @@ const pluck : Controller = {
 		}
 	},
 	filter: {
-		cutoff: 0.5,
+		cutoff: 0.4,
 		resonance: 0.2,
 		envelope: 0.6,
 		on: true
@@ -127,8 +127,8 @@ const Razor : Controller = {
 		fm: 0.7,
 		fmFreq: 0.53125,
 		offset: 0,
-		voices: 0.18181818181818182,
-		pitch: 0.5
+		voices: 3,
+		octave: 0
 	},
 	seq: {
 		on: false
@@ -166,8 +166,8 @@ const Padd : Controller = {
 		fm: 0,
 		fmFreq: 0,
 		offset: 0.5,
-		voices: 0,
-		pitch: 0.625
+		voices: 1,
+		octave: 0
 	},
 	seq: {
 		on: false

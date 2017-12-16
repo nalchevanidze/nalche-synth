@@ -32,7 +32,8 @@ function SoundEvent(controller) {
         return value / (size + 1);
     }
     function reset(frequency) {
-        count = wave.voices * (maxVoices - 1);
+        count = Math.min(maxVoices - 1, Math.max(1, wave.voices));
+        console.log(count);
         let middle = Math.floor((count + 1) / 2);
         for (let i = 0; i <= count; i++) {
             let value = i - middle;
@@ -49,7 +50,7 @@ function SoundEvent(controller) {
         next,
         reset,
         setNote(note) {
-            let range = Math.max(note + (Math.floor(wave.pitch * 8) - 4) * 12, 0);
+            let range = Math.max(note + Math.floor(wave.octave) * 12, 0);
             reset(NoteToFrequency_1.default(range));
         },
         end: envelope.end.bind(envelope)
