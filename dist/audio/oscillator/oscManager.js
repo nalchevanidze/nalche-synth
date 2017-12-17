@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const SoundEvent_1 = require("./SoundEvent");
+var SoundEvent_1 = require("./SoundEvent");
 function OSCManager(controller) {
-    const stack = Array.from({ length: 6 }, () => SoundEvent_1.default(controller));
-    const getOsc = (isActive) => stack.filter(osc => isActive === osc.envelope.live);
+    var stack = Array.from({ length: 6 }, function () { return SoundEvent_1.default(controller); });
+    var getOsc = function (isActive) { return stack.filter(function (osc) { return isActive === osc.envelope.live; }); };
     return {
-        active: () => getOsc(true),
-        clear() {
-            stack.forEach(osc => osc.end());
+        active: function () { return getOsc(true); },
+        clear: function () {
+            stack.forEach(function (osc) { return osc.end(); });
         },
-        getOsc(note) {
-            let osc = getOsc(false)[0];
+        getOsc: function (note) {
+            var osc = getOsc(false)[0];
             if (!osc) {
                 osc = SoundEvent_1.default(controller);
                 stack.push(osc);

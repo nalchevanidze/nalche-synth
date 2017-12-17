@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-let sequence = [[]];
-let endIndex = sequence.length;
-let arpIndex = 0;
+var sequence = [[]];
+var endIndex = sequence.length;
+var arpIndex = 0;
 function sequencer() {
     arpIndex = 0;
     return {
-        next(notes) {
-            let chord = [];
-            let maxNotes = notes.size;
-            let values = Array.from(notes).sort((a, b) => a > b ? 1 : -1);
+        next: function (notes) {
+            var chord = [];
+            var maxNotes = notes.size;
+            var values = Array.from(notes).sort(function (a, b) { return a > b ? 1 : -1; });
             if (maxNotes) {
-                chord = sequence[arpIndex].map((i) => {
+                chord = sequence[arpIndex].map(function (i) {
                     i--;
-                    const octave = 12 * Math.floor(i / maxNotes);
-                    const selectIndex = i % maxNotes;
+                    var octave = 12 * Math.floor(i / maxNotes);
+                    var selectIndex = i % maxNotes;
                     return values[selectIndex] + octave;
                 });
             }
@@ -26,27 +26,29 @@ function sequencer() {
         }
     };
 }
-class Sequencer {
-    constructor(initialSequence = [[]]) {
+var Sequencer = (function () {
+    function Sequencer(initialSequence) {
+        if (initialSequence === void 0) { initialSequence = [[]]; }
+        var _this = this;
         this._steps = 2;
-        this.nextState = (main) => {
-            this._chord.forEach(note => main.simpleUnset(note));
-            this._chord = this._sequenceTaskRunner.next(main.active);
-            this._chord.forEach(v => main.simpleSet(v));
+        this.nextState = function (main) {
+            _this._chord.forEach(function (note) { return main.simpleUnset(note); });
+            _this._chord = _this._sequenceTaskRunner.next(main.active);
+            _this._chord.forEach(function (v) { return main.simpleSet(v); });
         };
-        this.next = (main) => {
-            if (this.state >= this._steps) {
-                this.nextState(main);
-                this.state = 0;
+        this.next = function (main) {
+            if (_this.state >= _this._steps) {
+                _this.nextState(main);
+                _this.state = 0;
             }
-            this.state++;
+            _this.state++;
         };
-        this.setSequence = (seq) => {
-            this.sequence = seq;
+        this.setSequence = function (seq) {
+            _this.sequence = seq;
             sequence = seq;
             endIndex = sequence.length;
         };
-        this.restart = () => {
+        this.restart = function () {
             arpIndex = 0;
         };
         this.state = 0;
@@ -55,5 +57,6 @@ class Sequencer {
         this._chord = [];
         sequence = initialSequence;
     }
-}
+    return Sequencer;
+}());
 exports.default = Sequencer;

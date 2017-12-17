@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const midi = [
+var midi = [
     [
         {
             "at": 0,
@@ -242,7 +242,7 @@ const midi = [
     ],
     [],
 ];
-const midi2 = [
+var midi2 = [
     [
         {
             "at": 0,

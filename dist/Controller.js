@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const defaultPreset = {
+var defaultPreset = {
     wave: {
         sine: 0.2,
         square: 1,
@@ -38,7 +38,7 @@ const defaultPreset = {
         on: false
     }
 };
-const pluck = {
+var pluck = {
     wave: {
         sine: 1,
         square: 0,
@@ -76,7 +76,7 @@ const pluck = {
         on: true
     }
 };
-const Razor = {
+var Razor = {
     wave: {
         sine: 1,
         square: 0,
@@ -114,7 +114,7 @@ const Razor = {
         on: false
     }
 };
-const Padd = {
+var Padd = {
     wave: {
         sine: 1,
         square: 0.1,
@@ -152,7 +152,7 @@ const Padd = {
         on: true
     }
 };
-const presets = {
+var presets = {
     default: defaultPreset,
     pluck: pluck,
     razor: Razor,

@@ -5,7 +5,7 @@ function NoteToFrequency(index) {
     if (Number.isNaN(index)) {
         throw new Error("Invalid Note");
     }
-    let pow = (index - 49) / 12;
+    var pow = (index - 49) / 12;
     return (Math.pow(2, pow)) * 440;
 }
 exports.default = NoteToFrequency;

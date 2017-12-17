@@ -4,7 +4,7 @@ function SvgCoordinates(svg, event) {
     if (event.type === "touchmove") {
         event = event.touches[0];
     }
-    let point = svg.createSVGPoint();
+    var point = svg.createSVGPoint();
     point.x = event.clientX;
     point.y = event.clientY;
     return point.matrixTransform(svg.getScreenCTM().inverse());

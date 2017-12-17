@@ -1,83 +1,119 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spread = (this && this.__spread) || function () {
+    for (var ar = [], i = 0; i < arguments.length; i++) ar = ar.concat(__read(arguments[i]));
+    return ar;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const React = require("react");
-const GridLine_1 = require("../GridLine");
-const ReactDOM = require("react-dom");
-const svgCordinates_1 = require("../svgCordinates");
-const ControlPoint_1 = require("./ControlPoint");
-class EnvelopeGraphic extends React.Component {
-    constructor(props) {
-        super(props);
-        this.position = (event) => {
-            if (!this.target) {
+var React = require("react");
+var GridLine_1 = require("../GridLine");
+var ReactDOM = require("react-dom");
+var svgCordinates_1 = require("../svgCordinates");
+var ControlPoint_1 = require("./ControlPoint");
+var EnvelopeGraphic = (function (_super) {
+    __extends(EnvelopeGraphic, _super);
+    function EnvelopeGraphic(props) {
+        var _this = _super.call(this, props) || this;
+        _this.position = function (event) {
+            if (!_this.target) {
                 return { x: 0, y: 0 };
             }
-            let { x, y } = svgCordinates_1.default(this.target, event);
+            var _a = svgCordinates_1.default(_this.target, event), x = _a.x, y = _a.y;
             x = Math.min((Math.max(x, 0) / 100), 1);
             y = 1 - Math.min((Math.max(y, 0) / 100), 1);
-            return { x, y };
+            return { x: x, y: y };
         };
-        this.levelMove = (event) => {
-            if (this.point.current) {
-                this.point.current(event);
+        _this.levelMove = function (event) {
+            if (_this.point.current) {
+                _this.point.current(event);
             }
         };
-        this.clearPoint = (event) => {
-            this.point.current = () => { };
+        _this.clearPoint = function (event) {
+            _this.point.current = function () { };
         };
-        this.setAttack = ({ x }) => {
-            this.updateValues({ attack: x });
+        _this.setAttack = function (_a) {
+            var x = _a.x;
+            _this.updateValues({ attack: x });
         };
-        this.setDecay = ({ x, y }) => {
-            this.updateValues({
-                decay: Math.max(x - this.state.attack, 0),
+        _this.setDecay = function (_a) {
+            var x = _a.x, y = _a.y;
+            _this.updateValues({
+                decay: Math.max(x - _this.state.attack, 0),
                 sustain: y
             });
         };
-        this.state = {
+        _this.state = {
             attack: 0,
             release: 0,
             sustain: 0,
             decay: 0
         };
-        this.hide = false;
-        this.position = this.position.bind(this);
-        this.point = { current: () => { } };
+        _this.hide = false;
+        _this.position = _this.position.bind(_this);
+        _this.point = { current: function () { } };
+        return _this;
     }
-    updateTagret() {
+    EnvelopeGraphic.prototype.updateTagret = function () {
         this.hide = false;
         this.target = ReactDOM.findDOMNode(this);
-    }
-    componentWillMount() {
+    };
+    EnvelopeGraphic.prototype.componentWillMount = function () {
         this.state = this.props.state;
         this.original = this.props.state;
         this.updateTagret();
-    }
-    componentDidMount() {
+    };
+    EnvelopeGraphic.prototype.componentDidMount = function () {
         this.updateTagret();
-    }
-    componentWillReceiveProps(next) {
+    };
+    EnvelopeGraphic.prototype.componentWillReceiveProps = function (next) {
         this.state = next.state;
         this.original = next.state;
-    }
-    componentWillUnmount() {
+    };
+    EnvelopeGraphic.prototype.componentWillUnmount = function () {
         this.hide = true;
         this.target = null;
-    }
-    updateValues(state) {
+    };
+    EnvelopeGraphic.prototype.updateValues = function (state) {
         Object.assign(this.original, state);
         this.setState(this.original);
-    }
-    render() {
-        let { attack, release, sustain, decay } = this.state;
+    };
+    EnvelopeGraphic.prototype.render = function () {
+        var _this = this;
+        var _a = this.state, attack = _a.attack, release = _a.release, sustain = _a.sustain, decay = _a.decay;
         attack = attack * 100;
         decay = (attack + decay * 100);
-        let sustainX = decay + 20;
+        var sustainX = decay + 20;
         sustain = (1 - sustain) * 100;
         release = (sustainX + release * 100);
-        let PointStart = [0, 100], pointAttack = [attack, 0], pointSustain = [sustainX, sustain], pointDecay = [decay, sustain], pointRelease = [release, 100];
-        const setRelease = ({ x }) => {
-            this.updateValues({
+        var PointStart = [0, 100], pointAttack = [attack, 0], pointSustain = [sustainX, sustain], pointDecay = [decay, sustain], pointRelease = [release, 100];
+        var setRelease = function (_a) {
+            var x = _a.x;
+            _this.updateValues({
                 release: Math.max(x - sustainX / 100, 0)
             });
         };
@@ -85,9 +121,9 @@ class EnvelopeGraphic extends React.Component {
             React.createElement(GridLine_1.default, null),
             React.createElement("path", { stroke: "#fd9a06", fill: "#fd9a06", fillOpacity: "0.40", d: "M" + [PointStart, pointAttack, pointDecay, pointSustain, pointRelease] + "Z" }),
             React.createElement("g", { stroke: "#FFF", fill: "none", strokeWidth: "0.75" },
-                React.createElement("path", { d: "M" + [...pointAttack, attack, 100] }),
+                React.createElement("path", { d: "M" + __spread(pointAttack, [attack, 100]) }),
                 React.createElement("path", { d: "M" + [decay, sustain, decay, 100] }),
-                React.createElement("path", { d: "M" + [sustainX, 100, ...pointSustain] })),
+                React.createElement("path", { d: "M" + __spread([sustainX, 100], pointSustain) })),
             React.createElement("g", { className: "controllers", fillOpacity: 0.8, fill: "gray", stroke: "#333" },
                 "/* attack */",
                 React.createElement(ControlPoint_1.default, { point: this.point, position: this.position, onChange: this.setAttack, cx: attack, cy: 0 }),
@@ -95,6 +131,7 @@ class EnvelopeGraphic extends React.Component {
                 React.createElement(ControlPoint_1.default, { position: this.position, point: this.point, onChange: this.setDecay, cx: decay, cy: sustain }),
                 "/* release */",
                 React.createElement(ControlPoint_1.default, { position: this.position, point: this.point, onChange: setRelease, cx: release, cy: 100 }))));
-    }
-}
+    };
+    return EnvelopeGraphic;
+}(React.Component));
 exports.default = EnvelopeGraphic;
