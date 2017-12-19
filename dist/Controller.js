@@ -1,5 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var sequence = [
+    [1, 2, 3],
+    [],
+    [],
+    [1, 2, 3],
+    [],
+    [],
+    [1, 2, 3],
+    [],
+    [],
+    [1, 2, 3],
+    [],
+    [],
+    [1, 2, 3],
+    [],
+    [1, 2, 3],
+    [],
+    [],
+];
 var defaultPreset = {
     wave: {
         sine: 0.2,
@@ -36,7 +55,8 @@ var defaultPreset = {
         resonance: 0.2,
         envelope: 0.6,
         on: false
-    }
+    },
+    sequence: JSON.parse(JSON.stringify(sequence))
 };
 var pluck = {
     wave: {
@@ -74,7 +94,8 @@ var pluck = {
         resonance: 0.2,
         envelope: 0.6,
         on: true
-    }
+    },
+    sequence: JSON.parse(JSON.stringify(sequence))
 };
 var Razor = {
     wave: {
@@ -88,10 +109,10 @@ var Razor = {
         fmFreq: 0.53125,
         offset: 0,
         voices: 3,
-        octave: 0
+        octave: 1
     },
     seq: {
-        on: false
+        on: true
     },
     env: {
         filter: {
@@ -112,7 +133,26 @@ var Razor = {
         resonance: 0.2,
         envelope: 0.6,
         on: false
-    }
+    },
+    sequence: [
+        [3],
+        [1],
+        [],
+        [3],
+        [1],
+        [],
+        [3],
+        [1],
+        [],
+        [1],
+        [],
+        [1],
+        [1],
+        [],
+        [3],
+        [],
+        [],
+    ]
 };
 var Padd = {
     wave: {
@@ -150,7 +190,8 @@ var Padd = {
         resonance: 0.2,
         envelope: 0.6,
         on: true
-    }
+    },
+    sequence: JSON.parse(JSON.stringify(sequence))
 };
 var presets = {
     default: defaultPreset,

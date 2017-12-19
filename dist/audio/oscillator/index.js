@@ -7,7 +7,7 @@ var bufferSize = 2048;
 var Time_1 = require("./Time");
 var oscManager_1 = require("./oscManager");
 var Oscillator = (function () {
-    function Oscillator(controller, target, sequence) {
+    function Oscillator(controller, target) {
         var _this = this;
         this.isPlayng = false;
         this.simpleSet = function (note) {
@@ -68,7 +68,7 @@ var Oscillator = (function () {
         this.update = target;
         this.timeLine = new Time_1.default(this);
         this.setSequence = this.timeLine.sequencer.setSequence;
-        this.setSequence(sequence);
+        this.setSequence(controller.sequence);
         this.setMidi = this.timeLine.setMidi;
         var node = Context_1.default.createScriptProcessor(bufferSize, 1, 1);
         node.connect(destination);
@@ -79,6 +79,7 @@ var Oscillator = (function () {
     Oscillator.prototype.setSetting = function (oscSetting) {
         this.osc = oscManager_1.default(oscSetting);
         this.seq = oscSetting.seq;
+        this.setSequence(oscSetting.sequence);
     };
     return Oscillator;
 }());

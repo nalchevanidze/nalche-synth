@@ -36,7 +36,28 @@ export interface Controller {
 	},
 	env: EnvelopeStates
 	filter: FilterParameters;
+	sequence: number[][]
 }
+
+let sequence: number[][] = [
+	[1, 2, 3],
+	[],
+	[],
+	[1, 2, 3],
+	[],
+	[],
+	[1, 2, 3],
+	[],
+	[],
+	[1, 2, 3],
+	[],
+	[],
+	[1, 2, 3],
+	[],
+	[1, 2, 3],
+	[],
+	[],
+];
 
 const defaultPreset: Controller = {
 	wave: {
@@ -74,7 +95,8 @@ const defaultPreset: Controller = {
 		resonance: 0.2,
 		envelope: 0.6,
 		on: false
-	}
+	},
+	sequence: JSON.parse(JSON.stringify(sequence))
 };
 
 const pluck : Controller = {
@@ -113,7 +135,8 @@ const pluck : Controller = {
 		resonance: 0.2,
 		envelope: 0.6,
 		on: true
-	}
+	},
+	sequence: JSON.parse(JSON.stringify(sequence))
 };
 
 const Razor : Controller = {
@@ -128,10 +151,10 @@ const Razor : Controller = {
 		fmFreq: 0.53125,
 		offset: 0,
 		voices: 3,
-		octave: 0
+		octave: 1
 	},
 	seq: {
-		on: false
+		on: true
 	},
 	env: {
 		filter: {
@@ -152,7 +175,26 @@ const Razor : Controller = {
 		resonance: 0.2,
 		envelope: 0.6,
 		on: false
-	}
+	},
+	sequence:[
+		[3],
+		[1],
+		[],
+		[3],
+		[1],
+		[],
+		[3],
+		[1],
+		[],
+		[1],
+		[],
+		[1],
+		[1],
+		[],
+		[3],
+		[],
+		[],
+	]
 }
 
 const Padd : Controller = {
@@ -191,7 +233,8 @@ const Padd : Controller = {
 		resonance: 0.2,
 		envelope: 0.6,
 		on: true
-	}
+	},
+	sequence: JSON.parse(JSON.stringify(sequence))
 }
 
 const presets = {

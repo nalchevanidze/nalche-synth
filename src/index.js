@@ -45,8 +45,7 @@ export default class Synth extends React.Component {
 					time,
 					active
 				});
-			},
-			sequence
+			}
 		);
 
 		this.state = {
@@ -145,11 +144,7 @@ export default class Synth extends React.Component {
 					}
 				} >
 				<Panel
-
-					seq={sequence}
-					setSequence={
-						this.setSequence
-					}
+					setSequence={this.setSequence}
 					oscSettings={this.state.oscSettings}
 					preset={{
 						data:Controller,

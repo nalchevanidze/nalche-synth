@@ -20,7 +20,7 @@ export default class Panel extends React.PureComponent {
 				<div>
 					<PanelEnvelope env={this.props.oscSettings.env} />
 					<Sequencer
-						seq={this.props.seq} 
+						seq={this.props.oscSettings.sequence} 
 						setSequence={this.props.setSequence}
 						settings={this.props.oscSettings}
 					/>

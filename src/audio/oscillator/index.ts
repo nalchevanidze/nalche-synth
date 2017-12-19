@@ -31,8 +31,7 @@ export default class Oscillator {
 
 	constructor(
 		controller: Controller,
-		target: Target,
-		sequence: number[][]
+		target: Target
 	) {
 		this.notes = {};
 		this.active = new Set([]);
@@ -41,7 +40,7 @@ export default class Oscillator {
 		this.update = target;
 		this.timeLine = new Time(this);
 		this.setSequence = this.timeLine.sequencer.setSequence;
-		this.setSequence(sequence);
+		this.setSequence(controller.sequence);
 		this.setMidi = this.timeLine.setMidi;
 
 		const node = Context.createScriptProcessor(bufferSize, 1, 1);
@@ -60,6 +59,7 @@ export default class Oscillator {
 	setSetting(oscSetting: Controller): void {
 		this.osc = oscManager(oscSetting);
 		this.seq = oscSetting.seq;
+		this.setSequence(oscSetting.sequence);
 	}
 
 

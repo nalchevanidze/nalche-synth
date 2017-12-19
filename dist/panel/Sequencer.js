@@ -82,7 +82,7 @@ var Sequencer = function (_React$PureComponent) {
 		key: "setNew",
 		value: function setNew(i, index) {
 
-			var chord = this.state.seq[i];
+			var chord = this.props.seq[i];
 			var chordIndex = chord.indexOf(index);
 			if (chordIndex === -1) {
 				chord.push(index);
@@ -90,7 +90,7 @@ var Sequencer = function (_React$PureComponent) {
 				chord.splice(chordIndex, 1);
 			}
 			this.props.setSequence(this.props.seq);
-			this.setState({ seq: [].concat(_toConsumableArray(this.state.seq)) });
+			this.setState({ seq: [].concat(_toConsumableArray(this.props.seq)) });
 		}
 	}, {
 		key: "render",

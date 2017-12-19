@@ -72,7 +72,7 @@ var Synth = function (_React$Component) {
 				time: time,
 				active: active
 			});
-		}, sequence);
+		});
 
 		_this.state = {
 			name: "default",
@@ -192,8 +192,6 @@ var Synth = function (_React$Component) {
 							background: "#333333"
 						} },
 					_react2.default.createElement(_panel2.default, {
-
-						seq: sequence,
 						setSequence: this.setSequence,
 						oscSettings: this.state.oscSettings,
 						preset: {

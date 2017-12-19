@@ -45,7 +45,7 @@ export default class Sequencer extends React.PureComponent {
 	}
 	setNew(i, index) {
 
-		const chord = this.state.seq[i];
+		const chord = this.props.seq[i];
 		const chordIndex = chord.indexOf(index);
 		if (chordIndex === -1) {
 			chord.push(index);
@@ -53,7 +53,7 @@ export default class Sequencer extends React.PureComponent {
 			chord.splice(chordIndex, 1);
 		}
 		this.props.setSequence(this.props.seq);
-		this.setState({ seq: [...this.state.seq] });
+		this.setState({ seq: [...this.props.seq] });
 	}
 	render() {
 		let {seq} = this.props.settings;
