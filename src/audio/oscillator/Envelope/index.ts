@@ -1,12 +1,5 @@
 import countdownIterator from "./countdownIterator";
-
-//stateStypes
-
-const ATTACK = 0;
-const DEACY = 1;
-const SUSTAIN = 2;
-const RELEASE = 3;
-type State = typeof ATTACK | typeof DEACY | typeof SUSTAIN | typeof RELEASE;
+import { envelopeStates as State} from "./envelopeTypes";
 export interface EnvelopeConfig {
 	attack: number;
 	decay: number;
@@ -30,7 +23,7 @@ export default class Envelope {
 		this.next = this.next.bind(this);
 		this.end = this.end.bind(this);
 		this.updateStep = this.updateStep.bind(this);
-		this.state = ATTACK;
+		this.state = State.ATTACK;
 	}
 	updateStep(
 		{ done, value }: {
@@ -40,7 +33,7 @@ export default class Envelope {
 	): number {
 		this.volume = value;
 		if (done) {
-			if (this.state == ATTACK) {
+			if (this.state == State.ATTACK) {
 				this.getValue = countdownIterator(
 					this.env.decay ,
 					this.volume,
@@ -57,10 +50,10 @@ export default class Envelope {
 			return 0;
 		}
 		switch (this.state) {
-			case ATTACK:
-			case DEACY:
+			case State.ATTACK:
+			case State.DEACY:
 				this.updateStep(this.getValue.next());
-			case SUSTAIN:
+			case State.SUSTAIN:
 				return this.volume;
 			default:
 				let release = this.getValue.next();
@@ -71,14 +64,14 @@ export default class Envelope {
 
 	restart(): void {
 		this.live = true;
-		this.state = ATTACK;
+		this.state = State.ATTACK;
 		this.volume = 1;
 		this.getValue = countdownIterator(this.env.attack , 0, 1);
 	}
 
 	end(): void {
 		this.getValue = countdownIterator(this.env.release , this.volume, 0);
-		this.state = RELEASE;
+		this.state = State.RELEASE;
 	}
 
 }

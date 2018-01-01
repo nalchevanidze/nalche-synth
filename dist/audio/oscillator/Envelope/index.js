@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var countdownIterator_1 = require("./countdownIterator");
-var ATTACK = 0;
-var DEACY = 1;
-var SUSTAIN = 2;
-var RELEASE = 3;
+var envelopeTypes_1 = require("./envelopeTypes");
 var Envelope = (function () {
     function Envelope(env) {
         this.env = env;
@@ -14,13 +11,13 @@ var Envelope = (function () {
         this.next = this.next.bind(this);
         this.end = this.end.bind(this);
         this.updateStep = this.updateStep.bind(this);
-        this.state = ATTACK;
+        this.state = envelopeTypes_1.envelopeStates.ATTACK;
     }
     Envelope.prototype.updateStep = function (_a) {
         var done = _a.done, value = _a.value;
         this.volume = value;
         if (done) {
-            if (this.state == ATTACK) {
+            if (this.state == envelopeTypes_1.envelopeStates.ATTACK) {
                 this.getValue = countdownIterator_1.default(this.env.decay, this.volume, this.env.sustain);
             }
             this.state++;
@@ -32,10 +29,10 @@ var Envelope = (function () {
             return 0;
         }
         switch (this.state) {
-            case ATTACK:
-            case DEACY:
+            case envelopeTypes_1.envelopeStates.ATTACK:
+            case envelopeTypes_1.envelopeStates.DEACY:
                 this.updateStep(this.getValue.next());
-            case SUSTAIN:
+            case envelopeTypes_1.envelopeStates.SUSTAIN:
                 return this.volume;
             default:
                 var release = this.getValue.next();
@@ -45,13 +42,13 @@ var Envelope = (function () {
     };
     Envelope.prototype.restart = function () {
         this.live = true;
-        this.state = ATTACK;
+        this.state = envelopeTypes_1.envelopeStates.ATTACK;
         this.volume = 1;
         this.getValue = countdownIterator_1.default(this.env.attack, 0, 1);
     };
     Envelope.prototype.end = function () {
         this.getValue = countdownIterator_1.default(this.env.release, this.volume, 0);
-        this.state = RELEASE;
+        this.state = envelopeTypes_1.envelopeStates.RELEASE;
     };
     return Envelope;
 }());

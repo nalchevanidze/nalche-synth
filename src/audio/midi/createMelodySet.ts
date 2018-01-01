@@ -6,7 +6,7 @@ export default function createMelodySet(rowArray: DeepMidi): MidiTask[] {
 
 	rowArray.forEach(
 
-		(quarter, i: number) => {
+		(quarter: Note[], i: number) => {
 
 			if (quarter) {
 				quarter.forEach((note: Note) => {
